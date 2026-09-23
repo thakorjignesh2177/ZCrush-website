@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>ZCrußh</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+<!-- ================= NAVBAR ================= -->
+
+<header class="navbar">
+
+    <div class="logo">
+        ZCrußh
+    </div>
+
+
+    <nav>
+
+        <a href="#home">Home</a>
+
+        <a href="#shorts">Shorts</a>
+
+        <a href="#videos">Videos</a>
+
+        <a href="#market">Market</a>
+
+        <a href="#about">About</a>
+
+    </nav>
+
+
+    <div class="auth-buttons">
+
+        <button class="login">
+            Login
+        </button>
+
+        <button class="signup">
+            Sign Up
+        </button>
+
+    </div>
+
+</header>
+
+
+
+<!-- ================= HERO ================= -->
+
+<section class="hero" id="home">
+
+    <div class="hero-content">
+
+        <p class="small-title">
+            WELCOME TO ZCRUßH
+        </p>
+
+
+        <h1>
+
+            One Platform.<br>
+
+            <span>
+                Endless Possibilities.
+            </span>
+
+        </h1>
+
+
+        <p class="hero-description">
+
+            Connect with people, watch videos,
+            discover content and explore products
+            — all in one place.
+
+        </p>
+
+
+        <button class="start-btn">
+
+            Get Started
+
+        </button>
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= FEATURES ================= -->
+
+<section class="features">
+
+    <h2>
+        Everything in One Place
+    </h2>
+
+
+    <p class="section-text">
+
+        ZCrußh brings social, entertainment
+        and shopping together.
+
+    </p>
+
+
+    <div class="cards">
+
+
+        <!-- SHORT VIDEOS -->
+
+        <div class="card" id="shorts">
+
+            <div class="icon">
+                🎬
+            </div>
+
+            <h3>
+                Short Videos
+            </h3>
+
+            <p>
+
+                Watch and discover entertaining
+                short-form videos.
+
+            </p>
+
+        </div>
+
+
+
+        <!-- LONG VIDEOS -->
+
+        <div class="card" id="videos">
+
+            <div class="icon">
+                ▶️
+            </div>
+
+            <h3>
+                Long Videos
+            </h3>
+
+            <p>
+
+                Explore longer videos and
+                creative content.
+
+            </p>
+
+        </div>
+
+
+
+        <!-- MARKETPLACE -->
+
+        <div class="card" id="market">
+
+            <div class="icon">
+                🛒
+            </div>
+
+            <h3>
+                Marketplace
+            </h3>
+
+            <p>
+
+                Discover products and connect
+                with sellers.
+
+            </p>
+
+        </div>
+
+<!-- ================= SHORTS SECTION ================= -->
+
+<section class="shorts-section" id="shorts-page">
+    
+    <h2>
+        ZCrußh Shorts
+    </h2>
+    
+    <p class="section-text">
+        Watch short and entertaining videos.
+    </p>
+    
+    
+    <div class="shorts-container">
+        
+        <div class="short-card">
+            
+            <div class="short-video">
+                ▶
+            </div>
+            
+            <h3>
+                Trending Short
+            </h3>
+            
+            <p>
+                Discover something new on ZCrußh.
+            </p>
+            
+            <button class="watch-btn">
+                Watch
+            </button>
+            
+        </div>
+        
+        
+        <div class="short-card">
+            
+            <div class="short-video">
+                ▶
+            </div>
+            
+            <h3>
+                Funny Moments
+            </h3>
+            
+            <p>
+                Enjoy entertaining short videos.
+            </p>
+            
+            <button class="watch-btn">
+                Watch
+            </button>
+            
+        </div>
+        
+        
+        <div class="short-card">
+            
+            <div class="short-video">
+                ▶
+            </div>
+            
+            <h3>
+                New Creator
+            </h3>
+            
+            <p>
+                Explore content from creators.
+            </p>
+            
+            <button class="watch-btn">
+                Watch
+            </button>
+            
+        </div>
+        
+    </div>
+    
+</section>
+
+        <!-- COMMUNITY -->
+
+        <div class="card">
+
+            <div class="icon">
+                👥
+            </div>
+
+            <h3>
+                Community
+            </h3>
+
+            <p>
+
+                Connect and interact with
+                other users.
+
+            </p>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+<!-- ================= SHORTS VIEWER ================= -->
+
+<div class="short-viewer" id="shortViewer">
+
+    <div class="short-viewer-box">
+
+        <button
+            class="close-short"
+            id="closeShort">
+            ×
+        </button>
+
+        <div class="viewer-video">
+            ▶
+        </div>
+
+        <h3 id="viewerTitle">
+            ZCrußh Short
+        </h3>
+
+        <div class="viewer-actions">
+
+            <button id="likeButton">
+                ❤️ Like
+            </button>
+
+            <button id="commentButton">
+                💬 Comment
+            </button>
+
+            <button id="shareButton">
+                🔗 Share
+            </button>
+
+        </div>
+
+        <p id="viewerMessage"></p>
+
+    </div>
+
+</div>
+
+<!-- ================= ABOUT ================= -->
+
+<section class="about" id="about">
+
+    <h2>
+        About ZCrußh
+    </h2>
+
+
+    <p>
+
+        ZCrußh is being designed as a platform
+        where social connection, entertainment,
+        videos and marketplace features can
+        come together.
+
+    </p>
+
+</section>
+
+
+
+<!-- ================= LOGIN MODAL ================= -->
+
+<div class="login-modal" id="loginModal">
+
+
+    <div class="login-box">
+
+
+        <button
+            class="close-login"
+            id="closeLogin">
+
+            ×
+
+        </button>
+
+
+        <div class="login-logo">
+
+            ZCrußh
+
+        </div>
+
+
+        <h2>
+            Welcome Back
+        </h2>
+
+
+        <p>
+
+            Login to your ZCrußh account
+
+        </p>
+
+
+
+        <form id="loginForm">
+
+
+            <label>
+                Email
+            </label>
+
+
+            <input
+                type="email"
+                id="email"
+                placeholder="Enter your email"
+                required
+            >
+
+
+
+            <label>
+                Password
+            </label>
+
+
+            <input
+                type="password"
+                id="password"
+                placeholder="Enter your password"
+                required
+            >
+
+
+
+            <button
+                type="submit"
+                class="login-submit">
+
+                Login
+
+            </button>
+
+
+        </form>
+
+
+        <p
+            class="login-message"
+            id="loginMessage">
+        </p>
+
+
+    </div>
+
+</div>
+
+<!-- ================= SIGN UP MODAL ================= -->
+
+<div class="signup-modal" id="signupModal">
+
+    <div class="signup-box">
+
+        <button
+            class="close-signup"
+            id="closeSignup">
+            ×
+        </button>
+
+        <div class="signup-logo">
+            ZCrußh
+        </div>
+
+        <h2>
+            Create Account
+        </h2>
+
+        <p>
+            Join ZCrußh today
+        </p>
+
+        <form id="signupForm">
+
+            <label>
+                Name
+            </label>
+
+            <input
+                type="text"
+                id="signupName"
+                placeholder="Enter your name"
+                required
+            >
+
+            <label>
+                Email
+            </label>
+
+            <input
+                type="email"
+                id="signupEmail"
+                placeholder="Enter your email"
+                required
+            >
+
+            <label>
+                Password
+            </label>
+
+            <input
+                type="password"
+                id="signupPassword"
+                placeholder="Create a password"
+                required
+            >
+
+            <button
+                type="submit"
+                class="signup-submit">
+
+                Create Account
+
+            </button>
+
+        </form>
+
+        <p
+            class="signup-message"
+            id="signupMessage">
+        </p>
+
+    </div>
+
+</div>
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <p>
+
+        © 2026 ZCrußh.
+        All Rights Reserved.
+
+    </p>
+
+</footer>
+
+
+
+<!-- ================= JAVASCRIPT ================= -->
+
+<script src="script.js"></script>
+
+
+</body>
+
+</html>
