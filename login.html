@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>ZCrush - Login</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(157,0,255,.25), transparent 35%),
+        radial-gradient(circle at 80% 80%, rgba(0,150,255,.2), transparent 35%),
+        #030712;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 420px;
+    }
+
+    .logo {
+      text-align: center;
+      font-size: 42px;
+      font-weight: 900;
+      margin-bottom: 25px;
+      background: linear-gradient(90deg, #a000ff, #ff22bd, #168cff);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .card {
+      background: rgba(12, 19, 39, .9);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 25px;
+      padding: 30px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.45);
+      backdrop-filter: blur(15px);
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 28px;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #8995b2;
+      font-size: 14px;
+      margin-bottom: 25px;
+    }
+
+    .tabs {
+      display: flex;
+      background: #080e20;
+      border-radius: 12px;
+      padding: 5px;
+      margin-bottom: 25px;
+    }
+
+    .tab {
+      width: 50%;
+      padding: 12px;
+      border: none;
+      background: transparent;
+      color: #8d98b4;
+      border-radius: 9px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .tab.active {
+      background: linear-gradient(90deg, #8d00ff, #ed20bc);
+      color: white;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: #cbd3e6;
+      font-size: 14px;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      margin-bottom: 18px;
+      border-radius: 12px;
+      border: 1px solid #28334f;
+      outline: none;
+      background: #070d1d;
+      color: white;
+      font-size: 15px;
+    }
+
+    input:focus {
+      border-color: #9b35ff;
+    }
+
+    .main-btn {
+      width: 100%;
+      padding: 15px;
+      border: none;
+      border-radius: 30px;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      background: linear-gradient(90deg, #8d00ff, #ff20bd, #008cff);
+      margin-top: 5px;
+    }
+
+    .forgot {
+      display: block;
+      text-align: right;
+      color: #39caff;
+      font-size: 13px;
+      margin: -5px 0 20px;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 25px 0;
+      color: #68738d;
+      font-size: 13px;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: "";
+      height: 1px;
+      flex: 1;
+      background: #263149;
+    }
+
+    .social-btn {
+      width: 100%;
+      padding: 13px;
+      border-radius: 12px;
+      background: #0a1123;
+      border: 1px solid #28334f;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+
+    .back {
+      display: block;
+      text-align: center;
+      margin-top: 22px;
+      color: #aeb8d0;
+      font-size: 14px;
+    }
+
+    .back span {
+      color: #36caff;
+    }
+
+    #signupFields {
+      display: none;
+    }
+
+    @media (max-width: 480px) {
+      .card {
+        padding: 23px;
+      }
+
+      .logo {
+        font-size: 36px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <div class="logo">ZCrush</div>
+
+    <div class="card">
+
+      <h1 id="title">Welcome Back 👋</h1>
+
+      <p class="subtitle" id="subtitle">
+        Login to continue your ZCrush journey
+      </p>
+
+      <div class="tabs">
+        <button class="tab active" id="loginTab" onclick="showLogin()">
+          Login
+        </button>
+
+        <button class="tab" id="signupTab" onclick="showSignup()">
+          Sign Up
+        </button>
+      </div>
+
+
+      <!-- SIGN UP ONLY -->
+      <div id="signupFields">
+
+        <label>Full Name</label>
+        <input type="text" placeholder="Enter your name">
+
+      </div>
+
+
+      <label>Email</label>
+      <input type="email" placeholder="Enter your email">
+
+
+      <label>Password</label>
+      <input type="password" placeholder="Enter your password">
+
+
+      <a href="#" class="forgot" id="forgot">
+        Forgot Password?
+      </a>
+
+
+      <button class="main-btn" id="mainButton">
+        Login to ZCrush
+      </button>
+
+
+      <div class="divider">
+        OR CONTINUE WITH
+      </div>
+
+
+      <button class="social-btn">
+        🌐 Continue with Google
+      </button>
+
+      <button class="social-btn">
+        📱 Continue with Phone
+      </button>
+
+
+      <a href="index.html" class="back">
+        ← Back to <span>ZCrush Home</span>
+      </a>
+
+    </div>
+
+  </div>
+
+
+  <script>
+
+    function showLogin() {
+
+      document.getElementById("signupFields").style.display = "none";
+
+      document.getElementById("loginTab").classList.add("active");
+      document.getElementById("signupTab").classList.remove("active");
+
+      document.getElementById("title").innerText =
+        "Welcome Back 👋";
+
+      document.getElementById("subtitle").innerText =
+        "Login to continue your ZCrush journey";
+
+      document.getElementById("forgot").style.display =
+        "block";
+
+      document.getElementById("mainButton").innerText =
+        "Login to ZCrush";
+    }
+
+
+    function showSignup() {
+
+      document.getElementById("signupFields").style.display =
+        "block";
+
+      document.getElementById("signupTab").classList.add("active");
+      document.getElementById("loginTab").classList.remove("active");
+
+      document.getElementById("title").innerText =
+        "Create Your Account 🚀";
+
+      document.getElementById("subtitle").innerText =
+        "Join the ZCrush community today";
+
+      document.getElementById("forgot").style.display =
+        "none";
+
+      document.getElementById("mainButton").innerText =
+        "Create ZCrush Account";
+    }
+
+  </script>
+
+</body>
+</html>
