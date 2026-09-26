@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>ZCrush Social</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #050713;
+      color: white;
+    }
+
+    /* NAVBAR */
+    nav {
+      height: 70px;
+      padding: 0 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #080a18;
+      border-bottom: 1px solid #20243d;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .logo {
+      font-size: 28px;
+      font-weight: bold;
+      background: linear-gradient(90deg, #ff00cc, #7c3cff, #00c6ff);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .home {
+      text-decoration: none;
+      color: white;
+      background: linear-gradient(90deg, #a100ff, #008cff);
+      padding: 10px 17px;
+      border-radius: 22px;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    /* HERO */
+    .hero {
+      text-align: center;
+      padding: 35px 15px 20px;
+    }
+
+    .hero-icon {
+      font-size: 55px;
+      margin-bottom: 10px;
+    }
+
+    .hero h1 {
+      font-size: 34px;
+      margin-bottom: 8px;
+    }
+
+    .hero p {
+      color: #9da3c7;
+      font-size: 14px;
+    }
+
+    /* SEARCH */
+    .search-box {
+      width: 92%;
+      max-width: 650px;
+      margin: 20px auto;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 14px 18px;
+      border: 1px solid #292e4b;
+      border-radius: 25px;
+      outline: none;
+      background: #11152a;
+      color: white;
+      font-size: 14px;
+    }
+
+    /* SOCIAL FEED */
+    .feed {
+      width: 92%;
+      max-width: 700px;
+      margin: 25px auto 50px;
+    }
+
+    .post {
+      background: #11152a;
+      border: 1px solid #292e4b;
+      border-radius: 18px;
+      margin-bottom: 18px;
+      overflow: hidden;
+    }
+
+    /* USER */
+    .user {
+      display: flex;
+      align-items: center;
+      padding: 15px;
+      gap: 12px;
+    }
+
+    .avatar {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #8b2cff, #008cff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 21px;
+    }
+
+    .user-info h3 {
+      font-size: 15px;
+    }
+
+    .user-info p {
+      color: #777d9c;
+      font-size: 11px;
+      margin-top: 3px;
+    }
+
+    .follow {
+      margin-left: auto;
+      border: none;
+      background: #7c3cff;
+      color: white;
+      padding: 7px 13px;
+      border-radius: 18px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    /* POST CONTENT */
+    .post-text {
+      padding: 0 15px 15px;
+      color: #d9dcf0;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .post-image {
+      width: 100%;
+      height: 230px;
+      background: linear-gradient(135deg, #171b38, #24134c);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 65px;
+    }
+
+    /* ACTIONS */
+    .actions {
+      display: flex;
+      gap: 10px;
+      padding: 12px 15px;
+      border-top: 1px solid #20243d;
+    }
+
+    .action {
+      background: transparent;
+      border: none;
+      color: #aeb4d0;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    .action:hover {
+      color: white;
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 25px;
+      color: #777d9c;
+      border-top: 1px solid #20243d;
+      font-size: 13px;
+    }
+
+    @media (max-width: 600px) {
+
+      .hero h1 {
+        font-size: 28px;
+      }
+
+      .post-image {
+        height: 200px;
+      }
+
+      .follow {
+        padding: 6px 10px;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav>
+
+    <div class="logo">
+      ZCrush
+    </div>
+
+    <a href="index.html" class="home">
+      🏠 Home
+    </a>
+
+  </nav>
+
+
+  <!-- HERO -->
+  <section class="hero">
+
+    <div class="hero-icon">
+      👥
+    </div>
+
+    <h1>ZCrush Social</h1>
+
+    <p>Connect • Share • Discover</p>
+
+  </section>
+
+
+  <!-- SEARCH -->
+  <div class="search-box">
+
+    <input
+      type="text"
+      placeholder="🔍 Search people, posts..."
+    >
+
+  </div>
+
+
+  <!-- FEED -->
+  <section class="feed">
+
+
+    <!-- POST 1 -->
+    <div class="post">
+
+      <div class="user">
+
+        <div class="avatar">
+          😎
+        </div>
+
+        <div class="user-info">
+
+          <h3>ZCrush Creator</h3>
+
+          <p>@zcrush_creator • 2h ago</p>
+
+        </div>
+
+        <button class="follow">
+          Follow
+        </button>
+
+      </div>
+
+
+      <div class="post-text">
+        Welcome to ZCrush! 🚀
+        Share your creativity and connect with the community.
+      </div>
+
+
+      <div class="post-image">
+        🚀
+      </div>
+
+
+      <div class="actions">
+
+        <button class="action">
+          ❤️ Like
+        </button>
+
+        <button class="action">
+          💬 Comment
+        </button>
+
+        <button class="action">
+          ↗️ Share
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <!-- POST 2 -->
+    <div class="post">
+
+      <div class="user">
+
+        <div class="avatar">
+          🎮
+        </div>
+
+        <div class="user-info">
+
+          <h3>Gaming Zone</h3>
+
+          <p>@gamingzone • 5h ago</p>
+
+        </div>
+
+        <button class="follow">
+          Follow
+        </button>
+
+      </div>
+
+
+      <div class="post-text">
+        New gaming challenge is coming soon! 🎮🔥
+        Are you ready?
+      </div>
+
+
+      <div class="post-image">
+        🏆
+      </div>
+
+
+      <div class="actions">
+
+        <button class="action">
+          ❤️ Like
+        </button>
+
+        <button class="action">
+          💬 Comment
+        </button>
+
+        <button class="action">
+          ↗️ Share
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <!-- POST 3 -->
+    <div class="post">
+
+      <div class="user">
+
+        <div class="avatar">
+          🎨
+        </div>
+
+        <div class="user-info">
+
+          <h3>Creative World</h3>
+
+          <p>@creativeworld • 1d ago</p>
+
+        </div>
+
+        <button class="follow">
+          Follow
+        </button>
+
+      </div>
+
+
+      <div class="post-text">
+        Create something amazing and share it with ZCrush! ✨
+      </div>
+
+
+      <div class="post-image">
+        🎨✨
+      </div>
+
+
+      <div class="actions">
+
+        <button class="action">
+          ❤️ Like
+        </button>
+
+        <button class="action">
+          💬 Comment
+        </button>
+
+        <button class="action">
+          ↗️ Share
+        </button>
+
+      </div>
+
+    </div>
+
+
+  </section>
+
+
+  <!-- FOOTER -->
+  <footer>
+    © 2026 ZCrush — Social
+  </footer>
+
+
+</body>
+</html>
