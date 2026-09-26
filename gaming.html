@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>ZCrush Gaming</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #050713;
+      color: white;
+    }
+
+    /* NAVBAR */
+    nav {
+      height: 70px;
+      padding: 0 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #080a18;
+      border-bottom: 1px solid #20243d;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .logo {
+      font-size: 28px;
+      font-weight: bold;
+      background: linear-gradient(90deg, #ff00cc, #7c3cff, #00c6ff);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .home {
+      text-decoration: none;
+      color: white;
+      background: linear-gradient(90deg, #a100ff, #008cff);
+      padding: 10px 17px;
+      border-radius: 22px;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    /* HERO */
+    .hero {
+      text-align: center;
+      padding: 45px 15px 30px;
+    }
+
+    .hero .icon {
+      font-size: 60px;
+      margin-bottom: 12px;
+    }
+
+    .hero h1 {
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      color: #9da3c7;
+      font-size: 15px;
+    }
+
+    /* GAMES */
+    .games {
+      width: 92%;
+      max-width: 1100px;
+      margin: auto;
+      display: grid;
+
+      /* 2 games side-by-side */
+      grid-template-columns: repeat(2, 1fr);
+
+      gap: 15px;
+      padding-bottom: 50px;
+    }
+
+    .game {
+      background: #11152a;
+      border: 1px solid #292e4b;
+      border-radius: 18px;
+      padding: 22px 12px;
+      text-align: center;
+      transition: 0.3s;
+    }
+
+    .game:hover {
+      transform: translateY(-5px);
+      border-color: #7c3cff;
+    }
+
+    .game-icon {
+      font-size: 48px;
+      margin-bottom: 12px;
+    }
+
+    .game h2 {
+      font-size: 19px;
+      margin-bottom: 8px;
+    }
+
+    .game p {
+      color: #9298b8;
+      font-size: 12px;
+      line-height: 1.4;
+      margin-bottom: 15px;
+    }
+
+    .play {
+      display: inline-block;
+      text-decoration: none;
+      background: linear-gradient(90deg, #8b2cff, #008cff);
+      color: white;
+      padding: 9px 18px;
+      border-radius: 20px;
+      font-weight: bold;
+      font-size: 13px;
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 25px 10px;
+      color: #777d9c;
+      border-top: 1px solid #20243d;
+      font-size: 13px;
+    }
+
+    /* DESKTOP */
+    @media (min-width: 900px) {
+      .games {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav>
+    <div class="logo">ZCrush</div>
+
+    <a href="index.html" class="home">
+      🏠 Home
+    </a>
+  </nav>
+
+
+  <!-- HERO -->
+  <section class="hero">
+
+    <div class="icon">🎮</div>
+
+    <h1>ZCrush Gaming</h1>
+
+    <p>Play • Watch • Enjoy</p>
+
+  </section>
+
+
+  <!-- GAMES -->
+  <section class="games">
+
+    <!-- GAME 1 -->
+    <div class="game">
+
+      <div class="game-icon">🏎️</div>
+
+      <h2>Racing</h2>
+
+      <p>
+        Speed, competition and exciting races.
+      </p>
+
+      <a href="#" class="play">
+        Play Now
+      </a>
+
+    </div>
+
+
+    <!-- GAME 2 -->
+    <div class="game">
+
+      <div class="game-icon">⚔️</div>
+
+      <h2>Action</h2>
+
+      <p>
+        Discover exciting action gaming content.
+      </p>
+
+      <a href="#" class="play">
+        Play Now
+      </a>
+
+    </div>
+
+
+    <!-- GAME 3 -->
+    <div class="game">
+
+      <div class="game-icon">🧩</div>
+
+      <h2>Puzzle</h2>
+
+      <p>
+        Challenge your mind with fun puzzles.
+      </p>
+
+      <a href="#" class="play">
+        Play Now
+      </a>
+
+    </div>
+
+
+    <!-- GAME 4 -->
+    <div class="game">
+
+      <div class="game-icon">🏆</div>
+
+      <h2>Challenges</h2>
+
+      <p>
+        Take on challenges and share your results.
+      </p>
+
+      <a href="#" class="play">
+        Explore
+      </a>
+
+    </div>
+
+
+    <!-- GAME 5 -->
+    <div class="game">
+
+      <div class="game-icon">🎥</div>
+
+      <h2>Gaming Videos</h2>
+
+      <p>
+        Watch gaming videos and discover creators.
+      </p>
+
+      <a href="shorts.html" class="play">
+        Watch
+      </a>
+
+    </div>
+
+
+    <!-- GAME 6 -->
+    <div class="game">
+
+      <div class="game-icon">🔥</div>
+
+      <h2>Trending</h2>
+
+      <p>
+        See what's trending in the gaming community.
+      </p>
+
+      <a href="#" class="play">
+        Explore
+      </a>
+
+    </div>
+
+  </section>
+
+
+  <!-- FOOTER -->
+  <footer>
+    © 2026 ZCrush — Gaming
+  </footer>
+
+</body>
+</html>
