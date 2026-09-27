@@ -204,31 +204,51 @@
       </p>
 
       <div class="tabs">
-        <button class="tab active" id="loginTab" onclick="showLogin()">
+
+        <button
+          class="tab active"
+          id="loginTab"
+          onclick="showLogin()">
           Login
         </button>
 
-        <button class="tab" id="signupTab" onclick="showSignup()">
+        <button
+          class="tab"
+          id="signupTab"
+          onclick="showSignup()">
           Sign Up
         </button>
+
       </div>
 
 
-      <!-- SIGN UP ONLY -->
+      <!-- SIGN UP -->
       <div id="signupFields">
 
         <label>Full Name</label>
-        <input type="text" placeholder="Enter your name">
+
+        <input
+          type="text"
+          id="nameInput"
+          placeholder="Enter your name">
 
       </div>
 
 
       <label>Email</label>
-      <input type="email" placeholder="Enter your email">
+
+      <input
+        type="email"
+        id="emailInput"
+        placeholder="Enter your email">
 
 
       <label>Password</label>
-      <input type="password" placeholder="Enter your password">
+
+      <input
+        type="password"
+        id="passwordInput"
+        placeholder="Enter your password">
 
 
       <a href="#" class="forgot" id="forgot">
@@ -236,8 +256,13 @@
       </a>
 
 
-      <button class="main-btn" id="mainButton">
+      <button
+        class="main-btn"
+        id="mainButton"
+        onclick="handleAccount()">
+
         Login to ZCrush
+
       </button>
 
 
@@ -246,12 +271,21 @@
       </div>
 
 
-      <button class="social-btn">
+      <button
+        class="social-btn"
+        onclick="demoGoogle()">
+
         🌐 Continue with Google
+
       </button>
 
-      <button class="social-btn">
+
+      <button
+        class="social-btn"
+        onclick="demoPhone()">
+
         📱 Continue with Phone
+
       </button>
 
 
@@ -264,51 +298,212 @@
   </div>
 
 
-  <script>
+<script>
 
-    function showLogin() {
+let currentMode = "login";
 
-      document.getElementById("signupFields").style.display = "none";
 
-      document.getElementById("loginTab").classList.add("active");
-      document.getElementById("signupTab").classList.remove("active");
+/* LOGIN MODE */
 
-      document.getElementById("title").innerText =
-        "Welcome Back 👋";
+function showLogin() {
 
-      document.getElementById("subtitle").innerText =
-        "Login to continue your ZCrush journey";
+  currentMode = "login";
 
-      document.getElementById("forgot").style.display =
-        "block";
+  document.getElementById("signupFields").style.display =
+    "none";
 
-      document.getElementById("mainButton").innerText =
-        "Login to ZCrush";
+  document.getElementById("loginTab").classList.add("active");
+
+  document.getElementById("signupTab").classList.remove("active");
+
+  document.getElementById("title").innerText =
+    "Welcome Back 👋";
+
+  document.getElementById("subtitle").innerText =
+    "Login to continue your ZCrush journey";
+
+  document.getElementById("forgot").style.display =
+    "block";
+
+  document.getElementById("mainButton").innerText =
+    "Login to ZCrush";
+}
+
+
+/* SIGNUP MODE */
+
+function showSignup() {
+
+  currentMode = "signup";
+
+  document.getElementById("signupFields").style.display =
+    "block";
+
+  document.getElementById("signupTab").classList.add("active");
+
+  document.getElementById("loginTab").classList.remove("active");
+
+  document.getElementById("title").innerText =
+    "Create Your Account 🚀";
+
+  document.getElementById("subtitle").innerText =
+    "Join the ZCrush community today";
+
+  document.getElementById("forgot").style.display =
+    "none";
+
+  document.getElementById("mainButton").innerText =
+    "Create ZCrush Account";
+}
+
+
+/* MAIN ACCOUNT BUTTON */
+
+function handleAccount() {
+
+  const email =
+    document.getElementById("emailInput").value.trim();
+
+  const password =
+    document.getElementById("passwordInput").value.trim();
+
+
+  /* CHECK EMAIL */
+
+  if (email === "") {
+
+    alert("Please enter your email.");
+
+    return;
+  }
+
+
+  /* CHECK PASSWORD */
+
+  if (password === "") {
+
+    alert("Please enter your password.");
+
+    return;
+  }
+
+
+  /* SIGN UP */
+
+  if (currentMode === "signup") {
+
+    const name =
+      document.getElementById("nameInput").value.trim();
+
+
+    if (name === "") {
+
+      alert("Please enter your name.");
+
+      return;
     }
 
 
-    function showSignup() {
+    /*
+      Demo user information.
+      Real authentication will be connected
+      with a backend/database later.
+    */
 
-      document.getElementById("signupFields").style.display =
-        "block";
+    localStorage.setItem(
+      "zcrushUserName",
+      name
+    );
 
-      document.getElementById("signupTab").classList.add("active");
-      document.getElementById("loginTab").classList.remove("active");
+    localStorage.setItem(
+      "zcrushUserEmail",
+      email
+    );
 
-      document.getElementById("title").innerText =
-        "Create Your Account 🚀";
 
-      document.getElementById("subtitle").innerText =
-        "Join the ZCrush community today";
+    alert(
+      "ZCrush account created successfully! 🎉"
+    );
 
-      document.getElementById("forgot").style.display =
-        "none";
 
-      document.getElementById("mainButton").innerText =
-        "Create ZCrush Account";
-    }
+    window.location.href =
+      "profile.html";
 
-  </script>
+    return;
+  }
+
+
+  /* LOGIN */
+
+  const savedEmail =
+    localStorage.getItem("zcrushUserEmail");
+
+  const savedName =
+    localStorage.getItem("zcrushUserName");
+
+
+  if (savedEmail === null) {
+
+    alert(
+      "No ZCrush account found. Please Sign Up first."
+    );
+
+    return;
+  }
+
+
+  if (email !== savedEmail) {
+
+    alert(
+      "Email does not match the registered account."
+    );
+
+    return;
+  }
+
+
+  if (savedName) {
+
+    localStorage.setItem(
+      "zcrushLoggedIn",
+      "true"
+    );
+
+  }
+
+
+  alert(
+    "Login successful! Welcome to ZCrush 🚀"
+  );
+
+
+  window.location.href =
+    "profile.html";
+}
+
+
+/* GOOGLE DEMO */
+
+function demoGoogle() {
+
+  alert(
+    "Google Login will be connected with real authentication later."
+  );
+
+}
+
+
+/* PHONE DEMO */
+
+function demoPhone() {
+
+  alert(
+    "Phone Login will be connected with OTP authentication later."
+  );
+
+}
+
+</script>
 
 </body>
 </html>
