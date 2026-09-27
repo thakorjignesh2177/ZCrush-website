@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
   <title>ZCrush - Login</title>
 
   <style>
+
     * {
       margin: 0;
       padding: 0;
@@ -16,14 +18,26 @@
     body {
       min-height: 100vh;
       font-family: Arial, sans-serif;
+
       background:
-        radial-gradient(circle at 20% 20%, rgba(157,0,255,.25), transparent 35%),
-        radial-gradient(circle at 80% 80%, rgba(0,150,255,.2), transparent 35%),
+        radial-gradient(
+          circle at 20% 20%,
+          rgba(157,0,255,.25),
+          transparent 35%
+        ),
+        radial-gradient(
+          circle at 80% 80%,
+          rgba(0,150,255,.2),
+          transparent 35%
+        ),
         #030712;
+
       color: white;
+
       display: flex;
       align-items: center;
       justify-content: center;
+
       padding: 20px;
     }
 
@@ -36,18 +50,33 @@
       text-align: center;
       font-size: 42px;
       font-weight: 900;
+
       margin-bottom: 25px;
-      background: linear-gradient(90deg, #a000ff, #ff22bd, #168cff);
+
+      background:
+        linear-gradient(
+          90deg,
+          #a000ff,
+          #ff22bd,
+          #168cff
+        );
+
       -webkit-background-clip: text;
       color: transparent;
     }
 
     .card {
       background: rgba(12, 19, 39, .9);
+
       border: 1px solid rgba(255,255,255,.1);
+
       border-radius: 25px;
+
       padding: 30px;
-      box-shadow: 0 20px 60px rgba(0,0,0,.45);
+
+      box-shadow:
+        0 20px 60px rgba(0,0,0,.45);
+
       backdrop-filter: blur(15px);
     }
 
@@ -66,44 +95,72 @@
 
     .tabs {
       display: flex;
+
       background: #080e20;
+
       border-radius: 12px;
+
       padding: 5px;
+
       margin-bottom: 25px;
     }
 
     .tab {
       width: 50%;
+
       padding: 12px;
+
       border: none;
+
       background: transparent;
+
       color: #8d98b4;
+
       border-radius: 9px;
+
       font-weight: bold;
+
       cursor: pointer;
     }
 
     .tab.active {
-      background: linear-gradient(90deg, #8d00ff, #ed20bc);
+      background:
+        linear-gradient(
+          90deg,
+          #8d00ff,
+          #ed20bc
+        );
+
       color: white;
     }
 
     label {
       display: block;
+
       margin-bottom: 8px;
+
       color: #cbd3e6;
+
       font-size: 14px;
     }
 
     input {
       width: 100%;
+
       padding: 14px;
+
       margin-bottom: 18px;
+
       border-radius: 12px;
+
       border: 1px solid #28334f;
+
       outline: none;
+
       background: #070d1d;
+
       color: white;
+
       font-size: 15px;
     }
 
@@ -113,61 +170,102 @@
 
     .main-btn {
       width: 100%;
+
       padding: 15px;
+
       border: none;
+
       border-radius: 30px;
+
       color: white;
+
       font-size: 16px;
+
       font-weight: bold;
+
       cursor: pointer;
-      background: linear-gradient(90deg, #8d00ff, #ff20bd, #008cff);
+
+      background:
+        linear-gradient(
+          90deg,
+          #8d00ff,
+          #ff20bd,
+          #008cff
+        );
+
       margin-top: 5px;
     }
 
     .forgot {
       display: block;
+
       text-align: right;
+
       color: #39caff;
+
       font-size: 13px;
+
       margin: -5px 0 20px;
+
       text-decoration: none;
     }
 
     .divider {
       display: flex;
+
       align-items: center;
+
       gap: 10px;
+
       margin: 25px 0;
+
       color: #68738d;
+
       font-size: 13px;
     }
 
     .divider::before,
     .divider::after {
       content: "";
+
       height: 1px;
+
       flex: 1;
+
       background: #263149;
     }
 
     .social-btn {
       width: 100%;
+
       padding: 13px;
+
       border-radius: 12px;
+
       background: #0a1123;
+
       border: 1px solid #28334f;
+
       color: white;
+
       font-weight: bold;
+
       cursor: pointer;
+
       margin-bottom: 10px;
     }
 
     .back {
       display: block;
+
       text-align: center;
+
       margin-top: 22px;
+
       color: #aeb8d0;
+
       font-size: 14px;
+
       text-decoration: none;
     }
 
@@ -190,14 +288,20 @@
       }
 
     }
+
   </style>
+
 </head>
+
 
 <body>
 
   <div class="container">
 
-    <div class="logo">ZCrush</div>
+    <div class="logo">
+      ZCrush
+    </div>
+
 
     <div class="card">
 
@@ -217,19 +321,18 @@
         <button
           class="tab active"
           id="loginTab"
-          onclick="showLogin()">
-
+          onclick="showLogin()"
+        >
           Login
-
         </button>
+
 
         <button
           class="tab"
           id="signupTab"
-          onclick="showSignup()">
-
+          onclick="showSignup()"
+        >
           Sign Up
-
         </button>
 
       </div>
@@ -272,11 +375,11 @@
       </label>
 
       <input
-    type="email"
-    id="emailInput"
-    placeholder="Enter your email"
-    autocomplete="email"
-  >
+        type="email"
+        id="emailInput"
+        placeholder="Enter your email"
+        autocomplete="email"
+      >
 
 
       <!-- PASSWORD -->
@@ -357,348 +460,401 @@
   </div>
 
 
-<script>
+  <script>
 
-let currentMode = "login";
-
-
-/* =========================
-   LOGIN MODE
-========================= */
-
-function showLogin() {
-
-  currentMode = "login";
-
-  document.getElementById("signupFields").style.display =
-    "none";
-
-  document.getElementById("loginTab").classList.add("active");
-
-  document.getElementById("signupTab").classList.remove("active");
-
-  document.getElementById("title").innerText =
-    "Welcome Back 👋";
-
-  document.getElementById("subtitle").innerText =
-    "Login to continue your ZCrush journey";
-
-  document.getElementById("forgot").style.display =
-    "block";
-
-  document.getElementById("mainButton").innerText =
-    "Login to ZCrush";
-
-}
+    let currentMode = "login";
 
 
-/* =========================
-   SIGN UP MODE
-========================= */
+    /* =========================
+       LOGIN MODE
+    ========================= */
 
-function showSignup() {
+    function showLogin() {
 
-  currentMode = "signup";
+      currentMode = "login";
 
-  document.getElementById("signupFields").style.display =
-    "block";
+      document.getElementById("signupFields").style.display =
+        "none";
 
-  document.getElementById("signupTab").classList.add("active");
+      document.getElementById("loginTab").classList.add("active");
 
-  document.getElementById("loginTab").classList.remove("active");
+      document.getElementById("signupTab").classList.remove("active");
 
-  document.getElementById("title").innerText =
-    "Create Your Account 🚀";
+      document.getElementById("title").innerText =
+        "Welcome Back 👋";
 
-  document.getElementById("subtitle").innerText =
-    "Join the ZCrush community today";
+      document.getElementById("subtitle").innerText =
+        "Login to continue your ZCrush journey";
 
-  document.getElementById("forgot").style.display =
-    "none";
+      document.getElementById("forgot").style.display =
+        "block";
 
-  document.getElementById("mainButton").innerText =
-    "Create ZCrush Account";
-
-}
-
-
-/* =========================
-   MAIN ACCOUNT BUTTON
-========================= */
-
-function handleAccount() {
-
-  const email =
-    document.getElementById("emailInput").value.trim();
-
-  const password =
-    document.getElementById("passwordInput").value.trim();
-
-
-  /* EMAIL CHECK */
-
-  if (email === "") {
-
-    alert("Please enter your email.");
-
-    return;
-
-  }
-
-
-  /* BASIC EMAIL CHECK */
-
-  if (!email.includes("@") || !email.includes(".")) {
-
-    alert("Please enter a valid email address.");
-
-    return;
-
-  }
-
-
-  /* PASSWORD CHECK */
-
-  if (password === "") {
-
-    alert("Please enter your password.");
-
-    return;
-
-  }
-
-
-  /* =========================
-     SIGN UP
-  ========================= */
-
-  if (currentMode === "signup") {
-
-    const name =
-      document.getElementById("nameInput").value.trim();
-
-    let handle =
-      document.getElementById("handleInput").value.trim();
-
-
-    /* NAME CHECK */
-
-    if (name === "") {
-
-      alert("Please enter your full name.");
-
-      return;
-
+      document.getElementById("mainButton").innerText =
+        "Login to ZCrush";
     }
 
 
-    /* HANDLE CHECK */
+    /* =========================
+       SIGN UP MODE
+    ========================= */
 
-    if (handle === "") {
+    function showSignup() {
 
-      alert("Please enter a username / handle.");
+      currentMode = "signup";
 
-      return;
+      document.getElementById("signupFields").style.display =
+        "block";
 
+      document.getElementById("signupTab").classList.add("active");
+
+      document.getElementById("loginTab").classList.remove("active");
+
+      document.getElementById("title").innerText =
+        "Create Your Account 🚀";
+
+      document.getElementById("subtitle").innerText =
+        "Join the ZCrush community today";
+
+      document.getElementById("forgot").style.display =
+        "none";
+
+      document.getElementById("mainButton").innerText =
+        "Create ZCrush Account";
     }
 
 
-    /* Remove spaces */
+    /* =========================
+       MAIN ACCOUNT BUTTON
+    ========================= */
 
-    handle =
-      handle.replace(/\s+/g, "");
+    function handleAccount() {
+
+      const email =
+        document
+          .getElementById("emailInput")
+          .value
+          .trim();
+
+      const password =
+        document
+          .getElementById("passwordInput")
+          .value
+          .trim();
 
 
-    /* Add @ automatically */
+      /* EMAIL CHECK */
 
-    if (!handle.startsWith("@")) {
+      if (email === "") {
 
-      handle = "@" + handle;
+        alert("Please enter your email.");
 
-    }
+        return;
+      }
 
 
-    /* Handle length */
+      /* BASIC EMAIL CHECK */
 
-    if (handle.length < 4) {
+      if (
+        !email.includes("@") ||
+        !email.includes(".")
+      ) {
 
-      alert("Handle must contain at least 3 characters.");
+        alert("Please enter a valid email address.");
 
-      return;
+        return;
+      }
+
+
+      /* PASSWORD CHECK */
+
+      if (password === "") {
+
+        alert("Please enter your password.");
+
+        return;
+      }
+
+
+      /* =========================
+         SIGN UP
+      ========================= */
+
+      if (currentMode === "signup") {
+
+        const name =
+          document
+            .getElementById("nameInput")
+            .value
+            .trim();
+
+
+        let handle =
+          document
+            .getElementById("handleInput")
+            .value
+            .trim();
+
+
+        /* NAME CHECK */
+
+        if (name === "") {
+
+          alert("Please enter your full name.");
+
+          return;
+        }
+
+
+        /* HANDLE CHECK */
+
+        if (handle === "") {
+
+          alert(
+            "Please enter a username / handle."
+          );
+
+          return;
+        }
+
+
+        /* Remove spaces */
+
+        handle =
+          handle.replace(/\s+/g, "");
+
+
+        /* Remove extra @ */
+
+        handle =
+          handle.replace(/^@+/, "");
+
+
+        /* Add @ */
+
+        handle =
+          "@" + handle;
+
+
+        /* Handle length */
+
+        if (handle.length < 4) {
+
+          alert(
+            "Username must contain at least 3 characters."
+          );
+
+          return;
+        }
+
+
+        /* =========================
+           SAVE USER INFORMATION
+        ========================= */
+
+        localStorage.setItem(
+          "zcrushUserName",
+          name
+        );
+
+
+        localStorage.setItem(
+          "zcrushUserHandle",
+          handle
+        );
+
+
+        localStorage.setItem(
+          "zcrushUserEmail",
+          email
+        );
+
+
+        /*
+          Prototype only.
+
+          Password storage is NOT suitable
+          for production.
+
+          Later we will connect secure
+          backend authentication.
+        */
+
+        localStorage.setItem(
+          "zcrushUserPassword",
+          password
+        );
+
+
+        /* Login session */
+
+        localStorage.setItem(
+          "zcrushLoggedIn",
+          "true"
+        );
+
+
+        /* Save profile creation time */
+
+        localStorage.setItem(
+          "zcrushProfileCreated",
+          "true"
+        );
+
+
+        /* =========================
+           VERIFY SAVED DATA
+        ========================= */
+
+        const savedName =
+          localStorage.getItem(
+            "zcrushUserName"
+          );
+
+        const savedHandle =
+          localStorage.getItem(
+            "zcrushUserHandle"
+          );
+
+
+        if (
+          savedName !== name ||
+          savedHandle !== handle
+        ) {
+
+          alert(
+            "Profile data save nahi ho paya. Please try again."
+          );
+
+          return;
+        }
+
+
+        alert(
+          "ZCrush account created successfully! 🎉"
+        );
+
+
+        /* Go to Profile */
+
+        window.location.href =
+          "profile.html";
+
+        return;
+      }
+
+
+      /* =========================
+         LOGIN
+      ========================= */
+
+      const savedEmail =
+        localStorage.getItem(
+          "zcrushUserEmail"
+        );
+
+      const savedPassword =
+        localStorage.getItem(
+          "zcrushUserPassword"
+        );
+
+
+      /* No account */
+
+      if (savedEmail === null) {
+
+        alert(
+          "No ZCrush account found. Please Sign Up first."
+        );
+
+        return;
+      }
+
+
+      /* Email check */
+
+      if (email !== savedEmail) {
+
+        alert(
+          "Email does not match the registered account."
+        );
+
+        return;
+      }
+
+
+      /* Password check */
+
+      if (password !== savedPassword) {
+
+        alert(
+          "Incorrect password."
+        );
+
+        return;
+      }
+
+
+      /* Login session */
+
+      localStorage.setItem(
+        "zcrushLoggedIn",
+        "true"
+      );
+
+
+      alert(
+        "Login successful! Welcome to ZCrush 🚀"
+      );
+
+
+      window.location.href =
+        "profile.html";
 
     }
 
 
     /* =========================
-       SAVE USER INFORMATION
+       FORGOT PASSWORD
     ========================= */
 
-    localStorage.setItem(
-      "zcrushUserName",
-      name
-    );
+    function forgotPassword(event) {
 
-    localStorage.setItem(
-      "zcrushUserHandle",
-      handle
-    );
+      event.preventDefault();
 
-    localStorage.setItem(
-      "zcrushUserEmail",
-      email
-    );
+      alert(
+        "Password recovery will be connected with secure authentication later."
+      );
 
+    }
 
-    /*
-      Prototype only.
 
-      IMPORTANT:
-      This password storage is only for
-      testing the frontend flow.
+    /* =========================
+       GOOGLE DEMO
+    ========================= */
 
-      Production ZCrush will use secure
-      backend authentication.
-    */
+    function demoGoogle() {
 
-    localStorage.setItem(
-      "zcrushUserPassword",
-      password
-    );
+      alert(
+        "Google Login will be connected with real authentication later."
+      );
 
+    }
 
-    /* Login session */
 
-    localStorage.setItem(
-      "zcrushLoggedIn",
-      "true"
-    );
+    /* =========================
+       PHONE DEMO
+    ========================= */
 
+    function demoPhone() {
 
-    alert(
-      "ZCrush account created successfully! 🎉"
-    );
+      alert(
+        "Phone Login will be connected with OTP authentication later."
+      );
 
+    }
 
-    /* Go to Profile */
-
-    window.location.href =
-      "profile.html";
-
-    return;
-
-  }
-
-
-  /* =========================
-     LOGIN
-  ========================= */
-
-  const savedEmail =
-    localStorage.getItem("zcrushUserEmail");
-
-  const savedPassword =
-    localStorage.getItem("zcrushUserPassword");
-
-
-  /* No account */
-
-  if (savedEmail === null) {
-
-    alert(
-      "No ZCrush account found. Please Sign Up first."
-    );
-
-    return;
-
-  }
-
-
-  /* Email check */
-
-  if (email !== savedEmail) {
-
-    alert(
-      "Email does not match the registered account."
-    );
-
-    return;
-
-  }
-
-
-  /* Password check */
-
-  if (password !== savedPassword) {
-
-    alert(
-      "Incorrect password."
-    );
-
-    return;
-
-  }
-
-
-  /* Login session */
-
-  localStorage.setItem(
-    "zcrushLoggedIn",
-    "true"
-  );
-
-
-  alert(
-    "Login successful! Welcome to ZCrush 🚀"
-  );
-
-
-  window.location.href =
-    "profile.html";
-
-}
-
-
-/* =========================
-   FORGOT PASSWORD
-========================= */
-
-function forgotPassword(event) {
-
-  event.preventDefault();
-
-  alert(
-    "Password recovery will be connected with secure authentication later."
-  );
-
-}
-
-
-/* =========================
-   GOOGLE DEMO
-========================= */
-
-function demoGoogle() {
-
-  alert(
-    "Google Login will be connected with real authentication later."
-  );
-
-}
-
-
-/* =========================
-   PHONE DEMO
-========================= */
-
-function demoPhone() {
-
-  alert(
-    "Phone Login will be connected with OTP authentication later."
-  );
-
-}
-
-</script>
+  </script>
 
 </body>
+
 </html>
