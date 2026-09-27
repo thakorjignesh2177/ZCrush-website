@@ -130,6 +130,7 @@
       color: #39caff;
       font-size: 13px;
       margin: -5px 0 20px;
+      text-decoration: none;
     }
 
     .divider {
@@ -167,6 +168,7 @@
       margin-top: 22px;
       color: #aeb8d0;
       font-size: 14px;
+      text-decoration: none;
     }
 
     .back span {
@@ -178,6 +180,7 @@
     }
 
     @media (max-width: 480px) {
+
       .card {
         padding: 23px;
       }
@@ -185,6 +188,7 @@
       .logo {
         font-size: 36px;
       }
+
     }
   </style>
 </head>
@@ -197,11 +201,16 @@
 
     <div class="card">
 
-      <h1 id="title">Welcome Back 👋</h1>
+      <h1 id="title">
+        Welcome Back 👋
+      </h1>
 
       <p class="subtitle" id="subtitle">
         Login to continue your ZCrush journey
       </p>
+
+
+      <!-- LOGIN / SIGN UP TABS -->
 
       <div class="tabs">
 
@@ -209,87 +218,137 @@
           class="tab active"
           id="loginTab"
           onclick="showLogin()">
+
           Login
+
         </button>
 
         <button
           class="tab"
           id="signupTab"
           onclick="showSignup()">
+
           Sign Up
+
         </button>
 
       </div>
 
 
-      <!-- SIGN UP -->
+      <!-- SIGN UP FIELDS -->
+
       <div id="signupFields">
 
-        <label>Full Name</label>
+        <label>
+          Full Name
+        </label>
 
         <input
           type="text"
           id="nameInput"
-          placeholder="Enter your name">
+          placeholder="Enter your full name"
+          autocomplete="name"
+        >
+
+
+        <label>
+          Username / Handle
+        </label>
+
+        <input
+          type="text"
+          id="handleInput"
+          placeholder="@yourusername"
+          autocomplete="username"
+        >
 
       </div>
 
 
-      <label>Email</label>
+      <!-- EMAIL -->
+
+      <label>
+        Email
+      </label>
 
       <input
-        type="email"
-        id="emailInput"
-        placeholder="Enter your email">
+    type="email"
+    id="emailInput"
+    placeholder="Enter your email"
+    autocomplete="email"
+  >
 
 
-      <label>Password</label>
+      <!-- PASSWORD -->
+
+      <label>
+        Password
+      </label>
 
       <input
         type="password"
         id="passwordInput"
-        placeholder="Enter your password">
+        placeholder="Enter your password"
+        autocomplete="current-password"
+      >
 
 
-      <a href="#" class="forgot" id="forgot">
+      <!-- FORGOT PASSWORD -->
+
+      <a
+        href="#"
+        class="forgot"
+        id="forgot"
+        onclick="forgotPassword(event)"
+      >
         Forgot Password?
       </a>
 
 
+      <!-- MAIN BUTTON -->
+
       <button
         class="main-btn"
         id="mainButton"
-        onclick="handleAccount()">
-
+        onclick="handleAccount()"
+      >
         Login to ZCrush
-
       </button>
 
+
+      <!-- DIVIDER -->
 
       <div class="divider">
         OR CONTINUE WITH
       </div>
 
 
+      <!-- GOOGLE -->
+
       <button
         class="social-btn"
-        onclick="demoGoogle()">
-
+        onclick="demoGoogle()"
+      >
         🌐 Continue with Google
-
       </button>
 
+
+      <!-- PHONE -->
 
       <button
         class="social-btn"
-        onclick="demoPhone()">
-
+        onclick="demoPhone()"
+      >
         📱 Continue with Phone
-
       </button>
 
 
-      <a href="index.html" class="back">
+      <!-- BACK -->
+
+      <a
+        href="index.html"
+        class="back"
+      >
         ← Back to <span>ZCrush Home</span>
       </a>
 
@@ -303,7 +362,9 @@
 let currentMode = "login";
 
 
-/* LOGIN MODE */
+/* =========================
+   LOGIN MODE
+========================= */
 
 function showLogin() {
 
@@ -327,10 +388,13 @@ function showLogin() {
 
   document.getElementById("mainButton").innerText =
     "Login to ZCrush";
+
 }
 
 
-/* SIGNUP MODE */
+/* =========================
+   SIGN UP MODE
+========================= */
 
 function showSignup() {
 
@@ -354,10 +418,13 @@ function showSignup() {
 
   document.getElementById("mainButton").innerText =
     "Create ZCrush Account";
+
 }
 
 
-/* MAIN ACCOUNT BUTTON */
+/* =========================
+   MAIN ACCOUNT BUTTON
+========================= */
 
 function handleAccount() {
 
@@ -368,51 +435,112 @@ function handleAccount() {
     document.getElementById("passwordInput").value.trim();
 
 
-  /* CHECK EMAIL */
+  /* EMAIL CHECK */
 
   if (email === "") {
 
     alert("Please enter your email.");
 
     return;
+
   }
 
 
-  /* CHECK PASSWORD */
+  /* BASIC EMAIL CHECK */
+
+  if (!email.includes("@") || !email.includes(".")) {
+
+    alert("Please enter a valid email address.");
+
+    return;
+
+  }
+
+
+  /* PASSWORD CHECK */
 
   if (password === "") {
 
     alert("Please enter your password.");
 
     return;
+
   }
 
 
-  /* SIGN UP */
+  /* =========================
+     SIGN UP
+  ========================= */
 
   if (currentMode === "signup") {
 
     const name =
       document.getElementById("nameInput").value.trim();
 
+    let handle =
+      document.getElementById("handleInput").value.trim();
+
+
+    /* NAME CHECK */
 
     if (name === "") {
 
-      alert("Please enter your name.");
+      alert("Please enter your full name.");
 
       return;
+
     }
 
 
-    /*
-      Demo user information.
-      Real authentication will be connected
-      with a backend/database later.
-    */
+    /* HANDLE CHECK */
+
+    if (handle === "") {
+
+      alert("Please enter a username / handle.");
+
+      return;
+
+    }
+
+
+    /* Remove spaces */
+
+    handle =
+      handle.replace(/\s+/g, "");
+
+
+    /* Add @ automatically */
+
+    if (!handle.startsWith("@")) {
+
+      handle = "@" + handle;
+
+    }
+
+
+    /* Handle length */
+
+    if (handle.length < 4) {
+
+      alert("Handle must contain at least 3 characters.");
+
+      return;
+
+    }
+
+
+    /* =========================
+       SAVE USER INFORMATION
+    ========================= */
 
     localStorage.setItem(
       "zcrushUserName",
       name
+    );
+
+    localStorage.setItem(
+      "zcrushUserHandle",
+      handle
     );
 
     localStorage.setItem(
@@ -421,26 +549,58 @@ function handleAccount() {
     );
 
 
+    /*
+      Prototype only.
+
+      IMPORTANT:
+      This password storage is only for
+      testing the frontend flow.
+
+      Production ZCrush will use secure
+      backend authentication.
+    */
+
+    localStorage.setItem(
+      "zcrushUserPassword",
+      password
+    );
+
+
+    /* Login session */
+
+    localStorage.setItem(
+      "zcrushLoggedIn",
+      "true"
+    );
+
+
     alert(
       "ZCrush account created successfully! 🎉"
     );
 
 
+    /* Go to Profile */
+
     window.location.href =
       "profile.html";
 
     return;
+
   }
 
 
-  /* LOGIN */
+  /* =========================
+     LOGIN
+  ========================= */
 
   const savedEmail =
     localStorage.getItem("zcrushUserEmail");
 
-  const savedName =
-    localStorage.getItem("zcrushUserName");
+  const savedPassword =
+    localStorage.getItem("zcrushUserPassword");
 
+
+  /* No account */
 
   if (savedEmail === null) {
 
@@ -449,8 +609,11 @@ function handleAccount() {
     );
 
     return;
+
   }
 
+
+  /* Email check */
 
   if (email !== savedEmail) {
 
@@ -459,17 +622,29 @@ function handleAccount() {
     );
 
     return;
+
   }
 
 
-  if (savedName) {
+  /* Password check */
 
-    localStorage.setItem(
-      "zcrushLoggedIn",
-      "true"
+  if (password !== savedPassword) {
+
+    alert(
+      "Incorrect password."
     );
 
+    return;
+
   }
+
+
+  /* Login session */
+
+  localStorage.setItem(
+    "zcrushLoggedIn",
+    "true"
+  );
 
 
   alert(
@@ -479,10 +654,28 @@ function handleAccount() {
 
   window.location.href =
     "profile.html";
+
 }
 
 
-/* GOOGLE DEMO */
+/* =========================
+   FORGOT PASSWORD
+========================= */
+
+function forgotPassword(event) {
+
+  event.preventDefault();
+
+  alert(
+    "Password recovery will be connected with secure authentication later."
+  );
+
+}
+
+
+/* =========================
+   GOOGLE DEMO
+========================= */
 
 function demoGoogle() {
 
@@ -493,7 +686,9 @@ function demoGoogle() {
 }
 
 
-/* PHONE DEMO */
+/* =========================
+   PHONE DEMO
+========================= */
 
 function demoPhone() {
 
