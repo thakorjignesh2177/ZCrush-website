@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ZCrush - Profile</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial, sans-serif;
+}
+
+body{
+  background:#f5f7fb;
+  color:#172033;
+}
+
+/* TOP NAV */
+.topbar{
+  height:75px;
+  background:white;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 35px;
+  border-bottom:1px solid #e5e8ef;
+  position:sticky;
+  top:0;
+  z-index:10;
+}
+
+.logo{
+  font-size:32px;
+  font-weight:bold;
+  background:linear-gradient(90deg,#7b2cff,#168cff);
+  -webkit-background-clip:text;
+  color:transparent;
+}
+
+.search{
+  width:42%;
+  background:#f1f3f8;
+  border-radius:30px;
+  padding:13px 20px;
+  border:none;
+  outline:none;
+  font-size:15px;
+}
+
+.top-actions{
+  display:flex;
+  align-items:center;
+  gap:20px;
+}
+
+.notification{
+  font-size:23px;
+}
+
+.mini-avatar{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#7b2cff,#168cff);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:white;
+  font-size:20px;
+}
+
+/* LAYOUT */
+.layout{
+  display:flex;
+  max-width:1500px;
+  margin:auto;
+}
+
+/* SIDEBAR */
+.sidebar{
+  width:190px;
+  min-height:calc(100vh - 75px);
+  background:white;
+  padding:25px 10px;
+  border-right:1px solid #e5e8ef;
+}
+
+.sidebar a{
+  display:block;
+  padding:15px;
+  margin-bottom:8px;
+  border-radius:12px;
+  color:#52617a;
+  text-decoration:none;
+  font-size:16px;
+}
+
+.sidebar a:hover{
+  background:#eef2ff;
+  color:#5d35ff;
+}
+
+.sidebar .active{
+  background:#eef1ff;
+  color:#4e4cff;
+  font-weight:bold;
+}
+
+/* MAIN */
+.main{
+  flex:1;
+  padding:25px;
+}
+
+/* COVER */
+.profile-card{
+  background:white;
+  border-radius:18px;
+  overflow:hidden;
+  box-shadow:0 3px 15px rgba(0,0,0,.05);
+}
+
+.cover{
+  height:260px;
+  background:
+    linear-gradient(rgba(50,20,130,.15),rgba(50,20,130,.15)),
+    url("https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1600&q=80");
+  background-size:cover;
+  background-position:center;
+  position:relative;
+}
+
+.cover-btn{
+  position:absolute;
+  top:20px;
+  left:20px;
+  background:rgba(30,40,100,.75);
+  color:white;
+  border:none;
+  padding:12px 18px;
+  border-radius:25px;
+  cursor:pointer;
+}
+
+/* PROFILE INFO */
+.profile-info{
+  padding:0 25px 25px;
+  position:relative;
+}
+
+.profile-photo{
+  width:125px;
+  height:125px;
+  border-radius:50%;
+  border:5px solid white;
+  background:linear-gradient(135deg,#742cff,#178cff);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:55px;
+  position:relative;
+  margin-top:-62px;
+}
+
+.camera{
+  position:absolute;
+  right:0;
+  bottom:5px;
+  width:35px;
+  height:35px;
+  border-radius:50%;
+  border:3px solid white;
+  background:#18233d;
+  color:white;
+  cursor:pointer;
+}
+
+.profile-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.user-name{
+  font-size:27px;
+  font-weight:bold;
+  margin-top:12px;
+}
+
+.verified{
+  color:#168cff;
+}
+
+.handle{
+  color:#64728b;
+  margin-top:5px;
+}
+
+.bio{
+  margin-top:15px;
+  line-height:1.6;
+  color:#4c5a72;
+}
+
+.edit-btn{
+  padding:12px 25px;
+  border-radius:25px;
+  background:white;
+  border:1px solid #d9deea;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+.stats{
+  display:flex;
+  gap:70px;
+  margin-top:25px;
+}
+
+.stat strong{
+  display:block;
+  font-size:22px;
+}
+
+.stat span{
+  color:#68758b;
+}
+
+.action-buttons{
+  display:flex;
+  gap:15px;
+  margin-top:25px;
+}
+
+.action-buttons button{
+  flex:1;
+  padding:14px;
+  border:none;
+  border-radius:12px;
+  cursor:pointer;
+  font-weight:bold;
+  background:#f1f3f8;
+  color:#3f4d66;
+}
+
+.action-buttons .create{
+  color:white;
+  background:linear-gradient(90deg,#792cff,#e43cff);
+}
+
+/* TABS */
+.tabs{
+  background:white;
+  margin-top:18px;
+  padding:18px;
+  border-radius:15px;
+  display:flex;
+  gap:45px;
+}
+
+.tabs button{
+  background:none;
+  border:none;
+  font-size:16px;
+  color:#53627c;
+  cursor:pointer;
+}
+
+.tabs .selected{
+  color:#6037ff;
+  font-weight:bold;
+}
+
+/* CONTENT */
+.content{
+  display:grid;
+  grid-template-columns:2fr 1fr;
+  gap:18px;
+  margin-top:18px;
+}
+
+.box{
+  background:white;
+  border-radius:16px;
+  padding:20px;
+}
+
+.box-title{
+  font-size:20px;
+  font-weight:bold;
+  margin-bottom:18px;
+}
+
+/* POSTS */
+.posts{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+}
+
+.post{
+  height:180px;
+  border-radius:12px;
+  overflow:hidden;
+  position:relative;
+  background:#eee;
+}
+
+.post img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.post-info{
+  position:absolute;
+  bottom:10px;
+  left:10px;
+  color:white;
+  font-weight:bold;
+  text-shadow:0 2px 5px black;
+}
+
+/* EDIT */
+.edit-box{
+  display:none;
+}
+
+.edit-box input,
+.edit-box textarea{
+  width:100%;
+  padding:12px;
+  margin-bottom:12px;
+  border:1px solid #dce1eb;
+  border-radius:9px;
+  outline:none;
+}
+
+.edit-box textarea{
+  height:100px;
+  resize:none;
+}
+
+.save-btn{
+  width:100%;
+  padding:13px;
+  border:none;
+  border-radius:10px;
+  background:linear-gradient(90deg,#167cff,#d936ff);
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+/* FOLLOWERS */
+.people{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+.person{
+  width:48px;
+  height:48px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#8b5cff,#39a8ff);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:white;
+}
+
+/* FOOTER */
+footer{
+  text-align:center;
+  padding:35px;
+  color:#7b8799;
+}
+
+/* MOBILE */
+@media(max-width:800px){
+
+  .topbar{
+    padding:0 15px;
+  }
+
+  .search{
+    display:none;
+  }
+
+  .sidebar{
+    display:none;
+  }
+
+  .main{
+    padding:12px;
+  }
+
+  .cover{
+    height:190px;
+  }
+
+  .profile-row{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  .edit-btn{
+    margin-top:15px;
+  }
+
+  .stats{
+    gap:30px;
+  }
+
+  .action-buttons{
+    flex-direction:column;
+  }
+
+  .tabs{
+    gap:20px;
+    overflow-x:auto;
+  }
+
+  .content{
+    grid-template-columns:1fr;
+  }
+
+  .posts{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .post{
+    height:150px;
+  }
+
+  .logo{
+    font-size:25px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- TOP BAR -->
+<header class="topbar">
+
+  <div class="logo">ZCrush</div>
+
+  <input
+    class="search"
+    type="text"
+    placeholder="🔍 Search ZCrush..."
+  >
+
+  <div class="top-actions">
+    <div class="notification">🔔</div>
+    <div class="mini-avatar">Z</div>
+  </div>
+
+</header>
+
+
+<div class="layout">
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+
+  <a href="index.html">🏠 Home</a>
+  <a href="social.html">👥 Social</a>
+  <a href="gaming.html">🎮 Gaming</a>
+  <a href="shorts.html">▶️ Shorts</a>
+  <a href="marketplace.html">🛍️ Marketplace</a>
+  <a href="profile.html" class="active">👤 Profile</a>
+
+</aside>
+
+
+<!-- MAIN -->
+<main class="main">
+
+<section class="profile-card">
+
+  <!-- COVER -->
+  <div class="cover">
+
+    <button class="cover-btn">
+      📷 Change Cover
+    </button>
+
+  </div>
+
+
+  <!-- PROFILE -->
+  <div class="profile-info">
+
+    <div class="profile-row">
+
+      <div>
+
+        <div class="profile-photo">
+
+          👤
+
+          <button class="camera">
+            📷
+          </button>
+
+        </div>
+
+        <div class="user-name">
+          ZCrush User
+          <span class="verified">✔</span>
+        </div>
+
+        <div class="handle">
+          @zcrushuser
+        </div>
+
+        <div class="bio">
+          Dream • Create • Explore 🚀
+          <br>
+          Gaming | Tech | Animation | More...
+        </div>
+
+      </div>
+
+
+      <button
+        class="edit-btn"
+        onclick="openEdit()"
+      >
+        ✏️ Edit Profile
+      </button>
+
+    </div>
+
+
+    <!-- STATS -->
+    <div class="stats">
+
+      <div class="stat">
+        <strong>6</strong>
+        <span>Posts</span>
+      </div>
+
+      <div class="stat">
+        <strong>120</strong>
+        <span>Followers</span>
+      </div>
+
+      <div class="stat">
+        <strong>85</strong>
+        <span>Following</span>
+      </div>
+
+    </div>
+
+
+    <!-- ACTIONS -->
+    <div class="action-buttons">
+
+      <button class="create">
+        ✍️ Create Post
+      </button>
+
+      <button onclick="shareProfile()">
+        🔗 Share Profile
+      </button>
+
+      <button>
+        📊 View Analytics
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- TABS -->
+<div class="tabs">
+
+  <button class="selected">
+    ▦ Posts
+  </button>
+
+  <button>
+    ▶ Reels
+  </button>
+
+  <button>
+    👤 Tagged
+  </button>
+
+  <button>
+    🔖 Saved
+  </button>
+
+</div>
+
+
+<!-- CONTENT -->
+<div class="content">
+
+
+<!-- POSTS -->
+<section class="box">
+
+  <div class="box-title">
+    📸 My Posts
+  </div>
+
+  <div class="posts">
+
+    <div class="post">
+      <img src="https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&w=600&q=80">
+      <div class="post-info">♡ 24　💬 5</div>
+    </div>
+
+    <div class="post">
+      <img src="https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=600&q=80">
+      <div class="post-info">♡ 18　💬 3</div>
+    </div>
+
+    <div class="post">
+      <img src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=600&q=80">
+      <div class="post-info">♡ 32　💬 7</div>
+    </div>
+
+    <div class="post">
+      <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=600&q=80">
+      <div class="post-info">♡ 21　💬 4</div>
+    </div>
+
+    <div class="post">
+      <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=600&q=80">
+      <div class="post-info">♡ 16　💬 2</div>
+    </div>
+
+    <div class="post">
+      <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=600&q=80">
+      <div class="post-info">♡ 45　💬 8</div>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- RIGHT SIDE -->
+<section>
+
+  <!-- EDIT PROFILE -->
+  <div class="box edit-box" id="editBox">
+
+    <div class="box-title">
+      ✏️ Edit Profile
+    </div>
+
+    <input
+      id="nameInput"
+      placeholder="Username"
+    >
+
+    <input
+      id="handleInput"
+      placeholder="Handle"
+    >
+
+    <textarea
+      id="bioInput"
+      placeholder="Bio"
+    ></textarea>
+
+    <button
+      class="save-btn"
+      onclick="saveProfile()"
+    >
+      Save Changes
+    </button>
+
+  </div>
+
+
+  <!-- FOLLOWERS -->
+  <div class="box">
+
+    <div class="box-title">
+      👥 Followers
+    </div>
+
+    <h2>120</h2>
+
+    <br>
+
+    <div class="people">
+
+      <div class="person">👤</div>
+      <div class="person">😎</div>
+      <div class="person">🎮</div>
+      <div class="person">🎨</div>
+      <div class="person">🔥</div>
+
+    </div>
+
+  </div>
+
+
+  <!-- FOLLOWING -->
+  <div class="box" style="margin-top:18px;">
+
+    <div class="box-title">
+      👥 Following
+    </div>
+
+    <h2>85</h2>
+
+    <br>
+
+    <div class="people">
+
+      <div class="person">🎮</div>
+      <div class="person">🚀</div>
+      <div class="person">⭐</div>
+      <div class="person">🎬</div>
+
+    </div>
+
+  </div>
+
+</section>
+
+</div>
+
+</main>
+</div>
+
+
+<footer>
+  © 2026 ZCrush　•　Connect　•　Create　•　Grow
+</footer>
+
+
+<script>
+
+function openEdit(){
+
+  const box = document.getElementById("editBox");
+
+  box.style.display = "block";
+
+  document.getElementById("nameInput").value =
+    document.querySelector(".user-name").innerText.replace("✔","").trim();
+
+  document.getElementById("handleInput").value =
+    document.querySelector(".handle").innerText;
+
+  document.getElementById("bioInput").value =
+    document.querySelector(".bio").innerText;
+
+  box.scrollIntoView({
+    behavior:"smooth"
+  });
+}
+
+
+function saveProfile(){
+
+  const name =
+    document.getElementById("nameInput").value;
+
+  const handle =
+    document.getElementById("handleInput").value;
+
+  const bio =
+    document.getElementById("bioInput").value;
+
+  if(name.trim() !== ""){
+
+    document.querySelector(".user-name").innerHTML =
+      name + ' <span class="verified">✔</span>';
+
+  }
+
+  if(handle.trim() !== ""){
+
+    document.querySelector(".handle").innerText =
+      handle;
+
+  }
+
+  if(bio.trim() !== ""){
+
+    document.querySelector(".bio").innerText =
+      bio;
+
+  }
+
+  alert("Profile updated successfully!");
+
+}
+
+
+function shareProfile(){
+
+  if(navigator.share){
+
+    navigator.share({
+
+      title:"ZCrush Profile",
+
+      text:"Check out this ZCrush profile!",
+
+      url:window.location.href
+
+    });
+
+  }else{
+
+    navigator.clipboard.writeText(
+      window.location.href
+    );
+
+    alert("Profile link copied!");
+
+  }
+
+}
+
+</script>
+
+</body>
+</html>
