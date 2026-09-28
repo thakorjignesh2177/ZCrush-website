@@ -1,958 +1,51 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
 
-  <title>ZCrush - Profile</title>
+  /* ==========================================
+     LOAD USER DATA FROM SIGN UP
+  ========================================== */
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+  function loadUserProfile() {
 
-    body {
-      font-family: Arial, sans-serif;
-      background: #f5f7fb;
-      color: #111827;
-    }
+    const savedName =
+      localStorage.getItem("zcrushUserName");
 
-    /* TOP BAR */
-    .topbar {
-      height: 65px;
-      background: white;
-      border-bottom: 1px solid #e5e7eb;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 25px;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
+    let savedHandle =
+      localStorage.getItem("zcrushUserHandle");
 
-    .logo {
-      font-size: 27px;
-      font-weight: bold;
-      color: #6d28d9;
-    }
 
-    .top-right {
-      display: flex;
-      align-items: center;
-      gap: 18px;
-    }
+    /* NAME */
 
-    .search-box {
-      width: 250px;
-      padding: 10px 15px;
-      border: 1px solid #ddd;
-      border-radius: 22px;
-      outline: none;
-      font-size: 14px;
-    }
-
-    .notification {
-      font-size: 22px;
-      cursor: pointer;
-    }
-
-    .top-avatar {
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #7c3aed, #ec4899);
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    /* LAYOUT */
-    .layout {
-      display: flex;
-      min-height: calc(100vh - 65px);
-    }
-
-    /* SIDEBAR */
-    .sidebar {
-      width: 220px;
-      background: white;
-      border-right: 1px solid #e5e7eb;
-      padding: 25px 15px;
-    }
-
-    .menu-item {
-      display: block;
-      padding: 13px 15px;
-      margin-bottom: 8px;
-      text-decoration: none;
-      color: #374151;
-      border-radius: 10px;
-      font-size: 15px;
-      transition: 0.2s;
-    }
-
-    .menu-item:hover {
-      background: #f3e8ff;
-      color: #6d28d9;
-    }
-
-    .menu-item.active {
-      background: #ede9fe;
-      color: #6d28d9;
-      font-weight: bold;
-    }
-
-    /* MAIN */
-    .main {
-      flex: 1;
-      padding: 25px;
-      max-width: 1100px;
-      margin: auto;
-    }
-
-    /* PROFILE CARD */
-    .profile-card {
-      background: white;
-      border-radius: 18px;
-      overflow: hidden;
-      border: 1px solid #e5e7eb;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.04);
-    }
-
-    .cover {
-      height: 190px;
-      background:
-        linear-gradient(
-          rgba(109,40,217,0.2),
-          rgba(236,72,153,0.2)
-        ),
-        url("https://images.unsplash.com/photo-1557682250-33bd709cbe85?auto=format&fit=crop&w=1200&q=80");
-      background-size: cover;
-      background-position: center;
-      position: relative;
-    }
-
-    .change-cover {
-      position: absolute;
-      right: 18px;
-      bottom: 15px;
-      background: white;
-      border: none;
-      padding: 9px 14px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 13px;
-      font-weight: bold;
-    }
-
-    .profile-content {
-      padding: 0 25px 25px;
-      position: relative;
-    }
-
-    .profile-photo {
-      width: 105px;
-      height: 105px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #7c3aed, #ec4899);
-      border: 5px solid white;
-      margin-top: -52px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-size: 38px;
-      font-weight: bold;
-      position: relative;
-      z-index: 2;
-    }
-
-    .profile-info {
-      margin-top: 10px;
-    }
-
-    .user-name {
-      font-size: 25px;
-      font-weight: bold;
-      display: inline-block;
-    }
-
-    .verified {
-      color: #2563eb;
-      font-size: 17px;
-    }
-
-    .handle {
-      color: #6b7280;
-      margin-top: 4px;
-      font-size: 15px;
-    }
-
-    .bio {
-      margin-top: 12px;
-      color: #374151;
-      line-height: 1.5;
-    }
-
-    /* STATS */
-    .stats {
-      display: flex;
-      gap: 35px;
-      margin-top: 20px;
-    }
-
-    .stat {
-      text-align: center;
-    }
-
-    .stat strong {
-      display: block;
-      font-size: 19px;
-    }
-
-    .stat span {
-      color: #6b7280;
-      font-size: 13px;
-    }
-
-    /* ACTIONS */
-    .actions {
-      display: flex;
-      gap: 10px;
-      margin-top: 20px;
-    }
-
-    .btn {
-      border: none;
-      padding: 10px 18px;
-      border-radius: 9px;
-      cursor: pointer;
-      font-weight: bold;
-      font-size: 14px;
-    }
-
-    .edit-btn {
-      background: #6d28d9;
-      color: white;
-    }
-
-    .share-btn {
-      background: #f3f4f6;
-      color: #111827;
-    }
-
-    /* TABS */
-    .tabs {
-      display: flex;
-      gap: 30px;
-      margin-top: 25px;
-      border-top: 1px solid #e5e7eb;
-      padding-top: 18px;
-    }
-
-    .tab {
-      font-size: 14px;
-      color: #6b7280;
-      cursor: pointer;
-      padding-bottom: 8px;
-    }
-
-    .tab.active {
-      color: #6d28d9;
-      font-weight: bold;
-      border-bottom: 2px solid #6d28d9;
-    }
-
-    /* POSTS */
-    .posts {
-      margin-top: 20px;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-    }
-
-    .post {
-      height: 190px;
-      border-radius: 12px;
-      overflow: hidden;
-      background: #eee;
-    }
-
-    .post img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    /* RIGHT SECTION */
-    .right-box {
-      margin-top: 25px;
-      background: white;
-      border: 1px solid #e5e7eb;
-      border-radius: 15px;
-      padding: 20px;
-    }
-
-    .right-box h3 {
-      margin-bottom: 15px;
-    }
-
-    .right-box p {
-      color: #6b7280;
-      font-size: 14px;
-      margin-bottom: 12px;
-    }
-
-    /* MODAL */
-    .modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.55);
-      align-items: center;
-      justify-content: center;
-      z-index: 2000;
-      padding: 20px;
-    }
-
-    .modal-box {
-      width: 100%;
-      max-width: 420px;
-      background: white;
-      border-radius: 18px;
-      padding: 25px;
-    }
-
-    .modal-box h2 {
-      margin-bottom: 20px;
-    }
-
-    .modal-box label {
-      display: block;
-      font-size: 13px;
-      font-weight: bold;
-      margin-bottom: 6px;
-      margin-top: 13px;
-    }
-
-    .modal-box input,
-    .modal-box textarea {
-      width: 100%;
-      padding: 11px;
-      border: 1px solid #d1d5db;
-      border-radius: 8px;
-      outline: none;
-      font-size: 14px;
-    }
-
-    .modal-box textarea {
-      resize: vertical;
-      min-height: 80px;
-    }
-
-    .modal-actions {
-      display: flex;
-      gap: 10px;
-      margin-top: 20px;
-    }
-
-    .cancel-btn {
-      background: #e5e7eb;
-      color: #111827;
-    }
-
-    /* MOBILE */
-    @media (max-width: 800px) {
-
-      .topbar {
-        padding: 0 12px;
-      }
-
-      .search-box {
-        display: none;
-      }
-
-      .sidebar {
-        width: 70px;
-        padding: 15px 8px;
-      }
-
-      .menu-item {
-        font-size: 0;
-        text-align: center;
-      }
-
-      .menu-item::first-letter {
-        font-size: 20px;
-      }
-
-      .main {
-        padding: 12px;
-      }
-
-      .cover {
-        height: 145px;
-      }
-
-      .profile-content {
-        padding: 0 15px 20px;
-      }
-
-      .profile-photo {
-        width: 85px;
-        height: 85px;
-        font-size: 30px;
-      }
-
-      .user-name {
-        font-size: 21px;
-      }
-
-      .stats {
-        gap: 20px;
-      }
-
-      .posts {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .post {
-        height: 150px;
-      }
-    }
-  </style>
-</head>
-
-<body>
-
-  <!-- TOP BAR -->
-  <div class="topbar">
-
-    <div class="logo">
-      ZCrush
-    </div>
-
-    <div class="top-right">
-
-      <input
-        type="text"
-        class="search-box"
-        placeholder="Search ZCrush..."
-      >
-
-      <div
-        class="notification"
-        onclick="alert('Notifications coming soon!')"
-      >
-        🔔
-      </div>
-
-      <div
-        class="top-avatar"
-        id="topAvatar"
-        onclick="window.scrollTo({top:0, behavior:'smooth'})"
-      >
-        Z
-      </div>
-
-    </div>
-
-  </div>
-
-
-  <div class="layout">
-
-    <!-- SIDEBAR -->
-    <aside class="sidebar">
-
-      <a href="index.html" class="menu-item">
-        🏠 Home
-      </a>
-
-      <a href="social.html" class="menu-item">
-        👥 Social
-      </a>
-
-      <a href="gaming.html" class="menu-item">
-        🎮 Gaming
-      </a>
-
-      <a href="shorts.html" class="menu-item">
-        🎬 Shorts
-      </a>
-
-      <a href="marketplace.html" class="menu-item">
-        🛒 Marketplace
-      </a>
-
-      <a href="profile.html" class="menu-item active">
-        👤 Profile
-      </a>
-
-    </aside>
-
-
-    <!-- MAIN -->
-    <main class="main">
-
-      <!-- PROFILE CARD -->
-      <section class="profile-card">
-
-        <div class="cover">
-
-          <button
-            class="change-cover"
-            onclick="alert('Cover photo feature coming soon!')"
-          >
-            📷 Change Cover
-          </button>
-
-        </div>
-
-
-        <div class="profile-content">
-
-          <!-- PROFILE PHOTO -->
-          <div
-            class="profile-photo"
-            id="profilePhoto"
-          >
-            Z
-          </div>
-
-
-          <!-- PROFILE INFO -->
-          <div class="profile-info">
-
-            <div class="user-name" id="profileName">
-              ZCrush User
-              <span class="verified">✔</span>
-            </div>
-
-            <div
-              class="handle"
-              id="profileHandle"
-            >
-              @zcrushuser
-            </div>
-
-            <div
-              class="bio"
-              id="profileBio"
-            >
-              Welcome to ZCrush 🚀
-              Connect, create, watch, shop and play — all in one place.
-            </div>
-
-          </div>
-
-
-          <!-- STATS -->
-          <div class="stats">
-
-            <div class="stat">
-              <strong>0</strong>
-              <span>Posts</span>
-            </div>
-
-            <div class="stat">
-              <strong>0</strong>
-              <span>Followers</span>
-            </div>
-
-            <div class="stat">
-              <strong>0</strong>
-              <span>Following</span>
-            </div>
-
-          </div>
-
-
-          <!-- ACTIONS -->
-          <div class="actions">
-
-            <button
-              class="btn edit-btn"
-              onclick="openEdit()"
-            >
-              ✏️ Edit Profile
-            </button>
-
-            <button
-              class="btn share-btn"
-              onclick="shareProfile()"
-            >
-              🔗 Share Profile
-            </button>
-
-          </div>
-
-
-          <!-- TABS -->
-          <div class="tabs">
-
-            <div class="tab active">
-              Posts
-            </div>
-
-            <div
-              class="tab"
-              onclick="alert('Videos coming soon!')"
-            >
-              Videos
-            </div>
-
-            <div
-              class="tab"
-              onclick="alert('Likes coming soon!')"
-            >
-              Likes
-            </div>
-
-          </div>
-
-
-          <!-- POSTS -->
-          <div class="posts">
-
-            <div class="post">
-              <img
-                src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=600&q=80"
-                alt="Post"
-              >
-            </div>
-
-            <div class="post">
-              <img
-                src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=600&q=80"
-                alt="Post"
-              >
-            </div>
-
-            <div class="post">
-              <img
-                src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=600&q=80"
-                alt="Post"
-              >
-            </div>
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-      <!-- RIGHT BOX -->
-      <div class="right-box">
-
-        <h3>
-          👤 Profile Information
-        </h3>
-
-        <p>
-          Your ZCrush profile information is displayed here.
-        </p>
-
-        <p>
-          You can update your name, handle and bio using
-          <b>Edit Profile</b>.
-        </p>
-
-      </div>
-
-    </main>
-
-  </div>
-
-
-  <!-- EDIT PROFILE MODAL -->
-  <div
-    class="modal"
-    id="editModal"
-  >
-
-    <div class="modal-box">
-
-      <h2>
-        Edit Profile
-      </h2>
-
-
-      <label>
-        Full Name
-      </label>
-
-      <input
-        type="text"
-        id="editName"
-        placeholder="Enter your name"
-      >
-
-
-      <label>
-        Username / Handle
-      </label>
-
-      <input
-        type="text"
-        id="editHandle"
-        placeholder="@username"
-      >
-
-
-      <label>
-        Bio
-      </label>
-
-      <textarea
-        id="editBio"
-        placeholder="Write something about yourself..."
-      ></textarea>
-
-
-      <div class="modal-actions">
-
-        <button
-          class="btn edit-btn"
-          onclick="saveProfile()"
-        >
-          Save Changes
-        </button>
-
-        <button
-          class="btn cancel-btn"
-          onclick="closeEdit()"
-        >
-          Cancel
-        </button>
-
-      </div>
-
-    </div>
-
-  </div>
-
-
-  <script>
-
-    /* ==========================================
-       LOAD USER DATA FROM SIGN UP
-    ========================================== */
-
-    function loadUserProfile() {
-
-      let savedName =
-        localStorage.getItem("zcrushUserName");
-
-      let savedHandle =
-        localStorage.getItem("zcrushUserHandle");
-
-      let savedEmail =
-        localStorage.getItem("zcrushUserEmail");
-
-
-      /* NAME */
-
-      if (savedName && savedName.trim() !== "") {
-
-        document.getElementById("profileName").innerHTML =
-          escapeHTML(savedName) +
-          ' <span class="verified">✔</span>';
-
-      }
-
-
-      /* HANDLE */
-
-      if (savedHandle && savedHandle.trim() !== "") {
-
-        if (!savedHandle.startsWith("@")) {
-          savedHandle = "@" + savedHandle;
-        }
-
-        document.getElementById("profileHandle").textContent =
-          savedHandle;
-
-      }
-
-
-      /* PROFILE PHOTO LETTER */
-
-      if (savedName && savedName.trim() !== "") {
-
-        let firstLetter =
-          savedName.trim().charAt(0).toUpperCase();
-
-        document.getElementById("profilePhoto").textContent =
-          firstLetter;
-
-        document.getElementById("topAvatar").textContent =
-          firstLetter;
-
-      }
-
-
-      /* If only email exists */
-
-      if (
-        (!savedName || savedName.trim() === "") &&
-        savedEmail
-      ) {
-
-        let firstLetter =
-          savedEmail.charAt(0).toUpperCase();
-
-        document.getElementById("profilePhoto").textContent =
-          firstLetter;
-
-        document.getElementById("topAvatar").textContent =
-          firstLetter;
-
-      }
-
-    }
-
-
-    /* ==========================================
-       OPEN EDIT PROFILE
-    ========================================== */
-
-    function openEdit() {
-
-      let name =
-        localStorage.getItem("zcrushUserName") || "ZCrush User";
-
-      let handle =
-        localStorage.getItem("zcrushUserHandle") || "@zcrushuser";
-
-      let bio =
-        localStorage.getItem("zcrushUserBio") ||
-        "Welcome to ZCrush 🚀 Connect, create, watch, shop and play — all in one place.";
-
-
-      document.getElementById("editName").value =
-        name;
-
-      document.getElementById("editHandle").value =
-        handle;
-
-      document.getElementById("editBio").value =
-        bio;
-
-
-      document.getElementById("editModal").style.display =
-        "flex";
-
-    }
-
-
-    /* ==========================================
-       CLOSE EDIT PROFILE
-    ========================================== */
-
-    function closeEdit() {
-
-      document.getElementById("editModal").style.display =
-        "none";
-
-    }
-
-
-    /* ==========================================
-       SAVE PROFILE
-    ========================================== */
-
-    function saveProfile() {
-
-      let name =
-        document.getElementById("editName").value.trim();
-
-      let handle =
-        document.getElementById("editHandle").value.trim();
-
-      let bio =
-        document.getElementById("editBio").value.trim();
-
-
-      if (name === "") {
-
-        alert("Please enter your name.");
-
-        return;
-
-      }
-
-
-      if (handle === "") {
-
-        alert("Please enter your username.");
-
-        return;
-
-      }
-
-
-      /* Remove spaces from handle */
-
-      handle =
-        handle.replace(/\s+/g, "");
-
-
-      /* Add @ automatically */
-
-      if (!handle.startsWith("@")) {
-
-        handle =
-          "@" + handle;
-
-      }
-
-
-      /* Save to localStorage */
-
-      localStorage.setItem(
-        "zcrushUserName",
-        name
-      );
-
-      localStorage.setItem(
-        "zcrushUserHandle",
-        handle
-      );
-
-      localStorage.setItem(
-        "zcrushUserBio",
-        bio
-      );
-
-
-      /* Update screen */
+    if (savedName && savedName.trim() !== "") {
 
       document.getElementById("profileName").innerHTML =
-        escapeHTML(name) +
+        escapeHTML(savedName.trim()) +
         ' <span class="verified">✔</span>';
 
+    }
+
+
+    /* USERNAME / HANDLE */
+
+    if (savedHandle && savedHandle.trim() !== "") {
+
+      savedHandle = savedHandle.trim();
+
+      if (!savedHandle.startsWith("@")) {
+        savedHandle = "@" + savedHandle;
+      }
 
       document.getElementById("profileHandle").textContent =
-        handle;
+        savedHandle;
+
+    }
 
 
-      document.getElementById("profileBio").textContent =
-        bio ||
-        "Welcome to ZCrush 🚀 Connect, create, watch, shop and play — all in one place.";
+    /* PROFILE PHOTO + TOP AVATAR */
 
+    if (savedName && savedName.trim() !== "") {
 
-      /* Update avatar */
-
-      let firstLetter =
-        name.charAt(0).toUpperCase();
+      const firstLetter =
+        savedName.trim().charAt(0).toUpperCase();
 
       document.getElementById("profilePhoto").textContent =
         firstLetter;
@@ -960,107 +53,250 @@
       document.getElementById("topAvatar").textContent =
         firstLetter;
 
+    }
 
-      closeEdit();
+  }
 
 
-      alert("Profile updated successfully! ✅");
+  /* ==========================================
+     OPEN EDIT PROFILE
+  ========================================== */
+
+  function openEdit() {
+
+    const name =
+      localStorage.getItem("zcrushUserName") ||
+      "ZCrush User";
+
+    const handle =
+      localStorage.getItem("zcrushUserHandle") ||
+      "@zcrushuser";
+
+    const bio =
+      localStorage.getItem("zcrushUserBio") ||
+      "Welcome to ZCrush 🚀 Connect, create, watch, shop and play — all in one place.";
+
+
+    document.getElementById("editName").value =
+      name;
+
+    document.getElementById("editHandle").value =
+      handle;
+
+    document.getElementById("editBio").value =
+      bio;
+
+
+    document.getElementById("editModal").style.display =
+      "flex";
+
+  }
+
+
+  /* ==========================================
+     CLOSE EDIT PROFILE
+  ========================================== */
+
+  function closeEdit() {
+
+    document.getElementById("editModal").style.display =
+      "none";
+
+  }
+
+
+  /* ==========================================
+     SAVE PROFILE
+  ========================================== */
+
+  function saveProfile() {
+
+    let name =
+      document.getElementById("editName").value.trim();
+
+    let handle =
+      document.getElementById("editHandle").value.trim();
+
+    let bio =
+      document.getElementById("editBio").value.trim();
+
+
+    if (name === "") {
+
+      alert("Please enter your name.");
+
+      return;
 
     }
 
 
-    /* ==========================================
-       SHARE PROFILE
-    ========================================== */
+    if (handle === "") {
 
-    function shareProfile() {
+      alert("Please enter your username.");
 
-      let name =
-        localStorage.getItem("zcrushUserName") ||
-        "ZCrush User";
-
-      let handle =
-        localStorage.getItem("zcrushUserHandle") ||
-        "@zcrushuser";
-
-
-      let shareText =
-        "Check out " +
-        name +
-        " (" +
-        handle +
-        ") on ZCrush 🚀";
-
-
-      if (navigator.share) {
-
-        navigator.share({
-
-          title: "ZCrush Profile",
-
-          text: shareText,
-
-          url: window.location.href
-
-        });
-
-      } else {
-
-        navigator.clipboard.writeText(
-          window.location.href
-        );
-
-        alert(
-          "Profile link copied! 🔗"
-        );
-
-      }
+      return;
 
     }
 
 
-    /* ==========================================
-       SIMPLE HTML ESCAPE
-    ========================================== */
+    /* Remove spaces */
 
-    function escapeHTML(text) {
-
-      return text
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-
-    }
+    handle =
+      handle.replace(/\s+/g, "");
 
 
-    /* ==========================================
-       CLOSE MODAL WHEN CLICKING OUTSIDE
-    ========================================== */
+    /* Remove existing @ */
 
-    document.getElementById("editModal")
-      .addEventListener("click", function(event) {
+    handle =
+      handle.replace(/^@+/, "");
 
-        if (event.target === this) {
 
-          closeEdit();
+    /* Add @ */
 
-        }
+    handle =
+      "@" + handle;
+
+
+    /* SAVE USER DATA */
+
+    localStorage.setItem(
+      "zcrushUserName",
+      name
+    );
+
+    localStorage.setItem(
+      "zcrushUserHandle",
+      handle
+    );
+
+    localStorage.setItem(
+      "zcrushUserBio",
+      bio
+    );
+
+
+    /* UPDATE PROFILE */
+
+    document.getElementById("profileName").innerHTML =
+      escapeHTML(name) +
+      ' <span class="verified">✔</span>';
+
+
+    document.getElementById("profileHandle").textContent =
+      handle;
+
+
+    document.getElementById("profileBio").textContent =
+      bio ||
+      "Welcome to ZCrush 🚀 Connect, create, watch, shop and play — all in one place.";
+
+
+    /* UPDATE AVATAR */
+
+    const firstLetter =
+      name.charAt(0).toUpperCase();
+
+    document.getElementById("profilePhoto").textContent =
+      firstLetter;
+
+    document.getElementById("topAvatar").textContent =
+      firstLetter;
+
+
+    closeEdit();
+
+    alert("Profile updated successfully! ✅");
+
+  }
+
+
+  /* ==========================================
+     SHARE PROFILE
+  ========================================== */
+
+  function shareProfile() {
+
+    const name =
+      localStorage.getItem("zcrushUserName") ||
+      "ZCrush User";
+
+    const handle =
+      localStorage.getItem("zcrushUserHandle") ||
+      "@zcrushuser";
+
+
+    const shareText =
+      "Check out " +
+      name +
+      " (" +
+      handle +
+      ") on ZCrush 🚀";
+
+
+    if (navigator.share) {
+
+      navigator.share({
+
+        title: "ZCrush Profile",
+
+        text: shareText,
+
+        url: window.location.href
 
       });
 
+    } else {
 
-    /* ==========================================
-       LOAD PROFILE WHEN PAGE OPENS
-    ========================================== */
+      navigator.clipboard.writeText(
+        window.location.href
+      );
 
-    window.addEventListener(
-      "DOMContentLoaded",
-      loadUserProfile
-    );
+      alert("Profile link copied! 🔗");
 
-  </script>
+    }
 
-</body>
-</html>
+  }
+
+
+  /* ==========================================
+     HTML ESCAPE
+  ========================================== */
+
+  function escapeHTML(text) {
+
+    return text
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+
+  }
+
+
+  /* ==========================================
+     CLOSE MODAL OUTSIDE CLICK
+  ========================================== */
+
+  document.getElementById("editModal")
+    .addEventListener("click", function(event) {
+
+      if (event.target === this) {
+
+        closeEdit();
+
+      }
+
+    });
+
+
+  /* ==========================================
+     LOAD PROFILE
+  ========================================== */
+
+  window.addEventListener(
+    "DOMContentLoaded",
+    loadUserProfile
+  );
+
+</script>
