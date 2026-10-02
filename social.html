@@ -72,6 +72,75 @@
       font-size: 14px;
     }
 
+    /* CREATE POST */
+    .create-post {
+      width: 92%;
+      max-width: 700px;
+      margin: 15px auto 20px;
+      background: #11152a;
+      border: 1px solid #292e4b;
+      border-radius: 18px;
+      padding: 18px;
+    }
+
+    .create-title {
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 12px;
+    }
+
+    .create-post textarea {
+      width: 100%;
+      min-height: 85px;
+      resize: vertical;
+      padding: 13px;
+      border-radius: 14px;
+      border: 1px solid #292e4b;
+      outline: none;
+      background: #080a18;
+      color: white;
+      font-size: 14px;
+    }
+
+    .create-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 12px;
+      gap: 10px;
+    }
+
+    .photo-label {
+      background: #20243d;
+      padding: 9px 13px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    #photoInput {
+      display: none;
+    }
+
+    .post-btn {
+      border: none;
+      background: linear-gradient(90deg, #a100ff, #008cff);
+      color: white;
+      padding: 10px 18px;
+      border-radius: 20px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    #imagePreview {
+      display: none;
+      width: 100%;
+      max-height: 250px;
+      object-fit: cover;
+      border-radius: 14px;
+      margin-top: 12px;
+    }
+
     /* SEARCH */
     .search-box {
       width: 92%;
@@ -116,12 +185,15 @@
     .avatar {
       width: 45px;
       height: 45px;
+      min-width: 45px;
       border-radius: 50%;
       background: linear-gradient(135deg, #8b2cff, #008cff);
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 21px;
+      background-size: cover;
+      background-position: center;
     }
 
     .user-info h3 {
@@ -151,23 +223,47 @@
       background: #292e4b;
     }
 
+    /* DELETE */
+    .delete-btn {
+      border: none;
+      background: transparent;
+      color: #777d9c;
+      font-size: 12px;
+      cursor: pointer;
+      margin-left: 5px;
+    }
+
+    .delete-btn:hover {
+      color: #ff4d6d;
+    }
+
     /* POST TEXT */
     .post-text {
       padding: 0 15px 15px;
       color: #d9dcf0;
       font-size: 14px;
       line-height: 1.5;
+      white-space: pre-wrap;
     }
 
     /* POST IMAGE */
     .post-image {
       width: 100%;
-      height: 230px;
+      max-height: 420px;
+      min-height: 150px;
       background: linear-gradient(135deg, #171b38, #24134c);
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 65px;
+      overflow: hidden;
+    }
+
+    .post-image img {
+      width: 100%;
+      max-height: 420px;
+      object-fit: cover;
+      display: block;
     }
 
     /* ACTIONS */
@@ -192,7 +288,6 @@
       color: white;
     }
 
-    /* LIKED */
     .action.liked {
       color: #ff4d6d;
     }
@@ -242,6 +337,13 @@
       color: #d9dcf0;
     }
 
+    .empty {
+      text-align: center;
+      color: #777d9c;
+      padding: 30px;
+      display: none;
+    }
+
     footer {
       text-align: center;
       padding: 25px;
@@ -256,8 +358,17 @@
         font-size: 28px;
       }
 
+      .create-bottom {
+        align-items: stretch;
+      }
+
+      .photo-label,
+      .post-btn {
+        text-align: center;
+      }
+
       .post-image {
-        height: 200px;
+        max-height: 350px;
       }
 
       .actions {
@@ -275,7 +386,6 @@
 
   <!-- NAVBAR -->
   <nav>
-
     <div class="logo">
       ZCrush
     </div>
@@ -283,7 +393,6 @@
     <a href="index.html" class="home">
       🏠 Home
     </a>
-
   </nav>
 
 
@@ -301,11 +410,46 @@
   </section>
 
 
+  <!-- CREATE POST -->
+  <div class="create-post">
+
+    <div class="create-title">
+      ✨ Create a Post
+    </div>
+
+    <textarea
+      id="postText"
+      placeholder="What's on your mind?"
+    ></textarea>
+
+    <img id="imagePreview">
+
+    <div class="create-bottom">
+
+      <label class="photo-label">
+        📷 Add Photo
+        <input
+          type="file"
+          id="photoInput"
+          accept="image/*"
+        >
+      </label>
+
+      <button class="post-btn" onclick="createPost()">
+        🚀 Post
+      </button>
+
+    </div>
+
+  </div>
+
+
   <!-- SEARCH -->
   <div class="search-box">
 
     <input
       type="text"
+      id="searchInput"
       placeholder="🔍 Search people, posts..."
     >
 
@@ -313,11 +457,10 @@
 
 
   <!-- FEED -->
-  <section class="feed">
-
+  <section class="feed" id="feed">
 
     <!-- POST 1 -->
-    <div class="post">
+    <div class="post" data-search="zcrush creator welcome creativity community">
 
       <div class="user">
 
@@ -339,26 +482,23 @@
 
       </div>
 
-
       <div class="post-text">
         Welcome to ZCrush! 🚀
         Share your creativity and connect with the community.
       </div>
 
-
       <div class="post-image">
         🚀
       </div>
 
-
       <div class="actions">
 
         <button class="action like-btn">
-          ❤️ Like
+          ❤️ Like <span class="like-count">0</span>
         </button>
 
         <button class="action comment-btn">
-          💬 Comment
+          💬 Comment <span class="comment-count">0</span>
         </button>
 
         <button class="action share-btn">
@@ -366,7 +506,6 @@
         </button>
 
       </div>
-
 
       <div class="comment-box">
 
@@ -381,14 +520,13 @@
 
       </div>
 
-
       <div class="comments"></div>
 
     </div>
 
 
     <!-- POST 2 -->
-    <div class="post">
+    <div class="post" data-search="gaming zone gaming challenge game">
 
       <div class="user">
 
@@ -410,26 +548,23 @@
 
       </div>
 
-
       <div class="post-text">
         New gaming challenge is coming soon! 🎮🔥
         Are you ready?
       </div>
 
-
       <div class="post-image">
         🏆
       </div>
 
-
       <div class="actions">
 
         <button class="action like-btn">
-          ❤️ Like
+          ❤️ Like <span class="like-count">0</span>
         </button>
 
         <button class="action comment-btn">
-          💬 Comment
+          💬 Comment <span class="comment-count">0</span>
         </button>
 
         <button class="action share-btn">
@@ -437,7 +572,6 @@
         </button>
 
       </div>
-
 
       <div class="comment-box">
 
@@ -452,14 +586,13 @@
 
       </div>
 
-
       <div class="comments"></div>
 
     </div>
 
 
     <!-- POST 3 -->
-    <div class="post">
+    <div class="post" data-search="creative world art creativity amazing">
 
       <div class="user">
 
@@ -481,25 +614,22 @@
 
       </div>
 
-
       <div class="post-text">
         Create something amazing and share it with ZCrush! ✨
       </div>
-
 
       <div class="post-image">
         🎨✨
       </div>
 
-
       <div class="actions">
 
         <button class="action like-btn">
-          ❤️ Like
+          ❤️ Like <span class="like-count">0</span>
         </button>
 
         <button class="action comment-btn">
-          💬 Comment
+          💬 Comment <span class="comment-count">0</span>
         </button>
 
         <button class="action share-btn">
@@ -507,7 +637,6 @@
         </button>
 
       </div>
-
 
       <div class="comment-box">
 
@@ -522,12 +651,16 @@
 
       </div>
 
-
       <div class="comments"></div>
 
     </div>
 
   </section>
+
+
+  <div class="empty" id="emptyMessage">
+    🔍 No posts found.
+  </div>
 
 
   <!-- FOOTER -->
@@ -536,158 +669,823 @@
   </footer>
 
 
-  <!-- JAVASCRIPT -->
   <script>
 
-    /* LIKE */
-    const likeButtons =
-      document.querySelectorAll(".like-btn");
+    /* =========================
+       USER DATA
+    ========================= */
 
-    likeButtons.forEach(function(button) {
+    const savedName =
+      localStorage.getItem("zcrushUserName") || "ZCrush User";
 
-      button.addEventListener("click", function() {
-
-        this.classList.toggle("liked");
-
-        if (this.classList.contains("liked")) {
-          this.innerHTML = "❤️ Liked";
-        } else {
-          this.innerHTML = "❤️ Like";
-        }
-
-      });
-
-    });
+    const savedHandle =
+      localStorage.getItem("zcrushUserHandle") || "@zcrushuser";
 
 
-    /* FOLLOW */
-    const followButtons =
-      document.querySelectorAll(".follow");
+    /* =========================
+       PHOTO PREVIEW
+    ========================= */
 
-    followButtons.forEach(function(button) {
+    const photoInput =
+      document.getElementById("photoInput");
 
-      button.addEventListener("click", function() {
+    const imagePreview =
+      document.getElementById("imagePreview");
 
-        this.classList.toggle("following");
-
-        if (this.classList.contains("following")) {
-          this.innerHTML = "Following";
-        } else {
-          this.innerHTML = "Follow";
-        }
-
-      });
-
-    });
+    let selectedImage = "";
 
 
-    /* COMMENT BUTTON */
-    const commentButtons =
-      document.querySelectorAll(".comment-btn");
+    photoInput.addEventListener("change", function() {
 
-    commentButtons.forEach(function(button) {
+      const file = this.files[0];
 
-      button.addEventListener("click", function() {
+      if (!file) {
+        selectedImage = "";
+        imagePreview.style.display = "none";
+        return;
+      }
 
-        const post = this.closest(".post");
+      const reader = new FileReader();
 
-        const commentBox =
-          post.querySelector(".comment-box");
+      reader.onload = function(e) {
 
-        commentBox.classList.toggle("show");
+        selectedImage = e.target.result;
 
-      });
+        imagePreview.src = selectedImage;
+        imagePreview.style.display = "block";
+
+      };
+
+      reader.readAsDataURL(file);
 
     });
 
 
-    /* SEND COMMENT */
-    const sendButtons =
-      document.querySelectorAll(".send-comment");
+    /* =========================
+       CREATE POST
+    ========================= */
 
-    sendButtons.forEach(function(button) {
+    function createPost() {
 
-      button.addEventListener("click", function() {
+      const text =
+        document.getElementById("postText").value.trim();
 
-        const post = this.closest(".post");
+      if (text === "" && selectedImage === "") {
+        alert("Please write something or add a photo.");
+        return;
+      }
 
-        const input =
-          post.querySelector(".comment-box input");
+      const post = {
 
-        const comments =
-          post.querySelector(".comments");
+        id: Date.now(),
 
-        const text = input.value.trim();
+        name: savedName,
 
-        if (text === "") {
-          return;
-        }
+        handle: savedHandle,
 
-        const comment =
+        text: text,
+
+        image: selectedImage,
+
+        liked: false,
+
+        likes: 0,
+
+        comments: []
+
+      };
+
+
+      let posts =
+        JSON.parse(localStorage.getItem("zcrushPosts") || "[]");
+
+      posts.unshift(post);
+
+      localStorage.setItem(
+        "zcrushPosts",
+        JSON.stringify(posts)
+      );
+
+
+      document.getElementById("postText").value = "";
+
+      photoInput.value = "";
+
+      selectedImage = "";
+
+      imagePreview.src = "";
+
+      imagePreview.style.display = "none";
+
+
+      renderUserPosts();
+
+      alert("✅ Post created successfully!");
+
+    }
+
+
+    /* =========================
+       LOAD USER POSTS
+    ========================= */
+
+    function renderUserPosts() {
+
+      const feed =
+        document.getElementById("feed");
+
+      const oldUserPosts =
+        document.querySelectorAll(".user-created-post");
+
+      oldUserPosts.forEach(function(post) {
+        post.remove();
+      });
+
+
+      const posts =
+        JSON.parse(localStorage.getItem("zcrushPosts") || "[]");
+
+
+      posts.forEach(function(post) {
+
+        const postElement =
           document.createElement("div");
 
-        comment.className = "comment";
+        postElement.className =
+          "post user-created-post";
 
-        comment.innerHTML =
-          "👤 You: " + text;
 
-        comments.appendChild(comment);
+        postElement.setAttribute(
+          "data-search",
+          (
+            post.name +
+            " " +
+            post.handle +
+            " " +
+            post.text
+          ).toLowerCase()
+        );
 
-        input.value = "";
+
+        let imageHTML = "";
+
+        if (post.image) {
+
+          imageHTML = `
+            <div class="post-image">
+              <img src="${post.image}" alt="Post image">
+            </div>
+          `;
+
+        } else {
+
+          imageHTML = "";
+
+        }
+
+
+        let commentsHTML = "";
+
+        post.comments.forEach(function(comment) {
+
+          commentsHTML += `
+            <div class="comment">
+              👤 ${escapeHTML(comment)}
+            </div>
+          `;
+
+        });
+
+
+        postElement.innerHTML = `
+
+          <div class="user">
+
+            <div class="avatar">
+              👤
+            </div>
+
+            <div class="user-info">
+
+              <h3>${escapeHTML(post.name)}</h3>
+
+              <p>
+                ${escapeHTML(post.handle)} • Just now
+              </p>
+
+            </div>
+
+            <button
+              class="delete-btn"
+              onclick="deletePost(${post.id})"
+            >
+              🗑️
+            </button>
+
+          </div>
+
+
+          ${
+            post.text
+              ? `<div class="post-text">
+                   ${escapeHTML(post.text)}
+                 </div>`
+              : ""
+          }
+
+
+          ${imageHTML}
+
+
+          <div class="actions">
+
+            <button
+              class="action ${post.liked ? "liked" : ""}"
+              onclick="likeUserPost(${post.id}, this)"
+            >
+              ❤️ ${post.liked ? "Liked" : "Like"}
+              <span class="like-count">
+                ${post.likes}
+              </span>
+            </button>
+
+
+            <button
+              class="action"
+              onclick="toggleUserComment(${post.id})"
+            >
+              💬 Comment
+              <span class="comment-count">
+                ${post.comments.length}
+              </span>
+            </button>
+
+
+            <button
+              class="action"
+              onclick="shareUserPost(${post.id})"
+            >
+              ↗️ Share
+            </button>
+
+          </div>
+
+
+          <div
+            class="comment-box"
+            id="commentBox-${post.id}"
+          >
+
+            <input
+              type="text"
+              id="commentInput-${post.id}"
+              placeholder="Write a comment..."
+            >
+
+            <button
+              onclick="addUserComment(${post.id})"
+            >
+              Send
+            </button>
+
+          </div>
+
+
+          <div class="comments">
+            ${commentsHTML}
+          </div>
+
+        `;
+
+
+        feed.prepend(postElement);
 
       });
 
-    });
+    }
 
 
-    /* SHARE */
-    const shareButtons =
-      document.querySelectorAll(".share-btn");
+    /* =========================
+       LIKE USER POST
+    ========================= */
 
-    shareButtons.forEach(function(button) {
+    function likeUserPost(id, button) {
 
-      button.addEventListener("click", async function() {
+      let posts =
+        JSON.parse(localStorage.getItem("zcrushPosts") || "[]");
 
-        const post = this.closest(".post");
+      const post =
+        posts.find(function(item) {
+          return item.id === id;
+        });
 
-        const text =
-          post.querySelector(".post-text").innerText;
+      if (!post) return;
 
-        const shareData = {
-          title: "ZCrush",
-          text: text,
-          url: window.location.href
-        };
 
-        try {
+      post.liked = !post.liked;
 
-          if (navigator.share) {
 
-            await navigator.share(shareData);
+      if (post.liked) {
+        post.likes++;
+      } else {
+        post.likes--;
+      }
 
-          } else {
 
-            await navigator.clipboard.writeText(
-              window.location.href
-            );
+      localStorage.setItem(
+        "zcrushPosts",
+        JSON.stringify(posts)
+      );
 
-            this.innerHTML = "✅ Copied";
 
-            setTimeout(() => {
-              this.innerHTML = "↗️ Share";
-            }, 1500);
+      renderUserPosts();
+
+    }
+
+
+    /* =========================
+       DELETE USER POST
+    ========================= */
+
+    function deletePost(id) {
+
+      const confirmDelete =
+        confirm("Delete this post?");
+
+      if (!confirmDelete) return;
+
+
+      let posts =
+        JSON.parse(localStorage.getItem("zcrushPosts") || "[]");
+
+      posts =
+        posts.filter(function(post) {
+          return post.id !== id;
+        });
+
+
+      localStorage.setItem(
+        "zcrushPosts",
+        JSON.stringify(posts)
+      );
+
+
+      renderUserPosts();
+
+    }
+
+
+    /* =========================
+       COMMENT USER POST
+    ========================= */
+
+    function toggleUserComment(id) {
+
+      const box =
+        document.getElementById(
+          "commentBox-" + id
+        );
+
+      box.classList.toggle("show");
+
+    }
+
+
+    function addUserComment(id) {
+
+      const input =
+        document.getElementById(
+          "commentInput-" + id
+        );
+
+      const text =
+        input.value.trim();
+
+      if (text === "") return;
+
+
+      let posts =
+        JSON.parse(localStorage.getItem("zcrushPosts") || "[]");
+
+
+      const post =
+        posts.find(function(item) {
+          return item.id === id;
+        });
+
+
+      if (!post) return;
+
+
+      post.comments.push(text);
+
+
+      localStorage.setItem(
+        "zcrushPosts",
+        JSON.stringify(posts)
+      );
+
+
+      renderUserPosts();
+
+    }
+
+
+    /* =========================
+       SHARE USER POST
+    ========================= */
+
+    async function shareUserPost(id) {
+
+      const posts =
+        JSON.parse(localStorage.getItem("zcrushPosts") || "[]");
+
+      const post =
+        posts.find(function(item) {
+          return item.id === id;
+        });
+
+      if (!post) return;
+
+
+      const shareData = {
+
+        title: "ZCrush",
+
+        text:
+          post.text ||
+          "Check out this post on ZCrush!",
+
+        url: window.location.href
+
+      };
+
+
+      try {
+
+        if (navigator.share) {
+
+          await navigator.share(shareData);
+
+        } else {
+
+          await navigator.clipboard.writeText(
+            window.location.href
+          );
+
+          alert("✅ Link copied!");
+
+        }
+
+      } catch (error) {
+
+        console.log("Share cancelled");
+
+      }
+
+    }
+
+
+    /* =========================
+       LIKE OLD POSTS
+    ========================= */
+
+    document
+      .querySelectorAll(".like-btn")
+      .forEach(function(button) {
+
+        button.addEventListener(
+          "click",
+          function() {
+
+            this.classList.toggle("liked");
+
+            const count =
+              this.querySelector(".like-count");
+
+            let number =
+              parseInt(count.innerText) || 0;
+
+
+            if (
+              this.classList.contains("liked")
+            ) {
+
+              number++;
+
+              this.innerHTML =
+                `❤️ Liked <span class="like-count">${number}</span>`;
+
+            } else {
+
+              number--;
+
+              this.innerHTML =
+                `❤️ Like <span class="like-count">${number}</span>`;
+
+            }
+
+          }
+        );
+
+      });
+
+
+    /* =========================
+       FOLLOW
+    ========================= */
+
+    document
+      .querySelectorAll(".follow")
+      .forEach(function(button) {
+
+        button.addEventListener(
+          "click",
+          function() {
+
+            this.classList.toggle("following");
+
+            if (
+              this.classList.contains("following")
+            ) {
+
+              this.innerHTML =
+                "Following";
+
+            } else {
+
+              this.innerHTML =
+                "Follow";
+
+            }
+
+          }
+        );
+
+      });
+
+
+    /* =========================
+       COMMENT OLD POSTS
+    ========================= */
+
+    document
+      .querySelectorAll(".comment-btn")
+      .forEach(function(button) {
+
+        button.addEventListener(
+          "click",
+          function() {
+
+            const post =
+              this.closest(".post");
+
+            const box =
+              post.querySelector(".comment-box");
+
+            box.classList.toggle("show");
+
+          }
+        );
+
+      });
+
+
+    /* =========================
+       SEND OLD COMMENT
+    ========================= */
+
+    document
+      .querySelectorAll(".send-comment")
+      .forEach(function(button) {
+
+        button.addEventListener(
+          "click",
+          function() {
+
+            const post =
+              this.closest(".post");
+
+            const input =
+              post.querySelector(
+                ".comment-box input"
+              );
+
+            const comments =
+              post.querySelector(".comments");
+
+            const text =
+              input.value.trim();
+
+
+            if (text === "") return;
+
+
+            const comment =
+              document.createElement("div");
+
+            comment.className =
+              "comment";
+
+            comment.innerHTML =
+              "👤 You: " +
+              escapeHTML(text);
+
+
+            comments.appendChild(comment);
+
+            input.value = "";
+
+
+            const count =
+              post.querySelector(".comment-count");
+
+            let number =
+              parseInt(count.innerText) || 0;
+
+            number++;
+
+            count.innerText = number;
 
           }
 
-        } catch (error) {
-
-          console.log("Share cancelled");
-
-        }
+        );
 
       });
 
-    });
+
+    /* =========================
+       SHARE OLD POSTS
+    ========================= */
+
+    document
+      .querySelectorAll(".share-btn")
+      .forEach(function(button) {
+
+        button.addEventListener(
+          "click",
+          async function() {
+
+            const post =
+              this.closest(".post");
+
+            const text =
+              post.querySelector(
+                ".post-text"
+              ).innerText;
+
+
+            const shareData = {
+
+              title: "ZCrush",
+
+              text: text,
+
+              url: window.location.href
+
+            };
+
+
+            try {
+
+              if (navigator.share) {
+
+                await navigator.share(
+                  shareData
+                );
+
+              } else {
+
+                await navigator.clipboard.writeText(
+                  window.location.href
+                );
+
+                this.innerHTML =
+                  "✅ Copied";
+
+                setTimeout(() => {
+
+                  this.innerHTML =
+                    "↗️ Share";
+
+                }, 1500);
+
+              }
+
+            } catch (error) {
+
+              console.log(
+                "Share cancelled"
+              );
+
+            }
+
+          }
+
+        );
+
+      });
+
+
+    /* =========================
+       SEARCH
+    ========================= */
+
+    document
+      .getElementById("searchInput")
+      .addEventListener(
+        "input",
+        function() {
+
+          const query =
+            this.value.toLowerCase().trim();
+
+
+          const posts =
+            document.querySelectorAll(".post");
+
+          let found = 0;
+
+
+          posts.forEach(function(post) {
+
+            const text =
+              post.innerText.toLowerCase();
+
+            const searchData =
+              post.getAttribute(
+                "data-search"
+              ) || "";
+
+
+            if (
+              text.includes(query) ||
+              searchData.includes(query)
+            ) {
+
+              post.style.display = "block";
+
+              found++;
+
+            } else {
+
+              post.style.display = "none";
+
+            }
+
+          });
+
+
+          const empty =
+            document.getElementById(
+              "emptyMessage"
+            );
+
+
+          if (found === 0) {
+
+            empty.style.display =
+              "block";
+
+          } else {
+
+            empty.style.display =
+              "none";
+
+          }
+
+        }
+      );
+
+
+    /* =========================
+       HTML SECURITY
+    ========================= */
+
+    function escapeHTML(text) {
+
+      const div =
+        document.createElement("div");
+
+      div.textContent = text;
+
+      return div.innerHTML;
+
+    }
+
+
+    /* =========================
+       LOAD POSTS
+    ========================= */
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      function() {
+
+        renderUserPosts();
+
+      }
+    );
 
   </script>
 
