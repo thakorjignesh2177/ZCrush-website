@@ -145,7 +145,6 @@
 
     /* =========================
        COVER
-       SAME COVER
     ========================= */
 
     .cover {
@@ -174,6 +173,11 @@
       border-radius: 7px;
       font-size: 11px;
       cursor: pointer;
+    }
+
+    .change-cover:hover {
+      background: #f1ebff;
+      color: #5b21b6;
     }
 
 
@@ -321,6 +325,7 @@
       font-size: 11px;
       color: #777;
       padding-bottom: 7px;
+      cursor: pointer;
     }
 
     .tab.active {
@@ -349,11 +354,25 @@
       background: #eee;
     }
 
-    .post img {
+    .post img,
+    .post video {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
+    }
+
+
+    /* =========================
+       EMPTY TAB
+    ========================= */
+
+    .empty-tab {
+      display: none;
+      text-align: center;
+      padding: 35px 10px;
+      color: #777;
+      font-size: 12px;
     }
 
 
@@ -681,16 +700,29 @@
 
       <!-- COVER -->
 
-      <div class="cover">
+      <div
+        class="cover"
+        id="coverPhoto"
+      >
 
         <button
           class="change-cover"
-          onclick="alert('Cover photo feature coming soon!')"
+          onclick="changeCoverPhoto()"
         >
           🖼 Change Cover
         </button>
 
       </div>
+
+
+      <!-- COVER FILE INPUT -->
+
+      <input
+        type="file"
+        id="coverPhotoInput"
+        accept="image/*"
+        style="display:none;"
+      >
 
 
       <div class="profile-content">
@@ -713,7 +745,7 @@
         </div>
 
 
-        <!-- FILE INPUT -->
+        <!-- PROFILE FILE INPUT -->
 
         <input
           type="file"
@@ -802,15 +834,24 @@
 
         <div class="tabs">
 
-          <div class="tab active">
+          <div
+            class="tab active"
+            onclick="showTab('posts', this)"
+          >
             Posts
           </div>
 
-          <div class="tab">
+          <div
+            class="tab"
+            onclick="showTab('videos', this)"
+          >
             Videos
           </div>
 
-          <div class="tab">
+          <div
+            class="tab"
+            onclick="showTab('likes', this)"
+          >
             Likes
           </div>
 
@@ -819,7 +860,10 @@
 
         <!-- POSTS -->
 
-        <div class="posts-grid">
+        <div
+          class="posts-grid"
+          id="postsTab"
+        >
 
           <div class="post">
             <img
@@ -843,6 +887,35 @@
           </div>
 
         </div>
+
+
+        <!-- VIDEOS -->
+
+        <div
+          class="empty-tab"
+          id="videosTab"
+        >
+          🎬
+          <br><br>
+          No videos yet.
+          <br>
+          Your uploaded videos will appear here.
+        </div>
+
+
+        <!-- LIKES -->
+
+        <div
+          class="empty-tab"
+          id="likesTab"
+        >
+          ❤️
+          <br><br>
+          No liked posts yet.
+          <br>
+          Posts you like will appear here.
+        </div>
+
 
       </div>
 
@@ -968,7 +1041,7 @@
 
 
     /* ==========================================
-       SELECT PHOTO
+       PROFILE PHOTO SELECT
     ========================================== */
 
     document
@@ -1009,8 +1082,6 @@
                 e.target.result;
 
 
-              /* PROFILE PHOTO */
-
               document
                 .getElementById(
                   "profilePhoto"
@@ -1021,8 +1092,6 @@
                   '" alt="Profile Photo">' +
                   '<div class="photo-camera">📷</div>';
 
-
-              /* TOP AVATAR */
 
               const topAvatar =
                 document.getElementById(
@@ -1048,8 +1117,6 @@
                 "";
 
 
-              /* SAVE PHOTO */
-
               localStorage.setItem(
                 "zcrushProfilePhoto",
                 imageData
@@ -1062,6 +1129,179 @@
 
         }
       );
+
+
+    /* ==========================================
+       CHANGE COVER PHOTO
+    ========================================== */
+
+    function changeCoverPhoto() {
+
+      document
+        .getElementById("coverPhotoInput")
+        .click();
+
+    }
+
+
+    /* ==========================================
+       COVER PHOTO SELECT
+    ========================================== */
+
+    document
+      .getElementById("coverPhotoInput")
+      .addEventListener(
+        "change",
+        function(event) {
+
+          const file =
+            event.target.files[0];
+
+          if (!file) {
+            return;
+          }
+
+
+          if (
+            !file.type.startsWith("image/")
+          ) {
+
+            alert(
+              "Please select an image."
+            );
+
+            return;
+
+          }
+
+
+          const reader =
+            new FileReader();
+
+
+          reader.onload =
+            function(e) {
+
+              const imageData =
+                e.target.result;
+
+
+              const cover =
+                document.getElementById(
+                  "coverPhoto"
+                );
+
+
+              cover.style.backgroundImage =
+                "linear-gradient(rgba(109,40,217,0.2), rgba(236,72,153,0.2)), url('" +
+                imageData +
+                "')";
+
+
+              cover.style.backgroundSize =
+                "cover";
+
+
+              cover.style.backgroundPosition =
+                "center";
+
+
+              localStorage.setItem(
+                "zcrushCoverPhoto",
+                imageData
+              );
+
+            };
+
+
+          reader.readAsDataURL(file);
+
+        }
+      );
+
+
+    /* ==========================================
+       SHOW PROFILE TABS
+    ========================================== */
+
+    function showTab(
+      tabName,
+      clickedTab
+    ) {
+
+      const posts =
+        document.getElementById(
+          "postsTab"
+        );
+
+      const videos =
+        document.getElementById(
+          "videosTab"
+        );
+
+      const likes =
+        document.getElementById(
+          "likesTab"
+        );
+
+
+      posts.style.display = "none";
+      videos.style.display = "none";
+      likes.style.display = "none";
+
+
+      if (
+        tabName === "posts"
+      ) {
+
+        posts.style.display =
+          "grid";
+
+      }
+
+
+      if (
+        tabName === "videos"
+      ) {
+
+        videos.style.display =
+          "block";
+
+      }
+
+
+      if (
+        tabName === "likes"
+      ) {
+
+        likes.style.display =
+          "block";
+
+      }
+
+
+      const tabs =
+        document.querySelectorAll(
+          ".tab"
+        );
+
+
+      tabs.forEach(
+        function(tab) {
+
+          tab.classList.remove(
+            "active"
+          );
+
+        }
+      );
+
+
+      clickedTab.classList.add(
+        "active"
+      );
+
+    }
 
 
     /* ==========================================
@@ -1170,21 +1410,33 @@
             .toUpperCase();
 
 
-        document
-          .getElementById(
+        const profilePhoto =
+          document.getElementById(
             "profilePhoto"
-          )
-          .childNodes[0]
-          .textContent =
-            firstLetter;
+          );
 
 
-        document
-          .getElementById(
+        const topAvatar =
+          document.getElementById(
             "topAvatar"
+          );
+
+
+        if (
+          !localStorage.getItem(
+            "zcrushProfilePhoto"
           )
-          .textContent =
+        ) {
+
+          profilePhoto.childNodes[0]
+            .textContent =
             firstLetter;
+
+
+          topAvatar.textContent =
+            firstLetter;
+
+        }
 
       }
 
@@ -1232,6 +1484,38 @@
 
         topAvatar.textContent =
           "";
+
+      }
+
+
+      /* SAVED COVER PHOTO */
+
+      const savedCover =
+        localStorage.getItem(
+          "zcrushCoverPhoto"
+        );
+
+
+      if (savedCover) {
+
+        const cover =
+          document.getElementById(
+            "coverPhoto"
+          );
+
+
+        cover.style.backgroundImage =
+          "linear-gradient(rgba(109,40,217,0.2), rgba(236,72,153,0.2)), url('" +
+          savedCover +
+          "')";
+
+
+        cover.style.backgroundSize =
+          "cover";
+
+
+        cover.style.backgroundPosition =
+          "center";
 
       }
 
@@ -1413,8 +1697,6 @@
           .toUpperCase();
 
 
-      /* Only change letter if photo is not selected */
-
       if (
         !localStorage.getItem(
           "zcrushProfilePhoto"
@@ -1572,7 +1854,11 @@
 
     window.addEventListener(
       "DOMContentLoaded",
-      loadUserProfile
+      function() {
+
+        loadUserProfile();
+
+      }
     );
 
   </script>
