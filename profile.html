@@ -57,10 +57,6 @@
       font-size: 12px;
     }
 
-    .search:focus {
-      border-color: #8b5cf6;
-    }
-
     .notification {
       margin-left: 12px;
       font-size: 17px;
@@ -72,6 +68,8 @@
       margin-left: 12px;
       border-radius: 50%;
       background: linear-gradient(135deg, #6d28d9, #ec4899);
+      background-size: cover;
+      background-position: center;
       color: white;
       display: flex;
       align-items: center;
@@ -105,7 +103,6 @@
       padding: 9px 10px;
       margin-bottom: 5px;
       border-radius: 9px;
-      transition: 0.2s;
     }
 
     .sidebar a:hover {
@@ -125,11 +122,11 @@
     ========================= */
 
     .main {
-      margin-left: 138px;
       padding: 85px 18px 35px;
       max-width: 1050px;
-      margin-right: auto;
-      margin-left: calc(138px + (100% - 138px - 1050px) / 2);
+      margin-left: calc(
+        138px + (100% - 138px - 1050px) / 2
+      );
     }
 
 
@@ -148,7 +145,7 @@
 
     /* =========================
        COVER
-       SAME COVER IMAGE
+       SAME COVER
     ========================= */
 
     .cover {
@@ -177,11 +174,6 @@
       border-radius: 7px;
       font-size: 11px;
       cursor: pointer;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-    }
-
-    .change-cover:hover {
-      background: #f5f5f5;
     }
 
 
@@ -209,6 +201,32 @@
       font-size: 31px;
       font-weight: bold;
       z-index: 5;
+      cursor: pointer;
+      overflow: hidden;
+    }
+
+    .profile-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+    .photo-camera {
+      position: absolute;
+      right: 1px;
+      bottom: 1px;
+      width: 23px;
+      height: 23px;
+      border-radius: 50%;
+      background: white;
+      color: #5b21b6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      border: 2px solid white;
+      z-index: 10;
     }
 
     .user-name {
@@ -233,7 +251,6 @@
       font-size: 12px;
       line-height: 1.5;
       margin-top: 10px;
-      max-width: 700px;
     }
 
 
@@ -245,10 +262,6 @@
       display: flex;
       gap: 28px;
       margin-top: 14px;
-    }
-
-    .stat {
-      text-align: left;
     }
 
     .stat-number {
@@ -286,17 +299,9 @@
       color: white;
     }
 
-    .edit-btn:hover {
-      background: #5b21b6;
-    }
-
     .share-btn {
       background: #f1f3f5;
       color: #333;
-    }
-
-    .share-btn:hover {
-      background: #e7e9ec;
     }
 
 
@@ -315,7 +320,6 @@
     .tab {
       font-size: 11px;
       color: #777;
-      cursor: pointer;
       padding-bottom: 7px;
     }
 
@@ -350,16 +354,11 @@
       height: 100%;
       object-fit: cover;
       display: block;
-      transition: 0.25s;
-    }
-
-    .post img:hover {
-      transform: scale(1.03);
     }
 
 
     /* =========================
-       PROFILE INFORMATION
+       INFO
     ========================= */
 
     .info-card {
@@ -368,7 +367,6 @@
       border-radius: 12px;
       padding: 16px;
       margin-top: 16px;
-      box-shadow: 0 3px 15px rgba(0,0,0,0.04);
     }
 
     .info-title {
@@ -385,7 +383,7 @@
 
 
     /* =========================
-       EDIT MODAL
+       MODAL
     ========================= */
 
     .modal {
@@ -405,7 +403,6 @@
       background: white;
       border-radius: 14px;
       padding: 22px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
     }
 
     .modal-title {
@@ -423,7 +420,6 @@
       font-size: 11px;
       font-weight: bold;
       margin-bottom: 6px;
-      color: #444;
     }
 
     .form-group input,
@@ -435,11 +431,6 @@
       outline: none;
       font-family: Arial, sans-serif;
       font-size: 12px;
-    }
-
-    .form-group input:focus,
-    .form-group textarea:focus {
-      border-color: #7c3aed;
     }
 
     .form-group textarea {
@@ -499,7 +490,6 @@
         margin-left: 8px;
       }
 
-
       .sidebar {
         top: 58px;
         width: 105px;
@@ -511,13 +501,11 @@
         padding: 8px 7px;
       }
 
-
       .main {
         margin-left: 105px;
-        padding: 70px 10px 25px;
         width: calc(100% - 105px);
+        padding: 70px 10px 25px;
       }
-
 
       .cover {
         height: 135px;
@@ -546,19 +534,9 @@
         font-size: 10px;
       }
 
-
       .stats {
         gap: 20px;
       }
-
-      .stat-number {
-        font-size: 12px;
-      }
-
-      .stat-label {
-        font-size: 9px;
-      }
-
 
       .actions {
         gap: 6px;
@@ -569,44 +547,16 @@
         font-size: 10px;
       }
 
-
       .tabs {
         gap: 20px;
       }
-
-      .tab {
-        font-size: 10px;
-      }
-
 
       .posts-grid {
         gap: 6px;
       }
 
-      .post {
-        border-radius: 6px;
-      }
-
-
-      .info-card {
-        margin-top: 12px;
-        padding: 13px;
-      }
-
-      .info-title {
-        font-size: 12px;
-      }
-
-      .info-text {
-        font-size: 10px;
-      }
-
     }
 
-
-    /* =========================
-       SMALL PHONE
-    ========================= */
 
     @media (max-width: 450px) {
 
@@ -647,16 +597,8 @@
         font-size: 16px;
       }
 
-      .bio {
-        font-size: 9px;
-      }
-
       .stats {
         gap: 15px;
-      }
-
-      .posts-grid {
-        gap: 5px;
       }
 
     }
@@ -668,9 +610,7 @@
 <body>
 
 
-  <!-- =========================
-       TOP BAR
-  ========================= -->
+  <!-- TOP BAR -->
 
   <div class="topbar">
 
@@ -698,10 +638,7 @@
   </div>
 
 
-
-  <!-- =========================
-       SIDEBAR
-  ========================= -->
+  <!-- SIDEBAR -->
 
   <div class="sidebar">
 
@@ -735,17 +672,9 @@
   </div>
 
 
-
-  <!-- =========================
-       MAIN
-  ========================= -->
+  <!-- MAIN -->
 
   <main class="main">
-
-
-    <!-- =========================
-         PROFILE CARD
-    ========================= -->
 
     <section class="profile-card">
 
@@ -764,9 +693,6 @@
       </div>
 
 
-
-      <!-- PROFILE CONTENT -->
-
       <div class="profile-content">
 
 
@@ -775,10 +701,26 @@
         <div
           class="profile-photo"
           id="profilePhoto"
+          onclick="changeProfilePhoto()"
+          title="Change Profile Photo"
         >
           Z
+
+          <div class="photo-camera">
+            📷
+          </div>
+
         </div>
 
+
+        <!-- FILE INPUT -->
+
+        <input
+          type="file"
+          id="profilePhotoInput"
+          accept="image/*"
+          style="display:none;"
+        >
 
 
         <!-- NAME -->
@@ -792,7 +734,6 @@
         </div>
 
 
-
         <!-- HANDLE -->
 
         <div
@@ -801,7 +742,6 @@
         >
           @zcrushuser
         </div>
-
 
 
         <!-- BIO -->
@@ -813,7 +753,6 @@
           Welcome to ZCrush 🚀
           Connect, create, watch, shop and play — all in one place.
         </div>
-
 
 
         <!-- STATS -->
@@ -838,8 +777,7 @@
         </div>
 
 
-
-        <!-- BUTTONS -->
+        <!-- ACTIONS -->
 
         <div class="actions">
 
@@ -860,7 +798,6 @@
         </div>
 
 
-
         <!-- TABS -->
 
         <div class="tabs">
@@ -878,7 +815,6 @@
           </div>
 
         </div>
-
 
 
         <!-- POSTS -->
@@ -908,16 +844,12 @@
 
         </div>
 
-
       </div>
 
     </section>
 
 
-
-    <!-- =========================
-         PROFILE INFORMATION
-    ========================= -->
+    <!-- INFO -->
 
     <section class="info-card">
 
@@ -928,19 +860,15 @@
       <div class="info-text">
         Your ZCrush profile information is displayed here.
         <br>
-        You can update your name, handle and bio using Edit Profile.
+        You can update your name, username and bio using Edit Profile.
       </div>
 
     </section>
 
-
   </main>
 
 
-
-  <!-- =========================
-       EDIT PROFILE MODAL
-  ========================= -->
+  <!-- EDIT MODAL -->
 
   <div
     class="modal"
@@ -953,8 +881,6 @@
         Edit Profile
       </div>
 
-
-      <!-- NAME -->
 
       <div class="form-group">
 
@@ -971,8 +897,6 @@
       </div>
 
 
-      <!-- USERNAME -->
-
       <div class="form-group">
 
         <label>
@@ -988,8 +912,6 @@
       </div>
 
 
-      <!-- BIO -->
-
       <div class="form-group">
 
         <label>
@@ -1003,8 +925,6 @@
 
       </div>
 
-
-      <!-- MODAL BUTTONS -->
 
       <div class="modal-actions">
 
@@ -1029,28 +949,143 @@
   </div>
 
 
-
-  <!-- =========================
-       JAVASCRIPT
-  ========================= -->
+  <!-- JAVASCRIPT -->
 
   <script>
 
 
     /* ==========================================
-       LOAD USER DATA FROM SIGN UP
+       CHANGE PROFILE PHOTO
+    ========================================== */
+
+    function changeProfilePhoto() {
+
+      document
+        .getElementById("profilePhotoInput")
+        .click();
+
+    }
+
+
+    /* ==========================================
+       SELECT PHOTO
+    ========================================== */
+
+    document
+      .getElementById("profilePhotoInput")
+      .addEventListener(
+        "change",
+        function(event) {
+
+          const file =
+            event.target.files[0];
+
+          if (!file) {
+            return;
+          }
+
+
+          if (
+            !file.type.startsWith("image/")
+          ) {
+
+            alert(
+              "Please select an image."
+            );
+
+            return;
+
+          }
+
+
+          const reader =
+            new FileReader();
+
+
+          reader.onload =
+            function(e) {
+
+              const imageData =
+                e.target.result;
+
+
+              /* PROFILE PHOTO */
+
+              document
+                .getElementById(
+                  "profilePhoto"
+                )
+                .innerHTML =
+                  '<img src="' +
+                  imageData +
+                  '" alt="Profile Photo">' +
+                  '<div class="photo-camera">📷</div>';
+
+
+              /* TOP AVATAR */
+
+              const topAvatar =
+                document.getElementById(
+                  "topAvatar"
+                );
+
+
+              topAvatar.style.backgroundImage =
+                "url('" +
+                imageData +
+                "')";
+
+
+              topAvatar.style.backgroundSize =
+                "cover";
+
+
+              topAvatar.style.backgroundPosition =
+                "center";
+
+
+              topAvatar.textContent =
+                "";
+
+
+              /* SAVE PHOTO */
+
+              localStorage.setItem(
+                "zcrushProfilePhoto",
+                imageData
+              );
+
+            };
+
+
+          reader.readAsDataURL(file);
+
+        }
+      );
+
+
+    /* ==========================================
+       LOAD USER PROFILE
     ========================================== */
 
     function loadUserProfile() {
 
       const savedName =
-        localStorage.getItem("zcrushUserName");
+        localStorage.getItem(
+          "zcrushUserName"
+        );
+
 
       let savedHandle =
-        localStorage.getItem("zcrushUserHandle");
+        localStorage.getItem(
+          "zcrushUserHandle"
+        );
+
 
       const savedBio =
-        localStorage.getItem("zcrushUserBio");
+        localStorage.getItem(
+          "zcrushUserBio"
+        );
 
 
       /* NAME */
@@ -1060,9 +1095,15 @@
         savedName.trim() !== ""
       ) {
 
-        document.getElementById("profileName").innerHTML =
-          escapeHTML(savedName.trim()) +
-          ' <span class="verified">✔</span>';
+        document
+          .getElementById(
+            "profileName"
+          )
+          .innerHTML =
+            escapeHTML(
+              savedName.trim()
+            ) +
+            ' <span class="verified">✔</span>';
 
       }
 
@@ -1077,6 +1118,7 @@
         savedHandle =
           savedHandle.trim();
 
+
         if (
           !savedHandle.startsWith("@")
         ) {
@@ -1086,10 +1128,13 @@
 
         }
 
-        document.getElementById(
-          "profileHandle"
-        ).textContent =
-          savedHandle;
+
+        document
+          .getElementById(
+            "profileHandle"
+          )
+          .textContent =
+            savedHandle;
 
       }
 
@@ -1101,15 +1146,17 @@
         savedBio.trim() !== ""
       ) {
 
-        document.getElementById(
-          "profileBio"
-        ).textContent =
-          savedBio.trim();
+        document
+          .getElementById(
+            "profileBio"
+          )
+          .textContent =
+            savedBio.trim();
 
       }
 
 
-      /* PROFILE PHOTO + TOP AVATAR */
+      /* AVATAR LETTER */
 
       if (
         savedName &&
@@ -1122,20 +1169,73 @@
             .charAt(0)
             .toUpperCase();
 
-        document.getElementById(
-          "profilePhoto"
-        ).textContent =
-          firstLetter;
 
-        document.getElementById(
-          "topAvatar"
-        ).textContent =
-          firstLetter;
+        document
+          .getElementById(
+            "profilePhoto"
+          )
+          .childNodes[0]
+          .textContent =
+            firstLetter;
+
+
+        document
+          .getElementById(
+            "topAvatar"
+          )
+          .textContent =
+            firstLetter;
+
+      }
+
+
+      /* SAVED PROFILE PHOTO */
+
+      const savedPhoto =
+        localStorage.getItem(
+          "zcrushProfilePhoto"
+        );
+
+
+      if (savedPhoto) {
+
+        document
+          .getElementById(
+            "profilePhoto"
+          )
+          .innerHTML =
+            '<img src="' +
+            savedPhoto +
+            '" alt="Profile Photo">' +
+            '<div class="photo-camera">📷</div>';
+
+
+        const topAvatar =
+          document.getElementById(
+            "topAvatar"
+          );
+
+
+        topAvatar.style.backgroundImage =
+          "url('" +
+          savedPhoto +
+          "')";
+
+
+        topAvatar.style.backgroundSize =
+          "cover";
+
+
+        topAvatar.style.backgroundPosition =
+          "center";
+
+
+        topAvatar.textContent =
+          "";
 
       }
 
     }
-
 
 
     /* ==========================================
@@ -1191,9 +1291,8 @@
     }
 
 
-
     /* ==========================================
-       CLOSE EDIT PROFILE
+       CLOSE EDIT
     ========================================== */
 
     function closeEdit() {
@@ -1204,7 +1303,6 @@
         "none";
 
     }
-
 
 
     /* ==========================================
@@ -1253,16 +1351,12 @@
       }
 
 
-      /* Remove spaces */
-
       handle =
         handle.replace(
           /\s+/g,
           ""
         );
 
-
-      /* Remove existing @ */
 
       handle =
         handle.replace(
@@ -1271,31 +1365,27 @@
         );
 
 
-      /* Add @ */
-
       handle =
         "@" + handle;
 
-
-      /* SAVE DATA */
 
       localStorage.setItem(
         "zcrushUserName",
         name
       );
 
+
       localStorage.setItem(
         "zcrushUserHandle",
         handle
       );
+
 
       localStorage.setItem(
         "zcrushUserBio",
         bio
       );
 
-
-      /* UPDATE NAME */
 
       document.getElementById(
         "profileName"
@@ -1304,15 +1394,11 @@
         ' <span class="verified">✔</span>';
 
 
-      /* UPDATE HANDLE */
-
       document.getElementById(
         "profileHandle"
       ).textContent =
         handle;
 
-
-      /* UPDATE BIO */
 
       document.getElementById(
         "profileBio"
@@ -1321,24 +1407,32 @@
         "Welcome to ZCrush 🚀 Connect, create, watch, shop and play — all in one place.";
 
 
-      /* UPDATE AVATAR */
-
       const firstLetter =
         name
           .charAt(0)
           .toUpperCase();
 
 
-      document.getElementById(
-        "profilePhoto"
-      ).textContent =
-        firstLetter;
+      /* Only change letter if photo is not selected */
+
+      if (
+        !localStorage.getItem(
+          "zcrushProfilePhoto"
+        )
+      ) {
+
+        document.getElementById(
+          "profilePhoto"
+        ).childNodes[0].textContent =
+          firstLetter;
 
 
-      document.getElementById(
-        "topAvatar"
-      ).textContent =
-        firstLetter;
+        document.getElementById(
+          "topAvatar"
+        ).textContent =
+          firstLetter;
+
+      }
 
 
       closeEdit();
@@ -1349,7 +1443,6 @@
       );
 
     }
-
 
 
     /* ==========================================
@@ -1405,18 +1498,19 @@
           .writeText(
             window.location.href
           )
-          .then(function() {
+          .then(
+            function() {
 
-            alert(
-              "Profile link copied! 🔗"
-            );
+              alert(
+                "Profile link copied! 🔗"
+              );
 
-          });
+            }
+          );
 
       }
 
     }
-
 
 
     /* ==========================================
@@ -1450,9 +1544,8 @@
     }
 
 
-
     /* ==========================================
-       CLOSE MODAL OUTSIDE CLICK
+       CLOSE MODAL OUTSIDE
     ========================================== */
 
     document
@@ -1473,7 +1566,6 @@
       );
 
 
-
     /* ==========================================
        LOAD PROFILE
     ========================================== */
@@ -1482,7 +1574,6 @@
       "DOMContentLoaded",
       loadUserProfile
     );
-
 
   </script>
 
