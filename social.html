@@ -19,7 +19,8 @@
       color: white;
     }
 
-    /* NAVBAR */
+    /* ================= NAVBAR ================= */
+
     nav {
       height: 70px;
       padding: 0 20px;
@@ -30,7 +31,7 @@
       border-bottom: 1px solid #20243d;
       position: sticky;
       top: 0;
-      z-index: 10;
+      z-index: 100;
     }
 
     .logo {
@@ -51,7 +52,8 @@
       font-size: 14px;
     }
 
-    /* HERO */
+    /* ================= HERO ================= */
+
     .hero {
       text-align: center;
       padding: 35px 15px 20px;
@@ -72,7 +74,8 @@
       font-size: 14px;
     }
 
-    /* CREATE POST */
+    /* ================= CREATE POST ================= */
+
     .create-post {
       width: 92%;
       max-width: 700px;
@@ -89,6 +92,38 @@
       margin-bottom: 12px;
     }
 
+    .current-user {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .small-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #8b2cff, #008cff);
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 19px;
+      flex-shrink: 0;
+    }
+
+    .current-user-name {
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .current-user-handle {
+      color: #777d9c;
+      font-size: 11px;
+      margin-top: 3px;
+    }
+
     .create-post textarea {
       width: 100%;
       min-height: 85px;
@@ -100,6 +135,10 @@
       background: #080a18;
       color: white;
       font-size: 14px;
+    }
+
+    .create-post textarea::placeholder {
+      color: #777d9c;
     }
 
     .create-bottom {
@@ -118,6 +157,10 @@
       font-size: 13px;
     }
 
+    .photo-label:hover {
+      background: #292e4b;
+    }
+
     #photoInput {
       display: none;
     }
@@ -132,16 +175,34 @@
       cursor: pointer;
     }
 
+    .post-btn:hover {
+      opacity: 0.9;
+    }
+
     #imagePreview {
       display: none;
       width: 100%;
-      max-height: 250px;
-      object-fit: cover;
+      max-height: 300px;
+      object-fit: contain;
+      background: #080a18;
       border-radius: 14px;
       margin-top: 12px;
     }
 
-    /* SEARCH */
+    .remove-photo {
+      display: none;
+      margin-top: 7px;
+      border: none;
+      background: #292e4b;
+      color: #ff7189;
+      padding: 7px 12px;
+      border-radius: 15px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    /* ================= SEARCH ================= */
+
     .search-box {
       width: 92%;
       max-width: 650px;
@@ -159,7 +220,12 @@
       font-size: 14px;
     }
 
-    /* FEED */
+    .search-box input::placeholder {
+      color: #777d9c;
+    }
+
+    /* ================= FEED ================= */
+
     .feed {
       width: 92%;
       max-width: 700px;
@@ -174,7 +240,8 @@
       overflow: hidden;
     }
 
-    /* USER */
+    /* ================= USER ================= */
+
     .user {
       display: flex;
       align-items: center;
@@ -194,19 +261,27 @@
       font-size: 21px;
       background-size: cover;
       background-position: center;
+      overflow: hidden;
+    }
+
+    .user-info {
+      min-width: 0;
     }
 
     .user-info h3 {
       font-size: 15px;
+      word-break: break-word;
     }
 
     .user-info p {
       color: #777d9c;
       font-size: 11px;
       margin-top: 3px;
+      word-break: break-word;
     }
 
-    /* FOLLOW */
+    /* ================= FOLLOW ================= */
+
     .follow {
       margin-left: auto;
       border: none;
@@ -223,34 +298,38 @@
       background: #292e4b;
     }
 
-    /* DELETE */
+    /* ================= DELETE ================= */
+
     .delete-btn {
       border: none;
       background: transparent;
       color: #777d9c;
       font-size: 12px;
       cursor: pointer;
-      margin-left: 5px;
+      margin-left: auto;
+      padding: 5px;
     }
 
     .delete-btn:hover {
       color: #ff4d6d;
     }
 
-    /* POST TEXT */
+    /* ================= POST TEXT ================= */
+
     .post-text {
       padding: 0 15px 15px;
       color: #d9dcf0;
       font-size: 14px;
       line-height: 1.5;
       white-space: pre-wrap;
+      word-break: break-word;
     }
 
-    /* POST IMAGE */
+    /* ================= POST IMAGE ================= */
+
     .post-image {
       width: 100%;
       max-height: 420px;
-      min-height: 150px;
       background: linear-gradient(135deg, #171b38, #24134c);
       display: flex;
       align-items: center;
@@ -266,7 +345,8 @@
       display: block;
     }
 
-    /* ACTIONS */
+    /* ================= ACTIONS ================= */
+
     .actions {
       display: flex;
       gap: 8px;
@@ -292,15 +372,16 @@
       color: #ff4d6d;
     }
 
-    /* COMMENT BOX */
+    /* ================= COMMENT BOX ================= */
+
     .comment-box {
       display: none;
       padding: 0 15px 15px;
+      gap: 8px;
     }
 
     .comment-box.show {
       display: flex;
-      gap: 8px;
     }
 
     .comment-box input {
@@ -323,7 +404,8 @@
       cursor: pointer;
     }
 
-    /* COMMENTS */
+    /* ================= COMMENTS ================= */
+
     .comments {
       padding: 0 15px 12px;
     }
@@ -335,7 +417,10 @@
       margin-top: 7px;
       font-size: 12px;
       color: #d9dcf0;
+      word-break: break-word;
     }
+
+    /* ================= EMPTY ================= */
 
     .empty {
       text-align: center;
@@ -344,6 +429,26 @@
       display: none;
     }
 
+    /* ================= TOAST ================= */
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 25px;
+      transform: translateX(-50%);
+      background: #171b38;
+      border: 1px solid #343b62;
+      color: white;
+      padding: 12px 18px;
+      border-radius: 25px;
+      font-size: 13px;
+      z-index: 9999;
+      display: none;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.35);
+    }
+
+    /* ================= FOOTER ================= */
+
     footer {
       text-align: center;
       padding: 25px;
@@ -351,6 +456,8 @@
       border-top: 1px solid #20243d;
       font-size: 13px;
     }
+
+    /* ================= MOBILE ================= */
 
     @media (max-width: 600px) {
 
@@ -378,14 +485,24 @@
       .action {
         font-size: 12px;
       }
+
+      .user {
+        padding: 13px;
+      }
+
+      .follow {
+        padding: 6px 10px;
+      }
     }
   </style>
 </head>
 
 <body>
 
-  <!-- NAVBAR -->
+  <!-- ================= NAVBAR ================= -->
+
   <nav>
+
     <div class="logo">
       ZCrush
     </div>
@@ -393,10 +510,12 @@
     <a href="index.html" class="home">
       🏠 Home
     </a>
+
   </nav>
 
 
-  <!-- HERO -->
+  <!-- ================= HERO ================= -->
+
   <section class="hero">
 
     <div class="hero-icon">
@@ -410,32 +529,89 @@
   </section>
 
 
-  <!-- CREATE POST -->
+  <!-- ================= CREATE POST ================= -->
+
   <div class="create-post">
 
     <div class="create-title">
       ✨ Create a Post
     </div>
 
+
+    <div class="current-user">
+
+      <div
+        class="small-avatar"
+        id="currentUserAvatar"
+      >
+        👤
+      </div>
+
+      <div>
+
+        <div
+          class="current-user-name"
+          id="currentUserName"
+        >
+          ZCrush User
+        </div>
+
+        <div
+          class="current-user-handle"
+          id="currentUserHandle"
+        >
+          @zcrushuser
+        </div>
+
+      </div>
+
+    </div>
+
+
     <textarea
       id="postText"
+      maxlength="5000"
       placeholder="What's on your mind?"
     ></textarea>
 
-    <img id="imagePreview">
+
+    <img
+      id="imagePreview"
+      alt="Selected image preview"
+    >
+
+
+    <button
+      type="button"
+      class="remove-photo"
+      id="removePhotoBtn"
+      onclick="removeSelectedPhoto()"
+    >
+      ✕ Remove Photo
+    </button>
+
 
     <div class="create-bottom">
 
       <label class="photo-label">
+
         📷 Add Photo
+
         <input
           type="file"
           id="photoInput"
-          accept="image/*"
+          accept="image/jpeg,image/png,image/webp,image/gif"
         >
+
       </label>
 
-      <button class="post-btn" onclick="createPost()">
+
+      <button
+        type="button"
+        class="post-btn"
+        id="postButton"
+        onclick="createPost()"
+      >
         🚀 Post
       </button>
 
@@ -444,7 +620,8 @@
   </div>
 
 
-  <!-- SEARCH -->
+  <!-- ================= SEARCH ================= -->
+
   <div class="search-box">
 
     <input
@@ -456,11 +633,19 @@
   </div>
 
 
-  <!-- FEED -->
-  <section class="feed" id="feed">
+  <!-- ================= FEED ================= -->
 
-    <!-- POST 1 -->
-    <div class="post" data-search="zcrush creator welcome creativity community">
+  <section
+    class="feed"
+    id="feed"
+  >
+
+    <!-- ================= DEFAULT POST 1 ================= -->
+
+    <div
+      class="post"
+      data-search="zcrush creator welcome creativity community"
+    >
 
       <div class="user">
 
@@ -482,23 +667,28 @@
 
       </div>
 
+
       <div class="post-text">
-        Welcome to ZCrush! 🚀
-        Share your creativity and connect with the community.
+Welcome to ZCrush! 🚀
+Share your creativity and connect with the community.
       </div>
+
 
       <div class="post-image">
         🚀
       </div>
 
+
       <div class="actions">
 
         <button class="action like-btn">
-          ❤️ Like <span class="like-count">0</span>
+          ❤️ Like
+          <span class="like-count">0</span>
         </button>
 
         <button class="action comment-btn">
-          💬 Comment <span class="comment-count">0</span>
+          💬 Comment
+          <span class="comment-count">0</span>
         </button>
 
         <button class="action share-btn">
@@ -506,6 +696,7 @@
         </button>
 
       </div>
+
 
       <div class="comment-box">
 
@@ -520,13 +711,18 @@
 
       </div>
 
+
       <div class="comments"></div>
 
     </div>
 
 
-    <!-- POST 2 -->
-    <div class="post" data-search="gaming zone gaming challenge game">
+    <!-- ================= DEFAULT POST 2 ================= -->
+
+    <div
+      class="post"
+      data-search="gaming zone gaming challenge game"
+    >
 
       <div class="user">
 
@@ -548,23 +744,28 @@
 
       </div>
 
+
       <div class="post-text">
-        New gaming challenge is coming soon! 🎮🔥
-        Are you ready?
+New gaming challenge is coming soon! 🎮🔥
+Are you ready?
       </div>
+
 
       <div class="post-image">
         🏆
       </div>
 
+
       <div class="actions">
 
         <button class="action like-btn">
-          ❤️ Like <span class="like-count">0</span>
+          ❤️ Like
+          <span class="like-count">0</span>
         </button>
 
         <button class="action comment-btn">
-          💬 Comment <span class="comment-count">0</span>
+          💬 Comment
+          <span class="comment-count">0</span>
         </button>
 
         <button class="action share-btn">
@@ -572,6 +773,7 @@
         </button>
 
       </div>
+
 
       <div class="comment-box">
 
@@ -586,13 +788,18 @@
 
       </div>
 
+
       <div class="comments"></div>
 
     </div>
 
 
-    <!-- POST 3 -->
-    <div class="post" data-search="creative world art creativity amazing">
+    <!-- ================= DEFAULT POST 3 ================= -->
+
+    <div
+      class="post"
+      data-search="creative world art creativity amazing"
+    >
 
       <div class="user">
 
@@ -614,22 +821,27 @@
 
       </div>
 
+
       <div class="post-text">
-        Create something amazing and share it with ZCrush! ✨
+Create something amazing and share it with ZCrush! ✨
       </div>
+
 
       <div class="post-image">
         🎨✨
       </div>
 
+
       <div class="actions">
 
         <button class="action like-btn">
-          ❤️ Like <span class="like-count">0</span>
+          ❤️ Like
+          <span class="like-count">0</span>
         </button>
 
         <button class="action comment-btn">
-          💬 Comment <span class="comment-count">0</span>
+          💬 Comment
+          <span class="comment-count">0</span>
         </button>
 
         <button class="action share-btn">
@@ -637,6 +849,7 @@
         </button>
 
       </div>
+
 
       <div class="comment-box">
 
@@ -651,6 +864,7 @@
 
       </div>
 
+
       <div class="comments"></div>
 
     </div>
@@ -658,12 +872,24 @@
   </section>
 
 
-  <div class="empty" id="emptyMessage">
+  <div
+    class="empty"
+    id="emptyMessage"
+  >
     🔍 No posts found.
   </div>
 
 
+  <!-- TOAST -->
+
+  <div
+    class="toast"
+    id="toast"
+  ></div>
+
+
   <!-- FOOTER -->
+
   <footer>
     © 2026 ZCrush — Social
   </footer>
@@ -671,145 +897,604 @@
 
   <script>
 
-    /* =========================
-       USER DATA
-    ========================= */
-
-    const savedName =
-      localStorage.getItem("zcrushUserName") || "ZCrush User";
-
-    const savedHandle =
-      localStorage.getItem("zcrushUserHandle") || "@zcrushuser";
+    /* =====================================================
+       ZCRUSH SOCIAL SYSTEM
+    ===================================================== */
 
 
-    /* =========================
-       PHOTO PREVIEW
-    ========================= */
+    /* ================= USER DATA ================= */
 
-    const photoInput =
-      document.getElementById("photoInput");
+    function getUserData() {
 
-    const imagePreview =
-      document.getElementById("imagePreview");
+      return {
 
-    let selectedImage = "";
+        name:
+          localStorage.getItem("zcrushUserName") ||
+          "ZCrush User",
 
+        handle:
+          localStorage.getItem("zcrushUserHandle") ||
+          "@zcrushuser",
 
-    photoInput.addEventListener("change", function() {
-
-      const file = this.files[0];
-
-      if (!file) {
-        selectedImage = "";
-        imagePreview.style.display = "none";
-        return;
-      }
-
-      const reader = new FileReader();
-
-      reader.onload = function(e) {
-
-        selectedImage = e.target.result;
-
-        imagePreview.src = selectedImage;
-        imagePreview.style.display = "block";
+        photo:
+          localStorage.getItem("zcrushProfilePhoto") ||
+          ""
 
       };
-
-      reader.readAsDataURL(file);
-
-    });
-
-
-    /* =========================
-       CREATE POST
-    ========================= */
-
-    function createPost() {
-
-      const text =
-        document.getElementById("postText").value.trim();
-
-      if (text === "" && selectedImage === "") {
-        alert("Please write something or add a photo.");
-        return;
-      }
-
-      const post = {
-
-        id: Date.now(),
-
-        name: savedName,
-
-        handle: savedHandle,
-
-        text: text,
-
-        image: selectedImage,
-
-        liked: false,
-
-        likes: 0,
-
-        comments: []
-
-      };
-
-
-      let posts =
-        JSON.parse(localStorage.getItem("zcrushPosts") || "[]");
-
-      posts.unshift(post);
-
-      localStorage.setItem(
-        "zcrushPosts",
-        JSON.stringify(posts)
-      );
-
-
-      document.getElementById("postText").value = "";
-
-      photoInput.value = "";
-
-      selectedImage = "";
-
-      imagePreview.src = "";
-
-      imagePreview.style.display = "none";
-
-
-      renderUserPosts();
-
-      alert("✅ Post created successfully!");
 
     }
 
 
-    /* =========================
-       LOAD USER POSTS
-    ========================= */
+    /* ================= TOAST ================= */
+
+    function showToast(message) {
+
+      const toast =
+        document.getElementById("toast");
+
+      toast.innerText = message;
+
+      toast.style.display = "block";
+
+
+      clearTimeout(window.toastTimer);
+
+
+      window.toastTimer =
+        setTimeout(function() {
+
+          toast.style.display = "none";
+
+        }, 2200);
+
+    }
+
+
+    /* ================= LOAD USER ================= */
+
+    function loadCurrentUser() {
+
+      const user =
+        getUserData();
+
+
+      document.getElementById(
+        "currentUserName"
+      ).innerText = user.name;
+
+
+      document.getElementById(
+        "currentUserHandle"
+      ).innerText = user.handle;
+
+
+      const avatar =
+        document.getElementById(
+          "currentUserAvatar"
+        );
+
+
+      if (user.photo) {
+
+        avatar.style.backgroundImage =
+          `url("${user.photo}")`;
+
+        avatar.innerText = "";
+
+      } else {
+
+        avatar.style.backgroundImage = "";
+
+        avatar.innerText = "👤";
+
+      }
+
+    }
+
+
+    /* ================= PHOTO ================= */
+
+    const photoInput =
+      document.getElementById(
+        "photoInput"
+      );
+
+
+    const imagePreview =
+      document.getElementById(
+        "imagePreview"
+      );
+
+
+    const removePhotoBtn =
+      document.getElementById(
+        "removePhotoBtn"
+      );
+
+
+    let selectedImage = "";
+
+
+    photoInput.addEventListener(
+      "change",
+      function() {
+
+        const file =
+          this.files[0];
+
+
+        if (!file) {
+
+          removeSelectedPhoto();
+
+          return;
+
+        }
+
+
+        if (!file.type.startsWith("image/")) {
+
+          showToast("❌ Please select an image.");
+
+          this.value = "";
+
+          return;
+
+        }
+
+
+        /*
+          Resize image before saving.
+
+          This helps prevent localStorage
+          from becoming too large.
+        */
+
+        const reader =
+          new FileReader();
+
+
+        reader.onload =
+          function(event) {
+
+            const img =
+              new Image();
+
+
+            img.onload =
+              function() {
+
+                const maxWidth = 1200;
+
+                let width =
+                  img.width;
+
+                let height =
+                  img.height;
+
+
+                if (width > maxWidth) {
+
+                  height =
+                    Math.round(
+                      height *
+                      maxWidth /
+                      width
+                    );
+
+                  width =
+                    maxWidth;
+
+                }
+
+
+                const canvas =
+                  document.createElement(
+                    "canvas"
+                  );
+
+
+                canvas.width =
+                  width;
+
+                canvas.height =
+                  height;
+
+
+                const ctx =
+                  canvas.getContext(
+                    "2d"
+                  );
+
+
+                ctx.drawImage(
+                  img,
+                  0,
+                  0,
+                  width,
+                  height
+                );
+
+
+                selectedImage =
+                  canvas.toDataURL(
+                    "image/jpeg",
+                    0.82
+                  );
+
+
+                imagePreview.src =
+                  selectedImage;
+
+
+                imagePreview.style.display =
+                  "block";
+
+
+                removePhotoBtn.style.display =
+                  "inline-block";
+
+
+                showToast(
+                  "📷 Photo selected"
+                );
+
+              };
+
+
+            img.src =
+              event.target.result;
+
+          };
+
+
+        reader.readAsDataURL(file);
+
+      }
+    );
+
+
+    /* ================= REMOVE PHOTO ================= */
+
+    function removeSelectedPhoto() {
+
+      selectedImage = "";
+
+      photoInput.value = "";
+
+      imagePreview.src = "";
+
+      imagePreview.style.display =
+        "none";
+
+      removePhotoBtn.style.display =
+        "none";
+
+    }
+
+
+    /* ================= SAFE READ POSTS ================= */
+
+    function getPosts() {
+
+      try {
+
+        const saved =
+          localStorage.getItem(
+            "zcrushPosts"
+          );
+
+
+        if (!saved) {
+
+          return [];
+
+        }
+
+
+        const parsed =
+          JSON.parse(saved);
+
+
+        if (!Array.isArray(parsed)) {
+
+          return [];
+
+        }
+
+
+        return parsed.map(function(post) {
+
+          return {
+
+            id:
+              post.id ||
+              Date.now(),
+
+            name:
+              post.name ||
+              "ZCrush User",
+
+            handle:
+              post.handle ||
+              "@zcrushuser",
+
+            photo:
+              post.photo ||
+              "",
+
+            text:
+              typeof post.text === "string"
+                ? post.text
+                : "",
+
+            image:
+              post.image ||
+              "",
+
+            liked:
+              post.liked === true,
+
+            likes:
+              Number.isFinite(
+                Number(post.likes)
+              )
+                ? Number(post.likes)
+                : 0,
+
+            comments:
+              Array.isArray(post.comments)
+                ? post.comments
+                : []
+
+          };
+
+        });
+
+
+      } catch (error) {
+
+        console.error(
+          "Could not load posts:",
+          error
+        );
+
+        return [];
+
+      }
+
+    }
+
+
+    /* ================= SAVE POSTS ================= */
+
+    function savePosts(posts) {
+
+      try {
+
+        localStorage.setItem(
+          "zcrushPosts",
+          JSON.stringify(posts)
+        );
+
+        return true;
+
+      } catch (error) {
+
+        console.error(
+          "Could not save posts:",
+          error
+        );
+
+
+        showToast(
+          "❌ Storage full. Try a smaller photo."
+        );
+
+
+        return false;
+
+      }
+
+    }
+
+
+    /* ================= CREATE POST ================= */
+
+    function createPost() {
+
+      const text =
+        document
+          .getElementById("postText")
+          .value
+          .trim();
+
+
+      /*
+        User must add text OR image.
+      */
+
+      if (
+        text === "" &&
+        selectedImage === ""
+      ) {
+
+        showToast(
+          "⚠️ Write something or add a photo."
+        );
+
+        return;
+
+      }
+
+
+      const user =
+        getUserData();
+
+
+      const post = {
+
+        id:
+          Date.now(),
+
+        name:
+          user.name,
+
+        handle:
+          user.handle,
+
+        photo:
+          user.photo,
+
+        text:
+          text,
+
+        image:
+          selectedImage,
+
+        liked:
+          false,
+
+        likes:
+          0,
+
+        comments:
+          []
+
+      };
+
+
+      const posts =
+        getPosts();
+
+
+      posts.unshift(post);
+
+
+      /*
+        IMPORTANT:
+        Save BEFORE clearing form.
+      */
+
+      const saved =
+        savePosts(posts);
+
+
+      if (!saved) {
+
+        return;
+
+      }
+
+
+      /*
+        Clear form.
+      */
+
+      document.getElementById(
+        "postText"
+      ).value = "";
+
+
+      removeSelectedPhoto();
+
+
+      /*
+        Re-render feed.
+      */
+
+      renderUserPosts();
+
+
+      showToast(
+        "✅ Post uploaded successfully!"
+      );
+
+
+      /*
+        Scroll slightly toward new post.
+      */
+
+      setTimeout(function() {
+
+        window.scrollTo({
+          top: 250,
+          behavior: "smooth"
+        });
+
+      }, 100);
+
+    }
+
+
+    /* ================= ESCAPE HTML ================= */
+
+    function escapeHTML(text) {
+
+      const div =
+        document.createElement(
+          "div"
+        );
+
+
+      div.textContent =
+        String(text);
+
+
+      return div.innerHTML;
+
+    }
+
+
+    /* ================= ESCAPE ATTRIBUTE ================= */
+
+    function escapeAttribute(text) {
+
+      return String(text)
+        .replace(/&/g, "&amp;")
+        .replace(/"/g, "&quot;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
+
+    }
+
+
+    /* ================= RENDER USER POSTS ================= */
 
     function renderUserPosts() {
 
       const feed =
-        document.getElementById("feed");
+        document.getElementById(
+          "feed"
+        );
 
-      const oldUserPosts =
-        document.querySelectorAll(".user-created-post");
 
-      oldUserPosts.forEach(function(post) {
-        post.remove();
-      });
+      /*
+        Remove only posts created by user.
+      */
+
+      feed
+        .querySelectorAll(
+          ".user-created-post"
+        )
+        .forEach(function(post) {
+
+          post.remove();
+
+        });
 
 
       const posts =
-        JSON.parse(localStorage.getItem("zcrushPosts") || "[]");
+        getPosts();
 
 
       posts.forEach(function(post) {
 
         const postElement =
-          document.createElement("div");
+          document.createElement(
+            "div"
+          );
+
 
         postElement.className =
           "post user-created-post";
@@ -827,57 +1512,97 @@
         );
 
 
-        let imageHTML = "";
+        let avatarHTML =
+          "👤";
 
-        if (post.image) {
 
-          imageHTML = `
-            <div class="post-image">
-              <img src="${post.image}" alt="Post image">
-            </div>
-          `;
+        let avatarStyle =
+          "";
 
-        } else {
 
-          imageHTML = "";
+        if (post.photo) {
+
+          avatarStyle =
+            `style="background-image:url('${escapeAttribute(post.photo)}');"`;
+
+
+          avatarHTML = "";
 
         }
 
 
-        let commentsHTML = "";
+        let imageHTML =
+          "";
 
-        post.comments.forEach(function(comment) {
 
-          commentsHTML += `
-            <div class="comment">
-              👤 ${escapeHTML(comment)}
+        if (post.image) {
+
+          imageHTML = `
+
+            <div class="post-image">
+
+              <img
+                src="${escapeAttribute(post.image)}"
+                alt="Post image"
+                loading="lazy"
+              >
+
             </div>
+
           `;
 
-        });
+        }
+
+
+        let commentsHTML =
+          "";
+
+
+        post.comments.forEach(
+          function(comment) {
+
+            commentsHTML += `
+
+              <div class="comment">
+                👤 ${escapeHTML(comment)}
+              </div>
+
+            `;
+
+          }
+        );
 
 
         postElement.innerHTML = `
 
           <div class="user">
 
-            <div class="avatar">
-              👤
+            <div
+              class="avatar"
+              ${avatarStyle}
+            >
+              ${avatarHTML}
             </div>
+
 
             <div class="user-info">
 
-              <h3>${escapeHTML(post.name)}</h3>
+              <h3>
+                ${escapeHTML(post.name)}
+              </h3>
 
               <p>
-                ${escapeHTML(post.handle)} • Just now
+                ${escapeHTML(post.handle)}
+                • Just now
               </p>
 
             </div>
 
+
             <button
               class="delete-btn"
-              onclick="deletePost(${post.id})"
+              onclick="deletePost(${Number(post.id)})"
+              title="Delete post"
             >
               🗑️
             </button>
@@ -887,9 +1612,11 @@
 
           ${
             post.text
-              ? `<div class="post-text">
-                   ${escapeHTML(post.text)}
-                 </div>`
+              ? `
+                <div class="post-text">
+                  ${escapeHTML(post.text)}
+                </div>
+              `
               : ""
           }
 
@@ -901,31 +1628,40 @@
 
             <button
               class="action ${post.liked ? "liked" : ""}"
-              onclick="likeUserPost(${post.id}, this)"
+              onclick="likeUserPost(${Number(post.id)})"
             >
-              ❤️ ${post.liked ? "Liked" : "Like"}
+
+              ❤️
+              ${post.liked ? "Liked" : "Like"}
+
               <span class="like-count">
-                ${post.likes}
+                ${Number(post.likes)}
               </span>
+
             </button>
 
 
             <button
               class="action"
-              onclick="toggleUserComment(${post.id})"
+              onclick="toggleUserComment(${Number(post.id)})"
             >
+
               💬 Comment
+
               <span class="comment-count">
                 ${post.comments.length}
               </span>
+
             </button>
 
 
             <button
               class="action"
-              onclick="shareUserPost(${post.id})"
+              onclick="shareUserPost(${Number(post.id)})"
             >
+
               ↗️ Share
+
             </button>
 
           </div>
@@ -933,17 +1669,19 @@
 
           <div
             class="comment-box"
-            id="commentBox-${post.id}"
+            id="commentBox-${Number(post.id)}"
           >
 
             <input
               type="text"
-              id="commentInput-${post.id}"
+              id="commentInput-${Number(post.id)}"
+              maxlength="500"
               placeholder="Write a comment..."
             >
 
+
             <button
-              onclick="addUserComment(${post.id})"
+              onclick="addUserComment(${Number(post.id)})"
             >
               Send
             </button>
@@ -952,50 +1690,85 @@
 
 
           <div class="comments">
+
             ${commentsHTML}
+
           </div>
 
         `;
 
 
-        feed.prepend(postElement);
+        /*
+          IMPORTANT:
+
+          prepend means newest user post
+          appears at top of feed.
+        */
+
+        feed.prepend(
+          postElement
+        );
 
       });
+
+
+      /*
+        Re-run search if search box contains text.
+      */
+
+      filterPosts();
 
     }
 
 
-    /* =========================
-       LIKE USER POST
-    ========================= */
+    /* ================= LIKE USER POST ================= */
 
-    function likeUserPost(id, button) {
+    function likeUserPost(id) {
 
-      let posts =
-        JSON.parse(localStorage.getItem("zcrushPosts") || "[]");
+      const posts =
+        getPosts();
+
 
       const post =
         posts.find(function(item) {
-          return item.id === id;
+
+          return Number(item.id) ===
+            Number(id);
+
         });
 
-      if (!post) return;
 
+      if (!post) {
 
-      post.liked = !post.liked;
+        showToast(
+          "❌ Post not found."
+        );
 
+        return;
 
-      if (post.liked) {
-        post.likes++;
-      } else {
-        post.likes--;
       }
 
 
-      localStorage.setItem(
-        "zcrushPosts",
-        JSON.stringify(posts)
-      );
+      post.liked =
+        !post.liked;
+
+
+      if (post.liked) {
+
+        post.likes++;
+
+      } else {
+
+        post.likes =
+          Math.max(
+            0,
+            post.likes - 1
+          );
+
+      }
+
+
+      savePosts(posts);
 
 
       renderUserPosts();
@@ -1003,41 +1776,50 @@
     }
 
 
-    /* =========================
-       DELETE USER POST
-    ========================= */
+    /* ================= DELETE POST ================= */
 
     function deletePost(id) {
 
       const confirmDelete =
-        confirm("Delete this post?");
+        confirm(
+          "Delete this post?"
+        );
 
-      if (!confirmDelete) return;
+
+      if (!confirmDelete) {
+
+        return;
+
+      }
 
 
       let posts =
-        JSON.parse(localStorage.getItem("zcrushPosts") || "[]");
+        getPosts();
+
 
       posts =
         posts.filter(function(post) {
-          return post.id !== id;
+
+          return Number(post.id) !==
+            Number(id);
+
         });
 
 
-      localStorage.setItem(
-        "zcrushPosts",
-        JSON.stringify(posts)
-      );
+      if (savePosts(posts)) {
 
+        renderUserPosts();
 
-      renderUserPosts();
+        showToast(
+          "🗑️ Post deleted"
+        );
+
+      }
 
     }
 
 
-    /* =========================
-       COMMENT USER POST
-    ========================= */
+    /* ================= COMMENT TOGGLE ================= */
 
     function toggleUserComment(id) {
 
@@ -1046,10 +1828,39 @@
           "commentBox-" + id
         );
 
-      box.classList.toggle("show");
+
+      if (!box) {
+
+        return;
+
+      }
+
+
+      box.classList.toggle(
+        "show"
+      );
+
+
+      if (box.classList.contains("show")) {
+
+        const input =
+          document.getElementById(
+            "commentInput-" + id
+          );
+
+
+        if (input) {
+
+          input.focus();
+
+        }
+
+      }
 
     }
 
+
+    /* ================= ADD COMMENT ================= */
 
     function addUserComment(id) {
 
@@ -1058,97 +1869,155 @@
           "commentInput-" + id
         );
 
+
+      if (!input) {
+
+        return;
+
+      }
+
+
       const text =
         input.value.trim();
 
-      if (text === "") return;
+
+      if (text === "") {
+
+        return;
+
+      }
 
 
-      let posts =
-        JSON.parse(localStorage.getItem("zcrushPosts") || "[]");
+      const posts =
+        getPosts();
 
 
       const post =
         posts.find(function(item) {
-          return item.id === id;
+
+          return Number(item.id) ===
+            Number(id);
+
         });
 
 
-      if (!post) return;
+      if (!post) {
+
+        return;
+
+      }
 
 
-      post.comments.push(text);
-
-
-      localStorage.setItem(
-        "zcrushPosts",
-        JSON.stringify(posts)
+      post.comments.push(
+        text
       );
 
 
-      renderUserPosts();
+      if (savePosts(posts)) {
 
-    }
+        renderUserPosts();
 
-
-    /* =========================
-       SHARE USER POST
-    ========================= */
-
-    async function shareUserPost(id) {
-
-      const posts =
-        JSON.parse(localStorage.getItem("zcrushPosts") || "[]");
-
-      const post =
-        posts.find(function(item) {
-          return item.id === id;
-        });
-
-      if (!post) return;
-
-
-      const shareData = {
-
-        title: "ZCrush",
-
-        text:
-          post.text ||
-          "Check out this post on ZCrush!",
-
-        url: window.location.href
-
-      };
-
-
-      try {
-
-        if (navigator.share) {
-
-          await navigator.share(shareData);
-
-        } else {
-
-          await navigator.clipboard.writeText(
-            window.location.href
-          );
-
-          alert("✅ Link copied!");
-
-        }
-
-      } catch (error) {
-
-        console.log("Share cancelled");
+        showToast(
+          "💬 Comment added"
+        );
 
       }
 
     }
 
 
-    /* =========================
-       LIKE OLD POSTS
-    ========================= */
+    /* ================= SHARE USER POST ================= */
+
+    async function shareUserPost(id) {
+
+      const posts =
+        getPosts();
+
+
+      const post =
+        posts.find(function(item) {
+
+          return Number(item.id) ===
+            Number(id);
+
+        });
+
+
+      if (!post) {
+
+        return;
+
+      }
+
+
+      const shareData = {
+
+        title:
+          "ZCrush",
+
+        text:
+          post.text ||
+          "Check out this post on ZCrush!",
+
+        url:
+          window.location.href
+
+      };
+
+
+      try {
+
+        if (
+          navigator.share
+        ) {
+
+          await navigator.share(
+            shareData
+          );
+
+        } else if (
+          navigator.clipboard
+        ) {
+
+          await navigator.clipboard.writeText(
+            window.location.href
+          );
+
+          showToast(
+            "✅ Link copied!"
+          );
+
+        } else {
+
+          showToast(
+            "↗️ Share link: " +
+            window.location.href
+          );
+
+        }
+
+      } catch (error) {
+
+        /*
+          User cancelled sharing.
+          No error message needed.
+        */
+
+        console.log(
+          "Share cancelled"
+        );
+
+      }
+
+    }
+
+
+    /* =====================================================
+       OLD / DEFAULT POSTS
+    ===================================================== */
+
+
+    /* ================= LIKE OLD POSTS ================= */
 
     document
       .querySelectorAll(".like-btn")
@@ -1158,30 +2027,55 @@
           "click",
           function() {
 
-            this.classList.toggle("liked");
+            this.classList.toggle(
+              "liked"
+            );
+
 
             const count =
-              this.querySelector(".like-count");
+              this.querySelector(
+                ".like-count"
+              );
+
 
             let number =
-              parseInt(count.innerText) || 0;
+              parseInt(
+                count.innerText
+              ) || 0;
 
 
             if (
-              this.classList.contains("liked")
+              this.classList.contains(
+                "liked"
+              )
             ) {
 
               number++;
 
               this.innerHTML =
-                `❤️ Liked <span class="like-count">${number}</span>`;
+                `
+                  ❤️ Liked
+                  <span class="like-count">
+                    ${number}
+                  </span>
+                `;
 
             } else {
 
-              number--;
+              number =
+                Math.max(
+                  0,
+                  number - 1
+                );
+
 
               this.innerHTML =
-                `❤️ Like <span class="like-count">${number}</span>`;
+                `
+                  ❤️ Like
+                  <span class="like-count">
+                    ${number}
+                  </span>
+                `;
 
             }
 
@@ -1191,9 +2085,7 @@
       });
 
 
-    /* =========================
-       FOLLOW
-    ========================= */
+    /* ================= FOLLOW ================= */
 
     document
       .querySelectorAll(".follow")
@@ -1203,18 +2095,23 @@
           "click",
           function() {
 
-            this.classList.toggle("following");
+            this.classList.toggle(
+              "following"
+            );
+
 
             if (
-              this.classList.contains("following")
+              this.classList.contains(
+                "following"
+              )
             ) {
 
-              this.innerHTML =
+              this.innerText =
                 "Following";
 
             } else {
 
-              this.innerHTML =
+              this.innerText =
                 "Follow";
 
             }
@@ -1225,9 +2122,7 @@
       });
 
 
-    /* =========================
-       COMMENT OLD POSTS
-    ========================= */
+    /* ================= OLD COMMENTS ================= */
 
     document
       .querySelectorAll(".comment-btn")
@@ -1238,12 +2133,33 @@
           function() {
 
             const post =
-              this.closest(".post");
+              this.closest(
+                ".post"
+              );
+
 
             const box =
-              post.querySelector(".comment-box");
+              post.querySelector(
+                ".comment-box"
+              );
 
-            box.classList.toggle("show");
+
+            box.classList.toggle(
+              "show"
+            );
+
+
+            if (
+              box.classList.contains(
+                "show"
+              )
+            ) {
+
+              box.querySelector(
+                "input"
+              ).focus();
+
+            }
 
           }
         );
@@ -1251,9 +2167,7 @@
       });
 
 
-    /* =========================
-       SEND OLD COMMENT
-    ========================= */
+    /* ================= OLD SEND COMMENT ================= */
 
     document
       .querySelectorAll(".send-comment")
@@ -1264,48 +2178,76 @@
           function() {
 
             const post =
-              this.closest(".post");
+              this.closest(
+                ".post"
+              );
+
 
             const input =
               post.querySelector(
                 ".comment-box input"
               );
 
+
             const comments =
-              post.querySelector(".comments");
+              post.querySelector(
+                ".comments"
+              );
+
 
             const text =
               input.value.trim();
 
 
-            if (text === "") return;
+            if (
+              text === ""
+            ) {
+
+              return;
+
+            }
 
 
             const comment =
-              document.createElement("div");
+              document.createElement(
+                "div"
+              );
+
 
             comment.className =
               "comment";
+
 
             comment.innerHTML =
               "👤 You: " +
               escapeHTML(text);
 
 
-            comments.appendChild(comment);
+            comments.appendChild(
+              comment
+            );
+
 
             input.value = "";
 
 
             const count =
-              post.querySelector(".comment-count");
+              post.querySelector(
+                ".comment-count"
+              );
+
 
             let number =
-              parseInt(count.innerText) || 0;
+              parseInt(
+                count.innerText
+              ) || 0;
+
 
             number++;
 
-            count.innerText = number;
+
+            count.innerText =
+              number;
 
           }
 
@@ -1314,9 +2256,7 @@
       });
 
 
-    /* =========================
-       SHARE OLD POSTS
-    ========================= */
+    /* ================= OLD SHARE ================= */
 
     document
       .querySelectorAll(".share-btn")
@@ -1327,48 +2267,68 @@
           async function() {
 
             const post =
-              this.closest(".post");
+              this.closest(
+                ".post"
+              );
+
 
             const text =
               post.querySelector(
                 ".post-text"
-              ).innerText;
+              )?.innerText ||
+              "Check out this post on ZCrush!";
 
 
             const shareData = {
 
-              title: "ZCrush",
+              title:
+                "ZCrush",
 
-              text: text,
+              text:
+                text,
 
-              url: window.location.href
+              url:
+                window.location.href
 
             };
 
 
             try {
 
-              if (navigator.share) {
+              if (
+                navigator.share
+              ) {
 
                 await navigator.share(
                   shareData
                 );
 
-              } else {
+              } else if (
+                navigator.clipboard
+              ) {
 
                 await navigator.clipboard.writeText(
                   window.location.href
                 );
 
+
+                const oldText =
+                  this.innerHTML;
+
+
                 this.innerHTML =
                   "✅ Copied";
 
-                setTimeout(() => {
 
-                  this.innerHTML =
-                    "↗️ Share";
+                setTimeout(
+                  () => {
 
-                }, 1500);
+                    this.innerHTML =
+                      oldText;
+
+                  },
+                  1500
+                );
 
               }
 
@@ -1381,75 +2341,73 @@
             }
 
           }
-
         );
 
       });
 
 
-    /* =========================
+    /* =====================================================
        SEARCH
-    ========================= */
+    ===================================================== */
 
-    document
-      .getElementById("searchInput")
-      .addEventListener(
-        "input",
-        function() {
-
-          const query =
-            this.value.toLowerCase().trim();
+    const searchInput =
+      document.getElementById(
+        "searchInput"
+      );
 
 
-          const posts =
-            document.querySelectorAll(".post");
-
-          let found = 0;
-
-
-          posts.forEach(function(post) {
-
-            const text =
-              post.innerText.toLowerCase();
-
-            const searchData =
-              post.getAttribute(
-                "data-search"
-              ) || "";
+    searchInput.addEventListener(
+      "input",
+      filterPosts
+    );
 
 
-            if (
-              text.includes(query) ||
-              searchData.includes(query)
-            ) {
+    function filterPosts() {
 
-              post.style.display = "block";
-
-              found++;
-
-            } else {
-
-              post.style.display = "none";
-
-            }
-
-          });
+      const query =
+        searchInput.value
+          .toLowerCase()
+          .trim();
 
 
-          const empty =
-            document.getElementById(
-              "emptyMessage"
-            );
+      const posts =
+        document.querySelectorAll(
+          ".post"
+        );
 
 
-          if (found === 0) {
+      let found =
+        0;
 
-            empty.style.display =
+
+      posts.forEach(
+        function(post) {
+
+          const text =
+            post.innerText
+              .toLowerCase();
+
+
+          const searchData =
+            post.getAttribute(
+              "data-search"
+            ) || "";
+
+
+          if (
+            query === "" ||
+            text.includes(query) ||
+            searchData.includes(query)
+          ) {
+
+            post.style.display =
               "block";
+
+            found++;
 
           } else {
 
-            empty.style.display =
+            post.style.display =
               "none";
 
           }
@@ -1458,29 +2416,38 @@
       );
 
 
-    /* =========================
-       HTML SECURITY
-    ========================= */
+      const empty =
+        document.getElementById(
+          "emptyMessage"
+        );
 
-    function escapeHTML(text) {
 
-      const div =
-        document.createElement("div");
+      if (
+        found === 0
+      ) {
 
-      div.textContent = text;
+        empty.style.display =
+          "block";
 
-      return div.innerHTML;
+      } else {
+
+        empty.style.display =
+          "none";
+
+      }
 
     }
 
 
-    /* =========================
-       LOAD POSTS
-    ========================= */
+    /* =====================================================
+       INITIAL LOAD
+    ===================================================== */
 
     document.addEventListener(
       "DOMContentLoaded",
       function() {
+
+        loadCurrentUser();
 
         renderUserPosts();
 
