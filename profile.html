@@ -601,6 +601,12 @@ body{
       >
         Share Profile
       </button>
+      <button
+        class="btn secondary"
+        onclick="logoutUser()"
+      >
+        🚪 Logout
+      </button>
 
     </div>
 
@@ -1487,6 +1493,19 @@ function escapeAttribute(str){
 ========================= */
 
 loadUserProfile();
+function logoutUser(){
+
+  const confirmLogout =
+    confirm("Are you sure you want to logout?");
+
+  if(!confirmLogout){
+    return;
+  }
+
+  localStorage.removeItem("zcrushLoggedIn");
+
+  window.location.href = "login.html";
+}
 
 </script>
 
