@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>ZCrush Gaming</title>
+  <title>ZCrush - Gaming</title>
 
   <style>
     * {
@@ -15,133 +15,379 @@
     }
 
     body {
-      background: #050713;
-      color: white;
+      background: #f5f7fb;
+      color: #202124;
     }
 
-    /* NAVBAR */
-    nav {
+    /* ================= TOPBAR ================= */
+
+    .topbar {
       height: 70px;
-      padding: 0 20px;
+      background: #ffffff;
+      border-bottom: 1px solid #e5e7ef;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      background: #080a18;
-      border-bottom: 1px solid #20243d;
+      padding: 0 25px;
       position: sticky;
       top: 0;
-      z-index: 10;
+      z-index: 100;
     }
 
     .logo {
       font-size: 28px;
-      font-weight: bold;
-      background: linear-gradient(90deg, #ff00cc, #7c3cff, #00c6ff);
+      font-weight: 800;
+      background: linear-gradient(
+        90deg,
+        #a000ff,
+        #ff22bd,
+        #168cff
+      );
       -webkit-background-clip: text;
       color: transparent;
     }
 
-    .home {
-      text-decoration: none;
-      color: white;
-      background: linear-gradient(90deg, #a100ff, #008cff);
-      padding: 10px 17px;
-      border-radius: 22px;
-      font-weight: bold;
+    .top-search {
+      width: 360px;
+      background: #f5f7fb;
+      border: 1px solid #e3e5ed;
+      padding: 11px 18px;
+      border-radius: 25px;
+      outline: none;
       font-size: 14px;
     }
 
-    /* HERO */
-    .hero {
+    .top-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .notification {
+      font-size: 21px;
+      cursor: pointer;
+    }
+
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #721cff, #ff22bd);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+    }
+
+    /* ================= LAYOUT ================= */
+
+    .layout {
+      display: flex;
+      min-height: calc(100vh - 70px);
+    }
+
+    /* ================= SIDEBAR ================= */
+
+    .sidebar {
+      width: 230px;
+      background: #ffffff;
+      border-right: 1px solid #e5e7ef;
+      padding: 22px 15px;
+      position: fixed;
+      top: 70px;
+      bottom: 0;
+      left: 0;
+    }
+
+    .menu-title {
+      font-size: 11px;
+      color: #9aa0b5;
+      margin: 5px 12px 12px;
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+
+    .menu a {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      text-decoration: none;
+      color: #555b70;
+      padding: 12px 15px;
+      border-radius: 12px;
+      margin-bottom: 7px;
+      font-size: 14px;
+      font-weight: 600;
+      transition: 0.2s;
+    }
+
+    .menu a:hover {
+      background: #f1edff;
+      color: #721cff;
+    }
+
+    .menu a.active {
+      background: #eee8ff;
+      color: #721cff;
+    }
+
+    .menu-icon {
+      width: 22px;
       text-align: center;
-      padding: 45px 15px 30px;
+      font-size: 18px;
     }
 
-    .hero .icon {
-      font-size: 60px;
-      margin-bottom: 12px;
+    /* ================= MAIN ================= */
+
+    .main {
+      margin-left: 230px;
+      width: calc(100% - 230px);
+      padding: 30px;
     }
 
-    .hero h1 {
-      font-size: 36px;
+    /* ================= PAGE HEADER ================= */
+
+    .page-header {
+      background: #ffffff;
+      border: 1px solid #e5e7ef;
+      border-radius: 18px;
+      padding: 25px;
+      margin-bottom: 25px;
+    }
+
+    .page-header h1 {
+      font-size: 27px;
+      margin-bottom: 7px;
+    }
+
+    .page-header p {
+      color: #7c8195;
+      font-size: 14px;
+    }
+
+    /* ================= HERO ================= */
+
+    .gaming-hero {
+      background: linear-gradient(
+        135deg,
+        #f0e9ff,
+        #fceafa,
+        #e8f4ff
+      );
+      border: 1px solid #e5e7ef;
+      border-radius: 20px;
+      padding: 35px 25px;
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .gaming-icon {
+      font-size: 55px;
       margin-bottom: 10px;
     }
 
-    .hero p {
-      color: #9da3c7;
-      font-size: 15px;
+    .gaming-hero h2 {
+      font-size: 25px;
+      margin-bottom: 8px;
     }
 
-    /* GAMES */
+    .gaming-hero p {
+      color: #777d91;
+      font-size: 14px;
+    }
+
+    /* ================= GAMES ================= */
+
+    .section-title {
+      font-size: 20px;
+      margin-bottom: 15px;
+    }
+
     .games {
-      width: 92%;
-      max-width: 1100px;
-      margin: auto;
       display: grid;
-
-      /* 2 games side-by-side */
-      grid-template-columns: repeat(2, 1fr);
-
-      gap: 15px;
-      padding-bottom: 50px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      padding-bottom: 35px;
     }
 
     .game {
-      background: #11152a;
-      border: 1px solid #292e4b;
+      background: #ffffff;
+      border: 1px solid #e5e7ef;
       border-radius: 18px;
-      padding: 22px 12px;
+      padding: 25px 18px;
       text-align: center;
-      transition: 0.3s;
+      transition: 0.25s;
     }
 
     .game:hover {
       transform: translateY(-5px);
-      border-color: #7c3cff;
+      border-color: #b99cff;
+      box-shadow: 0 8px 25px rgba(114, 28, 255, 0.08);
     }
 
     .game-icon {
-      font-size: 48px;
-      margin-bottom: 12px;
+      width: 70px;
+      height: 70px;
+      margin: 0 auto 15px;
+      border-radius: 20px;
+      background: #f3efff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 38px;
     }
 
     .game h2 {
-      font-size: 19px;
+      font-size: 18px;
       margin-bottom: 8px;
     }
 
     .game p {
-      color: #9298b8;
-      font-size: 12px;
-      line-height: 1.4;
-      margin-bottom: 15px;
+      color: #7d8295;
+      font-size: 13px;
+      line-height: 1.5;
+      min-height: 40px;
+      margin-bottom: 17px;
     }
 
     .play {
       display: inline-block;
       text-decoration: none;
-      background: linear-gradient(90deg, #8b2cff, #008cff);
+      background: linear-gradient(
+        90deg,
+        #721cff,
+        #9b00ff
+      );
       color: white;
-      padding: 9px 18px;
-      border-radius: 20px;
+      padding: 10px 20px;
+      border-radius: 22px;
       font-weight: bold;
       font-size: 13px;
+      transition: 0.2s;
     }
 
-    /* FOOTER */
+    .play:hover {
+      transform: scale(1.04);
+    }
+
+    /* ================= FOOTER ================= */
+
     footer {
       text-align: center;
       padding: 25px 10px;
-      color: #777d9c;
-      border-top: 1px solid #20243d;
+      color: #888da0;
+      border-top: 1px solid #e5e7ef;
       font-size: 13px;
+      margin-top: 10px;
     }
 
-    /* DESKTOP */
-    @media (min-width: 900px) {
+    /* ================= TABLET ================= */
+
+    @media (max-width: 900px) {
+
       .games {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(2, 1fr);
       }
+
+      .top-search {
+        width: 250px;
+      }
+
+    }
+
+    /* ================= MOBILE ================= */
+
+    @media (max-width: 700px) {
+
+      .topbar {
+        padding: 0 15px;
+      }
+
+      .logo {
+        font-size: 23px;
+      }
+
+      .top-search {
+        display: none;
+      }
+
+      .notification {
+        font-size: 19px;
+      }
+
+      .sidebar {
+        width: 70px;
+        padding: 15px 8px;
+      }
+
+      .menu-title {
+        display: none;
+      }
+
+      .menu a {
+        justify-content: center;
+        padding: 12px 5px;
+      }
+
+      .menu-text {
+        display: none;
+      }
+
+      .main {
+        margin-left: 70px;
+        width: calc(100% - 70px);
+        padding: 18px 12px;
+      }
+
+      .page-header {
+        padding: 20px;
+      }
+
+      .page-header h1 {
+        font-size: 23px;
+      }
+
+      .gaming-hero {
+        padding: 28px 15px;
+      }
+
+      .gaming-icon {
+        font-size: 45px;
+      }
+
+      .gaming-hero h2 {
+        font-size: 21px;
+      }
+
+      .games {
+        grid-template-columns: 1fr;
+      }
+
+    }
+
+    /* ================= SMALL MOBILE ================= */
+
+    @media (max-width: 400px) {
+
+      .sidebar {
+        width: 60px;
+      }
+
+      .main {
+        margin-left: 60px;
+        width: calc(100% - 60px);
+      }
+
+      .top-right {
+        gap: 10px;
+      }
+
+      .avatar {
+        width: 35px;
+        height: 35px;
+      }
+
     }
 
   </style>
@@ -149,145 +395,282 @@
 
 <body>
 
-  <!-- NAVBAR -->
-  <nav>
-    <div class="logo">ZCrush</div>
+  <!-- ================= TOPBAR ================= -->
 
-    <a href="index.html" class="home">
-      🏠 Home
-    </a>
-  </nav>
+  <header class="topbar">
 
+    <div class="logo">
+      ZCrush
+    </div>
 
-  <!-- HERO -->
-  <section class="hero">
+    <input
+      type="text"
+      class="top-search"
+      placeholder="Search ZCrush"
+    >
 
-    <div class="icon">🎮</div>
+    <div class="top-right">
 
-    <h1>ZCrush Gaming</h1>
+      <div class="notification">
+        🔔
+      </div>
 
-    <p>Play • Watch • Enjoy</p>
-
-  </section>
-
-
-  <!-- GAMES -->
-  <section class="games">
-
-    <!-- GAME 1 -->
-    <div class="game">
-
-      <div class="game-icon">🏎️</div>
-
-      <h2>Racing</h2>
-
-      <p>
-        Speed, competition and exciting races.
-      </p>
-
-      <a href="#" class="play">
-        Play Now
-      </a>
+      <div class="avatar">
+        Z
+      </div>
 
     </div>
 
-
-    <!-- GAME 2 -->
-    <div class="game">
-
-      <div class="game-icon">⚔️</div>
-
-      <h2>Action</h2>
-
-      <p>
-        Discover exciting action gaming content.
-      </p>
-
-      <a href="#" class="play">
-        Play Now
-      </a>
-
-    </div>
+  </header>
 
 
-    <!-- GAME 3 -->
-    <div class="game">
+  <!-- ================= LAYOUT ================= -->
 
-      <div class="game-icon">🧩</div>
-
-      <h2>Puzzle</h2>
-
-      <p>
-        Challenge your mind with fun puzzles.
-      </p>
-
-      <a href="#" class="play">
-        Play Now
-      </a>
-
-    </div>
+  <div class="layout">
 
 
-    <!-- GAME 4 -->
-    <div class="game">
+    <!-- ================= SIDEBAR ================= -->
 
-      <div class="game-icon">🏆</div>
+    <aside class="sidebar">
 
-      <h2>Challenges</h2>
+      <div class="menu-title">
+        Menu
+      </div>
 
-      <p>
-        Take on challenges and share your results.
-      </p>
+      <div class="menu">
 
-      <a href="#" class="play">
-        Explore
-      </a>
+        <a href="index.html">
+          <span class="menu-icon">🏠</span>
+          <span class="menu-text">Home</span>
+        </a>
 
-    </div>
+        <a href="social.html">
+          <span class="menu-icon">👥</span>
+          <span class="menu-text">Social</span>
+        </a>
 
+        <a href="gaming.html" class="active">
+          <span class="menu-icon">🎮</span>
+          <span class="menu-text">Gaming</span>
+        </a>
 
-    <!-- GAME 5 -->
-    <div class="game">
+        <a href="shorts.html">
+          <span class="menu-icon">🎬</span>
+          <span class="menu-text">Shorts</span>
+        </a>
 
-      <div class="game-icon">🎥</div>
+        <a href="marketplace.html">
+          <span class="menu-icon">🛒</span>
+          <span class="menu-text">Marketplace</span>
+        </a>
 
-      <h2>Gaming Videos</h2>
+        <a href="profile.html">
+          <span class="menu-icon">👤</span>
+          <span class="menu-text">Profile</span>
+        </a>
 
-      <p>
-        Watch gaming videos and discover creators.
-      </p>
+      </div>
 
-      <a href="shorts.html" class="play">
-        Watch
-      </a>
-
-    </div>
-
-
-    <!-- GAME 6 -->
-    <div class="game">
-
-      <div class="game-icon">🔥</div>
-
-      <h2>Trending</h2>
-
-      <p>
-        See what's trending in the gaming community.
-      </p>
-
-      <a href="#" class="play">
-        Explore
-      </a>
-
-    </div>
-
-  </section>
+    </aside>
 
 
-  <!-- FOOTER -->
-  <footer>
-    © 2026 ZCrush — Gaming
-  </footer>
+    <!-- ================= MAIN ================= -->
+
+    <main class="main">
+
+
+      <!-- PAGE HEADER -->
+
+      <div class="page-header">
+
+        <h1>🎮 Gaming</h1>
+
+        <p>
+          Play games, discover gaming content and explore the ZCrush gaming community.
+        </p>
+
+      </div>
+
+
+      <!-- HERO -->
+
+      <section class="gaming-hero">
+
+        <div class="gaming-icon">
+          🎮
+        </div>
+
+        <h2>
+          ZCrush Gaming
+        </h2>
+
+        <p>
+          Play • Watch • Enjoy
+        </p>
+
+      </section>
+
+
+      <!-- GAMES -->
+
+      <h2 class="section-title">
+        Explore Gaming
+      </h2>
+
+      <section class="games">
+
+
+        <!-- GAME 1 -->
+
+        <div class="game">
+
+          <div class="game-icon">
+            🏎️
+          </div>
+
+          <h2>
+            Racing
+          </h2>
+
+          <p>
+            Speed, competition and exciting races.
+          </p>
+
+          <a href="#" class="play">
+            Play Now
+          </a>
+
+        </div>
+
+
+        <!-- GAME 2 -->
+
+        <div class="game">
+
+          <div class="game-icon">
+            ⚔️
+          </div>
+
+          <h2>
+            Action
+          </h2>
+
+          <p>
+            Discover exciting action gaming content.
+          </p>
+
+          <a href="#" class="play">
+            Play Now
+          </a>
+
+        </div>
+
+
+        <!-- GAME 3 -->
+
+        <div class="game">
+
+          <div class="game-icon">
+            🧩
+          </div>
+
+          <h2>
+            Puzzle
+          </h2>
+
+          <p>
+            Challenge your mind with fun puzzles.
+          </p>
+
+          <a href="#" class="play">
+            Play Now
+          </a>
+
+        </div>
+
+
+        <!-- GAME 4 -->
+
+        <div class="game">
+
+          <div class="game-icon">
+            🏆
+          </div>
+
+          <h2>
+            Challenges
+          </h2>
+
+          <p>
+            Take on challenges and share your results.
+          </p>
+
+          <a href="#" class="play">
+            Explore
+          </a>
+
+        </div>
+
+
+        <!-- GAME 5 -->
+
+        <div class="game">
+
+          <div class="game-icon">
+            🎥
+          </div>
+
+          <h2>
+            Gaming Videos
+          </h2>
+
+          <p>
+            Watch gaming videos and discover creators.
+          </p>
+
+          <a href="shorts.html" class="play">
+            Watch
+          </a>
+
+        </div>
+
+
+        <!-- GAME 6 -->
+
+        <div class="game">
+
+          <div class="game-icon">
+            🔥
+          </div>
+
+          <h2>
+            Trending
+          </h2>
+
+          <p>
+            See what's trending in the gaming community.
+          </p>
+
+          <a href="#" class="play">
+            Explore
+          </a>
+
+        </div>
+
+
+      </section>
+
+
+      <!-- FOOTER -->
+
+      <footer>
+        © 2026 ZCrush — Gaming
+      </footer>
+
+
+    </main>
+
+  </div>
 
 </body>
 </html>
