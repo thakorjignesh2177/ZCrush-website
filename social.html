@@ -609,9 +609,36 @@ footer{
 
   <div class="topRight">
 
-    <span class="notification">
-      🔔
+    <div class="notificationWrap">
+
+  <button
+    class="notification"
+    onclick="toggleNotifications()"
+  >
+    🔔
+    <span id="notificationBadge" class="notificationBadge">
+      0
     </span>
+  </button>
+
+  <div
+    id="notificationPanel"
+    class="notificationPanel"
+  >
+
+    <div class="notificationHeader">
+      <strong>Notifications</strong>
+
+      <button onclick="markAllNotificationsRead()">
+        Mark all read
+      </button>
+    </div>
+
+    <div id="notificationList"></div>
+
+  </div>
+
+</div>>
 
     <img
       id="topAvatar"
