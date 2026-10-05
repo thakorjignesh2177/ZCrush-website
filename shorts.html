@@ -4,112 +4,242 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>ZCrush Shorts</title>
+  <title>ZCrush - Shorts</title>
 
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+      font-family: Arial, sans-serif;
     }
 
     body {
-      font-family: Arial, Helvetica, sans-serif;
-      background: #030712;
-      color: white;
+      background: #f5f7fb;
+      color: #202124;
       min-height: 100vh;
     }
 
     a {
-      color: inherit;
       text-decoration: none;
+      color: inherit;
     }
 
-    /* NAVBAR */
-    .navbar {
+    /* ================= TOPBAR ================= */
+
+    .topbar {
       height: 70px;
-      padding: 0 5%;
+      background: #fff;
+      border-bottom: 1px solid #e5e7ef;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      padding: 0 25px;
       position: sticky;
       top: 0;
-      z-index: 20;
-      background: rgba(3, 7, 18, .92);
-      backdrop-filter: blur(15px);
-      border-bottom: 1px solid rgba(255,255,255,.08);
+      z-index: 100;
     }
 
     .logo {
-      font-size: 32px;
-      font-weight: 900;
-      background: linear-gradient(90deg,#a000ff,#ff22bd,#008cff);
+      font-size: 28px;
+      font-weight: 800;
+      background: linear-gradient(
+        90deg,
+        #a000ff,
+        #ff22bd,
+        #168cff
+      );
       -webkit-background-clip: text;
       color: transparent;
     }
 
-    .home-btn {
-      padding: 10px 18px;
+    .top-search {
+      width: 360px;
+      background: #f5f7fb;
+      border: 1px solid #e3e5ed;
+      padding: 11px 18px;
       border-radius: 25px;
-      background: #111a32;
-      border: 1px solid #2b3654;
-      color: #dce4f7;
+      outline: none;
+      font-size: 14px;
+    }
+
+    .top-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .notification {
+      font-size: 21px;
+      cursor: pointer;
+    }
+
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #721cff, #ff22bd);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
       font-weight: bold;
     }
 
-    /* HEADER */
-    .header {
-      text-align: center;
-      padding: 35px 20px 20px;
+    /* ================= LAYOUT ================= */
+
+    .layout {
+      display: flex;
+      min-height: calc(100vh - 70px);
     }
 
-    .header h1 {
-      font-size: 38px;
-      margin-bottom: 8px;
+    /* ================= SIDEBAR ================= */
+
+    .sidebar {
+      width: 230px;
+      background: #fff;
+      border-right: 1px solid #e5e7ef;
+      padding: 22px 15px;
+      position: fixed;
+      top: 70px;
+      bottom: 0;
+      left: 0;
+    }
+
+    .menu-title {
+      font-size: 11px;
+      color: #9aa0b5;
+      margin: 5px 12px 12px;
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+
+    .menu a {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      text-decoration: none;
+      color: #555b70;
+      padding: 12px 15px;
+      border-radius: 12px;
+      margin-bottom: 7px;
+      font-size: 14px;
+      font-weight: 600;
+      transition: .2s;
+    }
+
+    .menu a:hover {
+      background: #f1edff;
+      color: #721cff;
+    }
+
+    .menu a.active {
+      background: #eee8ff;
+      color: #721cff;
+    }
+
+    .menu-icon {
+      width: 22px;
+      text-align: center;
+      font-size: 18px;
+    }
+
+    /* ================= MAIN ================= */
+
+    .main {
+      margin-left: 230px;
+      width: calc(100% - 230px);
+      padding: 30px;
+    }
+
+    /* ================= HEADER ================= */
+
+    .page-header {
+      background: #fff;
+      border: 1px solid #e5e7ef;
+      border-radius: 18px;
+      padding: 25px;
+      margin-bottom: 20px;
+    }
+
+    .page-header h1 {
+      font-size: 27px;
+      margin-bottom: 7px;
+    }
+
+    .page-header p {
+      color: #7c8195;
+      font-size: 14px;
     }
 
     .gradient {
-      background: linear-gradient(90deg,#a000ff,#ff22bd,#008cff);
+      background: linear-gradient(
+        90deg,
+        #a000ff,
+        #ff22bd,
+        #168cff
+      );
       -webkit-background-clip: text;
       color: transparent;
     }
 
-    .header p {
-      color: #8995b2;
+    /* ================= FILTERS ================= */
+
+    .filters-card {
+      background: #fff;
+      border: 1px solid #e5e7ef;
+      border-radius: 18px;
+      padding: 15px;
+      margin-bottom: 25px;
     }
 
-    /* FILTERS */
     .filters {
       display: flex;
-      justify-content: center;
       gap: 10px;
-      padding: 15px;
       overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .filters::-webkit-scrollbar {
+      display: none;
     }
 
     .filter {
       padding: 10px 18px;
       border-radius: 25px;
-      border: 1px solid #293551;
-      background: #0a1123;
-      color: #b7c1d8;
+      border: 1px solid #e1e3eb;
+      background: #f7f8fb;
+      color: #62687a;
       white-space: nowrap;
       cursor: pointer;
+      font-weight: 600;
+      font-size: 13px;
     }
 
     .filter.active {
-      background: linear-gradient(90deg,#8d00ff,#ed20bc);
-      color: white;
+      background: linear-gradient(
+        90deg,
+        #721cff,
+        #9b00ff
+      );
+      color: #fff;
       border-color: transparent;
     }
 
-    /* SHORTS */
+    /* ================= SHORTS AREA ================= */
+
+    .shorts-heading {
+      font-size: 20px;
+      margin-bottom: 15px;
+    }
+
     .shorts-container {
       width: 100%;
       max-width: 500px;
-      margin: 20px auto 50px;
-      padding: 0 12px;
+      margin: auto;
     }
+
+    /* ================= SHORT CARD ================= */
 
     .short {
       height: 650px;
@@ -117,42 +247,77 @@
       border-radius: 24px;
       overflow: hidden;
       position: relative;
-      background: #111827;
-      border: 1px solid rgba(255,255,255,.1);
-      box-shadow: 0 15px 45px rgba(0,0,0,.4);
+      color: #fff;
+      border: 1px solid #e2e4eb;
+      box-shadow: 0 10px 30px rgba(30, 35, 60, .10);
     }
 
-    /* DEMO VIDEO BACKGROUNDS */
     .short:nth-child(1) {
       background:
-        linear-gradient(180deg,transparent 30%,rgba(0,0,0,.9)),
-        linear-gradient(135deg,#16004d,#9c00ff,#ff188d);
+        linear-gradient(
+          180deg,
+          transparent 30%,
+          rgba(0,0,0,.9)
+        ),
+        linear-gradient(
+          135deg,
+          #16004d,
+          #9c00ff,
+          #ff188d
+        );
     }
 
     .short:nth-child(2) {
       background:
-        linear-gradient(180deg,transparent 30%,rgba(0,0,0,.9)),
-        linear-gradient(135deg,#003b54,#00b8ff,#172554);
+        linear-gradient(
+          180deg,
+          transparent 30%,
+          rgba(0,0,0,.9)
+        ),
+        linear-gradient(
+          135deg,
+          #003b54,
+          #00b8ff,
+          #172554
+        );
     }
 
     .short:nth-child(3) {
       background:
-        linear-gradient(180deg,transparent 30%,rgba(0,0,0,.9)),
-        linear-gradient(135deg,#351000,#ff7200,#ff176b);
+        linear-gradient(
+          180deg,
+          transparent 30%,
+          rgba(0,0,0,.9)
+        ),
+        linear-gradient(
+          135deg,
+          #351000,
+          #ff7200,
+          #ff176b
+        );
     }
 
     .short:nth-child(4) {
       background:
-        linear-gradient(180deg,transparent 30%,rgba(0,0,0,.9)),
-        linear-gradient(135deg,#061d16,#00a67d,#003b69);
+        linear-gradient(
+          180deg,
+          transparent 30%,
+          rgba(0,0,0,.9)
+        ),
+        linear-gradient(
+          135deg,
+          #061d16,
+          #00a67d,
+          #003b69
+        );
     }
 
     .demo-image {
       position: absolute;
       inset: 0;
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
       font-size: 90px;
       opacity: .85;
     }
@@ -162,14 +327,15 @@
       height: 70px;
       border-radius: 50%;
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
       background: rgba(0,0,0,.5);
       border: 2px solid rgba(255,255,255,.7);
       font-size: 28px;
     }
 
-    /* VIDEO INFO */
+    /* ================= INFO ================= */
+
     .info {
       position: absolute;
       bottom: 20px;
@@ -183,26 +349,32 @@
       align-items: center;
       gap: 10px;
       margin-bottom: 12px;
+      flex-wrap: wrap;
     }
 
-    .avatar {
+    .creator-avatar {
       width: 42px;
       height: 42px;
       border-radius: 50%;
+      background: linear-gradient(
+        135deg,
+        #a000ff,
+        #ff22bd
+      );
       display: flex;
       align-items: center;
       justify-content: center;
-      background: linear-gradient(135deg,#a000ff,#ff22bd);
       font-weight: bold;
     }
 
     .follow {
       padding: 6px 12px;
-      border: 1px solid white;
+      border: 1px solid #fff;
       border-radius: 20px;
       background: transparent;
-      color: white;
+      color: #fff;
       font-size: 12px;
+      cursor: pointer;
     }
 
     .info h2 {
@@ -217,11 +389,12 @@
     }
 
     .hashtags {
-      color: #c47cff !important;
+      color: #d69cff !important;
       margin-top: 7px;
     }
 
-    /* ACTIONS */
+    /* ================= ACTIONS ================= */
+
     .actions {
       position: absolute;
       right: 15px;
@@ -248,6 +421,11 @@
       justify-content: center;
       font-size: 21px;
       margin-bottom: 4px;
+      transition: .2s;
+    }
+
+    .action-icon:hover {
+      transform: scale(1.08);
     }
 
     .action span {
@@ -256,342 +434,676 @@
     }
 
     .liked {
-      transform: scale(1.12);
+      transform: scale(1.15);
     }
 
-    /* FOOTER */
+    /* ================= FOOTER ================= */
+
     footer {
       text-align: center;
       padding: 30px 15px;
-      border-top: 1px solid rgba(255,255,255,.08);
-      color: #7e89a4;
+      border-top: 1px solid #e5e7ef;
+      color: #7e8497;
       font-size: 13px;
+      margin-top: 25px;
     }
 
-    /* MOBILE */
-    @media (max-width: 600px) {
+    /* ================= TABLET ================= */
 
-      .navbar {
-        height: 62px;
+    @media (max-width: 900px) {
+
+      .top-search {
+        width: 250px;
+      }
+
+      .main {
+        padding: 22px;
+      }
+    }
+
+    /* ================= MOBILE ================= */
+
+    @media (max-width: 700px) {
+
+      .topbar {
+        padding: 0 15px;
       }
 
       .logo {
-        font-size: 27px;
+        font-size: 23px;
       }
 
-      .home-btn {
-        font-size: 12px;
-        padding: 8px 13px;
+      .top-search {
+        display: none;
       }
 
-      .header h1 {
-        font-size: 30px;
+      .sidebar {
+        width: 70px;
+        padding: 15px 8px;
       }
 
-      .shorts-container {
-        padding: 0 8px;
+      .menu-title {
+        display: none;
+      }
+
+      .menu a {
+        justify-content: center;
+        padding: 12px 5px;
+      }
+
+      .menu-text {
+        display: none;
+      }
+
+      .main {
+        margin-left: 70px;
+        width: calc(100% - 70px);
+        padding: 18px 12px;
+      }
+
+      .page-header {
+        padding: 20px;
+      }
+
+      .page-header h1 {
+        font-size: 23px;
       }
 
       .short {
         height: 610px;
         border-radius: 20px;
       }
+
+      .shorts-container {
+        max-width: 100%;
+      }
     }
+
+    @media (max-width: 400px) {
+
+      .sidebar {
+        width: 60px;
+      }
+
+      .main {
+        margin-left: 60px;
+        width: calc(100% - 60px);
+      }
+
+      .short {
+        height: 580px;
+      }
+
+      .info {
+        left: 15px;
+        right: 75px;
+      }
+
+      .actions {
+        right: 10px;
+      }
+    }
+
   </style>
 </head>
 
 <body>
 
-  <!-- NAVBAR -->
-  <nav class="navbar">
+  <!-- ================= TOPBAR ================= -->
 
-    <a href="index.html" class="logo">
+  <header class="topbar">
+
+    <div class="logo">
       ZCrush
-    </a>
+    </div>
 
-    <a href="index.html" class="home-btn">
-      🏠 Home
-    </a>
+    <input
+      type="text"
+      class="top-search"
+      placeholder="Search ZCrush"
+    >
 
-  </nav>
+    <div class="top-right">
 
+      <div class="notification">
+        🔔
+      </div>
 
-  <!-- HEADER -->
-  <header class="header">
+      <div class="avatar">
+        Z
+      </div>
 
-    <h1>
-      <span class="gradient">ZCrush</span> Shorts 🎬
-    </h1>
-
-    <p>
-      Watch • Discover • Enjoy
-    </p>
+    </div>
 
   </header>
 
 
-  <!-- FILTERS -->
-  <div class="filters">
+  <!-- ================= LAYOUT ================= -->
 
-    <button class="filter active">🔥 Trending</button>
-    <button class="filter">🎮 Gaming</button>
-    <button class="filter">😂 Funny</button>
-    <button class="filter">🎵 Music</button>
-    <button class="filter">✨ Creative</button>
+  <div class="layout">
+
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+      <div class="menu-title">
+        Menu
+      </div>
+
+      <div class="menu">
+
+        <a href="index.html">
+          <span class="menu-icon">🏠</span>
+          <span class="menu-text">Home</span>
+        </a>
+
+        <a href="social.html">
+          <span class="menu-icon">👥</span>
+          <span class="menu-text">Social</span>
+        </a>
+
+        <a href="gaming.html">
+          <span class="menu-icon">🎮</span>
+          <span class="menu-text">Gaming</span>
+        </a>
+
+        <a href="shorts.html" class="active">
+          <span class="menu-icon">🎬</span>
+          <span class="menu-text">Shorts</span>
+        </a>
+
+        <a href="marketplace.html">
+          <span class="menu-icon">🛒</span>
+          <span class="menu-text">Marketplace</span>
+        </a>
+
+        <a href="profile.html">
+          <span class="menu-icon">👤</span>
+          <span class="menu-text">Profile</span>
+        </a>
+
+      </div>
+
+    </aside>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="main">
+
+
+      <!-- PAGE HEADER -->
+
+      <div class="page-header">
+
+        <h1>
+          <span class="gradient">ZCrush</span> Shorts 🎬
+        </h1>
+
+        <p>
+          Watch, discover and enjoy short videos from the ZCrush community.
+        </p>
+
+      </div>
+
+
+      <!-- ================= FILTERS ================= -->
+
+      <div class="filters-card">
+
+        <div class="filters">
+
+          <button class="filter active">
+            🔥 Trending
+          </button>
+
+          <button class="filter">
+            🎮 Gaming
+          </button>
+
+          <button class="filter">
+            😂 Funny
+          </button>
+
+          <button class="filter">
+            🎵 Music
+          </button>
+
+          <button class="filter">
+            ✨ Creative
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- ================= SHORTS ================= -->
+
+      <h2 class="shorts-heading">
+        Trending Shorts
+      </h2>
+
+      <main class="shorts-container">
+
+
+        <!-- SHORT 1 -->
+
+        <article class="short">
+
+          <div class="demo-image">
+
+            <div class="play">
+              ▶
+            </div>
+
+          </div>
+
+
+          <div class="info">
+
+            <div class="creator">
+
+              <div class="creator-avatar">
+                Z
+              </div>
+
+              <strong>
+                @ZCreator
+              </strong>
+
+              <button class="follow">
+                Follow
+              </button>
+
+            </div>
+
+            <h2>
+              Welcome to the ZCrush world! 🚀
+            </h2>
+
+            <p>
+              Discover amazing content and enjoy your daily dose of fun.
+            </p>
+
+            <p class="hashtags">
+              #ZCrush #shorts #trending
+            </p>
+
+          </div>
+
+
+          <div class="actions">
+
+            <div class="action">
+
+              <div class="action-icon like">
+                ❤️
+              </div>
+
+              <span>
+                12.4K
+              </span>
+
+            </div>
+
+
+            <div class="action">
+
+              <div class="action-icon">
+                💬
+              </div>
+
+              <span>
+                842
+              </span>
+
+            </div>
+
+
+            <div class="action">
+
+              <div class="action-icon">
+                ↗️
+              </div>
+
+              <span>
+                Share
+              </span>
+
+            </div>
+
+
+            <div class="action">
+
+              <div class="action-icon">
+                🔖
+              </div>
+
+              <span>
+                Save
+              </span>
+
+            </div>
+
+          </div>
+
+        </article>
+
+
+        <!-- SHORT 2 -->
+
+        <article class="short">
+
+          <div class="demo-image">
+            🎮
+          </div>
+
+
+          <div class="info">
+
+            <div class="creator">
+
+              <div class="creator-avatar">
+                G
+              </div>
+
+              <strong>
+                @GamingZone
+              </strong>
+
+              <button class="follow">
+                Follow
+              </button>
+
+            </div>
+
+            <h2>
+              Gaming setup 🔥
+            </h2>
+
+            <p>
+              New setup, new adventures! What game should we play next?
+            </p>
+
+            <p class="hashtags">
+              #gaming #setup #gamer
+            </p>
+
+          </div>
+
+
+          <div class="actions">
+
+            <div class="action">
+
+              <div class="action-icon like">
+                ❤️
+              </div>
+
+              <span>
+                25.7K
+              </span>
+
+            </div>
+
+            <div class="action">
+
+              <div class="action-icon">
+                💬
+              </div>
+
+              <span>
+                1.2K
+              </span>
+
+            </div>
+
+            <div class="action">
+
+              <div class="action-icon">
+                ↗️
+              </div>
+
+              <span>
+                Share
+              </span>
+
+            </div>
+
+            <div class="action">
+
+              <div class="action-icon">
+                🔖
+              </div>
+
+              <span>
+                Save
+              </span>
+
+            </div>
+
+          </div>
+
+        </article>
+
+
+        <!-- SHORT 3 -->
+
+        <article class="short">
+
+          <div class="demo-image">
+            😂
+          </div>
+
+
+          <div class="info">
+
+            <div class="creator">
+
+              <div class="creator-avatar">
+                F
+              </div>
+
+              <strong>
+                @FunWorld
+              </strong>
+
+              <button class="follow">
+                Follow
+              </button>
+
+            </div>
+
+            <h2>
+              That moment 😂
+            </h2>
+
+            <p>
+              When your plan doesn't go exactly as expected!
+            </p>
+
+            <p class="hashtags">
+              #funny #comedy #viral
+            </p>
+
+          </div>
+
+
+          <div class="actions">
+
+            <div class="action">
+
+              <div class="action-icon like">
+                ❤️
+              </div>
+
+              <span>
+                8.9K
+              </span>
+
+            </div>
+
+            <div class="action">
+
+              <div class="action-icon">
+                💬
+              </div>
+
+              <span>
+                456
+              </span>
+
+            </div>
+
+            <div class="action">
+
+              <div class="action-icon">
+                ↗️
+              </div>
+
+              <span>
+                Share
+              </span>
+
+            </div>
+
+            <div class="action">
+
+              <div class="action-icon">
+                🔖
+              </div>
+
+              <span>
+                Save
+              </span>
+
+            </div>
+
+          </div>
+
+        </article>
+
+
+        <!-- SHORT 4 -->
+
+        <article class="short">
+
+          <div class="demo-image">
+            🌄
+          </div>
+
+
+          <div class="info">
+
+            <div class="creator">
+
+              <div class="creator-avatar">
+                T
+              </div>
+
+              <strong>
+                @TravelWorld
+              </strong>
+
+              <button class="follow">
+                Follow
+              </button>
+
+            </div>
+
+            <h2>
+              Life is an adventure 🌄
+            </h2>
+
+            <p>
+              Explore new places, discover new moments and enjoy the journey.
+            </p>
+
+            <p class="hashtags">
+              #travel #nature #adventure
+            </p>
+
+          </div>
+
+
+          <div class="actions">
+
+            <div class="action">
+
+              <div class="action-icon like">
+                ❤️
+              </div>
+
+              <span>
+                18.3K
+              </span>
+
+            </div>
+
+            <div class="action">
+
+              <div class="action-icon">
+                💬
+              </div>
+
+              <span>
+                735
+              </span>
+
+            </div>
+
+            <div class="action">
+
+              <div class="action-icon">
+                ↗️
+              </div>
+
+              <span>
+                Share
+              </span>
+
+            </div>
+
+            <div class="action">
+
+              <div class="action-icon">
+                🔖
+              </div>
+
+              <span>
+                Save
+              </span>
+
+            </div>
+
+          </div>
+
+        </article>
+
+
+      </main>
+
+
+      <!-- ================= FOOTER ================= -->
+
+      <footer>
+        © 2026 ZCrush • More Social • More Fun • More You
+      </footer>
+
+
+    </main>
 
   </div>
 
 
-  <!-- SHORTS -->
-  <main class="shorts-container">
-
-
-    <!-- SHORT 1 -->
-    <article class="short">
-
-      <div class="demo-image">
-        <div class="play">▶</div>
-      </div>
-
-      <div class="info">
-
-        <div class="creator">
-          <div class="avatar">Z</div>
-
-          <strong>@ZCreator</strong>
-
-          <button class="follow">
-            Follow
-          </button>
-        </div>
-
-        <h2>Welcome to the ZCrush world! 🚀</h2>
-
-        <p>
-          Discover amazing content and enjoy your daily dose of fun.
-        </p>
-
-        <p class="hashtags">
-          #ZCrush #shorts #trending
-        </p>
-
-      </div>
-
-
-      <div class="actions">
-
-        <div class="action">
-          <div class="action-icon like">❤️</div>
-          <span>12.4K</span>
-        </div>
-
-        <div class="action">
-          <div class="action-icon">💬</div>
-          <span>842</span>
-        </div>
-
-        <div class="action">
-          <div class="action-icon">↗️</div>
-          <span>Share</span>
-        </div>
-
-        <div class="action">
-          <div class="action-icon">🔖</div>
-          <span>Save</span>
-        </div>
-
-      </div>
-
-    </article>
-
-
-    <!-- SHORT 2 -->
-    <article class="short">
-
-      <div class="demo-image">
-        🎮
-      </div>
-
-      <div class="info">
-
-        <div class="creator">
-          <div class="avatar">G</div>
-
-          <strong>@GamingZone</strong>
-
-          <button class="follow">
-            Follow
-          </button>
-        </div>
-
-        <h2>Gaming setup 🔥</h2>
-
-        <p>
-          New setup, new adventures! What game should we play next?
-        </p>
-
-        <p class="hashtags">
-          #gaming #setup #gamer
-        </p>
-
-      </div>
-
-
-      <div class="actions">
-
-        <div class="action">
-          <div class="action-icon like">❤️</div>
-          <span>25.7K</span>
-        </div>
-
-        <div class="action">
-          <div class="action-icon">💬</div>
-          <span>1.2K</span>
-        </div>
-
-        <div class="action">
-          <div class="action-icon">↗️</div>
-          <span>Share</span>
-        </div>
-
-        <div class="action">
-          <div class="action-icon">🔖</div>
-          <span>Save</span>
-        </div>
-
-      </div>
-
-    </article>
-
-
-    <!-- SHORT 3 -->
-    <article class="short">
-
-      <div class="demo-image">
-        😂
-      </div>
-
-      <div class="info">
-
-        <div class="creator">
-          <div class="avatar">F</div>
-
-          <strong>@FunWorld</strong>
-
-          <button class="follow">
-            Follow
-          </button>
-        </div>
-
-        <h2>That moment 😂</h2>
-
-        <p>
-          When your plan doesn't go exactly as expected!
-        </p>
-
-        <p class="hashtags">
-          #funny #comedy #viral
-        </p>
-
-      </div>
-
-
-      <div class="actions">
-
-        <div class="action">
-          <div class="action-icon like">❤️</div>
-          <span>8.9K</span>
-        </div>
-
-        <div class="action">
-          <div class="action-icon">💬</div>
-          <span>456</span>
-        </div>
-
-        <div class="action">
-          <div class="action-icon">↗️</div>
-          <span>Share</span>
-        </div>
-
-        <div class="action">
-          <div class="action-icon">🔖</div>
-          <span>Save</span>
-        </div>
-
-      </div>
-
-    </article>
-
-
-    <!-- SHORT 4 -->
-    <article class="short">
-
-      <div class="demo-image">
-        🌄
-      </div>
-
-      <div class="info">
-
-        <div class="creator">
-          <div class="avatar">T</div>
-
-          <strong>@TravelWorld</strong>
-
-          <button class="follow">
-            Follow
-          </button>
-        </div>
-
-        <h2>Life is an adventure 🌄</h2>
-
-        <p>
-          Explore new places, discover new moments and enjoy the journey.
-        </p>
-
-        <p class="hashtags">
-          #travel #nature #adventure
-        </p>
-
-      </div>
-
-
-      <div class="actions">
-
-        <div class="action">
-          <div class="action-icon like">❤️</div>
-          <span>18.3K</span>
-        </div>
-
-        <div class="action">
-          <div class="action-icon">💬</div>
-          <span>735</span>
-        </div>
-
-        <div class="action">
-          <div class="action-icon">↗️</div>
-          <span>Share</span>
-        </div>
-
-        <div class="action">
-          <div class="action-icon">🔖</div>
-          <span>Save</span>
-        </div>
-
-      </div>
-
-    </article>
-
-  </main>
-
-
-  <footer>
-    © 2026 ZCrush • More Social • More Fun • More You
-  </footer>
-
+  <!-- ================= JAVASCRIPT ================= -->
 
   <script>
 
     /* LIKE BUTTON */
+
     document.querySelectorAll(".like").forEach(function(button) {
 
       button.addEventListener("click", function() {
@@ -604,18 +1116,72 @@
 
 
     /* FILTER BUTTON */
+
     document.querySelectorAll(".filter").forEach(function(button) {
 
       button.addEventListener("click", function() {
 
         document.querySelectorAll(".filter")
           .forEach(function(btn) {
+
             btn.classList.remove("active");
+
           });
 
         button.classList.add("active");
 
       });
+
+    });
+
+
+    /* FOLLOW BUTTON */
+
+    document.querySelectorAll(".follow").forEach(function(button) {
+
+      button.addEventListener("click", function() {
+
+        if (button.textContent.trim() === "Follow") {
+
+          button.textContent = "Following";
+
+        } else {
+
+          button.textContent = "Follow";
+
+        }
+
+      });
+
+    });
+
+
+    /* SHARE BUTTON */
+
+    document.querySelectorAll(".action").forEach(function(action) {
+
+      const text = action.innerText.trim();
+
+      if (text.includes("Share")) {
+
+        action.addEventListener("click", function() {
+
+          if (navigator.share) {
+
+            navigator.share({
+              title: "ZCrush Shorts",
+              text: "Check out this short on ZCrush!"
+            });
+
+          } else {
+
+            alert("Share feature is available on supported devices.");
+
+          }
+
+        });
+
+      }
 
     });
 
