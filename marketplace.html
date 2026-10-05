@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ZCrush Marketplace</title>
+
+  <title>ZCrush - Marketplace</title>
 
   <style>
     * {
@@ -14,113 +15,279 @@
     }
 
     body {
-      background: #050713;
-      color: white;
+      background: #f5f7fb;
+      color: #202124;
     }
 
-    nav {
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* ================= TOPBAR ================= */
+
+    .topbar {
       height: 70px;
-      padding: 0 25px;
+      background: #ffffff;
+      border-bottom: 1px solid #e5e7ef;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      background: #080a18;
-      border-bottom: 1px solid #20243d;
+      padding: 0 25px;
       position: sticky;
       top: 0;
-      z-index: 10;
+      z-index: 100;
     }
 
     .logo {
       font-size: 28px;
-      font-weight: bold;
-      background: linear-gradient(90deg, #ff00cc, #7c3cff, #00c6ff);
+      font-weight: 800;
+      background: linear-gradient(
+        90deg,
+        #a000ff,
+        #ff22bd,
+        #168cff
+      );
       -webkit-background-clip: text;
       color: transparent;
     }
 
-    .home {
-      text-decoration: none;
-      color: white;
-      background: linear-gradient(90deg, #a100ff, #008cff);
+    .top-search {
+      width: 360px;
+      background: #f5f7fb;
+      border: 1px solid #e3e5ed;
       padding: 11px 18px;
-      border-radius: 22px;
+      border-radius: 25px;
+      outline: none;
+      font-size: 14px;
+    }
+
+    .top-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .notification {
+      font-size: 21px;
+      cursor: pointer;
+    }
+
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #721cff, #ff22bd);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
       font-weight: bold;
     }
 
-    .hero {
-      text-align: center;
-      padding: 45px 20px 30px;
-    }
+    /* ================= LAYOUT ================= */
 
-    .hero h1 {
-      font-size: 36px;
-      margin-bottom: 12px;
-    }
-
-    .hero p {
-      color: #9da3c7;
-      font-size: 16px;
-    }
-
-    .search {
-      width: 90%;
-      max-width: 600px;
-      margin: 10px auto 35px;
+    .layout {
       display: flex;
+      min-height: calc(100vh - 70px);
     }
 
-    .search input {
+    /* ================= SIDEBAR ================= */
+
+    .sidebar {
+      width: 230px;
+      background: #ffffff;
+      border-right: 1px solid #e5e7ef;
+      padding: 22px 15px;
+      position: fixed;
+      top: 70px;
+      bottom: 0;
+      left: 0;
+    }
+
+    .menu-title {
+      font-size: 11px;
+      color: #9aa0b5;
+      margin: 5px 12px 12px;
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+
+    .menu a {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      text-decoration: none;
+      color: #555b70;
+      padding: 12px 15px;
+      border-radius: 12px;
+      margin-bottom: 7px;
+      font-size: 14px;
+      font-weight: 600;
+      transition: 0.2s;
+    }
+
+    .menu a:hover {
+      background: #f1edff;
+      color: #721cff;
+    }
+
+    .menu a.active {
+      background: #eee8ff;
+      color: #721cff;
+    }
+
+    .menu-icon {
+      width: 22px;
+      text-align: center;
+      font-size: 18px;
+    }
+
+    /* ================= MAIN ================= */
+
+    .main {
+      margin-left: 230px;
+      width: calc(100% - 230px);
+      padding: 30px;
+    }
+
+    /* ================= PAGE HEADER ================= */
+
+    .page-header {
+      background: #ffffff;
+      border: 1px solid #e5e7ef;
+      border-radius: 18px;
+      padding: 25px;
+      margin-bottom: 20px;
+    }
+
+    .page-header h1 {
+      font-size: 27px;
+      margin-bottom: 7px;
+    }
+
+    .page-header p {
+      color: #7c8195;
+      font-size: 14px;
+    }
+
+    .gradient {
+      background: linear-gradient(
+        90deg,
+        #a000ff,
+        #ff22bd,
+        #168cff
+      );
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    /* ================= SEARCH ================= */
+
+    .market-search-card {
+      background: #ffffff;
+      border: 1px solid #e5e7ef;
+      border-radius: 18px;
+      padding: 18px;
+      margin-bottom: 18px;
+    }
+
+    .market-search {
+      display: flex;
+      width: 100%;
+    }
+
+    .market-search input {
       flex: 1;
-      padding: 15px;
-      background: #15192c;
-      border: 1px solid #292e4b;
-      color: white;
+      padding: 13px 16px;
+      background: #f5f7fb;
+      border: 1px solid #e1e3eb;
       outline: none;
       border-radius: 12px 0 0 12px;
-      font-size: 15px;
+      font-size: 14px;
+      color: #202124;
     }
 
-    .search button {
+    .market-search button {
       border: none;
-      background: #7c3cff;
+      background: linear-gradient(
+        90deg,
+        #721cff,
+        #9b00ff
+      );
       color: white;
-      padding: 0 20px;
+      padding: 0 22px;
       border-radius: 0 12px 12px 0;
-      font-size: 18px;
+      font-size: 17px;
+      cursor: pointer;
+    }
+
+    /* ================= CATEGORIES ================= */
+
+    .category-card {
+      background: #ffffff;
+      border: 1px solid #e5e7ef;
+      border-radius: 18px;
+      padding: 15px;
+      margin-bottom: 25px;
     }
 
     .categories {
       display: flex;
       gap: 10px;
       overflow-x: auto;
-      padding: 0 6% 30px;
+      scrollbar-width: none;
+    }
+
+    .categories::-webkit-scrollbar {
+      display: none;
     }
 
     .categories button {
       white-space: nowrap;
       padding: 10px 18px;
-      border-radius: 20px;
-      border: 1px solid #343953;
-      background: #11152a;
-      color: white;
+      border-radius: 22px;
+      border: 1px solid #e1e3eb;
+      background: #f7f8fb;
+      color: #5f6577;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 13px;
+    }
+
+    .categories button:hover,
+    .categories button.active {
+      background: #eee8ff;
+      color: #721cff;
+      border-color: #cbb9ff;
+    }
+
+    /* ================= PRODUCTS ================= */
+
+    .products-title {
+      font-size: 20px;
+      margin-bottom: 15px;
     }
 
     .products {
-      width: 90%;
-      max-width: 1200px;
-      margin: auto;
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 20px;
-      padding-bottom: 50px;
+      gap: 18px;
+      padding-bottom: 35px;
     }
 
     .product {
-      background: #11152a;
-      border: 1px solid #292e4b;
+      background: #ffffff;
+      border: 1px solid #e5e7ef;
       border-radius: 18px;
       overflow: hidden;
+      transition: 0.25s;
+    }
+
+    .product:hover {
+      transform: translateY(-5px);
+      border-color: #b99cff;
+      box-shadow: 0 10px 25px rgba(114, 28, 255, 0.08);
     }
 
     .image {
@@ -129,26 +296,34 @@
       align-items: center;
       justify-content: center;
       font-size: 65px;
-      background: linear-gradient(135deg, #171d3d, #24134a);
+      background: linear-gradient(
+        135deg,
+        #f1edff,
+        #fceafa,
+        #eaf4ff
+      );
     }
 
     .info {
-      padding: 16px;
+      padding: 17px;
     }
 
     .info h3 {
+      font-size: 17px;
       margin-bottom: 8px;
     }
 
     .info p {
-      color: #9298b8;
+      color: #7d8295;
       font-size: 13px;
+      line-height: 1.4;
       margin-bottom: 12px;
+      min-height: 36px;
     }
 
     .price {
-      color: #c77dff;
-      font-size: 21px;
+      color: #721cff;
+      font-size: 20px;
       font-weight: bold;
       margin-bottom: 14px;
     }
@@ -157,130 +332,551 @@
       display: block;
       text-align: center;
       text-decoration: none;
-      background: linear-gradient(90deg, #8b2cff, #008cff);
+      background: linear-gradient(
+        90deg,
+        #721cff,
+        #168cff
+      );
       color: white;
       padding: 11px;
       border-radius: 10px;
       font-weight: bold;
+      font-size: 13px;
     }
+
+    .buy:hover {
+      opacity: 0.9;
+    }
+
+    /* ================= FOOTER ================= */
 
     footer {
       text-align: center;
       padding: 30px;
-      color: #777d9c;
-      border-top: 1px solid #20243d;
+      color: #777d91;
+      border-top: 1px solid #e5e7ef;
+      font-size: 13px;
+      margin-top: 10px;
     }
 
-    @media (max-width: 850px) {
+    /* ================= TABLET ================= */
+
+    @media (max-width: 1000px) {
+
       .products {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .top-search {
+        width: 280px;
       }
     }
 
-    @media (max-width: 550px) {
+    @media (max-width: 800px) {
+
+      .products {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .top-search {
+        width: 220px;
+      }
+    }
+
+    /* ================= MOBILE ================= */
+
+    @media (max-width: 700px) {
+
+      .topbar {
+        padding: 0 15px;
+      }
+
+      .logo {
+        font-size: 23px;
+      }
+
+      .top-search {
+        display: none;
+      }
+
+      .sidebar {
+        width: 70px;
+        padding: 15px 8px;
+      }
+
+      .menu-title {
+        display: none;
+      }
+
+      .menu a {
+        justify-content: center;
+        padding: 12px 5px;
+      }
+
+      .menu-text {
+        display: none;
+      }
+
+      .main {
+        margin-left: 70px;
+        width: calc(100% - 70px);
+        padding: 18px 12px;
+      }
+
+      .page-header {
+        padding: 20px;
+      }
+
+      .page-header h1 {
+        font-size: 23px;
+      }
+
       .products {
         grid-template-columns: 1fr;
       }
 
-      .hero h1 {
-        font-size: 30px;
+      .image {
+        height: 200px;
       }
     }
+
+    @media (max-width: 400px) {
+
+      .sidebar {
+        width: 60px;
+      }
+
+      .main {
+        margin-left: 60px;
+        width: calc(100% - 60px);
+      }
+
+      .market-search input {
+        font-size: 13px;
+      }
+
+      .market-search button {
+        padding: 0 17px;
+      }
+    }
+
   </style>
 </head>
 
 <body>
 
-  <nav>
-    <div class="logo">ZCrush</div>
-    <a href="index.html" class="home">🏠 Home</a>
-  </nav>
+  <!-- ================= TOPBAR ================= -->
 
-  <section class="hero">
-    <h1>🛍️ ZCrush Marketplace</h1>
-    <p>Shop • Sell • Discover</p>
-  </section>
+  <header class="topbar">
 
-  <div class="search">
-    <input type="text" id="search" placeholder="Search products...">
-    <button>🔍</button>
+    <div class="logo">
+      ZCrush
+    </div>
+
+    <input
+      type="text"
+      class="top-search"
+      placeholder="Search ZCrush"
+    >
+
+    <div class="top-right">
+
+      <div class="notification">
+        🔔
+      </div>
+
+      <div class="avatar">
+        Z
+      </div>
+
+    </div>
+
+  </header>
+
+
+  <!-- ================= LAYOUT ================= -->
+
+  <div class="layout">
+
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+      <div class="menu-title">
+        Menu
+      </div>
+
+      <div class="menu">
+
+        <a href="index.html">
+          <span class="menu-icon">🏠</span>
+          <span class="menu-text">Home</span>
+        </a>
+
+        <a href="social.html">
+          <span class="menu-icon">👥</span>
+          <span class="menu-text">Social</span>
+        </a>
+
+        <a href="gaming.html">
+          <span class="menu-icon">🎮</span>
+          <span class="menu-text">Gaming</span>
+        </a>
+
+        <a href="shorts.html">
+          <span class="menu-icon">🎬</span>
+          <span class="menu-text">Shorts</span>
+        </a>
+
+        <a href="marketplace.html" class="active">
+          <span class="menu-icon">🛒</span>
+          <span class="menu-text">Marketplace</span>
+        </a>
+
+        <a href="profile.html">
+          <span class="menu-icon">👤</span>
+          <span class="menu-text">Profile</span>
+        </a>
+
+      </div>
+
+    </aside>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="main">
+
+
+      <!-- PAGE HEADER -->
+
+      <div class="page-header">
+
+        <h1>
+          🛍️ <span class="gradient">ZCrush</span> Marketplace
+        </h1>
+
+        <p>
+          Shop, discover products and explore the ZCrush marketplace.
+        </p>
+
+      </div>
+
+
+      <!-- ================= SEARCH ================= -->
+
+      <div class="market-search-card">
+
+        <div class="market-search">
+
+          <input
+            type="text"
+            id="search"
+            placeholder="Search products..."
+          >
+
+          <button>
+            🔍
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- ================= CATEGORIES ================= -->
+
+      <div class="category-card">
+
+        <div class="categories">
+
+          <button class="active">
+            All
+          </button>
+
+          <button>
+            📱 Electronics
+          </button>
+
+          <button>
+            👕 Fashion
+          </button>
+
+          <button>
+            🎮 Gaming
+          </button>
+
+          <button>
+            🏠 Home
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- ================= PRODUCTS ================= -->
+
+      <h2 class="products-title">
+        Discover Products
+      </h2>
+
+      <section class="products">
+
+
+        <!-- PRODUCT 1 -->
+
+        <div class="product">
+
+          <div class="image">
+            📱
+          </div>
+
+          <div class="info">
+
+            <h3>
+              Smart Phone
+            </h3>
+
+            <p>
+              Modern smartphone with powerful features.
+            </p>
+
+            <div class="price">
+              ₹14,999
+            </div>
+
+            <a href="#" class="buy">
+              Buy Now
+            </a>
+
+          </div>
+
+        </div>
+
+
+        <!-- PRODUCT 2 -->
+
+        <div class="product">
+
+          <div class="image">
+            🎧
+          </div>
+
+          <div class="info">
+
+            <h3>
+              Wireless Headphones
+            </h3>
+
+            <p>
+              Wireless headphones for music and entertainment.
+            </p>
+
+            <div class="price">
+              ₹1,499
+            </div>
+
+            <a href="#" class="buy">
+              Buy Now
+            </a>
+
+          </div>
+
+        </div>
+
+
+        <!-- PRODUCT 3 -->
+
+        <div class="product">
+
+          <div class="image">
+            🎮
+          </div>
+
+          <div class="info">
+
+            <h3>
+              Gaming Controller
+            </h3>
+
+            <p>
+              Upgrade your gaming experience.
+            </p>
+
+            <div class="price">
+              ₹1,999
+            </div>
+
+            <a href="#" class="buy">
+              Buy Now
+            </a>
+
+          </div>
+
+        </div>
+
+
+        <!-- PRODUCT 4 -->
+
+        <div class="product">
+
+          <div class="image">
+            👕
+          </div>
+
+          <div class="info">
+
+            <h3>
+              Premium T-Shirt
+            </h3>
+
+            <p>
+              Comfortable everyday fashion.
+            </p>
+
+            <div class="price">
+              ₹599
+            </div>
+
+            <a href="#" class="buy">
+              Buy Now
+            </a>
+
+          </div>
+
+        </div>
+
+
+        <!-- PRODUCT 5 -->
+
+        <div class="product">
+
+          <div class="image">
+            ⌚
+          </div>
+
+          <div class="info">
+
+            <h3>
+              Smart Watch
+            </h3>
+
+            <p>
+              Smart wearable for your daily activities.
+            </p>
+
+            <div class="price">
+              ₹2,499
+            </div>
+
+            <a href="#" class="buy">
+              Buy Now
+            </a>
+
+          </div>
+
+        </div>
+
+
+        <!-- PRODUCT 6 -->
+
+        <div class="product">
+
+          <div class="image">
+            💡
+          </div>
+
+          <div class="info">
+
+            <h3>
+              Smart LED Light
+            </h3>
+
+            <p>
+              Modern lighting for your room.
+            </p>
+
+            <div class="price">
+              ₹799
+            </div>
+
+            <a href="#" class="buy">
+              Buy Now
+            </a>
+
+          </div>
+
+        </div>
+
+
+      </section>
+
+
+      <!-- ================= FOOTER ================= -->
+
+      <footer>
+        © 2026 ZCrush — Marketplace
+      </footer>
+
+
+    </main>
+
   </div>
 
-  <div class="categories">
-    <button>All</button>
-    <button>📱 Electronics</button>
-    <button>👕 Fashion</button>
-    <button>🎮 Gaming</button>
-    <button>🏠 Home</button>
-  </div>
 
-  <section class="products">
+  <!-- ================= SEARCH SCRIPT ================= -->
 
-    <div class="product">
-      <div class="image">📱</div>
-      <div class="info">
-        <h3>Smart Phone</h3>
-        <p>Modern smartphone with powerful features.</p>
-        <div class="price">₹14,999</div>
-        <a href="#" class="buy">Buy Now</a>
-      </div>
-    </div>
+  <script>
 
-    <div class="product">
-      <div class="image">🎧</div>
-      <div class="info">
-        <h3>Wireless Headphones</h3>
-        <p>Wireless headphones for music and entertainment.</p>
-        <div class="price">₹1,499</div>
-        <a href="#" class="buy">Buy Now</a>
-      </div>
-    </div>
+    const searchInput = document.getElementById("search");
+    const products = document.querySelectorAll(".product");
 
-    <div class="product">
-      <div class="image">🎮</div>
-      <div class="info">
-        <h3>Gaming Controller</h3>
-        <p>Upgrade your gaming experience.</p>
-        <div class="price">₹1,999</div>
-        <a href="#" class="buy">Buy Now</a>
-      </div>
-    </div>
+    searchInput.addEventListener("input", function() {
 
-    <div class="product">
-      <div class="image">👕</div>
-      <div class="info">
-        <h3>Premium T-Shirt</h3>
-        <p>Comfortable everyday fashion.</p>
-        <div class="price">₹599</div>
-        <a href="#" class="buy">Buy Now</a>
-      </div>
-    </div>
+      const value = searchInput.value.toLowerCase().trim();
 
-    <div class="product">
-      <div class="image">⌚</div>
-      <div class="info">
-        <h3>Smart Watch</h3>
-        <p>Smart wearable for your daily activities.</p>
-        <div class="price">₹2,499</div>
-        <a href="#" class="buy">Buy Now</a>
-      </div>
-    </div>
+      products.forEach(function(product) {
 
-    <div class="product">
-      <div class="image">💡</div>
-      <div class="info">
-        <h3>Smart LED Light</h3>
-        <p>Modern lighting for your room.</p>
-        <div class="price">₹799</div>
-        <a href="#" class="buy">Buy Now</a>
-      </div>
-    </div>
+        const text = product.innerText.toLowerCase();
 
-  </section>
+        if (text.includes(value)) {
 
-  <footer>
-    © 2026 ZCrush — Marketplace
-  </footer>
+          product.style.display = "";
+
+        } else {
+
+          product.style.display = "none";
+
+        }
+
+      });
+
+    });
+
+
+    /* CATEGORY BUTTONS */
+
+    document.querySelectorAll(".categories button")
+      .forEach(function(button) {
+
+        button.addEventListener("click", function() {
+
+          document.querySelectorAll(".categories button")
+            .forEach(function(btn) {
+
+              btn.classList.remove("active");
+
+            });
+
+          button.classList.add("active");
+
+        });
+
+      });
+
+  </script>
 
 </body>
 </html>
