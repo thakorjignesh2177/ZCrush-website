@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ZCrush - CrushMoment</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+    background:#f5f7fb;
+    color:#171923;
+    min-height:100vh;
+}
+
+/* TOP BAR */
+.topbar{
+    position:sticky;
+    top:0;
+    z-index:100;
+    height:64px;
+    background:rgba(255,255,255,.95);
+    backdrop-filter:blur(15px);
+    border-bottom:1px solid #e7e9ef;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 18px;
+}
+
+.logo{
+    font-size:25px;
+    font-weight:800;
+    background:linear-gradient(90deg,#8b00ff,#ff20a8,#1677ff);
+    -webkit-background-clip:text;
+    color:transparent;
+}
+
+.top-icons{
+    display:flex;
+    gap:10px;
+}
+
+.icon-btn{
+    width:40px;
+    height:40px;
+    border:none;
+    border-radius:50%;
+    background:#f0f2f7;
+    cursor:pointer;
+    font-size:18px;
+}
+
+/* MAIN */
+.container{
+    max-width:900px;
+    margin:auto;
+    padding:22px 15px 100px;
+}
+
+/* HERO */
+.hero{
+    background:linear-gradient(135deg,#7b00ff,#e8008a,#176cff);
+    border-radius:24px;
+    padding:25px;
+    color:white;
+    position:relative;
+    overflow:hidden;
+    box-shadow:0 15px 40px rgba(105,0,255,.20);
+}
+
+.hero:after{
+    content:"";
+    position:absolute;
+    width:180px;
+    height:180px;
+    border-radius:50%;
+    background:rgba(255,255,255,.12);
+    right:-60px;
+    top:-50px;
+}
+
+.hero h1{
+    font-size:30px;
+    margin-bottom:8px;
+    position:relative;
+    z-index:2;
+}
+
+.hero p{
+    font-size:14px;
+    line-height:1.6;
+    opacity:.92;
+    max-width:600px;
+    position:relative;
+    z-index:2;
+}
+
+.create-btn{
+    margin-top:18px;
+    border:none;
+    background:white;
+    color:#7200ff;
+    padding:12px 18px;
+    border-radius:14px;
+    font-weight:700;
+    cursor:pointer;
+    position:relative;
+    z-index:2;
+}
+
+/* SEARCH */
+.search-box{
+    margin:20px 0;
+    display:flex;
+    gap:10px;
+}
+
+.search-box input{
+    flex:1;
+    border:1px solid #e0e3eb;
+    background:white;
+    border-radius:14px;
+    padding:13px 15px;
+    outline:none;
+    font-size:14px;
+}
+
+.filter{
+    border:none;
+    background:white;
+    border:1px solid #e0e3eb;
+    border-radius:14px;
+    padding:0 15px;
+    cursor:pointer;
+}
+
+/* SECTION */
+.section-title{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin:22px 0 13px;
+}
+
+.section-title h2{
+    font-size:20px;
+}
+
+.section-title span{
+    font-size:13px;
+    color:#777;
+}
+
+/* MOMENT CARD */
+.moment{
+    background:white;
+    border-radius:22px;
+    margin-bottom:18px;
+    overflow:hidden;
+    border:1px solid #e7e9ef;
+    box-shadow:0 8px 25px rgba(0,0,0,.05);
+}
+
+.moment-image{
+    height:240px;
+    position:relative;
+    background-size:cover;
+    background-position:center;
+}
+
+.badge{
+    position:absolute;
+    top:14px;
+    left:14px;
+    background:rgba(0,0,0,.55);
+    color:white;
+    padding:7px 11px;
+    border-radius:20px;
+    font-size:12px;
+    backdrop-filter:blur(5px);
+}
+
+.remembered{
+    position:absolute;
+    right:14px;
+    top:14px;
+    background:white;
+    color:#7200ff;
+    padding:8px 11px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.moment-content{
+    padding:17px;
+}
+
+.moment-title{
+    font-size:19px;
+    font-weight:700;
+    margin-bottom:7px;
+}
+
+.moment-text{
+    color:#656873;
+    font-size:14px;
+    line-height:1.55;
+}
+
+.meta{
+    display:flex;
+    gap:15px;
+    margin-top:12px;
+    color:#777;
+    font-size:12px;
+}
+
+.actions{
+    display:flex;
+    gap:8px;
+    margin-top:15px;
+    flex-wrap:wrap;
+}
+
+.action{
+    border:none;
+    background:#f2f3f8;
+    padding:10px 13px;
+    border-radius:12px;
+    cursor:pointer;
+    font-weight:600;
+    font-size:12px;
+}
+
+.action:hover{
+    background:#e9e7ff;
+}
+
+.ai{
+    background:linear-gradient(90deg,#7200ff,#e60091);
+    color:white;
+}
+
+/* EMPTY */
+.empty{
+    text-align:center;
+    background:white;
+    padding:30px 20px;
+    border-radius:20px;
+    border:1px solid #e7e9ef;
+    display:none;
+}
+
+.empty .emoji{
+    font-size:42px;
+    margin-bottom:10px;
+}
+
+/* MODAL */
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.55);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:500;
+    padding:15px;
+}
+
+.modal-box{
+    width:100%;
+    max-width:500px;
+    background:white;
+    border-radius:24px;
+    padding:22px;
+    max-height:90vh;
+    overflow:auto;
+}
+
+.modal-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:18px;
+}
+
+.close{
+    border:none;
+    background:#f0f1f5;
+    width:35px;
+    height:35px;
+    border-radius:50%;
+    cursor:pointer;
+}
+
+.form-group{
+    margin-bottom:15px;
+}
+
+.form-group label{
+    display:block;
+    font-size:13px;
+    font-weight:bold;
+    margin-bottom:7px;
+}
+
+.form-group input,
+.form-group textarea{
+    width:100%;
+    border:1px solid #dddfe7;
+    border-radius:13px;
+    padding:12px;
+    outline:none;
+    font-size:14px;
+}
+
+.form-group textarea{
+    min-height:100px;
+    resize:vertical;
+}
+
+.save-btn{
+    width:100%;
+    border:none;
+    padding:14px;
+    border-radius:14px;
+    background:linear-gradient(90deg,#7200ff,#e60091);
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+/* AI POPUP */
+.ai-box{
+    text-align:center;
+}
+
+.ai-animation{
+    font-size:55px;
+    margin:10px;
+    animation:pulse 1.2s infinite;
+}
+
+@keyframes pulse{
+    50%{
+        transform:scale(1.15);
+    }
+}
+
+/* BOTTOM NAV */
+.bottom-nav{
+    position:fixed;
+    bottom:0;
+    left:0;
+    right:0;
+    height:68px;
+    background:rgba(255,255,255,.96);
+    backdrop-filter:blur(15px);
+    border-top:1px solid #e4e6ec;
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+    z-index:200;
+}
+
+.nav-item{
+    border:none;
+    background:none;
+    color:#777;
+    font-size:11px;
+    cursor:pointer;
+    text-align:center;
+}
+
+.nav-item div{
+    font-size:21px;
+    margin-bottom:3px;
+}
+
+.nav-item.active{
+    color:#7200ff;
+    font-weight:bold;
+}
+
+/* TOAST */
+.toast{
+    position:fixed;
+    bottom:85px;
+    left:50%;
+    transform:translateX(-50%) translateY(20px);
+    background:#171923;
+    color:white;
+    padding:12px 17px;
+    border-radius:12px;
+    font-size:13px;
+    opacity:0;
+    pointer-events:none;
+    transition:.3s;
+    z-index:800;
+}
+
+.toast.show{
+    opacity:1;
+    transform:translateX(-50%) translateY(0);
+}
+
+/* MOBILE */
+@media(max-width:600px){
+
+    .hero h1{
+        font-size:25px;
+    }
+
+    .moment-image{
+        height:205px;
+    }
+
+    .container{
+        padding-top:16px;
+    }
+
+    .search-box{
+        flex-direction:row;
+    }
+
+    .filter{
+        padding:0 12px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- TOP BAR -->
+<header class="topbar">
+
+    <div class="logo">ZCrush</div>
+
+    <div class="top-icons">
+        <button class="icon-btn" onclick="showToast('Notifications coming soon 🔔')">
+            🔔
+        </button>
+
+        <button class="icon-btn" onclick="openCreate()">
+            ＋
+        </button>
+    </div>
+
+</header>
+
+
+<main class="container">
+
+    <!-- HERO -->
+    <section class="hero">
+
+        <h1>CrushMoment ❤️</h1>
+
+        <p>
+            Save the moments that matter.
+            Turn special memories into beautiful AI-powered stories
+            and rediscover them later.
+        </p>
+
+        <button class="create-btn" onclick="openCreate()">
+            ＋ Create a Moment
+        </button>
+
+    </section>
+
+
+    <!-- SEARCH -->
+    <div class="search-box">
+
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Search your moments..."
+            oninput="searchMoments()"
+        >
+
+        <button class="filter" onclick="showAll()">
+            All
+        </button>
+
+    </div>
+
+
+    <!-- MOMENTS -->
+    <div class="section-title">
+        <h2>Your Moments</h2>
+        <span id="momentCount">0 moments</span>
+    </div>
+
+
+    <div id="momentList"></div>
+
+
+    <div class="empty" id="emptyState">
+
+        <div class="emoji">💭</div>
+
+        <h3>No moments yet</h3>
+
+        <p style="color:#777;margin-top:7px;">
+            Create your first CrushMoment and keep it forever.
+        </p>
+
+        <button
+            class="create-btn"
+            onclick="openCreate()"
+            style="margin-top:15px;background:#7200ff;color:white;"
+        >
+            Create Moment
+        </button>
+
+    </div>
+
+</main>
+
+
+<!-- CREATE MODAL -->
+<div class="modal" id="createModal">
+
+    <div class="modal-box">
+
+        <div class="modal-head">
+
+            <h2>Create Moment ❤️</h2>
+
+            <button class="close" onclick="closeCreate()">
+                ✕
+            </button>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>Moment Title</label>
+
+            <input
+                type="text"
+                id="titleInput"
+                placeholder="Example: A beautiful evening"
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>Your Memory</label>
+
+            <textarea
+                id="textInput"
+                placeholder="Write something about this moment..."
+            ></textarea>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>Photo URL</label>
+
+            <input
+                type="text"
+                id="imageInput"
+                placeholder="Paste image URL"
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>Date</label>
+
+            <input
+                type="date"
+                id="dateInput"
+            >
+
+        </div>
+
+
+        <button class="save-btn" onclick="saveMoment()">
+            Save Moment ❤️
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- AI MODAL -->
+<div class="modal" id="aiModal">
+
+    <div class="modal-box ai-box">
+
+        <button
+            class="close"
+            onclick="closeAI()"
+            style="float:right;"
+        >
+            ✕
+        </button>
+
+        <div style="clear:both;"></div>
+
+        <div class="ai-animation">
+            ✨
+        </div>
+
+        <h2>AI Reel</h2>
+
+        <p style="color:#777;line-height:1.6;margin-top:10px;">
+
+            ZAI will turn this moment into a
+            beautiful short memory reel.
+
+        </p>
+
+        <div
+            style="
+            margin-top:20px;
+            background:#f4f1ff;
+            padding:15px;
+            border-radius:15px;
+            color:#6200d9;
+            font-size:13px;
+            "
+        >
+
+            🎬 AI Story  
+            🎵 Music  
+            ✨ Effects  
+            📝 Caption  
+
+        </div>
+
+        <button
+            class="save-btn"
+            style="margin-top:18px;"
+            onclick="generateAI()"
+        >
+            Create AI Reel ✨
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+
+    <button class="nav-item" onclick="goPage('index.html')">
+        <div>🏠</div>
+        Home
+    </button>
+
+    <button class="nav-item" onclick="goPage('social.html')">
+        <div>👥</div>
+        Social
+    </button>
+
+    <button class="nav-item" onclick="openCreate()">
+        <div>➕</div>
+        Create
+    </button>
+
+    <button class="nav-item active">
+        <div>❤️</div>
+        Moments
+    </button>
+
+    <button class="nav-item" onclick="goPage('profile.html')">
+        <div>👤</div>
+        Profile
+    </button>
+
+</nav>
+
+
+<div class="toast" id="toast">
+    Saved
+</div>
+
+
+<script>
+
+/* =========================
+   DEFAULT MOMENTS
+========================= */
+
+const defaultMoments = [
+
+    {
+        id:1,
+
+        title:"A Beautiful Evening",
+
+        text:"Some moments don't need a reason. They simply become memories.",
+
+        date:"2026-10-05",
+
+        image:"https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1200&q=80",
+
+        remembered:true
+    },
+
+    {
+        id:2,
+
+        title:"Peaceful Day",
+
+        text:"A small moment of happiness that deserves to be remembered.",
+
+        date:"2026-09-28",
+
+        image:"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80",
+
+        remembered:false
+    }
+
+];
+
+
+/* =========================
+   LOAD DATA
+========================= */
+
+let moments =
+    JSON.parse(localStorage.getItem("zcrushMoments")) ||
+    defaultMoments;
+
+
+/* =========================
+   RENDER
+========================= */
+
+function renderMoments(list = moments){
+
+    const container =
+        document.getElementById("momentList");
+
+    const empty =
+        document.getElementById("emptyState");
+
+    container.innerHTML = "";
+
+    document.getElementById("momentCount").innerText =
+        list.length + (list.length === 1 ? " moment" : " moments");
+
+
+    if(list.length === 0){
+
+        empty.style.display = "block";
+
+        return;
+
+    }
+
+    empty.style.display = "none";
+
+
+    list.forEach(moment => {
+
+        const card = document.createElement("div");
+
+        card.className = "moment";
+
+
+        card.innerHTML = `
+
+            <div
+                class="moment-image"
+                style="background-image:url('${moment.image}')"
+            >
+
+                <div class="badge">
+                    ❤️ CrushMoment
+                </div>
+
+                ${
+                    moment.remembered
+                    ?
+                    `<div class="remembered">
+                        ⭐ Remembered
+                    </div>`
+                    :
+                    ""
+                }
+
+            </div>
+
+
+            <div class="moment-content">
+
+                <div class="moment-title">
+                    ${escapeHTML(moment.title)}
+                </div>
+
+                <div class="moment-text">
+                    ${escapeHTML(moment.text)}
+                </div>
+
+
+                <div class="meta">
+
+                    <span>
+                        📅 ${formatDate(moment.date)}
+                    </span>
+
+                    <span>
+                        ❤️ Personal Moment
+                    </span>
+
+                </div>
+
+
+                <div class="actions">
+
+                    <button
+                        class="action"
+                        onclick="rememberMoment(${moment.id})"
+                    >
+                        ⭐ ${moment.remembered ? "Remembered" : "Remember This"}
+                    </button>
+
+
+                    <button
+                        class="action ai"
+                        onclick="openAI(${moment.id})"
+                    >
+                        ✨ Make AI Reel
+                    </button>
+
+
+                    <button
+                        class="action"
+                        onclick="shareMoment(${moment.id})"
+                    >
+                        ↗ Share
+                    </button>
+
+
+                    <button
+                        class="action"
+                        onclick="deleteMoment(${moment.id})"
+                    >
+                        🗑 Delete
+                    </button>
+
+                </div>
+
+            </div>
+
+        `;
+
+        container.appendChild(card);
+
+    });
+
+}
+
+
+/* =========================
+   CREATE MOMENT
+========================= */
+
+function openCreate(){
+
+    document.getElementById("createModal").style.display = "flex";
+
+}
+
+
+function closeCreate(){
+
+    document.getElementById("createModal").style.display = "none";
+
+}
+
+
+function saveMoment(){
+
+    const title =
+        document.getElementById("titleInput").value.trim();
+
+    const text =
+        document.getElementById("textInput").value.trim();
+
+    const image =
+        document.getElementById("imageInput").value.trim();
+
+    const date =
+        document.getElementById("dateInput").value;
+
+
+    if(!title || !text){
+
+        showToast("Please enter title and memory");
+
+        return;
+
+    }
+
+
+    const newMoment = {
+
+        id:Date.now(),
+
+        title:title,
+
+        text:text,
+
+        date:date || new Date().toISOString().split("T")[0],
+
+        image:
+            image ||
+            "https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1200&q=80",
+
+        remembered:false
+
+    };
+
+
+    moments.unshift(newMoment);
+
+
+    localStorage.setItem(
+        "zcrushMoments",
+        JSON.stringify(moments)
+    );
+
+
+    document.getElementById("titleInput").value = "";
+
+    document.getElementById("textInput").value = "";
+
+    document.getElementById("imageInput").value = "";
+
+    document.getElementById("dateInput").value = "";
+
+
+    closeCreate();
+
+    renderMoments();
+
+    showToast("Moment saved ❤️");
+
+}
+
+
+/* =========================
+   REMEMBER
+========================= */
+
+function rememberMoment(id){
+
+    const moment =
+        moments.find(m => m.id === id);
+
+    if(!moment) return;
+
+
+    moment.remembered =
+        !moment.remembered;
+
+
+    localStorage.setItem(
+        "zcrushMoments",
+        JSON.stringify(moments)
+    );
+
+
+    renderMoments();
+
+
+    showToast(
+        moment.remembered
+        ? "Moment remembered ⭐"
+        : "Removed from remembered"
+    );
+
+}
+
+
+/* =========================
+   DELETE
+========================= */
+
+function deleteMoment(id){
+
+    if(!confirm("Delete this moment?")) return;
+
+
+    moments =
+        moments.filter(m => m.id !== id);
+
+
+    localStorage.setItem(
+        "zcrushMoments",
+        JSON.stringify(moments)
+    );
+
+
+    renderMoments();
+
+    showToast("Moment deleted");
+
+}
+
+
+/* =========================
+   SEARCH
+========================= */
+
+function searchMoments(){
+
+    const query =
+        document
+        .getElementById("searchInput")
+        .value
+        .toLowerCase();
+
+
+    const filtered =
+        moments.filter(moment =>
+
+            moment.title.toLowerCase().includes(query) ||
+
+            moment.text.toLowerCase().includes(query)
+
+        );
+
+
+    renderMoments(filtered);
+
+}
+
+
+function showAll(){
+
+    document.getElementById("searchInput").value = "";
+
+    renderMoments();
+
+}
+
+
+/* =========================
+   AI REEL
+========================= */
+
+let currentAIId = null;
+
+
+function openAI(id){
+
+    currentAIId = id;
+
+    document.getElementById("aiModal").style.display = "flex";
+
+}
+
+
+function closeAI(){
+
+    document.getElementById("aiModal").style.display = "none";
+
+}
+
+
+function generateAI(){
+
+    closeAI();
+
+    showToast("ZAI is preparing your AI Reel ✨");
+
+    setTimeout(() => {
+
+        showToast("AI Reel prototype created 🎬");
+
+    },2000);
+
+}
+
+
+/* =========================
+   SHARE
+========================= */
+
+function shareMoment(id){
+
+    const moment =
+        moments.find(m => m.id === id);
+
+    if(!moment) return;
+
+
+    const text =
+        "❤️ " +
+        moment.title +
+        "\n\n" +
+        moment.text +
+        "\n\nCreated with ZCrush";
+
+
+    if(navigator.share){
+
+        navigator.share({
+
+            title:moment.title,
+
+            text:text
+
+        });
+
+    }else{
+
+        navigator.clipboard
+        .writeText(text)
+        .then(() => {
+
+            showToast("Moment text copied 📋");
+
+        });
+
+    }
+
+}
+
+
+/* =========================
+   NAVIGATION
+========================= */
+
+function goPage(page){
+
+    window.location.href = page;
+
+}
+
+
+/* =========================
+   TOAST
+========================= */
+
+function showToast(message){
+
+    const toast =
+        document.getElementById("toast");
+
+
+    toast.innerText = message;
+
+    toast.classList.add("show");
+
+
+    setTimeout(() => {
+
+        toast.classList.remove("show");
+
+    },2500);
+
+}
+
+
+/* =========================
+   DATE
+========================= */
+
+function formatDate(date){
+
+    if(!date) return "Today";
+
+
+    const d = new Date(date);
+
+
+    return d.toLocaleDateString(
+        "en-IN",
+        {
+            day:"numeric",
+            month:"short",
+            year:"numeric"
+        }
+    );
+
+}
+
+
+/* =========================
+   SECURITY / HTML ESCAPE
+========================= */
+
+function escapeHTML(text){
+
+    return String(text)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================
+   INITIAL LOAD
+========================= */
+
+renderMoments();
+
+
+/* CLOSE MODALS OUTSIDE */
+
+window.addEventListener("click",function(e){
+
+    if(e.target ===
+       document.getElementById("createModal")){
+
+        closeCreate();
+
+    }
+
+    if(e.target ===
+       document.getElementById("aiModal")){
+
+        closeAI();
+
+    }
+
+});
+
+</script>
+
+</body>
+</html>
