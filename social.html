@@ -1,11 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
+
 <title>ZCrush - Social</title>
 
+
 <style>
+
 *{
   margin:0;
   padding:0;
@@ -13,11 +22,13 @@
   font-family:Arial,sans-serif;
 }
 
+
 body{
   background:#f5f7fb;
   color:#151827;
   min-height:100vh;
 }
+
 
 /* =========================
    TOPBAR
@@ -36,13 +47,23 @@ body{
   z-index:1000;
 }
 
+
 .logo{
   font-size:25px;
   font-weight:bold;
-  background:linear-gradient(90deg,#9b00ff,#ff22bd,#168cff);
+
+  background:
+    linear-gradient(
+      90deg,
+      #9b00ff,
+      #ff22bd,
+      #168cff
+    );
+
   -webkit-background-clip:text;
   color:transparent;
 }
+
 
 .topSearch{
   width:280px;
@@ -54,9 +75,11 @@ body{
   color:#333;
 }
 
+
 .topSearch::placeholder{
   color:#999;
 }
+
 
 .topRight{
   display:flex;
@@ -64,10 +87,6 @@ body{
   gap:18px;
 }
 
-.notification{
-  font-size:18px;
-  cursor:pointer;
-}
 
 .topAvatar{
   width:38px;
@@ -76,6 +95,181 @@ body{
   object-fit:cover;
   background:#ddd;
 }
+
+
+/* =========================
+   NOTIFICATIONS
+========================= */
+
+.notificationWrap{
+  position:relative;
+}
+
+
+.notification{
+  width:40px;
+  height:40px;
+  border:none;
+  background:#f5f6fa;
+  border-radius:50%;
+  cursor:pointer;
+  font-size:18px;
+  position:relative;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+
+.notification:hover{
+  background:#eee8ff;
+}
+
+
+.notificationBadge{
+  position:absolute;
+  top:-3px;
+  right:-3px;
+
+  min-width:18px;
+  height:18px;
+
+  padding:0 5px;
+
+  background:#ef4056;
+  color:white;
+
+  border-radius:20px;
+
+  font-size:10px;
+  font-weight:bold;
+
+  display:none;
+
+  align-items:center;
+  justify-content:center;
+
+  border:2px solid white;
+}
+
+
+.notificationPanel{
+  position:absolute;
+
+  top:52px;
+  right:0;
+
+  width:340px;
+  max-width:calc(100vw - 30px);
+
+  background:white;
+
+  border:1px solid #e5e7ef;
+  border-radius:14px;
+
+  box-shadow:
+    0 12px 35px rgba(0,0,0,.14);
+
+  overflow:hidden;
+
+  display:none;
+
+  z-index:5000;
+}
+
+
+.notificationPanel.show{
+  display:block;
+}
+
+
+.notificationHeader{
+  padding:14px 15px;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  border-bottom:1px solid #eee;
+}
+
+
+.notificationHeader strong{
+  font-size:15px;
+}
+
+
+.notificationHeader button{
+  border:none;
+  background:none;
+  color:#721cff;
+  cursor:pointer;
+  font-size:12px;
+  font-weight:bold;
+}
+
+
+.notificationHeader button:hover{
+  text-decoration:underline;
+}
+
+
+.notificationItem{
+  padding:13px 15px;
+
+  border-bottom:1px solid #f0f0f0;
+
+  cursor:pointer;
+
+  color:#555;
+
+  font-size:13px;
+
+  transition:.2s;
+}
+
+
+.notificationItem:hover{
+  background:#f7f4ff;
+}
+
+
+.notificationItem.unread{
+  background:#f3edff;
+  color:#222;
+  font-weight:500;
+}
+
+
+.notificationItem small{
+  display:block;
+  margin-top:5px;
+  color:#999;
+  font-size:10px;
+  font-weight:normal;
+}
+
+
+.noNotification{
+  text-align:center;
+  padding:30px 15px;
+  color:#888;
+  font-size:13px;
+}
+
+
+@media(max-width:600px){
+
+  .notificationPanel{
+    position:fixed;
+    top:65px;
+    right:10px;
+    width:calc(100vw - 20px);
+  }
+
+}
+
 
 /* =========================
    LAYOUT
@@ -88,6 +282,7 @@ body{
   min-height:calc(100vh - 65px);
 }
 
+
 /* =========================
    SIDEBAR
 ========================= */
@@ -97,31 +292,40 @@ body{
   background:white;
   border-right:1px solid #e5e7ef;
   padding:25px 15px;
+
   position:sticky;
   top:65px;
+
   height:calc(100vh - 65px);
 }
+
 
 .sidebar a{
   display:block;
   text-decoration:none;
   color:#555b6d;
+
   padding:13px 15px;
+
   border-radius:10px;
   margin-bottom:6px;
+
   font-size:14px;
 }
+
 
 .sidebar a:hover{
   background:#f5f0ff;
   color:#721cff;
 }
 
+
 .sidebar a.active{
   background:#eee3ff;
   color:#721cff;
   font-weight:bold;
 }
+
 
 /* =========================
    MAIN
@@ -134,6 +338,7 @@ body{
   min-width:0;
 }
 
+
 /* =========================
    PAGE HEADER
 ========================= */
@@ -142,30 +347,38 @@ body{
   background:white;
   border:1px solid #e5e7ef;
   border-radius:15px;
+
   padding:22px 25px;
+
   margin-bottom:20px;
 }
+
 
 .pageHeader h1{
   font-size:26px;
   margin-bottom:7px;
 }
 
+
 .gradient{
-  background:linear-gradient(
-    90deg,
-    #9b00ff,
-    #ff22bd,
-    #168cff
-  );
+  background:
+    linear-gradient(
+      90deg,
+      #9b00ff,
+      #ff22bd,
+      #168cff
+    );
+
   -webkit-background-clip:text;
   color:transparent;
 }
+
 
 .pageHeader p{
   color:#777;
   font-size:14px;
 }
+
 
 /* =========================
    CREATE POST
@@ -175,9 +388,12 @@ body{
   background:white;
   border:1px solid #e5e7ef;
   border-radius:15px;
+
   padding:20px;
+
   margin-bottom:20px;
 }
+
 
 .userTop{
   display:flex;
@@ -185,6 +401,7 @@ body{
   gap:12px;
   margin-bottom:15px;
 }
+
 
 .avatar{
   width:45px;
@@ -194,10 +411,12 @@ body{
   background:#e9ebf2;
 }
 
+
 .userName{
   font-weight:bold;
   color:#222;
 }
+
 
 .handle{
   color:#888;
@@ -205,57 +424,78 @@ body{
   margin-top:3px;
 }
 
+
 textarea{
   width:100%;
   min-height:90px;
+
   resize:none;
+
   background:#f8f9fc;
   color:#222;
+
   border:1px solid #e0e3eb;
+
   border-radius:12px;
+
   padding:14px;
+
   outline:none;
+
   font-size:15px;
 }
+
 
 textarea:focus{
   border-color:#9b55ff;
   background:white;
 }
 
+
 textarea::placeholder{
   color:#999;
 }
+
 
 .createActions{
   display:flex;
   justify-content:space-between;
   align-items:center;
+
   margin-top:12px;
+
   gap:10px;
 }
+
 
 .fileBtn{
   color:#666;
   cursor:pointer;
+
   font-size:14px;
+
   padding:9px 12px;
+
   border-radius:9px;
 }
+
 
 .fileBtn:hover{
   background:#f3f0fa;
   color:#721cff;
 }
 
+
 #imageInput{
   display:none;
 }
+
 
 .preview{
   margin-top:12px;
   display:none;
 }
+
 
 .preview img{
   max-width:100%;
@@ -263,23 +503,32 @@ textarea::placeholder{
   border-radius:12px;
 }
 
+
 .postBtn{
   border:none;
   color:white;
+
   padding:10px 22px;
+
   border-radius:20px;
+
   cursor:pointer;
+
   font-weight:bold;
-  background:linear-gradient(
-    90deg,
-    #721cff,
-    #a000ff
-  );
+
+  background:
+    linear-gradient(
+      90deg,
+      #721cff,
+      #a000ff
+    );
 }
+
 
 .postBtn:hover{
   opacity:.9;
 }
+
 
 /* =========================
    SEARCH
@@ -289,19 +538,28 @@ textarea::placeholder{
   margin-bottom:20px;
 }
 
+
 .feedSearch input{
   width:100%;
+
   background:white;
+
   border:1px solid #e5e7ef;
+
   color:#333;
+
   padding:13px 16px;
+
   border-radius:12px;
+
   outline:none;
 }
+
 
 .feedSearch input:focus{
   border-color:#9b55ff;
 }
+
 
 /* =========================
    POSTS
@@ -309,90 +567,137 @@ textarea::placeholder{
 
 .post{
   background:white;
+
   border:1px solid #e5e7ef;
+
   border-radius:15px;
+
   padding:18px;
+
   margin-bottom:18px;
 }
 
+
 .postHeader{
   display:flex;
+
   align-items:center;
+
   justify-content:space-between;
+
   gap:10px;
 }
+
 
 .postUser{
   display:flex;
+
   align-items:center;
+
   gap:10px;
 }
 
+
 .followBtn{
   border:1px solid #721cff;
+
   background:white;
+
   color:#721cff;
+
   padding:7px 14px;
+
   border-radius:18px;
+
   cursor:pointer;
+
   font-size:12px;
 }
+
 
 .followBtn:hover{
   background:#f1e9ff;
 }
+
 
 .followBtn.following{
   background:#721cff;
   color:white;
 }
 
+
 .postText{
   margin:15px 0;
+
   color:#444;
+
   line-height:1.6;
+
   white-space:pre-wrap;
+
   font-size:15px;
 }
 
+
 .postImage{
   width:100%;
+
   max-height:550px;
+
   object-fit:cover;
+
   border-radius:12px;
+
   margin-top:8px;
+
   display:block;
 }
 
+
 .postActions{
   display:flex;
+
   gap:22px;
+
   border-top:1px solid #eee;
+
   padding-top:13px;
+
   margin-top:15px;
 }
 
+
 .actionBtn{
   border:none;
+
   background:none;
+
   color:#777;
+
   cursor:pointer;
+
   font-size:14px;
 }
+
 
 .actionBtn:hover{
   color:#721cff;
 }
 
+
 .actionBtn.liked{
   color:#ff3b7f;
 }
 
+
 .deleteBtn{
   color:#ef4056 !important;
+
   border-color:#ef4056 !important;
+
   background:white !important;
 }
+
 
 /* =========================
    COMMENTS
@@ -403,52 +708,78 @@ textarea::placeholder{
   display:none;
 }
 
+
 .commentList{
   margin-bottom:10px;
 }
 
+
 .comment{
   background:#f5f6fa;
+
   padding:10px 12px;
+
   border-radius:10px;
+
   margin-bottom:7px;
+
   font-size:13px;
+
   color:#444;
 }
 
+
 .comment strong{
   color:#222;
+
   display:block;
+
   margin-bottom:3px;
 }
+
 
 .commentInput{
   display:flex;
   gap:8px;
 }
 
+
 .commentInput input{
   flex:1;
+
   background:#f8f9fc;
+
   border:1px solid #e0e3eb;
+
   color:#333;
+
   border-radius:10px;
+
   padding:10px;
+
   outline:none;
 }
+
 
 .commentInput input:focus{
   border-color:#9b55ff;
 }
 
+
 .commentInput button{
   border:none;
+
   background:#721cff;
+
   color:white;
+
   border-radius:10px;
+
   padding:0 15px;
+
   cursor:pointer;
 }
+
 
 /* =========================
    EMPTY
@@ -456,12 +787,18 @@ textarea::placeholder{
 
 .empty{
   text-align:center;
+
   color:#777;
+
   padding:35px;
+
   background:white;
+
   border:1px solid #e5e7ef;
+
   border-radius:15px;
 }
+
 
 /* =========================
    TOAST
@@ -469,17 +806,29 @@ textarea::placeholder{
 
 .toast{
   position:fixed;
+
   bottom:25px;
+
   left:50%;
+
   transform:translateX(-50%);
+
   background:#222;
+
   color:white;
+
   padding:12px 20px;
+
   border-radius:25px;
+
   display:none;
+
   z-index:9999;
-  box-shadow:0 4px 20px rgba(0,0,0,.2);
+
+  box-shadow:
+    0 4px 20px rgba(0,0,0,.2);
 }
+
 
 /* =========================
    FOOTER
@@ -487,10 +836,14 @@ textarea::placeholder{
 
 footer{
   text-align:center;
+
   color:#888;
+
   padding:30px 0;
+
   font-size:13px;
 }
+
 
 /* =========================
    MOBILE
@@ -502,15 +855,18 @@ footer{
     width:180px;
   }
 
+
   .topSearch{
     width:200px;
   }
+
 
   .main{
     padding:18px;
   }
 
 }
+
 
 @media(max-width:600px){
 
@@ -518,14 +874,17 @@ footer{
     padding:0 15px;
   }
 
+
   .topSearch{
     display:none;
   }
+
 
   .sidebar{
     width:70px;
     padding:15px 8px;
   }
+
 
   .sidebar a{
     font-size:0;
@@ -533,34 +892,42 @@ footer{
     padding:13px 5px;
   }
 
+
   .sidebar a::first-letter{
     font-size:18px;
   }
+
 
   .main{
     padding:12px;
   }
 
+
   .pageHeader{
     padding:18px;
   }
 
+
   .pageHeader h1{
     font-size:22px;
   }
+
 
   .createActions{
     flex-direction:column;
     align-items:stretch;
   }
 
+
   .postBtn{
     width:100%;
   }
 
+
   .postHeader{
     align-items:flex-start;
   }
+
 
   .followBtn{
     padding:6px 10px;
@@ -568,29 +935,37 @@ footer{
 
 }
 
+
 @media(max-width:400px){
 
   .sidebar{
     width:58px;
   }
 
+
   .topbar{
     height:58px;
   }
 
+
   .main{
     padding:10px;
   }
+
 
   .post{
     padding:14px;
   }
 
 }
+
 </style>
+
 </head>
 
+
 <body>
+
 
 <!-- =========================
      TOPBAR
@@ -602,43 +977,65 @@ footer{
     ZCrush
   </div>
 
+
   <input
     class="topSearch"
     placeholder="Search ZCrush"
   >
 
+
   <div class="topRight">
+
+
+    <!-- NOTIFICATIONS -->
 
     <div class="notificationWrap">
 
-  <button
-    class="notification"
-    onclick="toggleNotifications()"
-  >
-    🔔
-    <span id="notificationBadge" class="notificationBadge">
-      0
-    </span>
-  </button>
+      <button
+        class="notification"
+        onclick="toggleNotifications()"
+        aria-label="Notifications"
+      >
 
-  <div
-    id="notificationPanel"
-    class="notificationPanel"
-  >
+        🔔
 
-    <div class="notificationHeader">
-      <strong>Notifications</strong>
+        <span
+          id="notificationBadge"
+          class="notificationBadge"
+        >
+          0
+        </span>
 
-      <button onclick="markAllNotificationsRead()">
-        Mark all read
       </button>
+
+
+      <div
+        id="notificationPanel"
+        class="notificationPanel"
+      >
+
+        <div class="notificationHeader">
+
+          <strong>
+            Notifications
+          </strong>
+
+
+          <button
+            onclick="markAllNotificationsRead()"
+          >
+            Mark all read
+          </button>
+
+        </div>
+
+
+        <div id="notificationList"></div>
+
+      </div>
+
     </div>
 
-    <div id="notificationList"></div>
-
-  </div>
-
-</div>
 
     <img
       id="topAvatar"
@@ -658,6 +1055,7 @@ footer{
 
 <div class="layout">
 
+
   <!-- SIDEBAR -->
 
   <aside class="sidebar">
@@ -666,6 +1064,7 @@ footer{
       🏠 Home
     </a>
 
+
     <a
       href="social.html"
       class="active"
@@ -673,17 +1072,21 @@ footer{
       👥 Social
     </a>
 
+
     <a href="gaming.html">
       🎮 Gaming
     </a>
+
 
     <a href="shorts.html">
       🎬 Shorts
     </a>
 
+
     <a href="marketplace.html">
       🛒 Marketplace
     </a>
+
 
     <a href="profile.html">
       👤 Profile
@@ -696,15 +1099,19 @@ footer{
 
   <main class="main">
 
+
     <!-- PAGE HEADER -->
 
     <section class="pageHeader">
 
       <h1>
+
         <span class="gradient">
           ZCrush Social
         </span>
+
       </h1>
+
 
       <p>
         Connect • Share • Like • Comment • Follow
@@ -726,6 +1133,7 @@ footer{
           alt="Profile"
         >
 
+
         <div>
 
           <div
@@ -734,6 +1142,7 @@ footer{
           >
             ZCrush User
           </div>
+
 
           <div
             class="handle"
@@ -772,6 +1181,7 @@ footer{
         <label class="fileBtn">
 
           📷 Add Photo
+
 
           <input
             type="file"
@@ -818,7 +1228,9 @@ footer{
 
 
 <footer>
+
   © 2026 ZCrush • Connect. Create. Explore.
+
 </footer>
 
 
@@ -830,25 +1242,27 @@ footer{
 
 <script>
 
-/* =========================
+/* =====================================================
    LOGIN PROTECTION
-========================= */
+===================================================== */
 
 if(
   localStorage.getItem("zcrushLoggedIn")
   !== "true"
 ){
 
-  alert("Please login to use ZCrush Social.");
+  alert(
+    "Please login to use ZCrush Social."
+  );
 
   window.location.href="login.html";
 
 }
 
 
-/* =========================
+/* =====================================================
    CURRENT USER
-========================= */
+===================================================== */
 
 const currentUser={
 
@@ -867,20 +1281,28 @@ const currentUser={
 };
 
 
-document.getElementById("currentName")
-.textContent=currentUser.name;
+document.getElementById(
+  "currentName"
+).textContent=
+  currentUser.name;
 
 
-document.getElementById("currentHandle")
-.textContent=currentUser.handle;
+document.getElementById(
+  "currentHandle"
+).textContent=
+  currentUser.handle;
 
 
 const currentAvatar=
-  document.getElementById("currentAvatar");
+  document.getElementById(
+    "currentAvatar"
+  );
 
 
 const topAvatar=
-  document.getElementById("topAvatar");
+  document.getElementById(
+    "topAvatar"
+  );
 
 
 if(currentUser.photo){
@@ -902,9 +1324,345 @@ if(currentUser.photo){
 }
 
 
-/* =========================
-   STORAGE
-========================= */
+/* =====================================================
+   NOTIFICATIONS
+===================================================== */
+
+function getNotifications(){
+
+  try{
+
+    const data=
+      JSON.parse(
+        localStorage.getItem(
+          "zcrushNotifications"
+        ) || "[]"
+      );
+
+    return Array.isArray(data)
+      ? data
+      : [];
+
+  }catch(e){
+
+    return [];
+
+  }
+
+}
+
+
+function saveNotifications(list){
+
+  try{
+
+    localStorage.setItem(
+      "zcrushNotifications",
+      JSON.stringify(list)
+    );
+
+  }catch(e){
+
+    console.log(
+      "Could not save notifications."
+    );
+
+  }
+
+}
+
+
+function addNotification(
+  text,
+  type="general"
+){
+
+  const notifications=
+    getNotifications();
+
+
+  notifications.unshift({
+
+    id:
+      "notification_"+
+      Date.now()+
+      "_"+
+      Math.random()
+        .toString(36)
+        .substring(2,8),
+
+    text:text,
+
+    type:type,
+
+    read:false,
+
+    time:Date.now()
+
+  });
+
+
+  saveNotifications(
+    notifications.slice(0,50)
+  );
+
+
+  renderNotifications();
+
+}
+
+
+function toggleNotifications(){
+
+  const panel=
+    document.getElementById(
+      "notificationPanel"
+    );
+
+
+  if(!panel)
+    return;
+
+
+  panel.classList.toggle(
+    "show"
+  );
+
+
+  renderNotifications();
+
+}
+
+
+function markAllNotificationsRead(){
+
+  const notifications=
+    getNotifications();
+
+
+  notifications.forEach(
+    function(notification){
+
+      notification.read=true;
+
+    }
+  );
+
+
+  saveNotifications(
+    notifications
+  );
+
+
+  renderNotifications();
+
+}
+
+
+function renderNotifications(){
+
+  const list=
+    document.getElementById(
+      "notificationList"
+    );
+
+
+  const badge=
+    document.getElementById(
+      "notificationBadge"
+    );
+
+
+  if(!list || !badge)
+    return;
+
+
+  const notifications=
+    getNotifications();
+
+
+  const unread=
+    notifications.filter(
+      function(notification){
+
+        return !notification.read;
+
+      }
+    ).length;
+
+
+  badge.textContent=
+    unread>99
+      ? "99+"
+      : unread;
+
+
+  badge.style.display=
+    unread>0
+      ? "flex"
+      : "none";
+
+
+  if(
+    notifications.length===0
+  ){
+
+    list.innerHTML=`
+
+      <div class="noNotification">
+
+        🔔 No notifications yet.
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  list.innerHTML=
+    notifications.map(
+      function(notification){
+
+        const time=
+          new Date(
+            notification.time
+          ).toLocaleString();
+
+
+        return `
+
+          <div
+            class="notificationItem ${
+              notification.read
+                ? ""
+                : "unread"
+            }"
+            data-id="${escapeHTML(
+              notification.id
+            )}"
+          >
+
+            ${escapeHTML(
+              notification.text
+            )}
+
+            <small>
+
+              ${escapeHTML(
+                time
+              )}
+
+            </small>
+
+          </div>
+
+        `;
+
+      }
+    ).join("");
+
+
+  const items=
+    list.querySelectorAll(
+      ".notificationItem"
+    );
+
+
+  items.forEach(
+    function(item){
+
+      item.addEventListener(
+        "click",
+        function(){
+
+          readNotification(
+            item.dataset.id
+          );
+
+        }
+      );
+
+    }
+  );
+
+}
+
+
+function readNotification(id){
+
+  const notifications=
+    getNotifications();
+
+
+  const notification=
+    notifications.find(
+      function(item){
+
+        return item.id===id;
+
+      }
+    );
+
+
+  if(!notification)
+    return;
+
+
+  notification.read=true;
+
+
+  saveNotifications(
+    notifications
+  );
+
+
+  renderNotifications();
+
+}
+
+
+/* =====================================================
+   CLOSE NOTIFICATION PANEL
+===================================================== */
+
+document.addEventListener(
+  "click",
+  function(event){
+
+    const wrap=
+      document.querySelector(
+        ".notificationWrap"
+      );
+
+
+    const panel=
+      document.getElementById(
+        "notificationPanel"
+      );
+
+
+    if(
+      wrap &&
+      panel &&
+      !wrap.contains(event.target)
+    ){
+
+      panel.classList.remove(
+        "show"
+      );
+
+    }
+
+  }
+);
+
+
+/* =====================================================
+   STORAGE - POSTS
+===================================================== */
 
 function getPosts(){
 
@@ -912,9 +1670,11 @@ function getPosts(){
 
     const data=
       JSON.parse(
-        localStorage.getItem("zcrushPosts")
-        || "[]"
+        localStorage.getItem(
+          "zcrushPosts"
+        ) || "[]"
       );
+
 
     return Array.isArray(data)
       ? data
@@ -953,9 +1713,9 @@ function savePosts(posts){
 }
 
 
-/* =========================
-   FOLLOW
-========================= */
+/* =====================================================
+   FOLLOWING
+===================================================== */
 
 function getFollowing(){
 
@@ -963,9 +1723,11 @@ function getFollowing(){
 
     const data=
       JSON.parse(
-        localStorage.getItem("zcrushFollowing")
-        || "[]"
+        localStorage.getItem(
+          "zcrushFollowing"
+        ) || "[]"
       );
+
 
     return Array.isArray(data)
       ? data
@@ -990,9 +1752,9 @@ function saveFollowing(list){
 }
 
 
-/* =========================
+/* =====================================================
    DEFAULT POSTS
-========================= */
+===================================================== */
 
 const defaultPosts=[
 
@@ -1010,7 +1772,9 @@ const defaultPosts=[
 
     image:
       "https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=1200&q=80"
+
   },
+
 
   {
     id:"default_2",
@@ -1026,7 +1790,9 @@ const defaultPosts=[
 
     image:
       "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1200&q=80"
+
   },
+
 
   {
     id:"default_3",
@@ -1042,14 +1808,15 @@ const defaultPosts=[
 
     image:
       "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80"
+
   }
 
 ];
 
 
-/* =========================
+/* =====================================================
    DEFAULT DATA
-========================= */
+===================================================== */
 
 function getDefaultData(){
 
@@ -1057,9 +1824,11 @@ function getDefaultData(){
 
     const data=
       JSON.parse(
-        localStorage.getItem("zcrushDefaultPosts")
-        || "{}"
+        localStorage.getItem(
+          "zcrushDefaultPosts"
+        ) || "{}"
       );
+
 
     return data &&
       typeof data==="object"
@@ -1085,24 +1854,32 @@ function saveDefaultData(data){
 }
 
 
-/* =========================
+/* =====================================================
    IMAGE UPLOAD
-========================= */
+===================================================== */
 
 let selectedImage="";
 
 
-document.getElementById("imageInput")
-.addEventListener(
+document.getElementById(
+  "imageInput"
+).addEventListener(
   "change",
   function(){
 
-    const file=this.files[0];
+    const file=
+      this.files[0];
 
-    if(!file) return;
+
+    if(!file)
+      return;
 
 
-    if(!file.type.startsWith("image/")){
+    if(
+      !file.type.startsWith(
+        "image/"
+      )
+    ){
 
       showToast(
         "Please select an image."
@@ -1117,98 +1894,125 @@ document.getElementById("imageInput")
       new FileReader();
 
 
-    reader.onload=function(e){
+    reader.onload=
+      function(e){
 
-      const img=
-        new Image();
-
-
-      img.onload=function(){
-
-        const maxWidth=1200;
-
-        let width=img.width;
-
-        let height=img.height;
+        const img=
+          new Image();
 
 
-        if(width>maxWidth){
+        img.onload=
+          function(){
 
-          height=
-            Math.round(
-              height*(maxWidth/width)
+            const maxWidth=1200;
+
+            let width=
+              img.width;
+
+            let height=
+              img.height;
+
+
+            if(
+              width>maxWidth
+            ){
+
+              height=
+                Math.round(
+                  height*
+                  (
+                    maxWidth/
+                    width
+                  )
+                );
+
+              width=
+                maxWidth;
+
+            }
+
+
+            const canvas=
+              document.createElement(
+                "canvas"
+              );
+
+
+            canvas.width=
+              width;
+
+            canvas.height=
+              height;
+
+
+            const ctx=
+              canvas.getContext(
+                "2d"
+              );
+
+
+            ctx.drawImage(
+              img,
+              0,
+              0,
+              width,
+              height
             );
 
-          width=maxWidth;
 
-        }
-
-
-        const canvas=
-          document.createElement("canvas");
-
-
-        canvas.width=width;
-
-        canvas.height=height;
+            selectedImage=
+              canvas.toDataURL(
+                "image/jpeg",
+                0.82
+              );
 
 
-        const ctx=
-          canvas.getContext("2d");
+            document.getElementById(
+              "previewImg"
+            ).src=
+              selectedImage;
 
 
-        ctx.drawImage(
-          img,
-          0,
-          0,
-          width,
-          height
-        );
+            document.getElementById(
+              "preview"
+            ).style.display=
+              "block";
+
+          };
 
 
-        selectedImage=
-          canvas.toDataURL(
-            "image/jpeg",
-            0.82
-          );
-
-
-        document.getElementById(
-          "previewImg"
-        ).src=selectedImage;
-
-
-        document.getElementById(
-          "preview"
-        ).style.display="block";
+        img.src=
+          e.target.result;
 
       };
 
 
-      img.src=e.target.result;
-
-    };
-
-
-    reader.readAsDataURL(file);
+    reader.readAsDataURL(
+      file
+    );
 
   }
 );
 
 
-/* =========================
+/* =====================================================
    CREATE POST
-========================= */
+===================================================== */
 
 function createPost(){
 
   const text=
-    document.getElementById("postText")
+    document.getElementById(
+      "postText"
+    )
     .value
     .trim();
 
 
-  if(!text && !selectedImage){
+  if(
+    !text &&
+    !selectedImage
+  ){
 
     showToast(
       "Write something or add a photo."
@@ -1258,11 +2062,18 @@ function createPost(){
   };
 
 
-  posts.unshift(newPost);
+  posts.unshift(
+    newPost
+  );
 
 
-  if(!savePosts(posts))
+  if(
+    !savePosts(posts)
+  ){
+
     return;
+
+  }
 
 
   document.getElementById(
@@ -1277,7 +2088,8 @@ function createPost(){
 
   document.getElementById(
     "preview"
-  ).style.display="none";
+  ).style.display=
+    "none";
 
 
   selectedImage="";
@@ -1293,9 +2105,9 @@ function createPost(){
 }
 
 
-/* =========================
+/* =====================================================
    LIKE USER POST
-========================= */
+===================================================== */
 
 function likeUserPost(id){
 
@@ -1305,7 +2117,11 @@ function likeUserPost(id){
 
   const post=
     posts.find(
-      p=>p.id===id
+      function(p){
+
+        return p.id===id;
+
+      }
     );
 
 
@@ -1314,34 +2130,59 @@ function likeUserPost(id){
 
 
   post.likes=
-    Number(post.likes || 0);
+    Number(
+      post.likes || 0
+    );
 
 
   if(post.liked){
 
     post.likes--;
 
+    post.liked=false;
+
   }else{
 
     post.likes++;
 
+    post.liked=true;
+
+
+    /*
+      Notification is only generated
+      when actor and post owner
+      are different.
+    */
+
+    if(
+      post.handle !==
+      currentUser.handle
+    ){
+
+      addNotification(
+        "❤️ "+currentUser.name+
+        " liked your post.",
+        "like"
+      );
+
+    }
+
   }
 
 
-  post.liked=
-    !post.liked;
+  savePosts(
+    posts
+  );
 
-
-  savePosts(posts);
 
   renderPosts();
 
 }
 
 
-/* =========================
+/* =====================================================
    LIKE DEFAULT POST
-========================= */
+===================================================== */
 
 function likeDefaultPost(id){
 
@@ -1364,36 +2205,48 @@ function likeDefaultPost(id){
   }
 
 
-  if(data[id].liked){
+  data[id].likes=
+    Number(
+      data[id].likes || 0
+    );
+
+
+  if(
+    data[id].liked
+  ){
 
     data[id].likes--;
+
+    data[id].liked=false;
 
   }else{
 
     data[id].likes++;
 
+    data[id].liked=true;
+
   }
 
 
-  data[id].liked=
-    !data[id].liked;
+  saveDefaultData(
+    data
+  );
 
-
-  saveDefaultData(data);
 
   renderPosts();
 
 }
 
 
-/* =========================
+/* =====================================================
    FOLLOW
-========================= */
+===================================================== */
 
 function toggleFollow(handle){
 
   if(
-    handle===currentUser.handle
+    handle===
+    currentUser.handle
   ){
 
     showToast(
@@ -1410,15 +2263,37 @@ function toggleFollow(handle){
 
 
   const index=
-    following.indexOf(handle);
+    following.indexOf(
+      handle
+    );
 
 
-  if(index===-1){
+  if(
+    index===-1
+  ){
 
-    following.push(handle);
+    following.push(
+      handle
+    );
+
 
     showToast(
-      "Following "+handle+" ✓"
+      "Following "+
+      handle+
+      " ✓"
+    );
+
+
+    /*
+      Local notification prototype.
+      Real recipient notification will
+      be connected with database later.
+    */
+
+    addNotification(
+      "👤 You started following "+
+      handle+".",
+      "follow"
     );
 
   }else{
@@ -1428,23 +2303,28 @@ function toggleFollow(handle){
       1
     );
 
+
     showToast(
-      "Unfollowed "+handle
+      "Unfollowed "+
+      handle
     );
 
   }
 
 
-  saveFollowing(following);
+  saveFollowing(
+    following
+  );
+
 
   renderPosts();
 
 }
 
 
-/* =========================
+/* =====================================================
    COMMENTS
-========================= */
+===================================================== */
 
 function toggleComments(id){
 
@@ -1466,12 +2346,20 @@ function toggleComments(id){
 }
 
 
+/* =====================================================
+   ADD USER COMMENT
+===================================================== */
+
 function addUserComment(id){
 
   const input=
     document.getElementById(
       "commentInput_"+id
     );
+
+
+  if(!input)
+    return;
 
 
   const text=
@@ -1488,7 +2376,11 @@ function addUserComment(id){
 
   const post=
     posts.find(
-      p=>p.id===id
+      function(p){
+
+        return p.id===id;
+
+      }
     );
 
 
@@ -1496,7 +2388,11 @@ function addUserComment(id){
     return;
 
 
-  if(!Array.isArray(post.comments)){
+  if(
+    !Array.isArray(
+      post.comments
+    )
+  ){
 
     post.comments=[];
 
@@ -1520,7 +2416,28 @@ function addUserComment(id){
   });
 
 
-  savePosts(posts);
+  savePosts(
+    posts
+  );
+
+
+  /*
+    Comment notification.
+  */
+
+  if(
+    post.handle !==
+    currentUser.handle
+  ){
+
+    addNotification(
+      "💬 "+
+      currentUser.name+
+      " commented on your post.",
+      "comment"
+    );
+
+  }
 
 
   input.value="";
@@ -1529,20 +2446,32 @@ function addUserComment(id){
   renderPosts();
 
 
-  setTimeout(function(){
+  setTimeout(
+    function(){
 
-    const box=
-      document.getElementById(
-        "comments_"+id
-      );
+      const box=
+        document.getElementById(
+          "comments_"+id
+        );
 
-    if(box)
-      box.style.display="block";
 
-  },20);
+      if(box){
+
+        box.style.display=
+          "block";
+
+      }
+
+    },
+    20
+  );
 
 }
 
+
+/* =====================================================
+   ADD DEFAULT COMMENT
+===================================================== */
 
 function addDefaultComment(id){
 
@@ -1550,6 +2479,10 @@ function addDefaultComment(id){
     document.getElementById(
       "commentInput_"+id
     );
+
+
+  if(!input)
+    return;
 
 
   const text=
@@ -1579,9 +2512,11 @@ function addDefaultComment(id){
   }
 
 
-  if(!Array.isArray(
-    data[id].comments
-  )){
+  if(
+    !Array.isArray(
+      data[id].comments
+    )
+  ){
 
     data[id].comments=[];
 
@@ -1605,7 +2540,9 @@ function addDefaultComment(id){
   });
 
 
-  saveDefaultData(data);
+  saveDefaultData(
+    data
+  );
 
 
   input.value="";
@@ -1614,29 +2551,39 @@ function addDefaultComment(id){
   renderPosts();
 
 
-  setTimeout(function(){
+  setTimeout(
+    function(){
 
-    const box=
-      document.getElementById(
-        "comments_"+id
-      );
+      const box=
+        document.getElementById(
+          "comments_"+id
+        );
 
-    if(box)
-      box.style.display="block";
 
-  },20);
+      if(box){
+
+        box.style.display=
+          "block";
+
+      }
+
+    },
+    20
+  );
 
 }
 
 
-/* =========================
-   DELETE
-========================= */
+/* =====================================================
+   DELETE POST
+===================================================== */
 
 function deletePost(id){
 
   if(
-    !confirm("Delete this post?")
+    !confirm(
+      "Delete this post?"
+    )
   ){
 
     return;
@@ -1650,11 +2597,18 @@ function deletePost(id){
 
   posts=
     posts.filter(
-      p=>p.id!==id
+      function(p){
+
+        return p.id!==id;
+
+      }
     );
 
 
-  savePosts(posts);
+  savePosts(
+    posts
+  );
+
 
   renderPosts();
 
@@ -1666,15 +2620,16 @@ function deletePost(id){
 }
 
 
-/* =========================
+/* =====================================================
    SHARE
-========================= */
+===================================================== */
 
 async function sharePost(id){
 
   const shareData={
 
-    title:"ZCrush",
+    title:
+      "ZCrush",
 
     text:
       "Check this post on ZCrush!",
@@ -1687,7 +2642,9 @@ async function sharePost(id){
 
   try{
 
-    if(navigator.share){
+    if(
+      navigator.share
+    ){
 
       await navigator.share(
         shareData
@@ -1698,6 +2655,7 @@ async function sharePost(id){
       await navigator.clipboard.writeText(
         window.location.href
       );
+
 
       showToast(
         "Link copied!"
@@ -1710,17 +2668,20 @@ async function sharePost(id){
 }
 
 
-/* =========================
+/* =====================================================
    ESCAPE HTML
-========================= */
+===================================================== */
 
 function escapeHTML(str){
 
   if(
     str===undefined ||
     str===null
-  )
+  ){
+
     return "";
+
+  }
 
 
   return String(str)
@@ -1753,9 +2714,9 @@ function escapeHTML(str){
 }
 
 
-/* =========================
+/* =====================================================
    AVATAR
-========================= */
+===================================================== */
 
 function avatarHTML(
   photo,
@@ -1804,11 +2765,13 @@ function avatarHTML(
 }
 
 
-/* =========================
+/* =====================================================
    COMMENTS HTML
-========================= */
+===================================================== */
 
-function commentsHTML(comments){
+function commentsHTML(
+  comments
+){
 
   if(
     !Array.isArray(comments) ||
@@ -1825,7 +2788,9 @@ function commentsHTML(comments){
           border:none;
         "
       >
+
         No comments yet.
+
       </div>
 
     `;
@@ -1841,11 +2806,17 @@ function commentsHTML(comments){
         <div class="comment">
 
           <strong>
-            ${escapeHTML(c.name)}
+            ${escapeHTML(
+              c.name
+            )}
           </strong>
 
           <div>
-            ${escapeHTML(c.text)}
+
+            ${escapeHTML(
+              c.text
+            )}
+
           </div>
 
         </div>
@@ -1858,9 +2829,9 @@ function commentsHTML(comments){
 }
 
 
-/* =========================
+/* =====================================================
    USER POST
-========================= */
+===================================================== */
 
 function renderUserPost(
   post,
@@ -1872,7 +2843,9 @@ function renderUserPost(
 
 
   const comments=
-    Array.isArray(post.comments)
+    Array.isArray(
+      post.comments
+    )
       ? post.comments
       : [];
 
@@ -1887,27 +2860,36 @@ function renderUserPost(
 
     <article class="post">
 
+
       <div class="postHeader">
 
+
         <div class="postUser">
+
 
           ${avatarHTML(
             post.photo,
             post.name
           )}
 
+
           <div>
 
             <div class="userName">
+
               ${escapeHTML(
                 post.name
               )}
+
             </div>
 
+
             <div class="handle">
+
               ${escapeHTML(
                 post.handle
               )}
+
             </div>
 
           </div>
@@ -1918,7 +2900,8 @@ function renderUserPost(
         <div>
 
           ${
-            post.handle!==currentUser.handle
+            post.handle !==
+            currentUser.handle
 
             ? `
 
@@ -1928,6 +2911,7 @@ function renderUserPost(
                     ? "following"
                     : ""
                 }"
+
                 onclick="
                   toggleFollow(
                     '${escapeAttribute(
@@ -1951,6 +2935,7 @@ function renderUserPost(
 
               <button
                 class="followBtn deleteBtn"
+
                 onclick="
                   deletePost(
                     '${escapeAttribute(
@@ -1959,7 +2944,9 @@ function renderUserPost(
                   )
                 "
               >
+
                 Delete
+
               </button>
 
             `
@@ -2010,12 +2997,14 @@ function renderUserPost(
 
       <div class="postActions">
 
+
         <button
           class="actionBtn ${
             liked
               ? "liked"
               : ""
           }"
+
           onclick="
             likeUserPost(
               '${escapeAttribute(
@@ -2038,6 +3027,7 @@ function renderUserPost(
 
         <button
           class="actionBtn"
+
           onclick="
             toggleComments(
               '${escapeAttribute(
@@ -2054,6 +3044,7 @@ function renderUserPost(
 
         <button
           class="actionBtn"
+
           onclick="
             sharePost(
               '${escapeAttribute(
@@ -2077,6 +3068,7 @@ function renderUserPost(
         )}"
       >
 
+
         <div class="commentList">
 
           ${commentsHTML(
@@ -2088,12 +3080,15 @@ function renderUserPost(
 
         <div class="commentInput">
 
+
           <input
             id="commentInput_${escapeAttribute(
               post.id
             )}"
+
             placeholder="Write a comment..."
           >
+
 
           <button
             onclick="
@@ -2104,12 +3099,15 @@ function renderUserPost(
               )
             "
           >
+
             Send
+
           </button>
 
         </div>
 
       </div>
+
 
     </article>
 
@@ -2118,9 +3116,9 @@ function renderUserPost(
 }
 
 
-/* =========================
+/* =====================================================
    DEFAULT POST
-========================= */
+===================================================== */
 
 function renderDefaultPost(
   post,
@@ -2158,14 +3156,18 @@ function renderDefaultPost(
 
     <article class="post">
 
+
       <div class="postHeader">
 
+
         <div class="postUser">
+
 
           ${avatarHTML(
             post.photo,
             post.name
           )}
+
 
           <div>
 
@@ -2176,6 +3178,7 @@ function renderDefaultPost(
               )}
 
             </div>
+
 
             <div class="handle">
 
@@ -2196,6 +3199,7 @@ function renderDefaultPost(
               ? "following"
               : ""
           }"
+
           onclick="
             toggleFollow(
               '${escapeAttribute(
@@ -2246,15 +3250,19 @@ function renderDefaultPost(
 
       <div class="postActions">
 
+
         <button
           class="actionBtn ${
             saved.liked
               ? "liked"
               : ""
           }"
+
           onclick="
             likeDefaultPost(
-              '${post.id}'
+              '${escapeAttribute(
+                post.id
+              )}'
             )
           "
         >
@@ -2272,9 +3280,12 @@ function renderDefaultPost(
 
         <button
           class="actionBtn"
+
           onclick="
             toggleComments(
-              '${post.id}'
+              '${escapeAttribute(
+                post.id
+              )}'
             )
           "
         >
@@ -2286,9 +3297,12 @@ function renderDefaultPost(
 
         <button
           class="actionBtn"
+
           onclick="
             sharePost(
-              '${post.id}'
+              '${escapeAttribute(
+                post.id
+              )}'
             )
           "
         >
@@ -2302,8 +3316,11 @@ function renderDefaultPost(
 
       <div
         class="comments"
-        id="comments_${post.id}"
+        id="comments_${escapeAttribute(
+          post.id
+        )}"
       >
+
 
         <div class="commentList">
 
@@ -2316,24 +3333,34 @@ function renderDefaultPost(
 
         <div class="commentInput">
 
+
           <input
-            id="commentInput_${post.id}"
+            id="commentInput_${escapeAttribute(
+              post.id
+            )}"
+
             placeholder="Write a comment..."
           >
+
 
           <button
             onclick="
               addDefaultComment(
-                '${post.id}'
+                '${escapeAttribute(
+                  post.id
+                )}'
               )
             "
           >
+
             Send
+
           </button>
 
         </div>
 
       </div>
+
 
     </article>
 
@@ -2342,9 +3369,9 @@ function renderDefaultPost(
 }
 
 
-/* =========================
+/* =====================================================
    RENDER FEED
-========================= */
+===================================================== */
 
 function renderPosts(){
 
@@ -2354,13 +3381,22 @@ function renderPosts(){
     );
 
 
-  const query=
+  if(!feed)
+    return;
+
+
+  const searchElement=
     document.getElementById(
       "searchInput"
-    )
-    .value
-    .toLowerCase()
-    .trim();
+    );
+
+
+  const query=
+    searchElement
+      ? searchElement.value
+          .toLowerCase()
+          .trim()
+      : "";
 
 
   const userPosts=
@@ -2422,7 +3458,9 @@ function renderPosts(){
   }
 
 
-  if(allPosts.length===0){
+  if(
+    allPosts.length===0
+  ){
 
     feed.innerHTML=`
 
@@ -2445,7 +3483,7 @@ function renderPosts(){
 
         if(
           String(post.id)
-          .startsWith("user_")
+            .startsWith("user_")
         ){
 
           return renderUserPost(
@@ -2468,9 +3506,9 @@ function renderPosts(){
 }
 
 
-/* =========================
+/* =====================================================
    ATTRIBUTE ESCAPE
-========================= */
+===================================================== */
 
 function escapeAttribute(str){
 
@@ -2494,16 +3532,22 @@ function escapeAttribute(str){
 }
 
 
-/* =========================
+/* =====================================================
    TOAST
-========================= */
+===================================================== */
 
-function showToast(message){
+function showToast(
+  message
+){
 
   const toast=
     document.getElementById(
       "toast"
     );
+
+
+  if(!toast)
+    return;
 
 
   toast.textContent=
@@ -2533,13 +3577,16 @@ function showToast(message){
 }
 
 
-/* =========================
-   START
-========================= */
+/* =====================================================
+   INITIAL LOAD
+===================================================== */
 
 renderPosts();
 
+renderNotifications();
+
 </script>
+
 
 </body>
 </html>
