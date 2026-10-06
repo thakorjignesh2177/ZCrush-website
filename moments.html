@@ -7,6 +7,7 @@
 <title>ZCrush - Moments</title>
 
 <style>
+
 *{
     margin:0;
     padding:0;
@@ -21,14 +22,15 @@ body{
     padding-bottom:80px;
 }
 
-/* HEADER */
+/* ================= HEADER ================= */
+
 .header{
     height:65px;
     background:white;
     display:flex;
     align-items:center;
     justify-content:space-between;
-    padding:0 18px;
+    padding:0 22px;
     border-bottom:1px solid #e5e7eb;
     position:sticky;
     top:0;
@@ -47,14 +49,73 @@ body{
     font-size:24px;
 }
 
+/* ================= SIDEBAR ================= */
+
+.sidebar{
+    position:fixed;
+    left:0;
+    top:65px;
+    bottom:0;
+    width:220px;
+    background:white;
+    border-right:1px solid #e5e7eb;
+    padding:20px 12px;
+    z-index:9;
+}
+
+.sidebar-title{
+    font-size:13px;
+    color:#888;
+    padding:0 12px;
+    margin-bottom:12px;
+}
+
+.sidebar a{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    text-decoration:none;
+    color:#444;
+    padding:12px 14px;
+    margin-bottom:5px;
+    border-radius:12px;
+    font-size:15px;
+    transition:.2s;
+}
+
+.sidebar a:hover{
+    background:#f3f0ff;
+    color:#7c3aed;
+}
+
+.sidebar a.active{
+    background:#f0e9ff;
+    color:#7c3aed;
+    font-weight:bold;
+}
+
+.sidebar-icon{
+    width:25px;
+    text-align:center;
+    font-size:20px;
+}
+
+/* ================= MAIN ================= */
+
+.main-area{
+    margin-left:220px;
+}
+
 /* CONTAINER */
+
 .container{
     max-width:650px;
     margin:auto;
     padding:18px;
 }
 
-/* HERO */
+/* ================= HERO ================= */
+
 .hero{
     background:linear-gradient(135deg,#7c3aed,#ec4899);
     color:white;
@@ -85,7 +146,8 @@ body{
     cursor:pointer;
 }
 
-/* SECTION */
+/* ================= SECTION ================= */
+
 .section-title{
     display:flex;
     justify-content:space-between;
@@ -97,7 +159,13 @@ body{
     font-size:21px;
 }
 
-/* MOMENT CARD */
+.section-title span{
+    color:#777;
+    font-size:13px;
+}
+
+/* ================= MOMENT CARD ================= */
+
 .moment{
     background:white;
     border-radius:18px;
@@ -167,7 +235,8 @@ body{
     background:#f3f4f6;
 }
 
-/* MODAL */
+/* ================= MODAL ================= */
+
 .modal{
     display:none;
     position:fixed;
@@ -191,7 +260,8 @@ body{
     margin-bottom:15px;
 }
 
-input,textarea{
+input,
+textarea{
     width:100%;
     border:1px solid #ddd;
     border-radius:12px;
@@ -227,133 +297,334 @@ textarea{
     cursor:pointer;
 }
 
-/* BOTTOM NAV */
+/* ================= MOBILE BOTTOM NAV ================= */
+
 .bottom-nav{
-    position:fixed;
-    bottom:0;
-    left:0;
-    right:0;
-    height:65px;
-    background:white;
-    border-top:1px solid #ddd;
-    display:flex;
-    justify-content:space-around;
-    align-items:center;
-    z-index:15;
+    display:none;
 }
 
-.bottom-nav a{
-    text-decoration:none;
-    color:#666;
-    font-size:12px;
-    text-align:center;
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:800px){
+
+    .sidebar{
+        display:none;
+    }
+
+    .main-area{
+        margin-left:0;
+    }
+
+    .header{
+        padding:0 18px;
+    }
+
+    .bottom-nav{
+        position:fixed;
+        bottom:0;
+        left:0;
+        right:0;
+        height:65px;
+        background:white;
+        border-top:1px solid #ddd;
+        display:flex;
+        justify-content:space-around;
+        align-items:center;
+        z-index:15;
+    }
+
+    .bottom-nav a{
+        text-decoration:none;
+        color:#666;
+        font-size:10px;
+        text-align:center;
+    }
+
+    .bottom-nav span{
+        display:block;
+        font-size:20px;
+        margin-bottom:2px;
+    }
+
+    .bottom-nav .active{
+        color:#7c3aed;
+        font-weight:bold;
+    }
+
 }
 
-.bottom-nav span{
-    display:block;
-    font-size:22px;
-    margin-bottom:2px;
+/* ================= SMALL MOBILE ================= */
+
+@media(max-width:430px){
+
+    .container{
+        padding:14px;
+    }
+
+    .hero{
+        padding:20px;
+    }
+
+    .hero h1{
+        font-size:25px;
+    }
+
+    .moment{
+        padding:15px;
+    }
+
+    .bottom-nav a{
+        font-size:9px;
+    }
+
+    .bottom-nav span{
+        font-size:19px;
+    }
+
 }
 
-.bottom-nav .active{
-    color:#7c3aed;
-    font-weight:bold;
-}
 </style>
 </head>
 
 <body>
 
+<!-- ================= HEADER ================= -->
+
 <header class="header">
-    <div class="logo">ZCrush</div>
-    <div class="header-icon">⭐</div>
+
+    <div class="logo">
+        ZCrush
+    </div>
+
+    <div class="header-icon">
+        ⭐
+    </div>
+
 </header>
+
+
+<!-- ================= SIDEBAR ================= -->
+
+<aside class="sidebar">
+
+    <div class="sidebar-title">
+        ZCrush Menu
+    </div>
+
+    <a href="index.html">
+        <span class="sidebar-icon">🏠</span>
+        <span>Home</span>
+    </a>
+
+    <a href="social.html">
+        <span class="sidebar-icon">🌐</span>
+        <span>Social</span>
+    </a>
+
+    <a href="gaming.html">
+        <span class="sidebar-icon">🎮</span>
+        <span>Gaming</span>
+    </a>
+
+    <a href="shorts.html">
+        <span class="sidebar-icon">▶️</span>
+        <span>Shorts</span>
+    </a>
+
+    <a href="marketplace.html">
+        <span class="sidebar-icon">🛒</span>
+        <span>Marketplace</span>
+    </a>
+
+    <a href="moments.html" class="active">
+        <span class="sidebar-icon">⭐</span>
+        <span>Moments</span>
+    </a>
+
+    <a href="profile.html">
+        <span class="sidebar-icon">👤</span>
+        <span>Profile</span>
+    </a>
+
+</aside>
+
+
+<!-- ================= MAIN AREA ================= -->
+
+<div class="main-area">
 
 <main class="container">
 
+
+    <!-- ================= HERO ================= -->
+
     <section class="hero">
-        <h1>✨ CrushMoment</h1>
+
+        <h1>
+            ✨ CrushMoment
+        </h1>
+
         <p>
             Save your favorite memories, special moments and
             unforgettable experiences in one place.
         </p>
 
-        <button class="create-btn" onclick="openModal()">
+        <button
+            class="create-btn"
+            onclick="openModal()"
+        >
             + Create Moment
         </button>
+
     </section>
 
+
+    <!-- ================= SECTION TITLE ================= -->
+
     <div class="section-title">
-        <h2>Your Moments</h2>
-        <span id="count">2 moments</span>
+
+        <h2>
+            Your Moments
+        </h2>
+
+        <span id="count">
+            2 moments
+        </span>
+
     </div>
 
-    <!-- MOMENT 1 -->
+
+    <!-- ================= MOMENT 1 ================= -->
+
     <div class="moment">
 
         <div class="moment-top">
-            <div class="avatar">Z</div>
+
+            <div class="avatar">
+                Z
+            </div>
 
             <div class="moment-info">
-                <h3>My First ZCrush Moment</h3>
-                <div class="date">Today</div>
+
+                <h3>
+                    My First ZCrush Moment
+                </h3>
+
+                <div class="date">
+                    Today
+                </div>
+
             </div>
+
         </div>
 
+
         <div class="moment-text">
+
             A special moment that I want to remember forever. ❤️
+
         </div>
+
 
         <div class="memory-box">
+
             ⭐ Remember this moment
+
         </div>
 
+
         <div class="actions">
-            <button onclick="remember()">⭐ Remember</button>
-            <button onclick="makeReel()">🎬 AI Reel</button>
-            <button onclick="shareMoment()">↗ Share</button>
+
+            <button onclick="remember()">
+                ⭐ Remember
+            </button>
+
+            <button onclick="makeReel()">
+                🎬 AI Reel
+            </button>
+
+            <button onclick="shareMoment()">
+                ↗ Share
+            </button>
+
         </div>
 
     </div>
 
-    <!-- MOMENT 2 -->
+
+    <!-- ================= MOMENT 2 ================= -->
+
     <div class="moment">
 
         <div class="moment-top">
-            <div class="avatar">Z</div>
+
+            <div class="avatar">
+                Z
+            </div>
 
             <div class="moment-info">
-                <h3>Beautiful Memory</h3>
-                <div class="date">Yesterday</div>
+
+                <h3>
+                    Beautiful Memory
+                </h3>
+
+                <div class="date">
+                    Yesterday
+                </div>
+
             </div>
+
         </div>
+
 
         <div class="moment-text">
+
             Every beautiful memory deserves a place on ZCrush. 🌟
+
         </div>
+
 
         <div class="memory-box">
+
             💜 Saved in CrushMoment
+
         </div>
 
+
         <div class="actions">
-            <button onclick="remember()">⭐ Remember</button>
-            <button onclick="makeReel()">🎬 AI Reel</button>
-            <button onclick="shareMoment()">↗ Share</button>
+
+            <button onclick="remember()">
+                ⭐ Remember
+            </button>
+
+            <button onclick="makeReel()">
+                🎬 AI Reel
+            </button>
+
+            <button onclick="shareMoment()">
+                ↗ Share
+            </button>
+
         </div>
 
     </div>
+
 
 </main>
 
+</div>
 
-<!-- CREATE MOMENT MODAL -->
+
+<!-- ================= CREATE MOMENT MODAL ================= -->
 
 <div class="modal" id="modal">
 
     <div class="modal-box">
 
-        <h2>✨ Create Moment</h2>
+        <h2>
+            ✨ Create Moment
+        </h2>
+
 
         <input
             type="text"
@@ -361,16 +632,25 @@ textarea{
             placeholder="Moment title"
         >
 
+
         <textarea
             id="description"
             placeholder="Write about your moment..."
         ></textarea>
 
-        <button class="save-btn" onclick="saveMoment()">
+
+        <button
+            class="save-btn"
+            onclick="saveMoment()"
+        >
             Save Moment
         </button>
 
-        <button class="close-btn" onclick="closeModal()">
+
+        <button
+            class="close-btn"
+            onclick="closeModal()"
+        >
             Cancel
         </button>
 
@@ -379,81 +659,160 @@ textarea{
 </div>
 
 
-<!-- BOTTOM NAV -->
+<!-- ================= MOBILE BOTTOM NAV ================= -->
 
 <nav class="bottom-nav">
 
     <a href="index.html">
+
         <span>🏠</span>
+
         Home
+
     </a>
+
 
     <a href="social.html">
+
         <span>🌐</span>
+
         Social
+
     </a>
+
+
+    <a href="gaming.html">
+
+        <span>🎮</span>
+
+        Gaming
+
+    </a>
+
+
+    <a href="shorts.html">
+
+        <span>▶️</span>
+
+        Shorts
+
+    </a>
+
+
+    <a href="marketplace.html">
+
+        <span>🛒</span>
+
+        Market
+
+    </a>
+
 
     <a href="moments.html" class="active">
+
         <span>⭐</span>
+
         Moments
+
     </a>
 
+
     <a href="profile.html">
+
         <span>👤</span>
+
         Profile
+
     </a>
 
 </nav>
 
 
+<!-- ================= JAVASCRIPT ================= -->
+
 <script>
 
 function openModal(){
+
     document.getElementById("modal").style.display="flex";
+
 }
 
+
 function closeModal(){
+
     document.getElementById("modal").style.display="none";
+
 }
+
 
 function saveMoment(){
 
-    let title=document.getElementById("title").value.trim();
-    let description=document.getElementById("description").value.trim();
+    let title =
+        document.getElementById("title").value.trim();
+
+    let description =
+        document.getElementById("description").value.trim();
+
 
     if(title==="" || description===""){
+
         alert("Please enter title and description.");
+
         return;
+
     }
+
 
     alert("✨ Moment saved successfully!");
 
+
     document.getElementById("title").value="";
+
     document.getElementById("description").value="";
 
+
     closeModal();
+
 }
+
 
 function remember(){
+
     alert("⭐ Moment added to your memories!");
+
 }
 
+
 function makeReel(){
+
     alert("🎬 AI Reel feature will be available soon!");
+
 }
+
 
 function shareMoment(){
 
     if(navigator.share){
 
         navigator.share({
+
             title:"My ZCrush Moment",
+
             text:"Check out my special moment on ZCrush!"
+
         });
 
-    }else{
-        alert("Share feature is not supported on this browser.");
     }
+
+    else{
+
+        alert(
+            "Share feature is not supported on this browser."
+        );
+
+    }
+
 }
 
 </script>
