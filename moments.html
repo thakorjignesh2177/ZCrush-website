@@ -26,7 +26,7 @@ body{
 
 .header{
     height:65px;
-    background:white;
+    background:#fff;
     display:flex;
     align-items:center;
     justify-content:space-between;
@@ -34,14 +34,20 @@ body{
     border-bottom:1px solid #e5e7eb;
     position:sticky;
     top:0;
-    z-index:10;
+    z-index:100;
 }
 
 .logo{
     font-size:25px;
     font-weight:800;
-    background:linear-gradient(90deg,#8b00ff,#ff1493,#1677ff);
+    background:linear-gradient(
+        90deg,
+        #8b00ff,
+        #ff1493,
+        #1677ff
+    );
     -webkit-background-clip:text;
+    background-clip:text;
     color:transparent;
 }
 
@@ -57,10 +63,10 @@ body{
     top:65px;
     bottom:0;
     width:220px;
-    background:white;
+    background:#fff;
     border-right:1px solid #e5e7eb;
     padding:20px 12px;
-    z-index:9;
+    z-index:90;
 }
 
 .sidebar-title{
@@ -104,55 +110,91 @@ body{
 
 .main-area{
     margin-left:220px;
+    width:calc(100% - 220px);
 }
 
-/* CONTAINER */
+/* ================= CONTAINER ================= */
 
 .container{
-    max-width:650px;
-    margin:auto;
-    padding:18px;
+    width:100%;
+    max-width:850px;
+    margin:0 auto;
+    padding:24px;
 }
 
 /* ================= HERO ================= */
 
 .hero{
-    background:linear-gradient(135deg,#7c3aed,#ec4899);
+    width:100%;
+    min-height:150px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #7c3aed,
+            #c026d3,
+            #ec4899
+        );
+
     color:white;
+
     padding:25px;
-    border-radius:22px;
-    margin-bottom:20px;
-    box-shadow:0 8px 25px rgba(124,58,237,.20);
+
+    border-radius:20px;
+
+    margin-bottom:22px;
+
+    box-shadow:
+        0 8px 25px rgba(124,58,237,.20);
 }
 
 .hero h1{
-    font-size:28px;
+    font-size:27px;
     margin-bottom:8px;
 }
 
 .hero p{
+    font-size:14px;
     line-height:1.5;
     opacity:.95;
+    max-width:650px;
 }
 
 .create-btn{
-    margin-top:18px;
+    margin-top:17px;
+
     border:0;
-    padding:12px 18px;
-    border-radius:12px;
-    background:white;
+
+    padding:11px 17px;
+
+    border-radius:10px;
+
+    background:#fff;
+
     color:#7c3aed;
+
     font-weight:bold;
+
     cursor:pointer;
+
+    transition:.2s;
+}
+
+.create-btn:hover{
+    transform:translateY(-1px);
+    box-shadow:0 5px 12px rgba(0,0,0,.12);
 }
 
 /* ================= SECTION ================= */
 
 .section-title{
+    width:100%;
+
     display:flex;
     justify-content:space-between;
     align-items:center;
-    margin:22px 0 12px;
+
+    margin:20px 0 12px;
 }
 
 .section-title h2{
@@ -167,12 +209,27 @@ body{
 /* ================= MOMENT CARD ================= */
 
 .moment{
-    background:white;
+    width:100%;
+
+    background:#fff;
+
     border-radius:18px;
+
     padding:18px;
+
     margin-bottom:15px;
+
     border:1px solid #e5e7eb;
-    box-shadow:0 4px 15px rgba(0,0,0,.04);
+
+    box-shadow:
+        0 4px 15px rgba(0,0,0,.04);
+
+    transition:.2s;
+}
+
+.moment:hover{
+    box-shadow:
+        0 7px 22px rgba(0,0,0,.07);
 }
 
 .moment-top{
@@ -184,12 +241,24 @@ body{
 .avatar{
     width:45px;
     height:45px;
+
+    flex-shrink:0;
+
     border-radius:50%;
+
     display:flex;
     justify-content:center;
     align-items:center;
-    background:linear-gradient(135deg,#7c3aed,#ec4899);
+
+    background:
+        linear-gradient(
+            135deg,
+            #7c3aed,
+            #ec4899
+        );
+
     color:white;
+
     font-weight:bold;
 }
 
@@ -205,16 +274,26 @@ body{
 
 .moment-text{
     margin:15px 0;
+
     line-height:1.5;
+
     color:#333;
+
+    font-size:14px;
 }
 
 .memory-box{
     background:#f5f3ff;
+
     border-radius:14px;
-    padding:14px;
+
+    padding:13px 14px;
+
     color:#5b21b6;
+
     margin-bottom:14px;
+
+    font-size:14px;
 }
 
 .actions{
@@ -225,10 +304,18 @@ body{
 
 .actions button{
     border:1px solid #ddd;
+
     background:#fff;
-    padding:9px 12px;
+
+    padding:8px 12px;
+
     border-radius:10px;
+
     cursor:pointer;
+
+    font-size:12px;
+
+    transition:.2s;
 }
 
 .actions button:hover{
@@ -239,21 +326,33 @@ body{
 
 .modal{
     display:none;
+
     position:fixed;
+
     inset:0;
+
     background:rgba(0,0,0,.55);
+
     align-items:center;
     justify-content:center;
+
     padding:20px;
-    z-index:20;
+
+    z-index:200;
 }
 
 .modal-box{
     width:100%;
     max-width:430px;
-    background:white;
+
+    background:#fff;
+
     border-radius:20px;
+
     padding:22px;
+
+    box-shadow:
+        0 15px 50px rgba(0,0,0,.2);
 }
 
 .modal-box h2{
@@ -263,12 +362,23 @@ body{
 input,
 textarea{
     width:100%;
+
     border:1px solid #ddd;
+
     border-radius:12px;
+
     padding:12px;
+
     margin-bottom:12px;
+
     font-size:15px;
+
     outline:none;
+}
+
+input:focus,
+textarea:focus{
+    border-color:#7c3aed;
 }
 
 textarea{
@@ -278,32 +388,45 @@ textarea{
 
 .save-btn{
     width:100%;
+
     border:0;
+
     padding:13px;
+
     border-radius:12px;
+
     background:#7c3aed;
+
     color:white;
+
     font-weight:bold;
+
     cursor:pointer;
 }
 
 .close-btn{
     width:100%;
+
     border:0;
+
     padding:12px;
+
     border-radius:12px;
+
     background:#eee;
+
     margin-top:8px;
+
     cursor:pointer;
 }
 
-/* ================= MOBILE BOTTOM NAV ================= */
+/* ================= MOBILE NAV ================= */
 
 .bottom-nav{
     display:none;
 }
 
-/* ================= RESPONSIVE ================= */
+/* ================= TABLET / MOBILE ================= */
 
 @media(max-width:800px){
 
@@ -313,44 +436,65 @@ textarea{
 
     .main-area{
         margin-left:0;
+        width:100%;
     }
 
     .header{
         padding:0 18px;
     }
 
+    .container{
+        max-width:none;
+        padding:18px;
+    }
+
     .bottom-nav{
         position:fixed;
+
         bottom:0;
         left:0;
         right:0;
+
         height:65px;
-        background:white;
+
+        background:#fff;
+
         border-top:1px solid #ddd;
+
         display:flex;
+
         justify-content:space-around;
         align-items:center;
-        z-index:15;
+
+        z-index:150;
+
+        box-shadow:
+            0 -3px 15px rgba(0,0,0,.05);
     }
 
     .bottom-nav a{
         text-decoration:none;
+
         color:#666;
+
         font-size:10px;
+
         text-align:center;
     }
 
     .bottom-nav span{
         display:block;
+
         font-size:20px;
+
         margin-bottom:2px;
     }
 
     .bottom-nav .active{
         color:#7c3aed;
+
         font-weight:bold;
     }
-
 }
 
 /* ================= SMALL MOBILE ================= */
@@ -363,14 +507,46 @@ textarea{
 
     .hero{
         padding:20px;
+
+        border-radius:18px;
+
+        min-height:145px;
     }
 
     .hero h1{
-        font-size:25px;
+        font-size:24px;
+    }
+
+    .hero p{
+        font-size:13px;
+    }
+
+    .create-btn{
+        padding:10px 14px;
+        font-size:12px;
+    }
+
+    .section-title h2{
+        font-size:19px;
     }
 
     .moment{
         padding:15px;
+
+        border-radius:17px;
+    }
+
+    .moment-text{
+        font-size:13px;
+    }
+
+    .memory-box{
+        font-size:13px;
+    }
+
+    .actions button{
+        padding:8px 10px;
+        font-size:11px;
     }
 
     .bottom-nav a{
@@ -380,7 +556,6 @@ textarea{
     .bottom-nav span{
         font-size:19px;
     }
-
 }
 
 </style>
@@ -449,7 +624,7 @@ textarea{
 </aside>
 
 
-<!-- ================= MAIN AREA ================= -->
+<!-- ================= MAIN ================= -->
 
 <div class="main-area">
 
@@ -520,16 +695,12 @@ textarea{
 
 
         <div class="moment-text">
-
             A special moment that I want to remember forever. ❤️
-
         </div>
 
 
         <div class="memory-box">
-
             ⭐ Remember this moment
-
         </div>
 
 
@@ -578,16 +749,12 @@ textarea{
 
 
         <div class="moment-text">
-
             Every beautiful memory deserves a place on ZCrush. 🌟
-
         </div>
 
 
         <div class="memory-box">
-
             💜 Saved in CrushMoment
-
         </div>
 
 
@@ -615,7 +782,7 @@ textarea{
 </div>
 
 
-<!-- ================= CREATE MOMENT MODAL ================= -->
+<!-- ================= CREATE MODAL ================= -->
 
 <div class="modal" id="modal">
 
@@ -625,19 +792,16 @@ textarea{
             ✨ Create Moment
         </h2>
 
-
         <input
             type="text"
             id="title"
             placeholder="Moment title"
         >
 
-
         <textarea
             id="description"
             placeholder="Write about your moment..."
         ></textarea>
-
 
         <button
             class="save-btn"
@@ -645,7 +809,6 @@ textarea{
         >
             Save Moment
         </button>
-
 
         <button
             class="close-btn"
@@ -664,65 +827,38 @@ textarea{
 <nav class="bottom-nav">
 
     <a href="index.html">
-
         <span>🏠</span>
-
         Home
-
     </a>
-
 
     <a href="social.html">
-
         <span>🌐</span>
-
         Social
-
     </a>
-
 
     <a href="gaming.html">
-
         <span>🎮</span>
-
         Gaming
-
     </a>
-
 
     <a href="shorts.html">
-
         <span>▶️</span>
-
         Shorts
-
     </a>
-
 
     <a href="marketplace.html">
-
         <span>🛒</span>
-
         Market
-
     </a>
-
 
     <a href="moments.html" class="active">
-
         <span>⭐</span>
-
         Moments
-
     </a>
 
-
     <a href="profile.html">
-
         <span>👤</span>
-
         Profile
-
     </a>
 
 </nav>
@@ -755,7 +891,7 @@ function saveMoment(){
         document.getElementById("description").value.trim();
 
 
-    if(title==="" || description===""){
+    if(title === "" || description === ""){
 
         alert("Please enter title and description.");
 
@@ -770,7 +906,6 @@ function saveMoment(){
     document.getElementById("title").value="";
 
     document.getElementById("description").value="";
-
 
     closeModal();
 
