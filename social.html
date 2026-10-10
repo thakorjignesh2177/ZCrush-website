@@ -34,8 +34,9 @@ body{
    TOPBAR
 ========================= */
 
+
 .topbar{
-  height:65px;
+  height:70px;
   background:white;
   border-bottom:1px solid #e5e7ef;
   display:flex;
@@ -46,6 +47,7 @@ body{
   top:0;
   z-index:1000;
 }
+
 
 
 .logo{
@@ -275,68 +277,74 @@ body{
    LAYOUT
 ========================= */
 
+
 .layout{
   display:flex;
-  max-width:1250px;
-  margin:auto;
-  min-height:calc(100vh - 65px);
+  width:100%;
+  max-width:none;
+  margin:0;
+  min-height:calc(100vh - 70px);
 }
 
-
-/* =========================
-   SIDEBAR
-========================= */
-
 .sidebar{
-  width:220px;
+  width:230px;
+  min-width:230px;
+  flex-shrink:0;
   background:white;
   border-right:1px solid #e5e7ef;
   padding:25px 15px;
-
-  position:sticky;
-  top:65px;
-
-  height:calc(100vh - 65px);
+  position:fixed;
+  top:70px;
+  left:0;
+  bottom:0;
+  height:calc(100vh - 70px);
+  overflow-y:auto;
+  overflow-x:hidden;
+  z-index:900;
 }
-
 
 .sidebar a{
-  display:block;
+  display:flex;
+  align-items:center;
+  gap:13px;
   text-decoration:none;
-  color:#555b6d;
-
+  color:#555d70;
   padding:13px 15px;
-
-  border-radius:10px;
-  margin-bottom:6px;
-
+  border-radius:12px;
+  margin-bottom:7px;
   font-size:14px;
+  font-weight:600;
+  white-space:nowrap;
+  transition:background .2s,color .2s;
 }
-
 
 .sidebar a:hover{
-  background:#f5f0ff;
+  background:#f1edff;
   color:#721cff;
 }
-
 
 .sidebar a.active{
-  background:#eee3ff;
+  background:#eee8ff;
   color:#721cff;
-  font-weight:bold;
+  font-weight:700;
 }
+
 
 
 /* =========================
    MAIN
 ========================= */
 
+
 .main{
   flex:1;
-  padding:25px;
-  max-width:1000px;
+  width:calc(100% - 230px);
   min-width:0;
+  max-width:1000px;
+  margin-left:230px;
+  padding:25px;
 }
+
 
 
 /* =========================
@@ -849,115 +857,148 @@ footer{
    MOBILE
 ========================= */
 
-@media(max-width:800px){
 
-  .sidebar{
-    width:180px;
+/* TABLET AND MOBILE */
+@media (max-width: 800px) {
+  .topSearch {
+    width: 200px;
   }
 
+  .sidebar {
+    position: fixed;
+    top: auto;
+    left: 0;
+    right: 0;
+    bottom: 0;
 
-  .topSearch{
-    width:200px;
+    width: 100%;
+    min-width: 0;
+    height: 65px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    gap: 0;
+
+    padding: 6px 4px;
+    border-right: none;
+    border-top: 1px solid #e5e7ef;
+
+    overflow: visible;
+    z-index: 2000;
   }
 
+  .sidebar a {
+    flex: 1;
+    min-width: 0;
 
-  .main{
-    padding:18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2px;
+
+    padding: 8px 2px;
+    margin: 0;
+    border-radius: 9px;
+
+    font-size: 10px;
+    line-height: 1.2;
+    white-space: normal;
+    text-align: center;
   }
 
+  .main {
+    width: 100%;
+    max-width: 100%;
+    margin-left: 0;
+    padding: 18px;
+    padding-bottom: 85px;
+  }
+
+  footer {
+    padding-bottom: 90px;
+  }
 }
 
-
-@media(max-width:600px){
-
-  .topbar{
-    padding:0 15px;
+@media (max-width: 600px) {
+  .topbar {
+    height: 70px;
+    padding: 0 15px;
   }
 
-
-  .topSearch{
-    display:none;
+  .topSearch {
+    display: none;
   }
 
-
-  .sidebar{
-    width:70px;
-    padding:15px 8px;
+  .topRight {
+    gap: 10px;
   }
 
-
-  .sidebar a{
-    font-size:0;
-    text-align:center;
-    padding:13px 5px;
+  .main {
+    padding: 12px;
+    padding-bottom: 85px;
   }
 
-
-  .sidebar a::first-letter{
-    font-size:18px;
+  .pageHeader {
+    padding: 18px;
   }
 
-
-  .main{
-    padding:12px;
+  .pageHeader h1 {
+    font-size: 22px;
   }
 
-
-  .pageHeader{
-    padding:18px;
+  .createActions {
+    flex-direction: column;
+    align-items: stretch;
   }
 
-
-  .pageHeader h1{
-    font-size:22px;
+  .postBtn {
+    width: 100%;
   }
 
-
-  .createActions{
-    flex-direction:column;
-    align-items:stretch;
+  .postHeader {
+    align-items: flex-start;
   }
 
-
-  .postBtn{
-    width:100%;
+  .followBtn {
+    padding: 6px 10px;
   }
 
-
-  .postHeader{
-    align-items:flex-start;
+  .postActions {
+    flex-wrap: wrap;
+    gap: 16px;
   }
 
-
-  .followBtn{
-    padding:6px 10px;
+  .notificationPanel {
+    position: fixed;
+    top: 75px;
+    right: 10px;
+    width: calc(100vw - 20px);
   }
-
 }
 
-
-@media(max-width:400px){
-
-  .sidebar{
-    width:58px;
+@media (max-width: 400px) {
+  .main {
+    padding: 10px;
+    padding-bottom: 85px;
   }
 
-
-  .topbar{
-    height:58px;
+  .post {
+    padding: 14px;
   }
 
-
-  .main{
-    padding:10px;
+  .logo {
+    font-size: 23px;
   }
 
-
-  .post{
-    padding:14px;
+  .sidebar a {
+    font-size: 9px;
+    padding: 7px 1px;
   }
-
 }
+
 
 </style>
 
