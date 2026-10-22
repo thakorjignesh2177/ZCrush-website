@@ -2661,48 +2661,36 @@ function deletePost(id){
    SHARE
 ===================================================== */
 
-async function sharePost(id){
 
-  const shareData={
+async function sharePost(id) {
+  const postUrl =
+    window.location.origin +
+    window.location.pathname +
+    "?post=" +
+    encodeURIComponent(id);
 
-    title:
-      "ZCrush",
-
-    text:
-      "Check this post on ZCrush!",
-
-    url:
-      window.location.href
-
+  const shareData = {
+    title: "ZCrush",
+    text: "Check this post on ZCrush!",
+    url: postUrl
   };
 
-
-  try{
-
-    if(
-      navigator.share
-    ){
-
-      await navigator.share(
-        shareData
-      );
-
-    }else{
-
-      await navigator.clipboard.writeText(
-        window.location.href
-      );
-
-
-      showToast(
-        "Link copied!"
-      );
-
+  try {
+    if (navigator.share) {
+      await navigator.share(shareData);
+    } else if (navigator.clipboard) {
+      await navigator.clipboard.writeText(postUrl);
+      showToast("Post link copied!");
+    } else {
+      window.prompt("Copy this post link:", postUrl);
     }
-
-  }catch(e){}
-
+  } catch (e) {
+    if (e.name !== "AbortError") {
+      showToast("Unable to share. Please try again.");
+    }
+  }
 }
+
 
 
 /* =====================================================
@@ -2895,7 +2883,7 @@ function renderUserPost(
 
   return `
 
-    <article class="post">
+    <article class="post" data-post-id="$.        {escapeAttribute(post.id)}">
 
 
       <div class="postHeader">
@@ -3153,6 +3141,49 @@ function renderUserPost(
 }
 
 
+function openSharedPost() {
+  const params = new URLSearchParams(
+    window.location.search
+  );
+
+  const postId = params.get("post");
+  if (!postId) return;
+
+  const searchElement =
+    document.getElementById("searchInput");
+
+  if (searchElement) {
+    searchElement.value = "";
+  }
+
+  renderPosts();
+
+  const postElement = Array.from(
+    document.querySelectorAll(
+      "#feed [data-post-id]"
+    )
+  ).find(function(element) {
+    return element.getAttribute("data-post-id") === postId;
+  });
+
+  if (postElement) {
+    postElement.scrollIntoView({
+      behavior: "smooth",
+      block: "center"
+    });
+
+    postElement.style.outline = "2px solid #7c3aed";
+
+    setTimeout(function() {
+      postElement.style.outline = "";
+    }, 3000);
+  } else {
+    showToast("Shared post not found.");
+  }
+}
+
+
+
 /* =====================================================
    DEFAULT POST
 ===================================================== */
@@ -3191,7 +3222,7 @@ function renderDefaultPost(
 
   return `
 
-    <article class="post">
+    <article class="post" data-post-id="${escapeAttribute(post.id)}">
 
 
       <div class="postHeader">
@@ -3621,6 +3652,8 @@ function showToast(
 renderPosts();
 
 renderNotifications();
+
+openSharedPost();
 
 </script>
 
