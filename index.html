@@ -96,6 +96,8 @@ a{
 /* SIDEBAR */
 .sidebar{
   width:230px;
+  min-width:230px;
+  flex-shrink:0;
   background:#fff;
   border-right:1px solid #e5e7ef;
   padding:25px 15px;
@@ -103,6 +105,10 @@ a{
   top:70px;
   bottom:0;
   left:0;
+  height:calc(100vh - 70px);
+  overflow-y:auto;
+  overflow-x:hidden;
+  z-index:900;
 }
 
 .sidebar-title{
@@ -117,12 +123,15 @@ a{
   display:flex;
   align-items:center;
   gap:13px;
-  padding:13px 15px;
-  margin-bottom:7px;
-  border-radius:12px;
+  text-decoration:none;
   color:#555d70;
+  padding:13px 15px;
+  border-radius:12px;
+  margin-bottom:7px;
+  font-size:14px;
   font-weight:600;
-  transition:.2s;
+  white-space:nowrap;
+  transition:background .2s,color .2s;
 }
 
 .sidebar a:hover{
@@ -133,14 +142,9 @@ a{
 .sidebar a.active{
   background:#eee8ff;
   color:#721cff;
+  font-weight:700;
 }
 
-/* MAIN */
-.main{
-  margin-left:230px;
-  width:calc(100% - 230px);
-  padding:30px;
-}
 
 /* HERO */
 .hero{
