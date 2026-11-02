@@ -1,1192 +1,1465 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>ZCrush - Shorts</title>
-
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
-    }
-
-    body {
-      background: #f5f7fb;
-      color: #202124;
-      min-height: 100vh;
-    }
-
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
-
-    /* ================= TOPBAR ================= */
-
-    .topbar {
-      height: 70px;
-      background: #fff;
-      border-bottom: 1px solid #e5e7ef;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 25px;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-
-    .logo {
-      font-size: 28px;
-      font-weight: 800;
-      background: linear-gradient(
-        90deg,
-        #a000ff,
-        #ff22bd,
-        #168cff
-      );
-      -webkit-background-clip: text;
-      color: transparent;
-    }
-
-    .top-search {
-      width: 360px;
-      background: #f5f7fb;
-      border: 1px solid #e3e5ed;
-      padding: 11px 18px;
-      border-radius: 25px;
-      outline: none;
-      font-size: 14px;
-    }
-
-    .top-right {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
-
-    .notification {
-      font-size: 21px;
-      cursor: pointer;
-    }
-
-    .avatar {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #721cff, #ff22bd);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #fff;
-      font-weight: bold;
-    }
-
-    /* ================= LAYOUT ================= */
-
-    .layout {
-      display: flex;
-      min-height: calc(100vh - 70px);
-    }
-
-    /* ================= SIDEBAR ================= */
-
-    .sidebar {
-      width: 230px;
-      background: #fff;
-      border-right: 1px solid #e5e7ef;
-      padding: 22px 15px;
-      position: fixed;
-      top: 70px;
-      bottom: 0;
-      left: 0;
-    }
-
-    .sidebar-title {
-      font-size: 11px;
-      color: #9aa0b5;
-      margin: 5px 12px 12px;
-      text-transform: uppercase;
-      font-weight: bold;
-    }
-
-    .sidebar a {
-      display: flex;
-      align-items: center;
-      gap: 13px;
-      text-decoration: none;
-      color: #555b70;
-      padding: 12px 15px;
-      border-radius: 12px;
-      margin-bottom: 7px;
-      font-size: 14px;
-      font-weight: 600;
-      transition: .2s;
-    }
-
-    .sidebar a:hover {
-      background: #f1edff;
-      color: #721cff;
-    }
-
-    .sidebar a.active {
-      background: #eee8ff;
-      color: #721cff;
-    }
-
-    .sidebar-icon {
-      width: 22px;
-      text-align: center;
-      font-size: 18px;
-    }
-
-    /* ================= MAIN ================= */
-
-    .main {
-      margin-left: 230px;
-      width: calc(100% - 230px);
-      padding: 30px;
-    }
-
-    /* ================= HEADER ================= */
-
-    .page-header {
-      background: #fff;
-      border: 1px solid #e5e7ef;
-      border-radius: 18px;
-      padding: 25px;
-      margin-bottom: 20px;
-    }
-
-    .page-header h1 {
-      font-size: 27px;
-      margin-bottom: 7px;
-    }
-
-    .page-header p {
-      color: #7c8195;
-      font-size: 14px;
-    }
-
-    .gradient {
-      background: linear-gradient(
-        90deg,
-        #a000ff,
-        #ff22bd,
-        #168cff
-      );
-      -webkit-background-clip: text;
-      color: transparent;
-    }
-
-    /* ================= FILTERS ================= */
-
-    .filters-card {
-      background: #fff;
-      border: 1px solid #e5e7ef;
-      border-radius: 18px;
-      padding: 15px;
-      margin-bottom: 25px;
-    }
-
-    .filters {
-      display: flex;
-      gap: 10px;
-      overflow-x: auto;
-      scrollbar-width: none;
-    }
-
-    .filters::-webkit-scrollbar {
-      display: none;
-    }
-
-    .filter {
-      padding: 10px 18px;
-      border-radius: 25px;
-      border: 1px solid #e1e3eb;
-      background: #f7f8fb;
-      color: #62687a;
-      white-space: nowrap;
-      cursor: pointer;
-      font-weight: 600;
-      font-size: 13px;
-    }
-
-    .filter.active {
-      background: linear-gradient(
-        90deg,
-        #721cff,
-        #9b00ff
-      );
-      color: #fff;
-      border-color: transparent;
-    }
-
-    /* ================= SHORTS AREA ================= */
-
-    .shorts-heading {
-      font-size: 20px;
-      margin-bottom: 15px;
-    }
-
-    .shorts-container {
-      width: 100%;
-      max-width: 500px;
-      margin: auto;
-    }
-
-    /* ================= SHORT CARD ================= */
-
-    .short {
-      height: 650px;
-      margin-bottom: 25px;
-      border-radius: 24px;
-      overflow: hidden;
-      position: relative;
-      color: #fff;
-      border: 1px solid #e2e4eb;
-      box-shadow: 0 10px 30px rgba(30, 35, 60, .10);
-    }
-
-    .short:nth-child(1) {
-      background:
-        linear-gradient(
-          180deg,
-          transparent 30%,
-          rgba(0,0,0,.9)
-        ),
-        linear-gradient(
-          135deg,
-          #16004d,
-          #9c00ff,
-          #ff188d
-        );
-    }
-
-    .short:nth-child(2) {
-      background:
-        linear-gradient(
-          180deg,
-          transparent 30%,
-          rgba(0,0,0,.9)
-        ),
-        linear-gradient(
-          135deg,
-          #003b54,
-          #00b8ff,
-          #172554
-        );
-    }
-
-    .short:nth-child(3) {
-      background:
-        linear-gradient(
-          180deg,
-          transparent 30%,
-          rgba(0,0,0,.9)
-        ),
-        linear-gradient(
-          135deg,
-          #351000,
-          #ff7200,
-          #ff176b
-        );
-    }
-
-    .short:nth-child(4) {
-      background:
-        linear-gradient(
-          180deg,
-          transparent 30%,
-          rgba(0,0,0,.9)
-        ),
-        linear-gradient(
-          135deg,
-          #061d16,
-          #00a67d,
-          #003b69
-        );
-    }
-
-    .demo-image {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 90px;
-      opacity: .85;
-    }
-
-    .play {
-      width: 70px;
-      height: 70px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(0,0,0,.5);
-      border: 2px solid rgba(255,255,255,.7);
-      font-size: 28px;
-    }
-
-    /* ================= INFO ================= */
-
-    .info {
-      position: absolute;
-      bottom: 20px;
-      left: 20px;
-      right: 85px;
-      z-index: 3;
-    }
-
-    .creator {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 12px;
-      flex-wrap: wrap;
-    }
-
-    .creator-avatar {
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      background: linear-gradient(
-        135deg,
-        #a000ff,
-        #ff22bd
-      );
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-    }
-
-    .follow {
-      padding: 6px 12px;
-      border: 1px solid #fff;
-      border-radius: 20px;
-      background: transparent;
-      color: #fff;
-      font-size: 12px;
-      cursor: pointer;
-    }
-
-    .info h2 {
-      font-size: 19px;
-      margin-bottom: 8px;
-    }
-
-    .info p {
-      color: #d0d5e1;
-      font-size: 13px;
-      line-height: 1.5;
-    }
-
-    .hashtags {
-      color: #d69cff !important;
-      margin-top: 7px;
-    }
-
-    /* ================= ACTIONS ================= */
-
-    .actions {
-      position: absolute;
-      right: 15px;
-      bottom: 25px;
-      z-index: 5;
-      display: flex;
-      flex-direction: column;
-      gap: 18px;
-      align-items: center;
-    }
-
-    .action {
-      text-align: center;
-      cursor: pointer;
-    }
-
-    .action-icon {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      background: rgba(0,0,0,.5);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 21px;
-      margin-bottom: 4px;
-      transition: .2s;
-    }
-
-    .action-icon:hover {
-      transform: scale(1.08);
-    }
-
-    .action span {
-      font-size: 11px;
-      color: #e0e5ef;
-    }
-
-    .liked {
-      transform: scale(1.15);
-    }
-
-    /* ================= FOOTER ================= */
-
-    footer {
-      text-align: center;
-      padding: 30px 15px;
-      border-top: 1px solid #e5e7ef;
-      color: #7e8497;
-      font-size: 13px;
-      margin-top: 25px;
-    }
-
-    /* ================= TABLET ================= */
-
-    @media (max-width: 900px) {
-
-      .top-search {
-        width: 250px;
-      }
-
-      .main {
-        padding: 22px;
-      }
-    }
-
-    /* ================= MOBILE ================= */
-
-    @media (max-width: 700px) {
-
-      .topbar {
-        padding: 0 15px;
-      }
-
-      .logo {
-        font-size: 23px;
-      }
-
-      .top-search {
-        display: none;
-      }
-
-      .sidebar {
-        width: 70px;
-        padding: 15px 8px;
-      }
-
-      .menu-title {
-        display: none;
-      }
-
-      .menu a {
-        justify-content: center;
-        padding: 12px 5px;
-      }
-
-      .menu-text {
-        display: none;
-      }
-
-      .main {
-        margin-left: 70px;
-        width: calc(100% - 70px);
-        padding: 18px 12px;
-      }
-
-      .page-header {
-        padding: 20px;
-      }
-
-      .page-header h1 {
-        font-size: 23px;
-      }
-
-      .short {
-        height: 610px;
-        border-radius: 20px;
-      }
-
-      .shorts-container {
-        max-width: 100%;
-      }
-    }
-
-    @media (max-width: 400px) {
-
-      .sidebar {
-        width: 60px;
-      }
-
-      .main {
-        margin-left: 60px;
-        width: calc(100% - 60px);
-      }
-
-      .short {
-        height: 580px;
-      }
-
-      .info {
-        left: 15px;
-        right: 75px;
-      }
-
-      .actions {
-        right: 10px;
-      }
-    }
-
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZCrush - Shorts</title>
+
+<!-- Lucide Icons: Load BEFORE JavaScript -->
+<script src="https://unpkg.com/lucide@latest"></script>
+
+<style>
+
+/* =====================================
+   ZCRUSH DARK THEME
+===================================== */
+
+:root{
+  color-scheme:dark;
+
+  --bg:#08070b;
+  --card:#121016;
+  --text:#ffffff;
+  --muted:#a8a2b0;
+  --border:#292431;
+  --purple:#241638;
+  --accent:#b77aff;
+  --post:#211d27;
+  --button:#302b36;
+  --shadow:0 5px 20px #0003;
+}
+
+/* =====================================
+   ZCRUSH LIGHT THEME
+===================================== */
+
+body.light{
+  color-scheme:light;
+
+  --bg:#f5f4f8;
+  --card:#ffffff;
+  --text:#211b2a;
+  --muted:#777080;
+  --border:#e7e1ec;
+  --purple:#eee5f8;
+  --accent:#8142b7;
+  --post:#f0edf3;
+  --button:#eae5ef;
+  --shadow:0 5px 20px #0000000b;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial,sans-serif;
+}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  overflow-x:hidden;
+  transition:background .2s,color .2s;
+}
+
+/* TOPBAR - EXACT MATCH WITH HOME PAGE */
+
+.topbar{
+  height:70px;
+  width:100%;
+  position:sticky;
+  top:0;
+  z-index:1000;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 25px;
+  background:var(--purple);
+  border-bottom:1px solid var(--border);
+}
+
+.logo{
+  font-size:30px;
+  font-weight:900;
+  letter-spacing:-1.5px;
+  color:var(--text);
+  text-decoration:none;
+}
+
+.logo-z{
+  color:#ff3030;
+}
+
+.top-actions{
+  display:flex;
+  align-items:center;
+  gap:17px;
+}
+
+.search-box{
+  width:250px;
+  padding:10px 15px;
+  border:1px solid var(--border);
+  border-radius:22px;
+  outline:none;
+  background:var(--card);
+  color:var(--text);
+}
+
+.top-icon{
+  background:none;
+  border:0;
+  color:var(--text);
+  cursor:pointer;
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.top-icon i{
+  width:22px;
+  height:22px;
+  stroke-width:1.8;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+  width:230px;
+  position:fixed;
+  top:70px;
+  bottom:0;
+  left:0;
+  padding:25px 15px;
+  background:var(--bg);
+  border-right:1px solid var(--border);
+  z-index:500;
+}
+
+.menu-title{
+  color:var(--muted);
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:1.5px;
+  margin:5px 12px 20px;
+}
+
+.nav-link{
+  display:flex;
+  align-items:center;
+  gap:15px;
+  padding:13px 14px;
+  margin-bottom:7px;
+  border-radius:12px;
+  color:var(--text);
+  text-decoration:none;
+  font-size:15px;
+}
+
+.nav-link:hover,
+.nav-link.active{
+  background:var(--purple);
+  color:var(--accent);
+}
+
+.nav-icon{
+  width:23px;
+  text-align:center;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.nav-icon i{
+  width:20px;
+  height:20px;
+  stroke-width:1.8;
+}
+
+.upload-side{
+  width:100%;
+  border:0;
+  padding:13px;
+  border-radius:12px;
+  background:var(--accent);
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+  margin-top:20px;
+}
+
+/* MAIN SHORTS AREA */
+
+.main{
+  margin-left:230px;
+  height:calc(100vh - 70px);
+  display:flex;
+  justify-content:center;
+  position:relative;
+  background:var(--bg);
+}
+
+.shorts-feed{
+  width:100%;
+  max-width:520px;
+  height:100%;
+  overflow-y:auto;
+  scroll-snap-type:y mandatory;
+  scrollbar-width:none;
+}
+
+.shorts-feed::-webkit-scrollbar{
+  display:none;
+}
+
+/* SHORT ITEM */
+.short-item{
+  width:100%;
+  height:100%;
+  min-height:100%;
+  position:relative;
+  scroll-snap-align:start;
+  scroll-snap-stop:always;
+  background:#08070b;
+  overflow:hidden;
+}
+
+.short-video{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  background:#08070b;
+  display:block;
+}
+
+.video-overlay{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:linear-gradient(
+    to bottom,
+    rgba(0,0,0,.18),
+    transparent 22%,
+    transparent 55%,
+    rgba(0,0,0,.65)
+  );
+}
+
+.short-top{
+  position:absolute;
+  top:20px;
+  left:15px;
+  right:15px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  z-index:3;
+}
+
+.top-action{
+  background:#0008;
+  color:white;
+  border:0;
+  padding:10px 13px;
+  border-radius:20px;
+  cursor:pointer;
+  font-size:13px;
+}
+
+.short-actions{
+  position:absolute;
+  right:13px;
+  bottom:110px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:20px;
+  z-index:5;
+}
+
+.short-action{
+  background:transparent;
+  border:0;
+  color:white;
+  cursor:pointer;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:5px;
+  font-size:13px;
+  text-shadow:0 1px 5px #000;
+}
+
+.action-icon{
+  width:45px;
+  height:45px;
+  border-radius:50%;
+  background:#0007;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:23px;
+}
+
+.short-action.liked .action-icon{
+  color:#ff477e;
+}
+
+.short-action.saved .action-icon{
+  color:#b77aff;
+}
+
+.short-bottom{
+  position:absolute;
+  bottom:25px;
+  left:15px;
+  right:75px;
+  color:white;
+  z-index:4;
+  text-shadow:0 1px 5px #000;
+}
+
+.creator-row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:12px;
+}
+
+.creator-avatar{
+  width:39px;
+  height:39px;
+  border-radius:50%;
+  background:var(--accent);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:18px;
+  flex-shrink:0;
+}
+
+.creator-name{
+  font-weight:bold;
+  font-size:14px;
+}
+
+.follow-btn{
+  border:1px solid white;
+  background:transparent;
+  color:white;
+  border-radius:8px;
+  padding:6px 12px;
+  cursor:pointer;
+  font-size:12px;
+}
+
+.follow-btn.following{
+  background:#ffffff25;
+}
+
+.short-caption{
+  font-size:14px;
+  line-height:1.5;
+  overflow-wrap:anywhere;
+  margin-bottom:7px;
+}
+
+.short-hashtags{
+  font-size:13px;
+  color:#e5c9ff;
+}
+
+/* PLAY ICON */
+.play-indicator{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  width:65px;
+  height:65px;
+  border-radius:50%;
+  background:#0008;
+  color:white;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  font-size:28px;
+  z-index:4;
+  pointer-events:none;
+}
+
+/* EMPTY */
+.empty{
+  width:100%;
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  color:white;
+  padding:25px;
+  gap:15px;
+}
+
+.empty h2{
+  font-size:25px;
+}
+
+.empty p{
+  color:#ccc;
+  font-size:14px;
+  line-height:1.6;
+}
+
+.empty button{
+  border:0;
+  background:var(--accent);
+  color:white;
+  padding:12px 20px;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+/* MODALS */
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:#000b;
+  z-index:2000;
+  align-items:center;
+  justify-content:center;
+  padding:15px;
+}
+
+.modal-content{
+  width:100%;
+  max-width:500px;
+  max-height:90vh;
+  overflow-y:auto;
+  background:var(--card);
+  color:var(--text);
+  border-radius:16px;
+  padding:22px;
+}
+
+.modal-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:18px;
+}
+
+.close-btn{
+  border:0;
+  background:var(--button);
+  color:var(--text);
+  padding:9px 12px;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.upload-box{
+  border:2px dashed var(--border);
+  padding:22px;
+  text-align:center;
+  border-radius:12px;
+  margin-bottom:15px;
+}
+
+.upload-box input{
+  width:100%;
+  margin-top:12px;
+}
+
+.preview-area{
+  text-align:center;
+  margin:15px 0;
+}
+
+.preview-area video{
+  width:100%;
+  max-height:300px;
+  object-fit:contain;
+  border-radius:12px;
+  background:#08070b;
+}
+
+.field{
+  width:100%;
+  padding:12px;
+  border:1px solid var(--border);
+  border-radius:10px;
+  background:var(--bg);
+  color:var(--text);
+  margin:8px 0 14px;
+}
+
+.editor-label{
+  display:block;
+  font-size:13px;
+  font-weight:bold;
+  margin-top:12px;
+}
+
+.filter-list{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin:10px 0;
+}
+
+.filter-btn{
+  background:var(--button);
+  color:var(--text);
+  border:1px solid var(--border);
+  padding:8px 11px;
+  border-radius:8px;
+  cursor:pointer;
+  font-size:12px;
+}
+
+.filter-btn.active{
+  background:var(--accent);
+  color:white;
+}
+
+.range-row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin:12px 0;
+  font-size:13px;
+}
+
+.range-row span{
+  width:95px;
+}
+
+.range-row input{
+  flex:1;
+  accent-color:var(--accent);
+}
+
+.primary-btn{
+  background:var(--accent);
+  color:white;
+  border:0;
+  border-radius:10px;
+  padding:12px 18px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.secondary-btn{
+  background:var(--button);
+  color:var(--text);
+  border:0;
+  border-radius:10px;
+  padding:12px 18px;
+  cursor:pointer;
+}
+
+.modal-actions{
+  display:flex;
+  gap:10px;
+  margin-top:15px;
+}
+
+.modal-actions button{
+  flex:1;
+}
+
+.comment-box{
+  width:100%;
+  max-width:430px;
+}
+
+.comment-list{
+  max-height:250px;
+  overflow-y:auto;
+  margin:15px 0;
+}
+
+.comment-item{
+  padding:10px;
+  background:var(--button);
+  border-radius:9px;
+  margin-bottom:8px;
+  font-size:13px;
+  overflow-wrap:anywhere;
+}
+
+.comment-user{
+  font-weight:bold;
+  margin-bottom:5px;
+}
+
+/* NOTIFICATIONS PANEL */
+.notification-panel{
+  display:none;
+  position:fixed;
+  top:76px;
+  right:15px;
+  width:min(350px,92vw);
+  max-height:65vh;
+  overflow-y:auto;
+  padding:16px;
+  background:var(--card);
+  color:var(--text);
+  border:1px solid var(--border);
+  border-radius:15px;
+  z-index:3000;
+  box-shadow:var(--shadow);
+}
+
+.notice-item{
+  padding:12px 4px;
+  border-bottom:1px solid var(--border);
+  font-size:14px;
+}
+
+.notice-time{
+  display:block;
+  color:var(--muted);
+  font-size:11px;
+  margin-top:5px;
+}
+
+/* TOAST */
+.toast{
+  display:none;
+  position:fixed;
+  bottom:100px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#30233b;
+  color:white;
+  padding:12px 20px;
+  border-radius:25px;
+  z-index:5000;
+  max-width:90%;
+  text-align:center;
+  font-size:14px;
+}
+
+/* MOBILE NAV */
+.bottom-nav{
+  display:none;
+}
+
+@media(max-width:800px){
+  .topbar{
+    height:65px;
+    padding:0 14px;
+  }
+
+  .logo{
+    font-size:27px;
+  }
+
+  .top-actions{
+    gap:12px;
+  }
+
+  .search-box{
+    width:125px;
+    padding:8px 10px;
+  }
+
+  .sidebar{
+    display:none;
+  }
+
+  .main{
+    margin-left:0;
+    height:calc(100vh - 65px);
+    height:calc(100dvh - 65px);
+  }
+
+  .shorts-feed{
+    max-width:none;
+  }
+
+  .short-item{
+    height:100%;
+  }
+
+  .short-actions{
+    bottom:95px;
+    right:10px;
+    gap:17px;
+  }
+
+  .short-bottom{
+    bottom:75px;
+    left:13px;
+  }
+
+  .bottom-nav{
+    position:fixed;
+    bottom:0;
+    left:0;
+    width:100%;
+    height:76px;
+    background:var(--purple);
+    display:flex;
+    align-items:center;
+    justify-content:space-around;
+    border-top:1px solid var(--border);
+    z-index:2000;
+  }
+
+  .bottom-link{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+    color:var(--text);
+    text-decoration:none;
+    font-size:13px;
+    font-weight:500;
+  }
+
+  .bottom-link i{
+    width:28px;
+    height:28px;
+    stroke-width:1.9;
+  }
+
+  .bottom-link.active{
+    color:var(--accent);
+    font-weight:700;
+  }
+
+  .bottom-link.active i{
+    color:var(--accent);
+  }
+}
+</style>
 </head>
 
 <body>
 
-  <!-- ================= TOPBAR ================= -->
-
-  <header class="topbar">
-
-    <div class="logo">
-      ZCrush
-    </div>
-
-    <input
-      type="text"
-      class="top-search"
-      placeholder="Search ZCrush"
-    >
-
-    <div class="top-right">
-
-      <div class="notification">
-        🔔
-      </div>
-
-      <div class="avatar">
-        Z
-      </div>
-
-    </div>
-
-  </header>
-
-
-  <!-- ================= LAYOUT ================= -->
-
-  <div class="layout">
-
-
-    <!-- ================= SIDEBAR ================= -->
-
-  <aside class="sidebar">
-
-    <div class="sidebar-title">
-        MENU
-    </div>
-
-    <a href="index.html">
-        <span class="sidebar-icon">🏠</span>
-        <span>Home</span>
-    </a>
-
-    <a href="social.html">
-        <span class="sidebar-icon">🌐</span>
-        <span>Social</span>
-    </a>
-
-    <a href="moments.html">
-        <span class="sidebar-icon">⭐</span>
-        <span>Moments</span>
-    </a>
-
-    <a href="gaming.html">
-        <span class="sidebar-icon">🎮</span>
-        <span>Gaming</span>
-    </a>
-
-    <a href="shorts.html" class="active">
-        <span class="sidebar-icon">🎬</span>
-        <span>Shorts</span>
-    </a>
-
-    <a href="marketplace.html">
-        <span class="sidebar-icon">🛒</span>
-        <span>Marketplace</span>
-    </a>
-
-    <a href="profile.html">
-        <span class="sidebar-icon">👤</span>
-        <span>Profile</span>
-    </a>
-
- </aside>
-
-
-    <!-- ================= MAIN ================= -->
-
-    <main class="main">
-
-
-      <!-- PAGE HEADER -->
-
-      <div class="page-header">
-
-        <h1>
-          <span class="gradient">ZCrush</span> Shorts 🎬
-        </h1>
-
-        <p>
-          Watch, discover and enjoy short videos from the ZCrush community.
-        </p>
-
-      </div>
-
-
-      <!-- ================= FILTERS ================= -->
-
-      <div class="filters-card">
-
-        <div class="filters">
-
-          <button class="filter active">
-            🔥 Trending
-          </button>
-
-          <button class="filter">
-            🎮 Gaming
-          </button>
-
-          <button class="filter">
-            😂 Funny
-          </button>
-
-          <button class="filter">
-            🎵 Music
-          </button>
-
-          <button class="filter">
-            ✨ Creative
-          </button>
-
-        </div>
-
-      </div>
-
-
-      <!-- ================= SHORTS ================= -->
-
-      <h2 class="shorts-heading">
-        Trending Shorts
-      </h2>
-
-      <main class="shorts-container">
-
-
-        <!-- SHORT 1 -->
-
-        <article class="short">
-
-          <div class="demo-image">
-
-            <div class="play">
-              ▶
-            </div>
-
-          </div>
-
-
-          <div class="info">
-
-            <div class="creator">
-
-              <div class="creator-avatar">
-                Z
-              </div>
-
-              <strong>
-                @ZCreator
-              </strong>
-
-              <button class="follow">
-                Follow
-              </button>
-
-            </div>
-
-            <h2>
-              Welcome to the ZCrush world! 🚀
-            </h2>
-
-            <p>
-              Discover amazing content and enjoy your daily dose of fun.
-            </p>
-
-            <p class="hashtags">
-              #ZCrush #shorts #trending
-            </p>
-
-          </div>
-
-
-          <div class="actions">
-
-            <div class="action">
-
-              <div class="action-icon like">
-                ❤️
-              </div>
-
-              <span>
-                12.4K
-              </span>
-
-            </div>
-
-
-            <div class="action">
-
-              <div class="action-icon">
-                💬
-              </div>
-
-              <span>
-                842
-              </span>
-
-            </div>
-
-
-            <div class="action">
-
-              <div class="action-icon">
-                ↗️
-              </div>
-
-              <span>
-                Share
-              </span>
-
-            </div>
-
-
-            <div class="action">
-
-              <div class="action-icon">
-                🔖
-              </div>
-
-              <span>
-                Save
-              </span>
-
-            </div>
-
-          </div>
-
-        </article>
-
-
-        <!-- SHORT 2 -->
-
-        <article class="short">
-
-          <div class="demo-image">
-            🎮
-          </div>
-
-
-          <div class="info">
-
-            <div class="creator">
-
-              <div class="creator-avatar">
-                G
-              </div>
-
-              <strong>
-                @GamingZone
-              </strong>
-
-              <button class="follow">
-                Follow
-              </button>
-
-            </div>
-
-            <h2>
-              Gaming setup 🔥
-            </h2>
-
-            <p>
-              New setup, new adventures! What game should we play next?
-            </p>
-
-            <p class="hashtags">
-              #gaming #setup #gamer
-            </p>
-
-          </div>
-
-
-          <div class="actions">
-
-            <div class="action">
-
-              <div class="action-icon like">
-                ❤️
-              </div>
-
-              <span>
-                25.7K
-              </span>
-
-            </div>
-
-            <div class="action">
-
-              <div class="action-icon">
-                💬
-              </div>
-
-              <span>
-                1.2K
-              </span>
-
-            </div>
-
-            <div class="action">
-
-              <div class="action-icon">
-                ↗️
-              </div>
-
-              <span>
-                Share
-              </span>
-
-            </div>
-
-            <div class="action">
-
-              <div class="action-icon">
-                🔖
-              </div>
-
-              <span>
-                Save
-              </span>
-
-            </div>
-
-          </div>
-
-        </article>
-
-
-        <!-- SHORT 3 -->
-
-        <article class="short">
-
-          <div class="demo-image">
-            😂
-          </div>
-
-
-          <div class="info">
-
-            <div class="creator">
-
-              <div class="creator-avatar">
-                F
-              </div>
-
-              <strong>
-                @FunWorld
-              </strong>
-
-              <button class="follow">
-                Follow
-              </button>
-
-            </div>
-
-            <h2>
-              That moment 😂
-            </h2>
-
-            <p>
-              When your plan doesn't go exactly as expected!
-            </p>
-
-            <p class="hashtags">
-              #funny #comedy #viral
-            </p>
-
-          </div>
-
-
-          <div class="actions">
-
-            <div class="action">
-
-              <div class="action-icon like">
-                ❤️
-              </div>
-
-              <span>
-                8.9K
-              </span>
-
-            </div>
-
-            <div class="action">
-
-              <div class="action-icon">
-                💬
-              </div>
-
-              <span>
-                456
-              </span>
-
-            </div>
-
-            <div class="action">
-
-              <div class="action-icon">
-                ↗️
-              </div>
-
-              <span>
-                Share
-              </span>
-
-            </div>
-
-            <div class="action">
-
-              <div class="action-icon">
-                🔖
-              </div>
-
-              <span>
-                Save
-              </span>
-
-            </div>
-
-          </div>
-
-        </article>
-
-
-        <!-- SHORT 4 -->
-
-        <article class="short">
-
-          <div class="demo-image">
-            🌄
-          </div>
-
-
-          <div class="info">
-
-            <div class="creator">
-
-              <div class="creator-avatar">
-                T
-              </div>
-
-              <strong>
-                @TravelWorld
-              </strong>
-
-              <button class="follow">
-                Follow
-              </button>
-
-            </div>
-
-            <h2>
-              Life is an adventure 🌄
-            </h2>
-
-            <p>
-              Explore new places, discover new moments and enjoy the journey.
-            </p>
-
-            <p class="hashtags">
-              #travel #nature #adventure
-            </p>
-
-          </div>
-
-
-          <div class="actions">
-
-            <div class="action">
-
-              <div class="action-icon like">
-                ❤️
-              </div>
-
-              <span>
-                18.3K
-              </span>
-
-            </div>
-
-            <div class="action">
-
-              <div class="action-icon">
-                💬
-              </div>
-
-              <span>
-                735
-              </span>
-
-            </div>
-
-            <div class="action">
-
-              <div class="action-icon">
-                ↗️
-              </div>
-
-              <span>
-                Share
-              </span>
-
-            </div>
-
-            <div class="action">
-
-              <div class="action-icon">
-                🔖
-              </div>
-
-              <span>
-                Save
-              </span>
-
-            </div>
-
-          </div>
-
-        </article>
-
-
-      </main>
-
-
-      <!-- ================= FOOTER ================= -->
-
-      <footer>
-        © 2026 ZCrush • More Social • More Fun • More You
-      </footer>
-
-
-    </main>
-
+<!-- TOPBAR -->
+<header class="topbar">
+  <a href="index.html" class="logo">
+    <span class="logo-z">Z</span>Crush
+  </a>
+  <div class="top-actions">
+    <input type="search" id="searchInput" class="search-box" placeholder="Search...">
+    <button class="top-icon" id="notificationBtn" title="Notifications">
+      <i data-lucide="bell"></i>
+    </button>
+    <button class="top-icon" id="connectBtn" title="Z-Connect">
+      <i data-lucide="globe"></i>
+    </button>
   </div>
+</header>
 
+<!-- DESKTOP SIDEBAR -->
+<aside class="sidebar">
+  <div class="menu-title">MENU</div>
+  <a href="index.html" class="nav-link">
+    <span class="nav-icon"><i data-lucide="house"></i></span> Home
+  </a>
+  <a href="moments.html" class="nav-link">
+    <span class="nav-icon"><i data-lucide="sparkles"></i></span> Moments
+  </a>
+  <a href="shorts.html" class="nav-link active">
+    <span class="nav-icon"><i data-lucide="circle-play"></i></span> Shorts
+  </a>
+  <a href="profile.html" class="nav-link">
+    <span class="nav-icon"><i data-lucide="user-round"></i></span> Profile
+  </a>
+  <button class="upload-side" onclick="openUpload()">
+    ＋ Upload Short
+  </button>
+</aside>
 
-  <!-- ================= JAVASCRIPT ================= -->
+<!-- MAIN -->
+<main class="main">
+  <div class="shorts-feed" id="shortsFeed">
+    <div class="empty">
+      <h2>Welcome to ZCrush Shorts</h2>
+      <p>Watch and share short videos with everyone.</p>
+      <button onclick="openUpload()">＋ Upload Your First Short</button>
+    </div>
+  </div>
+</main>
 
-  <script>
+<!-- NOTIFICATIONS PANEL -->
+<div class="notification-panel" id="notificationPanel"></div>
 
-    /* LIKE BUTTON */
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
 
-    document.querySelectorAll(".like").forEach(function(button) {
+<!-- MOBILE BOTTOM NAV -->
+<nav class="bottom-nav">
+  <a href="index.html" class="bottom-link">
+    <i data-lucide="house"></i>
+    <span>Home</span>
+  </a>
+  <a href="moments.html" class="bottom-link">
+    <i data-lucide="sparkles"></i>
+    <span>Moments</span>
+  </a>
+  <a href="zcam.html" class="bottom-link">
+    <i data-lucide="aperture"></i>
+    <span>ZCam</span>
+  </a>
+  <a href="shorts.html" class="bottom-link active">
+    <i data-lucide="circle-play"></i>
+    <span>Shorts</span>
+  </a>
+  <a href="profile.html" class="bottom-link">
+    <i data-lucide="user-round"></i>
+    <span>Profile</span>
+  </a>
+</nav>
 
-      button.addEventListener("click", function() {
+<!-- UPLOAD MODAL -->
+<div class="modal" id="uploadModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Upload Short</h2>
+      <button class="close-btn" onclick="closeUpload()">✕</button>
+    </div>
+    <div class="upload-box">
+      <strong>Select Video</strong>
+      <p style="color:var(--muted);font-size:12px;margin-top:7px">
+        Vertical 9:16 video recommended • Maximum 60 seconds
+      </p>
+      <input type="file" id="videoInput" accept="video/*">
+    </div>
+    <div class="preview-area" id="previewArea">
+      <p style="color:var(--muted)">Video preview will appear here.</p>
+    </div>
+    <label class="editor-label">Filters</label>
+    <div class="filter-list">
+      <button class="filter-btn active" data-filter="none">Original</button>
+      <button class="filter-btn" data-filter="vintage">Vintage</button>
+      <button class="filter-btn" data-filter="warm">Warm</button>
+      <button class="filter-btn" data-filter="cool">Cool</button>
+      <button class="filter-btn" data-filter="bw">B&W</button>
+      <button class="filter-btn" data-filter="cinematic">Cinematic</button>
+      <button class="filter-btn" data-filter="bright">Bright</button>
+      <button class="filter-btn" data-filter="soft">Soft</button>
+    </div>
+    <label class="editor-label">Adjustments</label>
+    <div class="range-row">
+      <span>Brightness</span>
+      <input type="range" id="brightness" min="50" max="150" value="100">
+    </div>
+    <div class="range-row">
+      <span>Contrast</span>
+      <input type="range" id="contrast" min="50" max="150" value="100">
+    </div>
+    <div class="range-row">
+      <span>Saturation</span>
+      <input type="range" id="saturation" min="0" max="200" value="100">
+    </div>
+    <label class="editor-label">Caption</label>
+    <textarea class="field" id="caption" rows="3" placeholder="Write a caption..."></textarea>
+    <label class="editor-label">Hashtags</label>
+    <input class="field" id="hashtags" placeholder="#ZCrush #Shorts">
+    <div class="modal-actions">
+      <button class="secondary-btn" onclick="resetEditor()">Reset</button>
+      <button class="primary-btn" onclick="publishShort()">Publish Short</button>
+    </div>
+  </div>
+</div>
 
-        button.classList.toggle("liked");
+<!-- COMMENTS MODAL -->
+<div class="modal" id="commentModal">
+  <div class="modal-content comment-box">
+    <div class="modal-header">
+      <h2>Comments</h2>
+      <button class="close-btn" onclick="closeComments()">✕</button>
+    </div>
+    <div class="comment-list" id="commentList"></div>
+    <input class="field" id="commentInput" placeholder="Write a comment...">
+    <button class="primary-btn" style="width:100%" onclick="submitComment()">Post Comment</button>
+  </div>
+</div>
 
-      });
+<script>
+const STORAGE_KEY = "zcrushShorts";
+const FOLLOW_KEY = "zcrushFollowing";
+const SAVE_KEY = "zcrushSavedShorts";
+const NOTIFY_KEY = "zcrushNotifications";
 
+let shorts = [];
+let selectedFile = null;
+let activeFilter = "none";
+let brightness = 100;
+let contrast = 100;
+let saturation = 100;
+let currentCommentId = null;
+let observer = null;
+let notifications = [];
+
+const $ = id => document.getElementById(id);
+
+function username(){
+  return localStorage.getItem("zcrushUserName") || "ZCrush User";
+}
+
+function showToast(message){
+  const el = $("toast");
+  el.textContent = message;
+  el.style.display = "block";
+  clearTimeout(window.toastTimer);
+  window.toastTimer = setTimeout(() => {
+    el.style.display = "none";
+  }, 2500);
+}
+
+function getList(key){
+  try{
+    return JSON.parse(localStorage.getItem(key)) || [];
+  }catch(e){
+    return [];
+  }
+}
+
+function saveList(key,list){
+  localStorage.setItem(key, JSON.stringify(list));
+}
+
+function loadShorts(){
+  try{
+    shorts = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+  }catch(e){
+    shorts = [];
+  }
+  saveShorts();
+}
+
+function saveShorts(){
+  try{
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(shorts));
+    return true;
+  }catch(e){
+    showToast("Storage full! Please use a smaller video.");
+    return false;
+  }
+}
+
+/* NOTIFICATIONS */
+function loadNotifications(){
+  notifications = getList(NOTIFY_KEY);
+  updateNotificationCount();
+}
+
+function updateNotificationCount(){
+  const count = notifications.filter(n => !n.read).length;
+  const btn = $("notificationBtn");
+  if(count > 0){
+    btn.innerHTML = `<i data-lucide="bell"></i><sup style="font-size:10px;color:#ff70aa;position:absolute;top:2px;right:2px;">${count}</sup>`;
+  }else{
+    btn.innerHTML = `<i data-lucide="bell"></i>`;
+  }
+  if(window.lucide) lucide.createIcons();
+}
+
+function renderNotifications(){
+  const panel = $("notificationPanel");
+  panel.style.display = panel.style.display === "block" ? "none" : "block";
+  if(panel.style.display !== "block") return;
+
+  panel.innerHTML = `
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+      <strong>Notifications</strong>
+      <button class="follow-btn" id="markRead" style="border:0; background:var(--button); padding:6px 10px; border-radius:8px; cursor:pointer;">Mark all read</button>
+    </div>
+    ${
+      notifications.length
+      ? notifications.map(n => `
+        <div class="notice-item">
+          ${n.text}
+          <span class="notice-time">Just now</span>
+        </div>
+      `).join("")
+      : `<p style="color:var(--muted);">No notifications yet.</p>`
+    }
+  `;
+
+  const markRead = $("markRead");
+  if(markRead){
+    markRead.addEventListener("click", () => {
+      notifications = notifications.map(n => ({...n, read:true}));
+      saveList(NOTIFY_KEY, notifications);
+      updateNotificationCount();
+      renderNotifications();
     });
+  }
+}
 
+$("notificationBtn").addEventListener("click", renderNotifications);
 
-    /* FILTER BUTTON */
+$("connectBtn").addEventListener("click", () => {
+  showToast("Z-Connect is coming soon!");
+});
 
-    document.querySelectorAll(".filter").forEach(function(button) {
+/* FILTERS */
+function filterCSS(filter){
+  const filters = {
+    none:"none",
+    vintage:"sepia(35%) contrast(105%)",
+    warm:"sepia(25%) saturate(130%)",
+    cool:"hue-rotate(15deg) saturate(90%)",
+    bw:"grayscale(100%)",
+    cinematic:"contrast(120%) saturate(85%)",
+    bright:"brightness(120%)",
+    soft:"brightness(110%) saturate(85%)"
+  };
+  return filters[filter] || "none";
+}
 
-      button.addEventListener("click", function() {
+function videoStyle(short){
+  return "filter:"+filterCSS(short.filter)+
+    " brightness("+short.brightness+"%)"+
+    " contrast("+short.contrast+"%)"+
+    " saturate("+short.saturation+"%);";
+}
 
-        document.querySelectorAll(".filter")
-          .forEach(function(btn) {
+/* UPLOAD */
+function openUpload(){
+  $("uploadModal").style.display = "flex";
+}
 
-            btn.classList.remove("active");
+function closeUpload(){
+  $("uploadModal").style.display = "none";
+}
 
-          });
+$("videoInput").addEventListener("change", function(){
+  const file = this.files[0];
+  if(!file) return;
 
-        button.classList.add("active");
+  if(!file.type.startsWith("video/")){
+    showToast("Please select a video.");
+    this.value = "";
+    return;
+  }
 
-      });
+  if(file.size > 8*1024*1024){
+    showToast("Video must be smaller than 8 MB.");
+    this.value = "";
+    return;
+  }
 
-    });
+  selectedFile = file;
+  const url = URL.createObjectURL(file);
+  const video = document.createElement("video");
+  video.src = url;
+  video.controls = true;
+  video.playsInline = true;
 
+  video.onloadedmetadata = ()=>{
+    if(video.duration > 60){
+      showToast("Video must be 60 seconds or shorter.");
+      selectedFile = null;
+      $("videoInput").value = "";
+      $("previewArea").innerHTML = '<p style="color:var(--muted)">Video preview will appear here.</p>';
+      return;
+    }
+  };
 
-    /* FOLLOW BUTTON */
+  $("previewArea").innerHTML = "";
+  $("previewArea").appendChild(video);
+  updatePreview();
+});
 
-    document.querySelectorAll(".follow").forEach(function(button) {
+document.querySelectorAll(".filter-btn").forEach(button=>{
+  button.addEventListener("click",()=>{
+    document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+    button.classList.add("active");
+    activeFilter = button.dataset.filter;
+    updatePreview();
+  });
+});
 
-      button.addEventListener("click", function() {
+["brightness","contrast","saturation"].forEach(id=>{
+  $(id).addEventListener("input",()=>{
+    brightness = Number($("brightness").value);
+    contrast = Number($("contrast").value);
+    saturation = Number($("saturation").value);
+    updatePreview();
+  });
+});
 
-        if (button.textContent.trim() === "Follow") {
+function updatePreview(){
+  const video = $("previewArea").querySelector("video");
+  if(!video) return;
+  video.style.filter =
+    filterCSS(activeFilter)+
+    " brightness("+brightness+"%)"+
+    " contrast("+contrast+"%)"+
+    " saturate("+saturation+"%)";
+}
 
-          button.textContent = "Following";
+function resetEditor(){
+  activeFilter = "none";
+  brightness = 100;
+  contrast = 100;
+  saturation = 100;
+  $("brightness").value = 100;
+  $("contrast").value = 100;
+  $("saturation").value = 100;
+  document.querySelectorAll(".filter-btn").forEach(b=>{
+    b.classList.toggle("active", b.dataset.filter === "none");
+  });
+  updatePreview();
+}
 
-        } else {
+function fileToDataURL(file){
+  return new Promise((resolve,reject)=>{
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
 
-          button.textContent = "Follow";
+function getDuration(file){
+  return new Promise(resolve=>{
+    const video = document.createElement("video");
+    const url = URL.createObjectURL(file);
+    video.preload = "metadata";
+    video.onloadedmetadata = ()=>{
+      const duration = video.duration;
+      URL.revokeObjectURL(url);
+      resolve(duration);
+    };
+    video.onerror = ()=>{
+      URL.revokeObjectURL(url);
+      resolve(999);
+    };
+    video.src = url;
+  });
+}
 
-        }
+async function publishShort(){
+  if(!selectedFile){
+    showToast("Please select a video first.");
+    return;
+  }
 
-      });
+  const duration = await getDuration(selectedFile);
+  if(duration > 60){
+    showToast("Video must be 60 seconds or shorter.");
+    return;
+  }
 
-    });
+  try{
+    const data = await fileToDataURL(selectedFile);
+    const short = {
+      id: Date.now()+"_"+Math.random().toString(36).slice(2,8),
+      username: username(),
+      video: data,
+      caption: $("caption").value.trim(),
+      hashtags: $("hashtags").value.trim(),
+      filter: activeFilter,
+      brightness: brightness,
+      contrast: contrast,
+      saturation: saturation,
+      likes: [],
+      comments: [],
+      views: 0,
+      createdAt: Date.now()
+    };
 
+    shorts.unshift(short);
+    if(!saveShorts()) return;
 
-    /* SHARE BUTTON */
+    selectedFile = null;
+    $("videoInput").value = "";
+    $("caption").value = "";
+    $("hashtags").value = "";
+    $("previewArea").innerHTML = '<p style="color:var(--muted)">Video preview will appear here.</p>';
 
-    document.querySelectorAll(".action").forEach(function(action) {
+    resetEditor();
+    closeUpload();
+    renderShorts();
+    $("shortsFeed").scrollTop = 0;
+    showToast("Short published successfully!");
+  }catch(error){
+    showToast("Unable to upload video.");
+  }
+}
 
-      const text = action.innerText.trim();
+function isFollowing(name){
+  return getList(FOLLOW_KEY).includes(name);
+}
 
-      if (text.includes("Share")) {
+function toggleFollow(name){
+  let following = getList(FOLLOW_KEY);
+  if(following.includes(name)){
+    following = following.filter(n => n !== name);
+    showToast("Unfollowed successfully.");
+  }else{
+    following.push(name);
+    showToast("Following " + name);
+  }
+  saveList(FOLLOW_KEY, following);
+  renderShorts();
+}
 
-        action.addEventListener("click", function() {
+function toggleLike(id){
+  const short = shorts.find(s => s.id === id);
+  if(!short) return;
+  const user = username();
+  if(short.likes.includes(user)){
+    short.likes = short.likes.filter(u => u !== user);
+  }else{
+    short.likes.push(user);
+  }
+  saveShorts();
+  renderShorts();
+}
 
-          if (navigator.share) {
+function toggleSave(id){
+  let saved = getList(SAVE_KEY);
+  if(saved.includes(id)){
+    saved = saved.filter(x => x !== id);
+    showToast("Removed from saved.");
+  }else{
+    saved.push(id);
+    showToast("Short saved!");
+  }
+  saveList(SAVE_KEY, saved);
+  renderShorts();
+}
 
-            navigator.share({
-              title: "ZCrush Shorts",
-              text: "Check out this short on ZCrush!"
-            });
+function openComments(id){
+  currentCommentId = id;
+  $("commentModal").style.display = "flex";
+  renderComments();
+}
 
-          } else {
+function closeComments(){
+  $("commentModal").style.display = "none";
+  currentCommentId = null;
+}
 
-            alert("Share feature is available on supported devices.");
+function renderComments(){
+  const short = shorts.find(s => s.id === currentCommentId);
+  if(!short) return;
 
-          }
+  const list = $("commentList");
+  list.innerHTML = "";
 
-        });
+  if(short.comments.length === 0){
+    list.innerHTML = '<p style="color:var(--muted);text-align:center;padding:20px">No comments yet.</p>';
+    return;
+  }
 
+  short.comments.forEach(comment=>{
+    const item = document.createElement("div");
+    item.className = "comment-item";
+    item.innerHTML = `<div class="comment-user">${comment.username}</div><div>${comment.text}</div>`;
+    list.appendChild(item);
+  });
+}
+
+function submitComment(){
+  const short = shorts.find(s => s.id === currentCommentId);
+  const text = $("commentInput").value.trim();
+  if(!short || !text) return;
+
+  short.comments.push({
+    username: username(),
+    text: text,
+    createdAt: Date.now()
+  });
+
+  $("commentInput").value = "";
+  saveShorts();
+  renderComments();
+  renderShorts();
+  showToast("Comment added!");
+}
+
+async function shareShort(id){
+  const url = location.href.split("?")[0]+"?short="+encodeURIComponent(id);
+  try{
+    if(navigator.share){
+      await navigator.share({title:"ZCrush Short", text:"Watch this Short on ZCrush!", url:url});
+    }else if(navigator.clipboard){
+      await navigator.clipboard.writeText(url);
+      showToast("Short link copied!");
+    }else{
+      prompt("Copy this link:", url);
+    }
+  }catch(error){}
+}
+
+function deleteShort(id){
+  const short = shorts.find(s => s.id === id);
+  if(!short || short.username !== username()) return;
+  if(!confirm("Delete this Short?")) return;
+
+  shorts = shorts.filter(s => s.id !== id);
+  saveShorts();
+  renderShorts();
+  showToast("Short deleted.");
+}
+
+function renderShorts(){
+  const feed = $("shortsFeed");
+  if(observer) observer.disconnect();
+  feed.innerHTML = "";
+
+  if(shorts.length === 0){
+    feed.innerHTML = `
+      <div class="empty">
+        <h2>Welcome to ZCrush Shorts</h2>
+        <p>Watch and share short videos with everyone.</p>
+        <button onclick="openUpload()">＋ Upload Your First Short</button>
+      </div>
+    `;
+    if(window.lucide) lucide.createIcons();
+    return;
+  }
+
+  const saved = getList(SAVE_KEY);
+
+  shorts.forEach(short=>{
+    const item = document.createElement("section");
+    item.className = "short-item";
+    item.dataset.id = short.id;
+
+    const liked = short.likes.includes(username());
+    const isSaved = saved.includes(short.id);
+
+    item.innerHTML = `
+      <video class="short-video" src="${short.video}" loop playsinline preload="metadata" style="${videoStyle(short)}"></video>
+      <div class="video-overlay"></div>
+      <div class="play-indicator">▶</div>
+      <div class="short-top">
+        <button class="top-action" onclick="toggleSound(this, event)">🔇 Sound</button>
+        <button class="top-action" onclick="openUpload()">＋ Upload</button>
+      </div>
+      <div class="short-actions">
+        <button class="short-action ${liked ? 'liked' : ''}" onclick="toggleLike('${short.id}')">
+          <span class="action-icon">${liked ? '♥' : '♡'}</span>
+          <span>${short.likes.length}</span>
+        </button>
+        <button class="short-action" onclick="openComments('${short.id}')">
+          <span class="action-icon">💬</span>
+          <span>${short.comments.length}</span>
+        </button>
+        <button class="short-action" onclick="shareShort('${short.id}')">
+          <span class="action-icon">↗</span>
+          <span>Share</span>
+        </button>
+        <button class="short-action ${isSaved ? 'saved' : ''}" onclick="toggleSave('${short.id}')">
+          <span class="action-icon">${isSaved ? '🔖' : '♧'}</span>
+          <span>Save</span>
+        </button>
+        <button class="short-action" onclick="handleMore('${short.id}', '${short.username}')">
+          <span class="action-icon">⋮</span>
+          <span>More</span>
+        </button>
+      </div>
+      <div class="short-bottom">
+        <div class="creator-row">
+          <div class="creator-avatar">👤</div>
+          <span class="creator-name">@${short.username.replace(/\s+/g,"").toLowerCase()}</span>
+          ${short.username !== username() ? `<button class="follow-btn ${isFollowing(short.username)?'following':''}" onclick="toggleFollow('${short.username}')">${isFollowing(short.username)?'Following':'Follow'}</button>` : ''}
+        </div>
+        <div class="short-caption">${short.caption || "Watch my new Short!"}</div>
+        <div class="short-hashtags">${short.hashtags || "#ZCrush #Shorts"}</div>
+      </div>
+    `;
+
+    const video = item.querySelector("video");
+    const playIndicator = item.querySelector(".play-indicator");
+
+    video.addEventListener("click", () => {
+      if(video.paused){
+        video.play().catch(()=>{});
+        playIndicator.style.display = "none";
+      }else{
+        video.pause();
+        playIndicator.style.display = "flex";
       }
-
     });
 
-  </script>
+    feed.appendChild(item);
+  });
 
+  setupAutoPlay();
+  if(window.lucide) lucide.createIcons();
+}
+
+function toggleSound(btn, e){
+  e.stopPropagation();
+  const video = btn.closest(".short-item").querySelector("video");
+  video.muted = !video.muted;
+  btn.textContent = video.muted ? "🔇 Sound" : "🔊 Sound";
+}
+
+function handleMore(id, creatorName){
+  if(creatorName === username()){
+    if(confirm("Delete this Short?")) deleteShort(id);
+  }else{
+    showToast("Report feature coming soon.");
+  }
+}
+
+function setupAutoPlay(){
+  const videos = document.querySelectorAll(".short-video");
+  observer = new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+      const video = entry.target;
+      if(entry.isIntersecting && entry.intersectionRatio >= 0.65){
+        videos.forEach(v=>{ if(v !== video) v.pause(); });
+        video.muted = true;
+        video.play().catch(()=>{});
+      }else{
+        video.pause();
+      }
+    });
+  },{
+    root: $("shortsFeed"),
+    threshold: [0.25, 0.65, 0.9]
+  });
+
+  videos.forEach(video => observer.observe(video));
+}
+
+function openSharedShort(){
+  const id = new URLSearchParams(location.search).get("short");
+  if(!id) return;
+  const item = document.querySelector('.short-item[data-id="'+id+'"]');
+  if(item){
+    item.scrollIntoView({behavior:"auto"});
+  }
+}
+
+const deviceTheme = window.matchMedia("(prefers-color-scheme: dark)");
+function applyDeviceTheme(){
+  document.body.classList.toggle("light", !deviceTheme.matches);
+}
+applyDeviceTheme();
+if(deviceTheme.addEventListener){
+  deviceTheme.addEventListener("change", applyDeviceTheme);
+}
+
+loadShorts();
+loadNotifications();
+renderShorts();
+openSharedShort();
+
+if(window.lucide) lucide.createIcons();
+</script>
 </body>
 </html>
