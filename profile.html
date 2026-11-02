@@ -3,10 +3,50 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>ZCrush - Profile</title>
 
+<!-- Lucide Icons: Load BEFORE JavaScript -->
+<script src="https://unpkg.com/lucide@latest"></script>
+
 <style>
+
+/* =====================================
+   ZCRUSH DARK THEME
+===================================== */
+
+:root{
+  color-scheme:dark;
+
+  --bg:#08070b;
+  --card:#121016;
+  --text:#ffffff;
+  --muted:#a8a2b0;
+  --border:#292431;
+  --purple:#241638;
+  --accent:#b77aff;
+  --post:#211d27;
+  --button:#302b36;
+  --shadow:0 5px 20px #0003;
+}
+
+/* =====================================
+   ZCRUSH LIGHT THEME
+===================================== */
+
+body.light{
+  color-scheme:light;
+
+  --bg:#f5f4f8;
+  --card:#ffffff;
+  --text:#211b2a;
+  --muted:#777080;
+  --border:#e7e1ec;
+  --purple:#eee5f8;
+  --accent:#8142b7;
+  --post:#f0edf3;
+  --button:#eae5ef;
+  --shadow:0 5px 20px #0000000b;
+}
 
 *{
   margin:0;
@@ -16,464 +56,622 @@
 }
 
 body{
-  background:#f5f7fb;
-  color:#151827;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  overflow-x:hidden;
+  transition:background .2s,color .2s;
 }
 
 /* TOPBAR */
 
 .topbar{
-  height:65px;
-  background:white;
-  border-bottom:1px solid #e5e7ef;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 5%;
+  height:70px;
+  width:100%;
   position:sticky;
   top:0;
   z-index:1000;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 25px;
+  background:var(--purple);
+  border-bottom:1px solid var(--border);
 }
 
 .logo{
-  font-size:25px;
-  font-weight:bold;
-  background:linear-gradient(90deg,#9b00ff,#ff22bd,#168cff);
-  -webkit-background-clip:text;
-  color:transparent;
+  font-size:30px;
+  font-weight:900;
+  letter-spacing:-1.5px;
+  color:var(--text);
+  text-decoration:none;
 }
 
-.search{
-  width:280px;
-  background:#f1f3f8;
-  border:none;
-  outline:none;
-  padding:11px 16px;
-  border-radius:22px;
+.logo-z{
+  color:#ff3030;
 }
 
-.topRight{
+.top-actions{
   display:flex;
   align-items:center;
-  gap:18px;
+  gap:17px;
 }
 
-.icon{
-  font-size:20px;
+.search-box{
+  width:250px;
+  padding:10px 15px;
+  border:1px solid var(--border);
+  border-radius:22px;
+  outline:none;
+  background:var(--card);
+  color:var(--text);
+  transition:border-color .2s;
+}
+
+.search-box:focus{
+  border-color:var(--accent);
+}
+
+.top-icon{
+  background:none;
+  border:0;
+  color:var(--text);
   cursor:pointer;
-}
-
-.topAvatar{
-  width:38px;
-  height:38px;
-  border-radius:50%;
-  object-fit:cover;
-  background:#ddd;
-}
-
-/* LAYOUT */
-
-.layout{
+  position:relative;
   display:flex;
-  max-width:1250px;
-  margin:auto;
+  align-items:center;
+  justify-content:center;
+}
+
+.top-icon i{
+  width:22px;
+  height:22px;
+  stroke-width:1.8;
 }
 
 /* SIDEBAR */
 
 .sidebar{
-  width:220px;
-  min-height:calc(100vh - 65px);
-  background:white;
-  border-right:1px solid #e5e7ef;
+  width:230px;
+  position:fixed;
+  top:70px;
+  bottom:0;
+  left:0;
   padding:25px 15px;
-  position:sticky;
-  top:65px;
-  height:calc(100vh - 65px);
+  background:var(--bg);
+  border-right:1px solid var(--border);
+  z-index:500;
 }
 
-.sidebar a{
-  display:block;
+.menu-title{
+  color:var(--muted);
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:1.5px;
+  margin:5px 12px 20px;
+}
+
+.nav-link{
+  display:flex;
+  align-items:center;
+  gap:15px;
+  padding:13px 14px;
+  margin-bottom:7px;
+  border-radius:12px;
+  color:var(--text);
   text-decoration:none;
-  color:#555b6d;
-  padding:13px 15px;
-  border-radius:10px;
-  margin-bottom:6px;
-  font-size:14px;
+  font-size:15px;
+  transition:all .2s ease;
 }
 
-.sidebar a:hover,
-.sidebar a.active{
-  background:#f0e8ff;
-  color:#781cff;
-  font-weight:bold;
+.nav-link:hover,
+.nav-link.active{
+  background:var(--purple);
+  color:var(--accent);
+}
+
+.nav-icon{
+  width:23px;
+  text-align:center;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.nav-icon i{
+  width:20px;
+  height:20px;
+  stroke-width:1.8;
 }
 
 /* MAIN */
 
 .main{
-  flex:1;
-  padding:25px;
+  margin-left:230px;
+  width:calc(100% - 230px);
   max-width:1000px;
+  padding:25px;
 }
 
-/* COVER */
+/* PROFILE HEADER CARD */
 
-.cover{
-  height:250px;
+.profile-card{
+  background:var(--card);
+  border:1px solid var(--border);
   border-radius:18px;
-  background:
-    linear-gradient(
-      rgba(0,0,0,.15),
-      rgba(0,0,0,.25)
-    ),
-    url("https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=1500&q=80")
-    center/cover;
-  position:relative;
+  overflow:hidden;
+  box-shadow:var(--shadow);
+  margin-bottom:25px;
+  transition:transform .2s ease;
 }
 
-/* PROFILE CARD */
-
-.profileCard{
-  background:white;
-  border-radius:18px;
-  margin-top:-70px;
+.cover-photo{
+  width:100%;
+  height:170px;
+  background:linear-gradient(135deg, #8b4cc4, #241638);
   position:relative;
-  padding:0 25px 25px;
-  box-shadow:0 3px 15px rgba(0,0,0,.06);
+  background-size:cover;
+  background-position:center;
 }
 
-.profileTop{
+.cover-edit-btn{
+  position:absolute;
+  top:12px;
+  right:12px;
+  background:rgba(0,0,0,0.6);
+  backdrop-filter:blur(4px);
+  border:1px solid rgba(255,255,255,0.2);
+  color:white;
+  padding:7px 14px;
+  border-radius:20px;
+  font-size:12px;
+  cursor:pointer;
   display:flex;
-  align-items:flex-end;
-  gap:20px;
+  align-items:center;
+  gap:6px;
+  transition:background .2s;
 }
 
-.profilePhoto{
-  width:130px;
-  height:130px;
+.cover-edit-btn:hover{
+  background:rgba(0,0,0,0.8);
+}
+
+.profile-info{
+  padding:20px;
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:15px;
+}
+
+.avatar-wrapper{
+  position:relative;
+  margin-top:-65px;
+  width:95px;
+  height:95px;
+  cursor:pointer;
+}
+
+.avatar-container{
+  width:100%;
+  height:100%;
   border-radius:50%;
-  border:5px solid white;
-  object-fit:cover;
-  background:#e9ebf2;
-  margin-top:-60px;
-}
-
-.profileInfo{
-  padding-top:15px;
-  flex:1;
-}
-
-.profileName{
-  font-size:25px;
-  font-weight:bold;
-}
-
-.verified{
-  color:#258cff;
-}
-
-.handle{
-  color:#777;
-  margin-top:5px;
-}
-
-.bio{
-  margin-top:10px;
-  color:#555;
-  line-height:1.5;
-}
-
-.profileActions{
+  background:var(--card);
+  border:4px solid var(--card);
+  overflow:hidden;
   display:flex;
-  gap:10px;
-  margin-top:20px;
+  align-items:center;
+  justify-content:center;
+  font-size:36px;
+  font-weight:bold;
+  color:var(--text);
+  box-shadow:var(--shadow);
+}
+
+.avatar-container img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.avatar-edit-badge{
+  position:absolute;
+  bottom:2px;
+  right:2px;
+  background:var(--accent);
+  color:white;
+  width:26px;
+  height:26px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:15px;
+  font-weight:bold;
+  border:2px solid var(--card);
+  z-index:2;
+  box-shadow:0 2px 5px rgba(0,0,0,0.3);
+  transition:transform .15s ease;
+}
+
+.avatar-wrapper:hover .avatar-edit-badge{
+  transform:scale(1.1);
+}
+
+.profile-header-actions{
+  width:100%;
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:15px;
   flex-wrap:wrap;
 }
 
-.btn{
-  border:none;
-  padding:10px 18px;
+.user-names h1{
+  font-size:22px;
+  font-weight:800;
+}
+
+.user-names p{
+  color:var(--muted);
+  font-size:14px;
+  margin-top:2px;
+}
+
+.bio-section{
+  font-size:14px;
+  color:var(--text);
+  margin-top:8px;
+  white-space:pre-wrap;
+  line-height:1.4;
+}
+
+.edit-profile-btn{
+  background:var(--button);
+  border:1px solid var(--border);
+  color:var(--text);
+  padding:9px 18px;
   border-radius:20px;
-  cursor:pointer;
-  font-weight:bold;
-}
-
-.primary{
-  background:#721cff;
-  color:white;
-}
-
-.secondary{
-  background:#f0f1f6;
-  color:#333;
-}
-
-.stats{
-  display:flex;
-  gap:35px;
-  margin-top:22px;
-  border-top:1px solid #eee;
-  padding-top:18px;
-}
-
-.stat{
-  text-align:center;
-}
-
-.stat strong{
-  display:block;
-  font-size:20px;
-}
-
-.stat span{
-  color:#777;
+  font-weight:700;
   font-size:13px;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  transition:all .2s ease;
+}
+
+.edit-profile-btn:hover{
+  background:var(--purple);
+  color:var(--accent);
+  border-color:var(--accent);
+}
+
+.stats-row{
+  display:flex;
+  gap:25px;
+  margin-top:5px;
+}
+
+.stat-item{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+}
+
+.stat-value{
+  font-weight:800;
+  font-size:18px;
+}
+
+.stat-label{
+  color:var(--muted);
+  font-size:12px;
 }
 
 /* TABS */
 
 .tabs{
   display:flex;
-  gap:30px;
-  background:white;
-  margin-top:20px;
-  padding:0 20px;
-  border-radius:15px;
-  border:1px solid #e5e7ef;
+  gap:10px;
+  border-bottom:1px solid var(--border);
+  margin-bottom:20px;
 }
 
-.tab{
-  padding:17px 5px;
+.tab-btn{
+  background:none;
+  border:0;
+  padding:12px 18px;
+  color:var(--muted);
+  font-weight:700;
+  font-size:15px;
   cursor:pointer;
-  color:#777;
   border-bottom:3px solid transparent;
+  transition:all .2s ease;
 }
 
-.tab.active{
-  color:#721cff;
-  border-color:#721cff;
-  font-weight:bold;
+.tab-btn.active{
+  color:var(--accent);
+  border-bottom-color:var(--accent);
 }
 
-/* CONTENT */
+/* CONTENT GRID */
 
-.contentBox{
-  margin-top:20px;
-}
-
-.tabContent{
-  display:none;
-}
-
-.tabContent.active{
-  display:block;
-}
-
-/* POSTS */
-
-.postsGrid{
+.posts-grid{
   display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:12px;
+  grid-template-columns:repeat(3, minmax(0, 1fr));
+  gap:15px;
 }
 
-.postCard{
-  background:white;
-  border-radius:14px;
+.grid-item{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:12px;
+  height:200px;
   overflow:hidden;
-  border:1px solid #e5e7ef;
+  position:relative;
+  transition:transform .2s ease;
 }
 
-.postCard img{
+.grid-item:hover{
+  transform:translateY(-2px);
+}
+
+.grid-item img, .grid-item video{
   width:100%;
-  height:220px;
+  height:100%;
   object-fit:cover;
-  display:block;
 }
 
-.postText{
-  padding:14px;
-  font-size:14px;
-  line-height:1.5;
-}
-
-.postBottom{
-  padding:0 14px 14px;
-  display:flex;
-  justify-content:space-between;
-  color:#777;
+.grid-text{
+  padding:15px;
   font-size:13px;
+  color:var(--text);
+  overflow:hidden;
 }
 
-.deletePost{
-  color:#ef4056;
-  cursor:pointer;
+.view-badge{
+  position:absolute;
+  bottom:8px;
+  left:8px;
+  background:rgba(0,0,0,0.65);
+  backdrop-filter:blur(3px);
+  color:white;
+  padding:4px 8px;
+  border-radius:8px;
+  font-size:11px;
+  font-weight:600;
 }
 
-/* EMPTY */
-
-.empty{
-  background:white;
-  border:1px solid #e5e7ef;
-  border-radius:15px;
-  padding:45px 20px;
+.empty-msg{
+  grid-column:1 / -1;
   text-align:center;
-  color:#777;
+  padding:40px;
+  color:var(--muted);
 }
 
-.empty h3{
-  color:#333;
-  margin-bottom:8px;
-}
-
-/* ABOUT */
-
-.aboutBox{
-  background:white;
-  border:1px solid #e5e7ef;
-  border-radius:15px;
-  padding:20px;
-}
-
-.aboutRow{
-  padding:12px 0;
-  border-bottom:1px solid #eee;
-}
-
-.aboutRow:last-child{
-  border-bottom:none;
-}
-
-.aboutLabel{
-  color:#777;
-  font-size:13px;
-}
-
-.aboutValue{
-  margin-top:4px;
-}
-
-/* MODAL */
+/* MODAL FOR EDIT PROFILE */
 
 .modal{
   display:none;
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,.55);
-  z-index:5000;
+  background:rgba(0,0,0,0.7);
+  backdrop-filter:blur(5px);
+  z-index:2000;
   align-items:center;
   justify-content:center;
-  padding:20px;
+  padding:15px;
+  opacity:0;
+  transition:opacity .2s ease;
 }
 
-.modalBox{
+.modal.active{
+  display:flex;
+  opacity:1;
+}
+
+.modal-content{
   width:100%;
-  max-width:500px;
-  background:white;
+  max-width:480px;
+  background:var(--card);
+  color:var(--text);
   border-radius:18px;
-  padding:25px;
+  padding:22px;
+  border:1px solid var(--border);
+  box-shadow:var(--shadow);
+  transform:scale(0.95);
+  transition:transform .2s ease;
 }
 
-.modalBox h2{
-  margin-bottom:20px;
+.modal.active .modal-content{
+  transform:scale(1);
 }
 
-.inputGroup{
-  margin-bottom:15px;
+.modal-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:18px;
 }
 
-.inputGroup label{
+.close-btn{
+  border:0;
+  background:var(--button);
+  color:var(--text);
+  border-radius:50%;
+  width:32px;
+  height:32px;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.field-group{
+  margin-bottom:14px;
+}
+
+.field-group label{
   display:block;
   font-size:13px;
-  color:#666;
+  font-weight:bold;
   margin-bottom:6px;
+  color:var(--muted);
 }
 
-.inputGroup input,
-.inputGroup textarea{
+.field{
   width:100%;
   padding:12px;
-  border:1px solid #ddd;
-  border-radius:10px;
+  border:1px solid var(--border);
+  border-radius:12px;
+  background:var(--bg);
+  color:var(--text);
   outline:none;
+  transition:border-color .2s;
 }
 
-.inputGroup textarea{
-  min-height:90px;
-  resize:none;
+.field:focus{
+  border-color:var(--accent);
 }
 
-.modalButtons{
-  display:flex;
-  gap:10px;
-  justify-content:flex-end;
-  margin-top:20px;
+.primary-btn{
+  width:100%;
+  padding:12px;
+  border-radius:20px;
+  background:var(--accent);
+  color:white;
+  font-weight:700;
+  border:0;
+  cursor:pointer;
+  transition:opacity .2s;
+}
+
+.primary-btn:hover{
+  opacity:0.9;
+}
+
+/* NOTIFICATIONS & TOAST */
+
+.notification-panel{
+  display:none;
+  position:fixed;
+  top:76px;
+  right:15px;
+  width:min(350px,92vw);
+  max-height:65vh;
+  overflow-y:auto;
+  padding:16px;
+  background:var(--card);
+  color:var(--text);
+  border:1px solid var(--border);
+  border-radius:15px;
+  z-index:3000;
+  box-shadow:var(--shadow);
+}
+
+.toast{
+  display:none;
+  position:fixed;
+  bottom:100px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#30233b;
+  color:white;
+  padding:12px 20px;
+  border-radius:25px;
+  z-index:5000;
+  max-width:90%;
+  text-align:center;
+  font-size:14px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.3);
+}
+
+/* MOBILE NAV */
+
+.bottom-nav{
+  display:none;
 }
 
 /* RESPONSIVE */
 
 @media(max-width:800px){
 
+  .topbar{
+    height:65px;
+    padding:0 14px;
+  }
+
+  .logo{
+    font-size:27px;
+  }
+
+  .top-actions{
+    gap:12px;
+  }
+
+  .search-box{
+    width:125px;
+    padding:8px 10px;
+  }
+
   .sidebar{
     display:none;
   }
 
   .main{
-    padding:15px;
-  }
-
-  .search{
-    display:none;
-  }
-
-  .profileTop{
-    align-items:center;
-    flex-direction:column;
-    text-align:center;
-  }
-
-  .profileInfo{
+    margin-left:0;
     width:100%;
+    padding:18px 13px 105px;
   }
 
-  .profilePhoto{
-    margin-top:-65px;
+  .posts-grid{
+    grid-template-columns:repeat(2, minmax(0, 1fr));
+    gap:10px;
   }
 
-  .profileActions{
+  .bottom-nav{
+    position:fixed;
+    bottom:0;
+    left:0;
+    width:100%;
+    height:76px;
+    background:var(--purple);
+    display:flex;
+    align-items:center;
+    justify-content:space-around;
+    border-top:1px solid var(--border);
+    z-index:2000;
+  }
+
+  .bottom-link{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
     justify-content:center;
+    gap:6px;
+    color:var(--text);
+    text-decoration:none;
+    font-size:13px;
+    font-weight:500;
   }
 
-  .stats{
-    justify-content:center;
+  .bottom-link i{
+    width:28px;
+    height:28px;
+    stroke-width:1.9;
   }
 
-  .postsGrid{
-    grid-template-columns:1fr 1fr;
+  .bottom-link.active{
+    color:var(--accent);
+    font-weight:700;
   }
 
-}
-
-@media(max-width:500px){
-
-  .postsGrid{
-    grid-template-columns:1fr;
+  .bottom-link.active i{
+    color:var(--accent);
   }
-
-  .cover{
-    height:190px;
-  }
-
-  .profileName{
-    font-size:22px;
-  }
-
-  .tabs{
-    gap:18px;
-    overflow-x:auto;
-  }
-
 }
 
 </style>
@@ -485,72 +683,53 @@ body{
 
 <header class="topbar">
 
-  <div class="logo">ZCrush</div>
+  <a href="index.html" class="logo">
+    <span class="logo-z">Z</span>Crush
+  </a>
 
-  <input
-    class="search"
-    placeholder="Search ZCrush"
-  >
+  <div class="top-actions">
 
-  <div class="topRight">
-
-    <span class="icon">🔔</span>
-
-    <img
-      id="topAvatar"
-      class="topAvatar"
-      src=""
+    <input
+      type="search"
+      id="searchInput"
+      class="search-box"
+      placeholder="Search..."
     >
+
+    <button class="top-icon" id="notificationBtn" title="Notifications">
+      <i data-lucide="bell"></i>
+    </button>
+
+    <button class="top-icon" id="connectBtn" title="Z-Connect">
+      <i data-lucide="globe"></i>
+    </button>
 
   </div>
 
 </header>
 
 
-<div class="layout">
-
-<!-- SIDEBAR -->
+<!-- DESKTOP SIDEBAR -->
 
 <aside class="sidebar">
 
-    <div class="sidebar-title">
-        MENU
-    </div>
+  <div class="menu-title">MENU</div>
 
-    <a href="index.html">
-        <span class="sidebar-icon">🏠</span>
-        <span>Home</span>
-    </a>
+  <a href="index.html" class="nav-link">
+    <span class="nav-icon"><i data-lucide="house"></i></span> Home
+  </a>
 
-    <a href="social.html">
-        <span class="sidebar-icon">🌐</span>
-        <span>Social</span>
-    </a>
+  <a href="moments.html" class="nav-link">
+    <span class="nav-icon"><i data-lucide="sparkles"></i></span> Moments
+  </a>
 
-    <a href="moments.html">
-        <span class="sidebar-icon">⭐</span>
-        <span>Moments</span>
-    </a>
+  <a href="shorts.html" class="nav-link">
+    <span class="nav-icon"><i data-lucide="circle-play"></i></span> Shorts
+  </a>
 
-    <a href="gaming.html">
-        <span class="sidebar-icon">🎮</span>
-        <span>Gaming</span>
-    </a>
-
-    <a href="shorts.html">
-        <span class="sidebar-icon">🎬</span>
-        <span>Shorts</span>
-    </a>
-
-    <a href="marketplace.html">
-        <span class="sidebar-icon">🛒</span>
-        <span>Marketplace</span>
-    </a>
-
-    <a href="profile.html" class="active">
-        <span class="sidebar-icon">👤</span>
-        <span>Profile</span>
-    </a>
+  <a href="profile.html" class="nav-link active">
+    <span class="nav-icon"><i data-lucide="user-round"></i></span> Profile
+  </a>
 
 </aside>
 
@@ -559,980 +738,335 @@ body{
 
 <main class="main">
 
-  <!-- COVER -->
-
-  <div class="cover" id="coverPhoto"></div>
-
-
-  <!-- PROFILE -->
-
-  <section class="profileCard">
-
-    <div class="profileTop">
-
-      <img
-        id="profilePhoto"
-        class="profilePhoto"
-        src=""
-      >
-
-      <div class="profileInfo">
-
-        <div class="profileName">
-
-          <span id="profileName">
-            ZCrush User
-          </span>
-
-          <span class="verified">✓</span>
-
-        </div>
-
-        <div
-          class="handle"
-          id="profileHandle"
-        >
-          @zcrushuser
-        </div>
-
-        <div
-          class="bio"
-          id="profileBio"
-        >
-          Dream • Create • Explore 🚀
-          <br>
-          Gaming | Tech | Animation | More...
-        </div>
-
-      </div>
-
+  <section class="profile-card">
+    <div class="cover-photo" id="coverPhotoBg">
+      <button class="cover-edit-btn" onclick="$('coverInput').click()">
+        <i data-lucide="camera" style="width:14px;height:14px;"></i> Cover
+      </button>
+      <input type="file" id="coverInput" accept="image/*" style="display:none;" onchange="updateCoverPhoto(this)">
     </div>
 
+    <div class="profile-info">
+      <div class="avatar-wrapper" onclick="$('avatarInput').click()" title="Click to change profile picture">
+        <div class="avatar-container" id="profileAvatar">
+          <span>Z</span>
+        </div>
+        <div class="avatar-edit-badge">+</div>
+      </div>
+      <input type="file" id="avatarInput" accept="image/*" style="display:none;" onchange="updateAvatarPhoto(this)">
 
-    <!-- ACTIONS -->
+      <div class="profile-header-actions">
+        <div class="user-names">
+          <h1 id="profileName">ZCrush User</h1>
+          <p id="profileHandle">@zcrushuser</p>
+          <div class="bio-section" id="profileBio">Welcome to my ZCrush profile!</div>
+        </div>
 
-    <div class="profileActions">
+        <button class="edit-profile-btn" onclick="openEditModal()">
+          <i data-lucide="user-pen" style="width:16px;height:16px;"></i> Edit Profile
+        </button>
+      </div>
 
-      <button
-        class="btn primary"
-        onclick="openEdit()"
-      >
-        Edit Profile
-      </button>
-
-      <button
-        class="btn secondary"
-        onclick="shareProfile()"
-      >
-        Share Profile
-      </button>
-      <button
-        class="btn secondary"
-        onclick="logoutUser()"
-      >
-        🚪 Logout
-      </button>
-
+      <div class="stats-row">
+        <div class="stat-item">
+          <span class="stat-value" id="postCount">0</span>
+          <span class="stat-label">Posts</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value" id="followingCount">0</span>
+          <span class="stat-label">Following</span>
+        </div>
+      </div>
     </div>
-
-
-    <!-- STATS -->
-
-    <div class="stats">
-
-      <div class="stat">
-        <strong id="postCount">0</strong>
-        <span>Posts</span>
-      </div>
-
-      <div class="stat">
-        <strong id="followerCount">0</strong>
-        <span>Followers</span>
-      </div>
-
-      <div class="stat">
-        <strong id="followingCount">0</strong>
-        <span>Following</span>
-      </div>
-
-    </div>
-
   </section>
 
-
   <!-- TABS -->
-
   <div class="tabs">
-
-    <div
-      class="tab active"
-      onclick="showTab('posts',this)"
-    >
-      Posts
-    </div>
-
-    <div
-      class="tab"
-      onclick="showTab('about',this)"
-    >
-      About
-    </div>
-
+    <button class="tab-btn active" onclick="switchTab('posts', this)">My Post</button>
+    <button class="tab-btn" onclick="switchTab('shorts', this)">Short</button>
   </div>
 
-
-  <div class="contentBox">
-
-    <!-- POSTS TAB -->
-
-    <section
-      id="posts"
-      class="tabContent active"
-    >
-
-      <div
-        id="postsGrid"
-        class="postsGrid"
-      ></div>
-
-    </section>
-
-
-    <!-- ABOUT TAB -->
-
-    <section
-      id="about"
-      class="tabContent"
-    >
-
-      <div class="aboutBox">
-
-        <div class="aboutRow">
-
-          <div class="aboutLabel">
-            Name
-          </div>
-
-          <div
-            class="aboutValue"
-            id="aboutName"
-          >
-          </div>
-
-        </div>
-
-
-        <div class="aboutRow">
-
-          <div class="aboutLabel">
-            Username
-          </div>
-
-          <div
-            class="aboutValue"
-            id="aboutHandle"
-          >
-          </div>
-
-        </div>
-
-
-        <div class="aboutRow">
-
-          <div class="aboutLabel">
-            Bio
-          </div>
-
-          <div
-            class="aboutValue"
-            id="aboutBio"
-          >
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-  </div>
+  <!-- CONTENT GRID -->
+  <div class="posts-grid" id="contentGrid"></div>
 
 </main>
 
-</div>
 
+<!-- EDIT PROFILE MODAL -->
 
-<!-- EDIT MODAL -->
+<div class="modal" id="editModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Edit Profile</h2>
+      <button class="close-btn" onclick="closeEditModal()">✕</button>
+    </div>
 
-<div
-  class="modal"
-  id="editModal"
->
-
-  <div class="modalBox">
-
-    <h2>Edit Profile</h2>
-
-
-    <div class="inputGroup">
-
+    <div class="field-group">
       <label>Name</label>
-
-      <input
-        id="editName"
-        type="text"
-      >
-
+      <input type="text" class="field" id="editName" placeholder="Enter name">
     </div>
 
-
-    <div class="inputGroup">
-
+    <div class="field-group">
       <label>Username / Handle</label>
-
-      <input
-        id="editHandle"
-        type="text"
-        placeholder="@username"
-      >
-
+      <input type="text" class="field" id="editHandle" placeholder="@handle">
     </div>
 
-
-    <div class="inputGroup">
-
+    <div class="field-group">
       <label>Bio</label>
-
-      <textarea
-        id="editBio"
-      ></textarea>
-
+      <textarea class="field" id="editBio" rows="3" placeholder="Tell us about yourself..."></textarea>
     </div>
 
-
-    <div class="inputGroup">
-
-      <label>Profile Photo</label>
-
-      <input
-        id="profilePhotoInput"
-        type="file"
-        accept="image/*"
-      >
-
+    <div class="field-group">
+      <label>Change Profile Picture</label>
+      <input type="file" class="field" id="modalAvatarInput" accept="image/*">
     </div>
 
-
-    <div class="inputGroup">
-
-      <label>Cover Photo</label>
-
-      <input
-        id="coverPhotoInput"
-        type="file"
-        accept="image/*"
-      >
-
+    <div class="field-group">
+      <label>Change Cover Image</label>
+      <input type="file" class="field" id="modalCoverInput" accept="image/*">
     </div>
 
-
-    <div class="modalButtons">
-
-      <button
-        class="btn secondary"
-        onclick="closeEdit()"
-      >
-        Cancel
-      </button>
-
-      <button
-        class="btn primary"
-        onclick="saveProfile()"
-      >
-        Save Changes
-      </button>
-
-    </div>
-
+    <button class="primary-btn" onclick="saveProfileChanges()">Save Profile</button>
   </div>
-
 </div>
+
+
+<!-- NOTIFICATIONS PANEL -->
+<div class="notification-panel" id="notificationPanel"></div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+
+<!-- MOBILE BOTTOM NAV -->
+
+<nav class="bottom-nav">
+
+  <a href="index.html" class="bottom-link">
+    <i data-lucide="house"></i>
+    <span>Home</span>
+  </a>
+
+  <a href="moments.html" class="bottom-link">
+    <i data-lucide="sparkles"></i>
+    <span>Moments</span>
+  </a>
+
+  <a href="zcam.html" class="bottom-link">
+    <i data-lucide="aperture"></i>
+    <span>ZCam</span>
+  </a>
+
+  <a href="shorts.html" class="bottom-link">
+    <i data-lucide="circle-play"></i>
+    <span>Shorts</span>
+  </a>
+
+  <a href="profile.html" class="bottom-link active">
+    <i data-lucide="user-round"></i>
+    <span>Profile</span>
+  </a>
+
+</nav>
 
 
 <script>
+const $ = id => document.getElementById(id);
 
-/* =========================
-   LOGIN PROTECTION
-========================= */
-
-if(
-  localStorage.getItem("zcrushLoggedIn")
-  !== "true"
-){
-
-  alert("Please login first.");
-
-  window.location.href="login.html";
-
+function showToast(msg){
+  const t = $("toast");
+  t.textContent = msg;
+  t.style.display = "block";
+  setTimeout(()=>t.style.display="none", 2500);
 }
 
+function loadProfile(){
+  const name = localStorage.getItem("zcrushUserName") || "ZCrush User";
+  const handle = localStorage.getItem("zcrushUserHandle") || "@zcrushuser";
+  const photo = localStorage.getItem("zcrushProfilePhoto") || "";
+  const cover = localStorage.getItem("zcrushCoverPhoto") || "";
+  const bio = localStorage.getItem("zcrushUserBio") || "Welcome to my ZCrush profile!";
 
-/* =========================
-   HELPERS
-========================= */
-
-function escapeHTML(str){
-
-  if(str===undefined || str===null)
-    return "";
-
-  return String(str)
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
-
-}
-
-
-/* =========================
-   LOAD PROFILE
-========================= */
-
-function loadUserProfile(){
-
-  const name=
-    localStorage.getItem("zcrushUserName")
-    || "ZCrush User";
-
-  const handle=
-    localStorage.getItem("zcrushUserHandle")
-    || "@zcrushuser";
-
-  const bio=
-    localStorage.getItem("zcrushUserBio")
-    ||
-    "Dream • Create • Explore 🚀\nGaming | Tech | Animation | More...";
-
-  const photo=
-    localStorage.getItem("zcrushProfilePhoto")
-    || "";
-
-  const cover=
-    localStorage.getItem("zcrushCoverPhoto")
-    || "";
-
-
-  document.getElementById("profileName")
-    .textContent=name;
-
-  document.getElementById("profileHandle")
-    .textContent=handle;
-
-  document.getElementById("profileBio")
-    .innerHTML=
-      escapeHTML(bio).replace(/\n/g,"<br>");
-
-
-  document.getElementById("aboutName")
-    .textContent=name;
-
-  document.getElementById("aboutHandle")
-    .textContent=handle;
-
-  document.getElementById("aboutBio")
-    .textContent=bio;
-
-
-  const profilePhoto=
-    document.getElementById("profilePhoto");
-
-  const topAvatar=
-    document.getElementById("topAvatar");
-
+  $("profileName").textContent = name;
+  $("profileHandle").textContent = handle;
+  $("profileBio").textContent = bio;
 
   if(photo){
-
-    profilePhoto.src=photo;
-    topAvatar.src=photo;
-
-  }else{
-
-    profilePhoto.src=
-      "https://via.placeholder.com/200/721cff/ffffff?text=Z";
-
-    topAvatar.src=
-      "https://via.placeholder.com/100/721cff/ffffff?text=Z";
-
+    $("profileAvatar").innerHTML = `<img src="${photo}" alt="Avatar">`;
+  } else {
+    $("profileAvatar").innerHTML = `<span>${name.charAt(0).toUpperCase()}</span>`;
   }
-
 
   if(cover){
-
-    document.getElementById("coverPhoto")
-      .style.backgroundImage=
-      `url("${cover}")`;
-
+    $("coverPhotoBg").style.backgroundImage = `url(${cover})`;
   }
 
+  const following = JSON.parse(localStorage.getItem("zcrushFollowing") || "[]");
+  $("followingCount").textContent = following.length;
 
-  loadSocialPosts();
-
+  renderMyPostTab();
 }
 
-
-/* =========================
-   GET SOCIAL POSTS
-========================= */
-
-function getPosts(){
-
-  try{
-
-    const posts=
-      JSON.parse(
-        localStorage.getItem("zcrushPosts")
-        || "[]"
-      );
-
-    return Array.isArray(posts)
-      ? posts
-      : [];
-
-  }catch(e){
-
-    return [];
-
-  }
-
+function updateAvatarPhoto(input){
+  const file = input.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e){
+    localStorage.setItem("zcrushProfilePhoto", e.target.result);
+    loadProfile();
+    showToast("Profile picture updated!");
+  };
+  reader.readAsDataURL(file);
 }
 
+function updateCoverPhoto(input){
+  const file = input.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e){
+    localStorage.setItem("zcrushCoverPhoto", e.target.result);
+    loadProfile();
+    showToast("Cover photo updated!");
+  };
+  reader.readAsDataURL(file);
+}
 
-/* =========================
-   LOAD SOCIAL POSTS
-========================= */
+function openEditModal(){
+  $("editName").value = localStorage.getItem("zcrushUserName") || "ZCrush User";
+  $("editHandle").value = localStorage.getItem("zcrushUserHandle") || "@zcrushuser";
+  $("editBio").value = localStorage.getItem("zcrushUserBio") || "Welcome to my ZCrush profile!";
+  $("modalAvatarInput").value = "";
+  $("modalCoverInput").value = "";
+  $("editModal").classList.add("active");
+}
 
-function loadSocialPosts(){
+function closeEditModal(){
+  $("editModal").classList.remove("active");
+}
 
-  const posts=getPosts();
+async function saveProfileChanges(){
+  const name = $("editName").value.trim();
+  const handle = $("editHandle").value.trim();
+  const bio = $("editBio").value.trim();
 
-  const currentHandle=
-    localStorage.getItem("zcrushUserHandle")
-    || "@zcrushuser";
+  if(name) localStorage.setItem("zcrushUserName", name);
+  if(handle) localStorage.setItem("zcrushUserHandle", handle);
+  localStorage.setItem("zcrushUserBio", bio);
 
-  const currentName=
-    localStorage.getItem("zcrushUserName")
-    || "ZCrush User";
+  const avatarFile = $("modalAvatarInput").files[0];
+  const coverFile = $("modalCoverInput").files[0];
 
-
-  /*
-    Only show posts belonging
-    to current user
-  */
-
-  const myPosts=posts.filter(function(post){
-
-    return (
-      post.owner===currentHandle
-      ||
-      post.handle===currentHandle
-      ||
-      (
-        !post.owner &&
-        post.name===currentName
-      )
-    );
-
+  const readFile = (file) => new Promise(res => {
+    const reader = new FileReader();
+    reader.onload = e => res(e.target.result);
+    reader.readAsDataURL(file);
   });
 
-
-  /* POSTS COUNT */
-
-  document.getElementById("postCount")
-    .textContent=myPosts.length;
-
-
-  /* FOLLOWING COUNT */
-
-  let following=[];
-
-  try{
-
-    following=
-      JSON.parse(
-        localStorage.getItem("zcrushFollowing")
-        || "[]"
-      );
-
-  }catch(e){
-
-    following=[];
-
+  if(avatarFile){
+    const avatarData = await readFile(avatarFile);
+    localStorage.setItem("zcrushProfilePhoto", avatarData);
   }
-
-  document.getElementById("followingCount")
-    .textContent=following.length;
-
-
-  /* FOLLOWER COUNT */
-
-  /*
-    Real follower count will be connected
-    when cloud database is added.
-  */
-
-  document.getElementById("followerCount")
-    .textContent="0";
-
-
-  renderProfilePosts(myPosts);
-
-}
-
-
-/* =========================
-   RENDER PROFILE POSTS
-========================= */
-
-function renderProfilePosts(posts){
-
-  const grid=
-    document.getElementById("postsGrid");
-
-
-  if(posts.length===0){
-
-    grid.innerHTML=`
-
-      <div
-        class="empty"
-        style="grid-column:1/-1;"
-      >
-
-        <h3>No posts yet</h3>
-
-        <p>
-          Create your first post on ZCrush Social.
-        </p>
-
-        <br>
-
-        <button
-          class="btn primary"
-          onclick="window.location.href='social.html'"
-        >
-          Create Post
-        </button>
-
-      </div>
-
-    `;
-
-    return;
-
-  }
-
-
-  grid.innerHTML=
-    posts.map(function(post){
-
-      return `
-
-        <div class="postCard">
-
-          ${
-            post.image
-            ? `
-              <img
-                src="${escapeHTML(post.image)}"
-                alt="Post"
-              >
-            `
-            : `
-              <div
-                style="
-                  height:220px;
-                  display:flex;
-                  align-items:center;
-                  justify-content:center;
-                  padding:20px;
-                  background:#f0f1f6;
-                  color:#555;
-                  text-align:center;
-                "
-              >
-                ${escapeHTML(post.text || "Post")}
-              </div>
-            `
-          }
-
-
-          ${
-            post.text
-            ? `
-              <div class="postText">
-                ${escapeHTML(post.text)}
-              </div>
-            `
-            : ""
-          }
-
-
-          <div class="postBottom">
-
-            <span>
-              ❤️ ${post.likes || 0}
-            </span>
-
-            <span
-              class="deletePost"
-              onclick="deleteProfilePost('${escapeAttribute(post.id)}')"
-            >
-              Delete
-            </span>
-
-          </div>
-
-        </div>
-
-      `;
-
-    }).join("");
-
-}
-
-
-/* =========================
-   DELETE POST
-========================= */
-
-function deleteProfilePost(id){
-
-  if(!confirm("Delete this post?")){
-    return;
-  }
-
-
-  let posts=getPosts();
-
-
-  posts=
-    posts.filter(function(post){
-
-      return String(post.id)!==
-        String(id);
-
-    });
-
-
-  localStorage.setItem(
-    "zcrushPosts",
-    JSON.stringify(posts)
-  );
-
-
-  loadSocialPosts();
-
-}
-
-
-/* =========================
-   EDIT PROFILE
-========================= */
-
-function openEdit(){
-
-  document.getElementById("editName").value=
-    localStorage.getItem("zcrushUserName")
-    || "ZCrush User";
-
-
-  document.getElementById("editHandle").value=
-    localStorage.getItem("zcrushUserHandle")
-    || "@zcrushuser";
-
-
-  document.getElementById("editBio").value=
-    localStorage.getItem("zcrushUserBio")
-    ||
-    "Dream • Create • Explore 🚀\nGaming | Tech | Animation | More...";
-
-
-  document.getElementById("editModal")
-    .style.display="flex";
-
-}
-
-
-function closeEdit(){
-
-  document.getElementById("editModal")
-    .style.display="none";
-
-}
-
-
-/* =========================
-   SAVE PROFILE
-========================= */
-
-function saveProfile(){
-
-  let name=
-    document.getElementById("editName")
-    .value.trim();
-
-  let handle=
-    document.getElementById("editHandle")
-    .value.trim();
-
-  const bio=
-    document.getElementById("editBio")
-    .value.trim();
-
-
-  if(!name){
-
-    alert("Please enter your name.");
-    return;
-
-  }
-
-
-  if(!handle){
-
-    handle="@zcrushuser";
-
-  }
-
-
-  if(!handle.startsWith("@")){
-
-    handle="@"+handle;
-
-  }
-
-
-  /*
-    IMPORTANT:
-    Save new profile data.
-  */
-
-  localStorage.setItem(
-    "zcrushUserName",
-    name
-  );
-
-  localStorage.setItem(
-    "zcrushUserHandle",
-    handle
-  );
-
-  localStorage.setItem(
-    "zcrushUserBio",
-    bio
-  );
-
-
-  /* PROFILE PHOTO */
-
-  const photoFile=
-    document.getElementById("profilePhotoInput")
-    .files[0];
-
-
-  if(photoFile){
-
-    const reader=
-      new FileReader();
-
-    reader.onload=function(e){
-
-      localStorage.setItem(
-        "zcrushProfilePhoto",
-        e.target.result
-      );
-
-      saveCoverAndFinish();
-
-    };
-
-    reader.readAsDataURL(photoFile);
-
-  }else{
-
-    saveCoverAndFinish();
-
-  }
-
-}
-
-
-/* =========================
-   COVER PHOTO
-========================= */
-
-function saveCoverAndFinish(){
-
-  const coverFile=
-    document.getElementById("coverPhotoInput")
-    .files[0];
-
 
   if(coverFile){
-
-    const reader=
-      new FileReader();
-
-    reader.onload=function(e){
-
-      localStorage.setItem(
-        "zcrushCoverPhoto",
-        e.target.result
-      );
-
-      finishProfileSave();
-
-    };
-
-    reader.readAsDataURL(coverFile);
-
-  }else{
-
-    finishProfileSave();
-
+    const coverData = await readFile(coverFile);
+    localStorage.setItem("zcrushCoverPhoto", coverData);
   }
 
+  loadProfile();
+  closeEditModal();
+  showToast("Profile updated successfully!");
 }
 
+function renderMyPostTab(){
+  const posts = JSON.parse(localStorage.getItem("zcrushPosts") || "[]");
+  const shorts = JSON.parse(localStorage.getItem("zcrushShorts") || "[]");
+  const handle = localStorage.getItem("zcrushUserHandle") || "@zcrushuser";
+  const name = localStorage.getItem("zcrushUserName") || "ZCrush User";
 
-/* =========================
-   FINISH SAVE
-========================= */
+  const userPosts = posts.filter(p => p.handle === handle || p.owner === handle);
+  const userShorts = shorts.filter(s => s.username === name);
 
-function finishProfileSave(){
+  $("postCount").textContent = userPosts.length + userShorts.length;
 
-  closeEdit();
+  const grid = $("contentGrid");
+  grid.innerHTML = "";
 
-  loadUserProfile();
-
-  alert("Profile updated successfully! ✓");
-
-}
-
-
-/* =========================
-   SHARE PROFILE
-========================= */
-
-async function shareProfile(){
-
-  const handle=
-    localStorage.getItem("zcrushUserHandle")
-    || "@zcrushuser";
-
-  const text=
-    "Check out "+handle+" on ZCrush!";
-
-
-  try{
-
-    if(navigator.share){
-
-      await navigator.share({
-
-        title:"ZCrush Profile",
-
-        text:text,
-
-        url:window.location.href
-
-      });
-
-    }else{
-
-      await navigator.clipboard.writeText(
-        window.location.href
-      );
-
-      alert("Profile link copied!");
-
-    }
-
-  }catch(e){}
-
-}
-
-
-/* =========================
-   TABS
-========================= */
-
-function showTab(tabName,element){
-
-  document
-    .querySelectorAll(".tabContent")
-    .forEach(function(tab){
-
-      tab.classList.remove("active");
-
-    });
-
-
-  document
-    .querySelectorAll(".tab")
-    .forEach(function(tab){
-
-      tab.classList.remove("active");
-
-    });
-
-
-  document
-    .getElementById(tabName)
-    .classList.add("active");
-
-
-  element.classList.add("active");
-
-}
-
-
-/* =========================
-   ESCAPE ATTRIBUTE
-========================= */
-
-function escapeAttribute(str){
-
-  return String(str)
-    .replace(/\\/g,"\\\\")
-    .replace(/'/g,"\\'")
-    .replace(/"/g,"&quot;");
-
-}
-
-
-/* =========================
-   START
-========================= */
-
-loadUserProfile();
-function logoutUser(){
-
-  const confirmLogout =
-    confirm("Are you sure you want to logout?");
-
-  if(!confirmLogout){
+  if(userPosts.length === 0 && userShorts.length === 0){
+    grid.innerHTML = `<div class="empty-msg">No posts or shorts shared yet.</div>`;
     return;
   }
 
-  localStorage.removeItem("zcrushLoggedIn");
+  userShorts.forEach(short => {
+    const item = document.createElement("div");
+    item.className = "grid-item";
+    item.innerHTML = `
+      <video src="${short.video}"></video>
+      <div class="view-badge">▶ ${short.views || 0} views</div>
+    `;
+    grid.appendChild(item);
+  });
 
-  window.location.href = "login.html";
+  userPosts.forEach(post => {
+    const item = document.createElement("div");
+    item.className = "grid-item";
+    if(post.image){
+      item.innerHTML = `<img src="${post.image}" alt="Post">`;
+    }else if(post.video){
+      item.innerHTML = `<video src="${post.video}"></video>`;
+    }else{
+      item.innerHTML = `<div class="grid-text">${post.text || "Text Post"}</div>`;
+    }
+    grid.appendChild(item);
+  });
 }
 
-</script>
+function renderShortTab(){
+  const shorts = JSON.parse(localStorage.getItem("zcrushShorts") || "[]");
+  const name = localStorage.getItem("zcrushUserName") || "ZCrush User";
+  const userShorts = shorts.filter(s => s.username === name);
 
+  const grid = $("contentGrid");
+  grid.innerHTML = "";
+
+  if(userShorts.length === 0){
+    grid.innerHTML = `<div class="empty-msg">No shorts available.</div>`;
+    return;
+  }
+
+  userShorts.forEach(short => {
+    const item = document.createElement("div");
+    item.className = "grid-item";
+    item.innerHTML = `
+      <video src="${short.video}"></video>
+      <div class="view-badge">▶ ${short.views || 0} views</div>
+    `;
+    grid.appendChild(item);
+  });
+}
+
+function switchTab(type, btn){
+  document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+
+  if(type === "posts"){
+    renderMyPostTab();
+  }else if(type === "shorts"){
+    renderShortTab();
+  }
+}
+
+/* AUTOMATIC DEVICE THEME */
+const deviceTheme = window.matchMedia("(prefers-color-scheme: dark)");
+function applyDeviceTheme(){
+  document.body.classList.toggle("light", !deviceTheme.matches);
+}
+applyDeviceTheme();
+if(deviceTheme.addEventListener){
+  deviceTheme.addEventListener("change", applyDeviceTheme);
+}
+
+loadProfile();
+if(window.lucide) lucide.createIcons();
+</script>
 </body>
 </html>
