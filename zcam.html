@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZCrush - ZCam</title>
+
+<!-- Lucide Icons: Load BEFORE JavaScript -->
+<script src="https://unpkg.com/lucide@latest"></script>
+
+<style>
+
+/* =====================================
+   ZCRUSH DARK THEME
+===================================== */
+
+:root{
+  color-scheme:dark;
+
+  --bg:#08070b;
+  --card:#121016;
+  --text:#ffffff;
+  --muted:#a8a2b0;
+  --border:#292431;
+  --purple:#241638;
+  --accent:#b77aff;
+  --post:#211d27;
+  --button:#302b36;
+  --shadow:0 5px 20px #0003;
+}
+
+/* =====================================
+   ZCRUSH LIGHT THEME
+===================================== */
+
+body.light{
+  color-scheme:light;
+
+  --bg:#f5f4f8;
+  --card:#ffffff;
+  --text:#211b2a;
+  --muted:#777080;
+  --border:#e7e1ec;
+  --purple:#eee5f8;
+  --accent:#8142b7;
+  --post:#f0edf3;
+  --button:#eae5ef;
+  --shadow:0 5px 20px #0000000b;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial,sans-serif;
+}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  overflow-x:hidden;
+  transition:background .2s,color .2s;
+}
+
+/* TOPBAR */
+
+.topbar{
+  height:70px;
+  width:100%;
+  position:sticky;
+  top:0;
+  z-index:1000;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 25px;
+  background:var(--purple);
+  border-bottom:1px solid var(--border);
+}
+
+.logo{
+  font-size:30px;
+  font-weight:900;
+  letter-spacing:-1.5px;
+  color:var(--text);
+  text-decoration:none;
+}
+
+.logo-z{
+  color:#ff3030;
+}
+
+.top-actions{
+  display:flex;
+  align-items:center;
+  gap:17px;
+}
+
+.search-box{
+  width:250px;
+  padding:10px 15px;
+  border:1px solid var(--border);
+  border-radius:22px;
+  outline:none;
+  background:var(--card);
+  color:var(--text);
+}
+
+.top-icon{
+  background:none;
+  border:0;
+  color:var(--text);
+  cursor:pointer;
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.top-icon i{
+  width:22px;
+  height:22px;
+  stroke-width:1.8;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+  width:230px;
+  position:fixed;
+  top:70px;
+  bottom:0;
+  left:0;
+  padding:25px 15px;
+  background:var(--bg);
+  border-right:1px solid var(--border);
+  z-index:500;
+}
+
+.menu-title{
+  color:var(--muted);
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:1.5px;
+  margin:5px 12px 20px;
+}
+
+.nav-link{
+  display:flex;
+  align-items:center;
+  gap:15px;
+  padding:13px 14px;
+  margin-bottom:7px;
+  border-radius:12px;
+  color:var(--text);
+  text-decoration:none;
+  font-size:15px;
+}
+
+.nav-link:hover,
+.nav-link.active{
+  background:var(--purple);
+  color:var(--accent);
+}
+
+.nav-icon{
+  width:23px;
+  text-align:center;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.nav-icon i{
+  width:20px;
+  height:20px;
+  stroke-width:1.8;
+}
+
+/* MAIN ZCAM CONTAINER */
+
+.main{
+  margin-left:230px;
+  width:calc(100% - 230px);
+  max-width:900px;
+  padding:25px;
+}
+
+.zcam-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:20px;
+  box-shadow:var(--shadow);
+}
+
+.camera-viewbox{
+  position:relative;
+  width:100%;
+  height:420px;
+  background:#000;
+  border-radius:14px;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin-bottom:15px;
+}
+
+#cameraStream, #mediaPreview{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.timer-overlay{
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,0.5);
+  color:white;
+  font-size:60px;
+  font-weight:bold;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:10;
+}
+
+.cam-toolbar{
+  display:flex;
+  justify-content:center;
+  gap:15px;
+  margin-bottom:15px;
+  flex-wrap:wrap;
+}
+
+.cam-btn{
+  background:var(--button);
+  color:var(--text);
+  border:1px solid var(--border);
+  padding:10px 18px;
+  border-radius:20px;
+  font-weight:700;
+  cursor:pointer;
+  font-size:13px;
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+
+.cam-btn.primary{
+  background:var(--accent);
+  color:white;
+  border-color:transparent;
+}
+
+/* FILTERS & CONTROLS */
+
+.editor-label{
+  display:block;
+  font-size:13px;
+  font-weight:700;
+  margin-top:12px;
+  margin-bottom:6px;
+}
+
+.filter-list{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-bottom:15px;
+}
+
+.filter-btn{
+  background:var(--button);
+  color:var(--text);
+  border:1px solid var(--border);
+  padding:8px 12px;
+  border-radius:10px;
+  cursor:pointer;
+  font-size:12px;
+}
+
+.filter-btn.active{
+  background:var(--accent);
+  color:white;
+  border-color:transparent;
+}
+
+.range-row{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin:10px 0;
+  font-size:13px;
+}
+
+.range-row span{
+  width:95px;
+  color:var(--muted);
+}
+
+.range-row input{
+  flex:1;
+  accent-color:var(--accent);
+}
+
+.field{
+  width:100%;
+  padding:12px;
+  border:1px solid var(--border);
+  border-radius:12px;
+  background:var(--bg);
+  color:var(--text);
+  margin-top:6px;
+  outline:none;
+}
+
+/* PUBLISH ACTIONS BOX */
+.publish-box{
+  margin-top:20px;
+  padding-top:15px;
+  border-top:1px solid var(--border);
+  display:none;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+/* NOTIFICATIONS & TOAST */
+.notification-panel{
+  display:none;
+  position:fixed;
+  top:76px;
+  right:15px;
+  width:min(350px,92vw);
+  max-height:65vh;
+  overflow-y:auto;
+  padding:16px;
+  background:var(--card);
+  color:var(--text);
+  border:1px solid var(--border);
+  border-radius:15px;
+  z-index:3000;
+  box-shadow:var(--shadow);
+}
+
+.toast{
+  display:none;
+  position:fixed;
+  bottom:100px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#30233b;
+  color:white;
+  padding:12px 20px;
+  border-radius:25px;
+  z-index:5000;
+  max-width:90%;
+  text-align:center;
+  font-size:14px;
+}
+
+/* MOBILE NAV */
+.bottom-nav{
+  display:none;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:800px){
+  .topbar{
+    height:65px;
+    padding:0 14px;
+  }
+
+  .logo{
+    font-size:27px;
+  }
+
+  .top-actions{
+    gap:12px;
+  }
+
+  .search-box{
+    width:125px;
+    padding:8px 10px;
+  }
+
+  .sidebar{
+    display:none;
+  }
+
+  .main{
+    margin-left:0;
+    width:100%;
+    padding:18px 13px 105px;
+  }
+
+  .camera-viewbox{
+    height:340px;
+  }
+
+  .bottom-nav{
+    position:fixed;
+    bottom:0;
+    left:0;
+    width:100%;
+    height:76px;
+    background:var(--purple);
+    display:flex;
+    align-items:center;
+    justify-content:space-around;
+    border-top:1px solid var(--border);
+    z-index:2000;
+  }
+
+  .bottom-link{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+    color:var(--text);
+    text-decoration:none;
+    font-size:13px;
+    font-weight:500;
+  }
+
+  .bottom-link i{
+    width:28px;
+    height:28px;
+    stroke-width:1.9;
+  }
+
+  .bottom-link.active{
+    color:var(--accent);
+    font-weight:700;
+  }
+
+  .bottom-link.active i{
+    color:var(--accent);
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- TOPBAR -->
+<header class="topbar">
+  <a href="index.html" class="logo">
+    <span class="logo-z">Z</span>Crush
+  </a>
+  <div class="top-actions">
+    <input type="search" id="searchInput" class="search-box" placeholder="Search...">
+    <button class="top-icon" id="notificationBtn" title="Notifications">
+      <i data-lucide="bell"></i>
+    </button>
+    <button class="top-icon" id="connectBtn" title="Z-Connect">
+      <i data-lucide="globe"></i>
+    </button>
+  </div>
+</header>
+
+<!-- DESKTOP SIDEBAR -->
+<aside class="sidebar">
+  <div class="menu-title">MENU</div>
+  <a href="index.html" class="nav-link">
+    <span class="nav-icon"><i data-lucide="house"></i></span> Home
+  </a>
+  <a href="moments.html" class="nav-link">
+    <span class="nav-icon"><i data-lucide="sparkles"></i></span> Moments
+  </a>
+  <a href="zcam.html" class="nav-link active">
+    <span class="nav-icon"><i data-lucide="aperture"></i></span> ZCam
+  </a>
+  <a href="shorts.html" class="nav-link">
+    <span class="nav-icon"><i data-lucide="circle-play"></i></span> Shorts
+  </a>
+  <a href="profile.html" class="nav-link">
+    <span class="nav-icon"><i data-lucide="user-round"></i></span> Profile
+  </a>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+  <div class="zcam-card">
+    <h2 style="margin-bottom:15px; font-size:20px;">ZCam Studio</h2>
+    
+    <div class="camera-viewbox" id="camContainer">
+      <video id="cameraStream" autoplay playsinline></video>
+      <img id="mediaPreview" style="display:none;" alt="Preview">
+      <div class="timer-overlay" id="timerOverlay">3</div>
+    </div>
+
+    <div class="cam-toolbar">
+      <button class="cam-btn primary" id="captureBtn" onclick="takeSnapshot()">📸 Capture Photo</button>
+      <button class="cam-btn" id="flipBtn" onclick="flipCamera()">🔄 Switch Camera</button>
+      <button class="cam-btn" id="timerBtn" onclick="startTimerCapture()">⏱️ 3s Timer</button>
+      <button class="cam-btn" id="retakeBtn" onclick="startCamera()" style="display:none;">🔄 Retake</button>
+      <label class="cam-btn" style="cursor:pointer; margin:0;">
+        📁 Upload File
+        <input type="file" id="fileInput" accept="image/*,video/*" style="display:none;">
+      </label>
+    </div>
+
+    <label class="editor-label">Live Filters</label>
+    <div class="filter-list" id="filterList">
+      <button class="filter-btn active" data-filter="none">Original</button>
+      <button class="filter-btn" data-filter="vintage">Vintage</button>
+      <button class="filter-btn" data-filter="warm">Warm</button>
+      <button class="filter-btn" data-filter="cool">Cool</button>
+      <button class="filter-btn" data-filter="bw">B&W</button>
+      <button class="filter-btn" data-filter="cinematic">Cinematic</button>
+      <button class="filter-btn" data-filter="bright">Bright</button>
+      <button class="filter-btn" data-filter="soft">Soft</button>
+    </div>
+
+    <label class="editor-label">Image Adjustments</label>
+    <div class="range-row">
+      <span>Brightness</span>
+      <input type="range" id="brightness" min="50" max="150" value="100">
+    </div>
+    <div class="range-row">
+      <span>Contrast</span>
+      <input type="range" id="contrast" min="50" max="150" value="100">
+    </div>
+    <div class="range-row">
+      <span>Saturation</span>
+      <input type="range" id="saturation" min="0" max="200" value="100">
+    </div>
+
+    <div class="publish-box" id="publishBox">
+      <label class="editor-label" style="margin-top:0;">Caption / Hashtags</label>
+      <input type="text" class="field" id="camCaption" placeholder="Write a caption or hashtags...">
+      <div style="display:flex; gap:10px; margin-top:12px; width:100%;">
+        <button class="cam-btn primary" style="flex:1;" onclick="shareToMoments()">Share as Moment</button>
+        <button class="cam-btn" style="flex:1;" onclick="downloadMedia()">Download</button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- NOTIFICATIONS PANEL -->
+<div class="notification-panel" id="notificationPanel"></div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- MOBILE BOTTOM NAV -->
+<nav class="bottom-nav">
+  <a href="index.html" class="bottom-link">
+    <i data-lucide="house"></i>
+    <span>Home</span>
+  </a>
+  <a href="moments.html" class="bottom-link">
+    <i data-lucide="sparkles"></i>
+    <span>Moments</span>
+  </a>
+  <a href="zcam.html" class="bottom-link active">
+    <i data-lucide="aperture"></i>
+    <span>ZCam</span>
+  </a>
+  <a href="shorts.html" class="bottom-link">
+    <i data-lucide="circle-play"></i>
+    <span>Shorts</span>
+  </a>
+  <a href="profile.html" class="bottom-link">
+    <i data-lucide="user-round"></i>
+    <span>Profile</span>
+  </a>
+</nav>
+
+<script>
+const $ = id => document.getElementById(id);
+let mediaStream = null;
+let useFrontCamera = true;
+let capturedData = "";
+let mediaType = "image";
+let currentFilter = "none";
+let currentBrightness = 100;
+let currentContrast = 100;
+let currentSaturation = 100;
+
+function showToast(msg){
+  const t = $("toast");
+  t.textContent = msg;
+  t.style.display = "block";
+  setTimeout(() => t.style.display = "none", 2500);
+}
+
+function getUsername(){
+  return localStorage.getItem("zcrushUserName") || "ZCrush User";
+}
+
+async function startCamera(){
+  stopCamera();
+  capturedData = "";
+  $("mediaPreview").style.display = "none";
+  $("cameraStream").style.display = "block";
+  $("captureBtn").style.display = "inline-flex";
+  $("timerBtn").style.display = "inline-flex";
+  $("flipBtn").style.display = "inline-flex";
+  $("retakeBtn").style.display = "none";
+  $("publishBox").style.display = "none";
+
+  try{
+    const constraints = {
+      video: { facingMode: useFrontCamera ? "user" : "environment" },
+      audio: false
+    };
+    mediaStream = await navigator.mediaDevices.getUserMedia(constraints);
+    $("cameraStream").srcObject = mediaStream;
+  }catch(e){
+    console.warn("Camera access not available.");
+  }
+}
+
+function stopCamera(){
+  if(mediaStream){
+    mediaStream.getTracks().forEach(track => track.stop());
+    mediaStream = null;
+  }
+}
+
+function flipCamera(){
+  useFrontCamera = !useFrontCamera;
+  startCamera();
+}
+
+function startTimerCapture(){
+  let count = 3;
+  const overlay = $("timerOverlay");
+  overlay.textContent = count;
+  overlay.style.display = "flex";
+
+  const interval = setInterval(() => {
+    count--;
+    if(count > 0){
+      overlay.textContent = count;
+    }else{
+      clearInterval(interval);
+      overlay.style.display = "none";
+      takeSnapshot();
+    }
+  }, 1000);
+}
+
+function takeSnapshot(){
+  const video = $("cameraStream");
+  const preview = $("mediaPreview");
+
+  const canvas = document.createElement("canvas");
+  canvas.width = video.videoWidth || 640;
+  canvas.height = video.videoHeight || 480;
+  const ctx = canvas.getContext("2d");
+  ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+  capturedData = canvas.toDataURL("image/jpeg", 0.85);
+  mediaType = "image";
+
+  stopCamera();
+  video.style.display = "none";
+  preview.src = capturedData;
+  preview.style.display = "block";
+
+  $("captureBtn").style.display = "none";
+  $("timerBtn").style.display = "none";
+  $("flipBtn").style.display = "none";
+  $("retakeBtn").style.display = "inline-flex";
+  $("publishBox").style.display = "flex";
+  updatePreviewFilter();
+}
+
+$("fileInput").addEventListener("change", function(){
+  const file = this.files[0];
+  if(!file) return;
+
+  if(file.size > 8*1024*1024){
+    showToast("File size must be under 8MB.");
+    return;
+  }
+
+  stopCamera();
+  const reader = new FileReader();
+  reader.onload = function(e){
+    capturedData = e.target.result;
+    mediaType = file.type.startsWith("video/") ? "video" : "image";
+
+    $("cameraStream").style.display = "none";
+    const preview = $("mediaPreview");
+    preview.src = capturedData;
+    preview.style.display = "block";
+
+    $("captureBtn").style.display = "none";
+    $("timerBtn").style.display = "none";
+    $("flipBtn").style.display = "none";
+    $("retakeBtn").style.display = "inline-flex";
+    $("publishBox").style.display = "flex";
+    updatePreviewFilter();
+  };
+  reader.readAsDataURL(file);
+});
+
+function filterCSS(name){
+  const filters = {
+    none:"none",
+    vintage:"sepia(35%) contrast(105%)",
+    warm:"sepia(25%) saturate(130%)",
+    cool:"hue-rotate(15deg) saturate(90%)",
+    bw:"grayscale(100%)",
+    cinematic:"contrast(120%) saturate(85%)",
+    bright:"brightness(120%)",
+    soft:"brightness(110%) saturate(85%)"
+  };
+  return filters[name] || "none";
+}
+
+function updatePreviewFilter(){
+  const preview = $("mediaPreview");
+  if(preview){
+    preview.style.filter =
+      filterCSS(currentFilter) +
+      " brightness("+currentBrightness+"%)" +
+      " contrast("+currentContrast+"%)" +
+      " saturate("+currentSaturation+"%)";
+  }
+}
+
+document.querySelectorAll(".filter-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    currentFilter = btn.dataset.filter;
+    updatePreviewFilter();
+  });
+});
+
+["brightness", "contrast", "saturation"].forEach(id => {
+  $(id).addEventListener("input", () => {
+    currentBrightness = $("brightness").value;
+    currentContrast = $("contrast").value;
+    currentSaturation = $("saturation").value;
+    updatePreviewFilter();
+  });
+});
+
+function shareToMoments(){
+  if(!capturedData){
+    showToast("No media captured!");
+    return;
+  }
+
+  const moments = JSON.parse(localStorage.getItem("zcrushMoments") || "[]");
+  const newMoment = {
+    id: Date.now() + "_" + Math.random().toString(36).slice(2,8),
+    username: getUsername(),
+    media: capturedData,
+    type: mediaType,
+    caption: $("camCaption").value.trim(),
+    filter: currentFilter,
+    brightness: Number(currentBrightness),
+    contrast: Number(currentContrast),
+    saturation: Number(currentSaturation),
+    likes: [],
+    comments: [],
+    views: [],
+    createdAt: Date.now()
+  };
+
+  moments.unshift(newMoment);
+  localStorage.setItem("zcrushMoments", JSON.stringify(moments));
+  showToast("Successfully shared to Moments!");
+  setTimeout(() => {
+    window.location.href = "moments.html";
+  }, 1000);
+}
+
+function downloadMedia(){
+  if(!capturedData) return;
+  const a = document.createElement("a");
+  a.href = capturedData;
+  a.download = "zcam_" + Date.now() + (mediaType === "video" ? ".mp4" : ".jpg");
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  showToast("Downloaded successfully!");
+}
+
+/* AUTOMATIC THEME */
+const deviceTheme = window.matchMedia("(prefers-color-scheme: dark)");
+function applyDeviceTheme(){
+  document.body.classList.toggle("light", !deviceTheme.matches);
+}
+applyDeviceTheme();
+if(deviceTheme.addEventListener){
+  deviceTheme.addEventListener("change", applyDeviceTheme);
+}
+
+startCamera();
+if(window.lucide) lucide.createIcons();
+</script>
+</body>
+</html>
