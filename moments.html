@@ -3,559 +3,685 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>ZCrush - Moments</title>
+
+<!-- Lucide Icons: Load BEFORE JavaScript -->
+<script src="https://unpkg.com/lucide@latest"></script>
 
 <style>
 
+/* =====================================
+   ZCRUSH DARK THEME
+===================================== */
+
+:root{
+  color-scheme:dark;
+
+  --bg:#08070b;
+  --card:#121016;
+  --text:#ffffff;
+  --muted:#a8a2b0;
+  --border:#292431;
+  --purple:#241638;
+  --accent:#b77aff;
+  --post:#211d27;
+  --button:#302b36;
+  --shadow:0 5px 20px #0003;
+}
+
+/* =====================================
+   ZCRUSH LIGHT THEME
+===================================== */
+
+body.light{
+  color-scheme:light;
+
+  --bg:#f5f4f8;
+  --card:#ffffff;
+  --text:#211b2a;
+  --muted:#777080;
+  --border:#e7e1ec;
+  --purple:#eee5f8;
+  --accent:#8142b7;
+  --post:#f0edf3;
+  --button:#eae5ef;
+  --shadow:0 5px 20px #0000000b;
+}
+
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial,sans-serif;
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial,sans-serif;
 }
 
 body{
-    background:#f5f7fb;
-    color:#171717;
-    min-height:100vh;
-    padding-bottom:80px;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  overflow-x:hidden;
+  transition:background .2s,color .2s;
 }
 
-/* ================= HEADER ================= */
+/* TOPBAR */
 
-.header{
-    height:65px;
-    background:#fff;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:0 22px;
-    border-bottom:1px solid #e5e7eb;
-    position:sticky;
-    top:0;
-    z-index:100;
+.topbar{
+  height:70px;
+  width:100%;
+  position:sticky;
+  top:0;
+  z-index:1000;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 25px;
+  background:var(--purple);
+  border-bottom:1px solid var(--border);
 }
 
 .logo{
-    font-size:25px;
-    font-weight:800;
-    background:linear-gradient(
-        90deg,
-        #8b00ff,
-        #ff1493,
-        #1677ff
-    );
-    -webkit-background-clip:text;
-    background-clip:text;
-    color:transparent;
+  font-size:30px;
+  font-weight:900;
+  letter-spacing:-1.5px;
+  color:var(--text);
+  text-decoration:none;
 }
 
-.header-icon{
-    font-size:24px;
+.logo-z{
+  color:#ff3030;
 }
 
-/* ================= SIDEBAR ================= */
+.top-actions{
+  display:flex;
+  align-items:center;
+  gap:17px;
+}
+
+.search-box{
+  width:250px;
+  padding:10px 15px;
+  border:1px solid var(--border);
+  border-radius:22px;
+  outline:none;
+  background:var(--card);
+  color:var(--text);
+}
+
+.top-icon{
+  background:none;
+  border:0;
+  color:var(--text);
+  cursor:pointer;
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.top-icon i{
+  width:22px;
+  height:22px;
+  stroke-width:1.8;
+}
+
+/* SIDEBAR */
 
 .sidebar{
-    position:fixed;
-    left:0;
-    top:65px;
-    bottom:0;
-    width:220px;
-    background:#fff;
-    border-right:1px solid #e5e7eb;
-    padding:20px 12px;
-    z-index:90;
+  width:230px;
+  position:fixed;
+  top:70px;
+  bottom:0;
+  left:0;
+  padding:25px 15px;
+  background:var(--bg);
+  border-right:1px solid var(--border);
+  z-index:500;
 }
 
-.sidebar-title{
-    font-size:13px;
-    color:#888;
-    padding:0 12px;
-    margin-bottom:12px;
+.menu-title{
+  color:var(--muted);
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:1.5px;
+  margin:5px 12px 20px;
 }
 
-.sidebar a{
-    display:flex;
-    align-items:center;
-    gap:12px;
-    text-decoration:none;
-    color:#444;
-    padding:12px 14px;
-    margin-bottom:5px;
-    border-radius:12px;
-    font-size:15px;
-    transition:.2s;
+.nav-link{
+  display:flex;
+  align-items:center;
+  gap:15px;
+  padding:13px 14px;
+  margin-bottom:7px;
+  border-radius:12px;
+  color:var(--text);
+  text-decoration:none;
+  font-size:15px;
 }
 
-.sidebar a:hover{
-    background:#f3f0ff;
-    color:#7c3aed;
+.nav-link:hover,
+.nav-link.active{
+  background:var(--purple);
+  color:var(--accent);
 }
 
-.sidebar a.active{
-    background:#f0e9ff;
-    color:#7c3aed;
-    font-weight:bold;
+.nav-icon{
+  width:23px;
+  text-align:center;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
-.sidebar-icon{
-    width:25px;
-    text-align:center;
-    font-size:20px;
+.nav-icon i{
+  width:20px;
+  height:20px;
+  stroke-width:1.8;
 }
 
-/* ================= MAIN ================= */
+/* MAIN */
 
-.main-area{
-    margin-left:220px;
-    width:calc(100% - 220px);
+.main{
+  margin-left:230px;
+  width:calc(100% - 230px);
+  max-width:1000px;
+  padding:25px;
 }
 
-/* ================= CONTAINER ================= */
+/* STORIES TRAY */
 
-.container{
-    width:100%;
-    max-width:850px;
-    margin:0 auto;
-    padding:24px;
+.stories-tray{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:18px 20px;
+  margin-bottom:30px;
+  box-shadow:var(--shadow);
+  display:flex;
+  gap:18px;
+  overflow-x:auto;
+  align-items:center;
 }
 
-/* ================= HERO ================= */
-
-.hero{
-    width:100%;
-    min-height:150px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #7c3aed,
-            #c026d3,
-            #ec4899
-        );
-
-    color:white;
-
-    padding:25px;
-
-    border-radius:20px;
-
-    margin-bottom:22px;
-
-    box-shadow:
-        0 8px 25px rgba(124,58,237,.20);
+.story-item{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:6px;
+  cursor:pointer;
+  flex-shrink:0;
+  width:72px;
 }
 
-.hero h1{
-    font-size:27px;
-    margin-bottom:8px;
+.story-ring{
+  width:68px;
+  height:68px;
+  border-radius:50%;
+  padding:3px;
+  background:linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative; /* Required for absolute positioning of badge */
 }
 
-.hero p{
-    font-size:14px;
-    line-height:1.5;
-    opacity:.95;
-    max-width:650px;
+.story-ring.own{
+  background:var(--border);
 }
 
-.create-btn{
-    margin-top:17px;
-
-    border:0;
-
-    padding:11px 17px;
-
-    border-radius:10px;
-
-    background:#fff;
-
-    color:#7c3aed;
-
-    font-weight:bold;
-
-    cursor:pointer;
-
-    transition:.2s;
+.story-avatar-wrap{
+  width:100%;
+  height:100%;
+  border-radius:50%;
+  background:var(--card);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
 }
 
-.create-btn:hover{
-    transform:translateY(-1px);
-    box-shadow:0 5px 12px rgba(0,0,0,.12);
+.story-avatar-wrap img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
 }
 
-/* ================= SECTION ================= */
-
-.section-title{
-    width:100%;
-
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-
-    margin:20px 0 12px;
+.story-avatar-wrap span{
+  font-size:20px;
+  font-weight:bold;
+  color:var(--text);
 }
 
-.section-title h2{
-    font-size:21px;
+/* Placed at top-right */
+.add-badge{
+  position:absolute;
+  top:0;
+  right:0;
+  background:var(--accent);
+  color:white;
+  width:20px;
+  height:20px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:12px;
+  font-weight:bold;
+  border:2px solid var(--card);
 }
 
-.section-title span{
-    color:#777;
-    font-size:13px;
+.story-name{
+  font-size:12px;
+  color:var(--text);
+  text-align:center;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  width:100%;
 }
 
-/* ================= MOMENT CARD ================= */
+/* MOMENT CARDS GRID */
 
-.moment{
-    width:100%;
-
-    background:#fff;
-
-    border-radius:18px;
-
-    padding:18px;
-
-    margin-bottom:15px;
-
-    border:1px solid #e5e7eb;
-
-    box-shadow:
-        0 4px 15px rgba(0,0,0,.04);
-
-    transition:.2s;
+.section-heading{
+  font-size:21px;
+  font-weight:700;
+  margin-bottom:18px;
 }
 
-.moment:hover{
-    box-shadow:
-        0 7px 22px rgba(0,0,0,.07);
+.moments-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:20px;
 }
 
-.moment-top{
-    display:flex;
-    align-items:center;
-    gap:12px;
+.moment-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:18px;
+  overflow:hidden;
+  box-shadow:var(--shadow);
 }
 
-.avatar{
-    width:45px;
-    height:45px;
-
-    flex-shrink:0;
-
-    border-radius:50%;
-
-    display:flex;
-    justify-content:center;
-    align-items:center;
-
-    background:
-        linear-gradient(
-            135deg,
-            #7c3aed,
-            #ec4899
-        );
-
-    color:white;
-
-    font-weight:bold;
+.moment-media{
+  width:100%;
+  height:260px;
+  background:var(--post);
+  object-fit:cover;
+  display:block;
+  cursor:pointer;
 }
 
-.moment-info h3{
-    font-size:16px;
+.moment-info{
+  padding:15px;
 }
 
-.date{
-    color:#777;
-    font-size:12px;
-    margin-top:3px;
+.moment-user{
+  font-weight:700;
+  font-size:14px;
+  margin-bottom:4px;
 }
 
-.moment-text{
-    margin:15px 0;
-
-    line-height:1.5;
-
-    color:#333;
-
-    font-size:14px;
+.moment-caption{
+  font-size:13px;
+  color:var(--muted);
+  margin:6px 0 12px;
+  overflow-wrap:anywhere;
 }
 
-.memory-box{
-    background:#f5f3ff;
-
-    border-radius:14px;
-
-    padding:13px 14px;
-
-    color:#5b21b6;
-
-    margin-bottom:14px;
-
-    font-size:14px;
+.moment-actions{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:8px;
 }
 
-.actions{
-    display:flex;
-    gap:8px;
-    flex-wrap:wrap;
+.action-btn{
+  border:0;
+  background:var(--button);
+  color:var(--text);
+  padding:8px 12px;
+  border-radius:12px;
+  cursor:pointer;
+  font-size:13px;
 }
 
-.actions button{
-    border:1px solid #ddd;
-
-    background:#fff;
-
-    padding:8px 12px;
-
-    border-radius:10px;
-
-    cursor:pointer;
-
-    font-size:12px;
-
-    transition:.2s;
+.action-btn.liked{
+  color:#e65b9e;
 }
 
-.actions button:hover{
-    background:#f3f4f6;
+.empty{
+  text-align:center;
+  padding:40px 15px;
+  color:var(--muted);
+  grid-column: 1 / -1;
 }
 
-/* ================= MODAL ================= */
-
+/* CREATE MODAL / CAMERA */
 .modal{
-    display:none;
-
-    position:fixed;
-
-    inset:0;
-
-    background:rgba(0,0,0,.55);
-
-    align-items:center;
-    justify-content:center;
-
-    padding:20px;
-
-    z-index:200;
+  display:none;
+  position:fixed;
+  inset:0;
+  background:#0009;
+  z-index:2000;
+  align-items:center;
+  justify-content:center;
+  padding:15px;
 }
 
-.modal-box{
-    width:100%;
-    max-width:430px;
-
-    background:#fff;
-
-    border-radius:20px;
-
-    padding:22px;
-
-    box-shadow:
-        0 15px 50px rgba(0,0,0,.2);
+.modal-content{
+  width:100%;
+  max-width:520px;
+  max-height:90vh;
+  overflow-y:auto;
+  background:var(--card);
+  color:var(--text);
+  border-radius:18px;
+  padding:22px;
+  border:1px solid var(--border);
+  box-shadow:var(--shadow);
 }
 
-.modal-box h2{
-    margin-bottom:15px;
-}
-
-input,
-textarea{
-    width:100%;
-
-    border:1px solid #ddd;
-
-    border-radius:12px;
-
-    padding:12px;
-
-    margin-bottom:12px;
-
-    font-size:15px;
-
-    outline:none;
-}
-
-input:focus,
-textarea:focus{
-    border-color:#7c3aed;
-}
-
-textarea{
-    min-height:110px;
-    resize:none;
-}
-
-.save-btn{
-    width:100%;
-
-    border:0;
-
-    padding:13px;
-
-    border-radius:12px;
-
-    background:#7c3aed;
-
-    color:white;
-
-    font-weight:bold;
-
-    cursor:pointer;
+.modal-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:18px;
 }
 
 .close-btn{
-    width:100%;
-
-    border:0;
-
-    padding:12px;
-
-    border-radius:12px;
-
-    background:#eee;
-
-    margin-top:8px;
-
-    cursor:pointer;
+  border:0;
+  background:var(--button);
+  color:var(--text);
+  border-radius:50%;
+  width:32px;
+  height:32px;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
-/* ================= MOBILE NAV ================= */
+.camera-container{
+  position:relative;
+  width:100%;
+  height:300px;
+  background:#000;
+  border-radius:14px;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin-bottom:15px;
+}
 
+#cameraStream, #capturedPreview{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.camera-controls{
+  display:flex;
+  justify-content:center;
+  gap:12px;
+  margin-bottom:15px;
+}
+
+.capture-btn{
+  background:var(--accent);
+  color:white;
+  border:0;
+  padding:10px 20px;
+  border-radius:20px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.field{
+  width:100%;
+  padding:12px;
+  border:1px solid var(--border);
+  border-radius:12px;
+  background:var(--bg);
+  color:var(--text);
+  margin:8px 0 14px;
+  outline:none;
+}
+
+.editor-label{
+  display:block;
+  font-size:13px;
+  font-weight:700;
+  margin-top:10px;
+}
+
+.filter-list{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin:10px 0;
+}
+
+.filter-btn{
+  background:var(--button);
+  color:var(--text);
+  border:1px solid var(--border);
+  padding:8px 11px;
+  border-radius:10px;
+  cursor:pointer;
+  font-size:12px;
+}
+
+.filter-btn.active{
+  background:var(--accent);
+  color:white;
+  border-color:transparent;
+}
+
+.range-row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin:12px 0;
+  font-size:13px;
+}
+
+.range-row span{
+  width:95px;
+}
+
+.range-row input{
+  flex:1;
+  accent-color:var(--accent);
+}
+
+.editor-actions{
+  display:flex;
+  gap:10px;
+  margin-top:18px;
+}
+
+.editor-actions button{
+  flex:1;
+  padding:12px;
+  border-radius:20px;
+  font-weight:700;
+  border:0;
+  cursor:pointer;
+}
+
+.primary-btn{
+  background:#8b4cc4;
+  color:white;
+}
+
+/* VIEWER */
+.viewer{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:#08070bf0;
+  z-index:3000;
+  align-items:center;
+  justify-content:center;
+  padding:15px;
+}
+
+.viewer-inner{
+  width:100%;
+  max-width:430px;
+  color:white;
+}
+
+.viewer-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:12px;
+}
+
+.viewer-media{
+  width:100%;
+  max-height:60vh;
+  object-fit:contain;
+  border-radius:12px;
+  background:#17131c;
+}
+
+.viewer-caption{
+  margin:12px 0;
+  overflow-wrap:anywhere;
+  color:#fff;
+}
+
+.viewer-actions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.viewer-actions button{
+  border:0;
+  border-radius:12px;
+  padding:10px 14px;
+  background:#302b36;
+  color:white;
+  cursor:pointer;
+  font-weight:500;
+}
+
+.progress-track{
+  width:100%;
+  height:4px;
+  background:#555;
+  margin-bottom:12px;
+  border-radius:5px;
+  overflow:hidden;
+}
+
+.progress-fill{
+  height:100%;
+  width:0%;
+  background:white;
+  border-radius:5px;
+  transition:width linear;
+}
+
+/* MOBILE NAV */
 .bottom-nav{
-    display:none;
+  display:none;
 }
 
-/* ================= TABLET / MOBILE ================= */
+/* RESPONSIVE */
 
 @media(max-width:800px){
 
-    .sidebar{
-        display:none;
-    }
+  .topbar{
+    height:65px;
+    padding:0 14px;
+  }
 
-    .main-area{
-        margin-left:0;
-        width:100%;
-    }
+  .logo{
+    font-size:27px;
+  }
 
-    .header{
-        padding:0 18px;
-    }
+  .top-actions{
+    gap:12px;
+  }
 
-    .container{
-        max-width:none;
-        padding:18px;
-    }
+  .search-box{
+    width:125px;
+    padding:8px 10px;
+  }
 
-    .bottom-nav{
-        position:fixed;
+  .sidebar{
+    display:none;
+  }
 
-        bottom:0;
-        left:0;
-        right:0;
+  .main{
+    margin-left:0;
+    width:100%;
+    padding:18px 13px 105px;
+  }
 
-        height:65px;
+  .moments-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:12px;
+  }
 
-        background:#fff;
+  .moment-media{
+    height:210px;
+  }
 
-        border-top:1px solid #ddd;
+  .bottom-nav{
+    position:fixed;
+    bottom:0;
+    left:0;
+    width:100%;
+    height:76px;
+    background:var(--purple);
+    display:flex;
+    align-items:center;
+    justify-content:space-around;
+    border-top:1px solid var(--border);
+    z-index:2000;
+  }
 
-        display:flex;
+  .bottom-link{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+    color:var(--text);
+    text-decoration:none;
+    font-size:13px;
+    font-weight:500;
+  }
 
-        justify-content:space-around;
-        align-items:center;
+  .bottom-link i{
+    width:28px;
+    height:28px;
+    stroke-width:1.9;
+  }
 
-        z-index:150;
+  .bottom-link.active{
+    color:var(--accent);
+    font-weight:700;
+  }
 
-        box-shadow:
-            0 -3px 15px rgba(0,0,0,.05);
-    }
-
-    .bottom-nav a{
-        text-decoration:none;
-
-        color:#666;
-
-        font-size:10px;
-
-        text-align:center;
-    }
-
-    .bottom-nav span{
-        display:block;
-
-        font-size:20px;
-
-        margin-bottom:2px;
-    }
-
-    .bottom-nav .active{
-        color:#7c3aed;
-
-        font-weight:bold;
-    }
+  .bottom-link.active i{
+    color:var(--accent);
+  }
 }
 
-/* ================= SMALL MOBILE ================= */
-
-@media(max-width:430px){
-
-    .container{
-        padding:14px;
-    }
-
-    .hero{
-        padding:20px;
-
-        border-radius:18px;
-
-        min-height:145px;
-    }
-
-    .hero h1{
-        font-size:24px;
-    }
-
-    .hero p{
-        font-size:13px;
-    }
-
-    .create-btn{
-        padding:10px 14px;
-        font-size:12px;
-    }
-
-    .section-title h2{
-        font-size:19px;
-    }
-
-    .moment{
-        padding:15px;
-
-        border-radius:17px;
-    }
-
-    .moment-text{
-        font-size:13px;
-    }
-
-    .memory-box{
-        font-size:13px;
-    }
-
-    .actions button{
-        padding:8px 10px;
-        font-size:11px;
-    }
-
-    .bottom-nav a{
-        font-size:9px;
-    }
-
-    .bottom-nav span{
-        font-size:19px;
-    }
+@media(max-width:380px){
+  .logo{
+    font-size:23px;
+  }
+  .moments-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
 }
 
 </style>
@@ -563,394 +689,699 @@ textarea{
 
 <body>
 
-<!-- ================= HEADER ================= -->
+<!-- TOPBAR -->
 
-<header class="header">
+<header class="topbar">
 
-    <div class="logo">
-        ZCrush
-    </div>
+  <a href="index.html" class="logo">
+    <span class="logo-z">Z</span>Crush
+  </a>
 
-    <div class="header-icon">
-        ⭐
-    </div>
+  <div class="top-actions">
+
+    <input
+      type="search"
+      id="searchInput"
+      class="search-box"
+      placeholder="Search..."
+    >
+
+    <button class="top-icon" id="notificationBtn" title="Notifications">
+      <i data-lucide="bell"></i>
+    </button>
+
+    <button class="top-icon" id="connectBtn" title="Z-Connect">
+      <i data-lucide="globe"></i>
+    </button>
+
+  </div>
 
 </header>
 
 
-<!-- ================= SIDEBAR ================= -->
+<!-- DESKTOP SIDEBAR -->
 
 <aside class="sidebar">
 
-    <div class="sidebar-title">
-        MENU
-    </div>
+  <div class="menu-title">MENU</div>
 
-    <a href="index.html">
-        <span class="sidebar-icon">🏠</span>
-        <span>Home</span>
-    </a>
+  <a href="index.html" class="nav-link">
+    <span class="nav-icon"><i data-lucide="house"></i></span> Home
+  </a>
 
-    <a href="social.html">
-        <span class="sidebar-icon">🌐</span>
-        <span>Social</span>
-    </a>
+  <a href="moments.html" class="nav-link active">
+    <span class="nav-icon"><i data-lucide="sparkles"></i></span> Moments
+  </a>
 
-    <a href="moments.html" class="active">
-        <span class="sidebar-icon">⭐</span>
-        <span>Moments</span>
-    </a>
+  <a href="shorts.html" class="nav-link">
+    <span class="nav-icon"><i data-lucide="circle-play"></i></span> Shorts
+  </a>
 
-    <a href="gaming.html">
-        <span class="sidebar-icon">🎮</span>
-        <span>Gaming</span>
-    </a>
-
-    <a href="shorts.html">
-        <span class="sidebar-icon">🎬</span>
-        <span>Shorts</span>
-    </a>
-
-    <a href="marketplace.html">
-        <span class="sidebar-icon">🛒</span>
-        <span>Marketplace</span>
-    </a>
-
-    <a href="profile.html">
-        <span class="sidebar-icon">👤</span>
-        <span>Profile</span>
-    </a>
+  <a href="profile.html" class="nav-link">
+    <span class="nav-icon"><i data-lucide="user-round"></i></span> Profile
+  </a>
 
 </aside>
 
 
-<!-- ================= MAIN ================= -->
+<!-- MAIN -->
 
-<div class="main-area">
+<main class="main">
 
-<main class="container">
-
-
-    <!-- ================= HERO ================= -->
-
-    <section class="hero">
-
-        <h1>
-            ✨ CrushMoment
-        </h1>
-
-        <p>
-            Save your favorite memories, special moments and
-            unforgettable experiences in one place.
-        </p>
-
-        <button
-            class="create-btn"
-            onclick="openModal()"
-        >
-            + Create Moment
-        </button>
-
-    </section>
-
-
-    <!-- ================= SECTION TITLE ================= -->
-
-    <div class="section-title">
-
-        <h2>
-            Your Moments
-        </h2>
-
-        <span id="count">
-            2 moments
-        </span>
-
+  <!-- INSTAGRAM STYLE STORIES TRAY -->
+  <div class="stories-tray" id="storyList">
+    <!-- Own Story / Create Item -->
+    <div class="story-item" onclick="openCreate()">
+      <div class="story-ring own">
+        <div class="story-avatar-wrap" id="myStoryAvatar">
+          <span>Z</span>
+        </div>
+        <div class="add-badge">＋</div>
+      </div>
+      <div class="story-name">Your Story</div>
     </div>
+  </div>
 
+  <h2 class="section-heading">Recent Moments</h2>
 
-    <!-- ================= MOMENT 1 ================= -->
-
-    <div class="moment">
-
-        <div class="moment-top">
-
-            <div class="avatar">
-                Z
-            </div>
-
-            <div class="moment-info">
-
-                <h3>
-                    My First ZCrush Moment
-                </h3>
-
-                <div class="date">
-                    Today
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <div class="moment-text">
-            A special moment that I want to remember forever. ❤️
-        </div>
-
-
-        <div class="memory-box">
-            ⭐ Remember this moment
-        </div>
-
-
-        <div class="actions">
-
-            <button onclick="remember()">
-                ⭐ Remember
-            </button>
-
-            <button onclick="makeReel()">
-                🎬 AI Reel
-            </button>
-
-            <button onclick="shareMoment()">
-                ↗ Share
-            </button>
-
-        </div>
-
-    </div>
-
-
-    <!-- ================= MOMENT 2 ================= -->
-
-    <div class="moment">
-
-        <div class="moment-top">
-
-            <div class="avatar">
-                Z
-            </div>
-
-            <div class="moment-info">
-
-                <h3>
-                    Beautiful Memory
-                </h3>
-
-                <div class="date">
-                    Yesterday
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <div class="moment-text">
-            Every beautiful memory deserves a place on ZCrush. 🌟
-        </div>
-
-
-        <div class="memory-box">
-            💜 Saved in CrushMoment
-        </div>
-
-
-        <div class="actions">
-
-            <button onclick="remember()">
-                ⭐ Remember
-            </button>
-
-            <button onclick="makeReel()">
-                🎬 AI Reel
-            </button>
-
-            <button onclick="shareMoment()">
-                ↗ Share
-            </button>
-
-        </div>
-
-    </div>
-
+  <div class="moments-grid" id="momentsGrid">
+    <div class="empty">No Moments available. Create your first Moment!</div>
+  </div>
 
 </main>
 
-</div>
+
+<!-- NOTIFICATIONS PANEL -->
+<div class="notification-panel" id="notificationPanel"></div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
 
 
-<!-- ================= CREATE MODAL ================= -->
-
-<div class="modal" id="modal">
-
-    <div class="modal-box">
-
-        <h2>
-            ✨ Create Moment
-        </h2>
-
-        <input
-            type="text"
-            id="title"
-            placeholder="Moment title"
-        >
-
-        <textarea
-            id="description"
-            placeholder="Write about your moment..."
-        ></textarea>
-
-        <button
-            class="save-btn"
-            onclick="saveMoment()"
-        >
-            Save Moment
-        </button>
-
-        <button
-            class="close-btn"
-            onclick="closeModal()"
-        >
-            Cancel
-        </button>
-
-    </div>
-
-</div>
-
-
-<!-- ================= MOBILE BOTTOM NAV ================= -->
+<!-- MOBILE BOTTOM NAV -->
 
 <nav class="bottom-nav">
 
-    <a href="index.html">
-        <span>🏠</span>
-        Home
-    </a>
+  <a href="index.html" class="bottom-link">
+    <i data-lucide="house"></i>
+    <span>Home</span>
+  </a>
 
-    <a href="social.html">
-        <span>🌐</span>
-        Social
-    </a>
+  <a href="moments.html" class="bottom-link active">
+    <i data-lucide="sparkles"></i>
+    <span>Moments</span>
+  </a>
 
-    <a href="gaming.html">
-        <span>🎮</span>
-        Gaming
-    </a>
+  <a href="zcam.html" class="bottom-link">
+    <i data-lucide="aperture"></i>
+    <span>ZCam</span>
+  </a>
 
-    <a href="shorts.html">
-        <span>▶️</span>
-        Shorts
-    </a>
+  <a href="shorts.html" class="bottom-link">
+    <i data-lucide="circle-play"></i>
+    <span>Shorts</span>
+  </a>
 
-    <a href="marketplace.html">
-        <span>🛒</span>
-        Market
-    </a>
-
-    <a href="moments.html" class="active">
-        <span>⭐</span>
-        Moments
-    </a>
-
-    <a href="profile.html">
-        <span>👤</span>
-        Profile
-    </a>
+  <a href="profile.html" class="bottom-link">
+    <i data-lucide="user-round"></i>
+    <span>Profile</span>
+  </a>
 
 </nav>
 
 
-<!-- ================= JAVASCRIPT ================= -->
+<!-- CREATE MODAL / CAMERA -->
+<div class="modal" id="createModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Capture Moment</h2>
+      <button class="close-btn" onclick="closeCreate()">✕</button>
+    </div>
+
+    <!-- Live Camera View / Preview -->
+    <div class="camera-container" id="cameraContainer">
+      <video id="cameraStream" autoplay playsinline></video>
+      <img id="capturedPreview" style="display:none;" alt="Captured">
+    </div>
+
+    <div class="camera-controls">
+      <button class="capture-btn" id="captureBtn" onclick="takeSnapshot()">📸 Capture Photo</button>
+      <button class="capture-btn" id="retakeBtn" onclick="startCamera()" style="display:none; background:#555;">🔄 Retake</button>
+      <label class="capture-btn" style="background:#302b36; cursor:pointer; display:inline-block; text-align:center; padding:10px 15px; margin:0;">
+        📁 Upload File
+        <input type="file" id="mediaInput" accept="image/*,video/*" style="display:none;">
+      </label>
+    </div>
+
+    <label class="editor-label">Filters</label>
+    <div class="filter-list" id="filterList">
+      <button class="filter-btn active" data-filter="none">Original</button>
+      <button class="filter-btn" data-filter="vintage">Vintage</button>
+      <button class="filter-btn" data-filter="warm">Warm</button>
+      <button class="filter-btn" data-filter="cool">Cool</button>
+      <button class="filter-btn" data-filter="bw">B&W</button>
+      <button class="filter-btn" data-filter="cinematic">Cinematic</button>
+      <button class="filter-btn" data-filter="bright">Bright</button>
+      <button class="filter-btn" data-filter="soft">Soft</button>
+      <button class="filter-btn" data-filter="retro">Retro</button>
+      <button class="filter-btn" data-filter="dramatic">Dramatic</button>
+    </div>
+
+    <label class="editor-label">Adjustments</label>
+
+    <div class="range-row">
+      <span>Brightness</span>
+      <input type="range" id="brightness" min="50" max="150" value="100">
+    </div>
+
+    <div class="range-row">
+      <span>Contrast</span>
+      <input type="range" id="contrast" min="50" max="150" value="100">
+    </div>
+
+    <div class="range-row">
+      <span>Saturation</span>
+      <input type="range" id="saturation" min="0" max="200" value="100">
+    </div>
+
+    <label class="editor-label">Caption</label>
+    <textarea class="field" id="caption" rows="3" placeholder="Write something about your Moment..."></textarea>
+
+    <div class="editor-actions">
+      <button class="action-btn" onclick="resetEditor()">Reset</button>
+      <button class="primary-btn" onclick="publishMoment()">Share Moment</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- MOMENT VIEWER -->
+<div class="viewer" id="viewer">
+  <div class="viewer-inner">
+    <div class="progress-track">
+      <div class="progress-fill" id="viewerProgress"></div>
+    </div>
+
+    <div class="viewer-top">
+      <strong id="viewerUser">ZCrush User</strong>
+      <button class="close-btn" onclick="closeViewer()">✕</button>
+    </div>
+
+    <div id="viewerMedia"></div>
+    <p class="viewer-caption" id="viewerCaption"></p>
+
+    <div class="viewer-actions">
+      <button onclick="viewerLike()">♡ Like</button>
+      <button onclick="viewerComment()">💬 Comment</button>
+      <button onclick="viewerShare()">↗ Share</button>
+      <button onclick="nextMoment()">Next →</button>
+    </div>
+  </div>
+</div>
+
 
 <script>
+const STORAGE_KEY = "zcrushMoments";
 
-function openModal(){
+let moments = [];
+let capturedMediaData = "";
+let mediaType = "image";
+let currentFilter = "none";
+let currentMomentIndex = 0;
+let currentViewerId = null;
+let currentBrightness = 100;
+let currentContrast = 100;
+let currentSaturation = 100;
+let viewerTimer = null;
+let mediaStream = null;
 
-    document.getElementById("modal").style.display="flex";
+const $ = id => document.getElementById(id);
 
+function getUsername(){
+  return localStorage.getItem("zcrushUserName") || "ZCrush User";
 }
 
-
-function closeModal(){
-
-    document.getElementById("modal").style.display="none";
-
+function setupUserProfileAvatar(){
+  const name = getUsername();
+  const photo = localStorage.getItem("zcrushProfilePhoto") || "";
+  const wrap = $("myStoryAvatar");
+  if(wrap){
+    wrap.innerHTML = photo
+      ? `<img src="${photo}" alt="Profile">`
+      : `<span>${name.charAt(0).toUpperCase()}</span>`;
+  }
 }
 
-
-function saveMoment(){
-
-    let title =
-        document.getElementById("title").value.trim();
-
-    let description =
-        document.getElementById("description").value.trim();
-
-
-    if(title === "" || description === ""){
-
-        alert("Please enter title and description.");
-
-        return;
-
-    }
-
-
-    alert("✨ Moment saved successfully!");
-
-
-    document.getElementById("title").value="";
-
-    document.getElementById("description").value="";
-
-    closeModal();
-
+function loadMoments(){
+  try{
+    moments = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+  }catch(e){
+    moments = [];
+  }
+  removeExpiredMoments();
 }
 
-
-function remember(){
-
-    alert("⭐ Moment added to your memories!");
-
+function saveMoments(){
+  try{
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(moments));
+    return true;
+  }catch(e){
+    alert("Storage full! Try a smaller photo.");
+    return false;
+  }
 }
 
-
-function makeReel(){
-
-    alert("🎬 AI Reel feature will be available soon!");
-
+function removeExpiredMoments(){
+  const now = Date.now();
+  moments = moments.filter(m => now < m.createdAt + 24*60*60*1000);
+  saveMoments();
 }
 
+function timeLeft(moment){
+  const remaining = moment.createdAt + 86400000 - Date.now();
+  if(remaining <= 0) return "Expired";
+  const hours = Math.floor(remaining/3600000);
+  const minutes = Math.floor((remaining%3600000)/60000);
+  return hours + "h " + minutes + "m left";
+}
 
-function shareMoment(){
+function filterCSS(name){
+  const filters = {
+    none:"none",
+    vintage:"sepia(35%) contrast(105%)",
+    warm:"sepia(25%) saturate(130%)",
+    cool:"hue-rotate(15deg) saturate(90%)",
+    bw:"grayscale(100%)",
+    cinematic:"contrast(120%) saturate(85%)",
+    bright:"brightness(120%)",
+    soft:"brightness(110%) saturate(85%)",
+    retro:"sepia(20%) contrast(115%) saturate(115%)",
+    dramatic:"contrast(140%) saturate(120%)"
+  };
+  return filters[name] || "none";
+}
 
+function updatePreview(){
+  const preview = $("capturedPreview");
+  if(preview){
+    preview.style.filter =
+      filterCSS(currentFilter) +
+      " brightness("+currentBrightness+"%)" +
+      " contrast("+currentContrast+"%)" +
+      " saturate("+currentSaturation+"%)";
+  }
+}
+
+/* CAMERA FUNCTIONS */
+async function startCamera(){
+  stopCamera();
+  capturedMediaData = "";
+  $("capturedPreview").style.display = "none";
+  $("cameraStream").style.display = "block";
+  $("captureBtn").style.display = "inline-block";
+  $("retakeBtn").style.display = "none";
+
+  try{
+    mediaStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" }, audio: false });
+    $("cameraStream").srcObject = mediaStream;
+  }catch(err){
+    console.warn("Camera access denied or unavailable, use file upload instead.");
+  }
+}
+
+function stopCamera(){
+  if(mediaStream){
+    mediaStream.getTracks().forEach(track => track.stop());
+    mediaStream = null;
+  }
+}
+
+function takeSnapshot(){
+  const video = $("cameraStream");
+  const preview = $("capturedPreview");
+  
+  const canvas = document.createElement("canvas");
+  canvas.width = video.videoWidth || 640;
+  canvas.height = video.videoHeight || 480;
+  const ctx = canvas.getContext("2d");
+  ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+  capturedMediaData = canvas.toDataURL("image/jpeg", 0.8);
+  mediaType = "image";
+
+  stopCamera();
+  video.style.display = "none";
+  preview.src = capturedMediaData;
+  preview.style.display = "block";
+  $("captureBtn").style.display = "none";
+  $("retakeBtn").style.display = "inline-block";
+  updatePreview();
+}
+
+/* FILE UPLOAD FALLBACK */
+$("mediaInput").addEventListener("change", async function(){
+  const file = this.files[0];
+  if(!file) return;
+
+  if(file.size > 8*1024*1024){
+    alert("File size must be less than 8 MB.");
+    return;
+  }
+
+  stopCamera();
+  const reader = new FileReader();
+  reader.onload = function(e){
+    capturedMediaData = e.target.result;
+    mediaType = file.type.startsWith("video/") ? "video" : "image";
+    
+    $("cameraStream").style.display = "none";
+    const preview = $("capturedPreview");
+    preview.src = capturedMediaData;
+    preview.style.display = "block";
+    $("captureBtn").style.display = "none";
+    $("retakeBtn").style.display = "inline-block";
+    updatePreview();
+  };
+  reader.readAsDataURL(file);
+});
+
+document.querySelectorAll(".filter-btn").forEach(button=>{
+  button.addEventListener("click",()=>{
+    document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+    button.classList.add("active");
+    currentFilter = button.dataset.filter;
+    updatePreview();
+  });
+});
+
+["brightness","contrast","saturation"].forEach(id=>{
+  $(id).addEventListener("input",()=>{
+    currentBrightness = $("brightness").value;
+    currentContrast = $("contrast").value;
+    currentSaturation = $("saturation").value;
+    updatePreview();
+  });
+});
+
+function openCreate(){
+  $("createModal").style.display = "flex";
+  startCamera();
+}
+
+function closeCreate(){
+  stopCamera();
+  $("createModal").style.display = "none";
+}
+
+function resetEditor(){
+  currentFilter = "none";
+  currentBrightness = 100;
+  currentContrast = 100;
+  currentSaturation = 100;
+  $("brightness").value = 100;
+  $("contrast").value = 100;
+  $("saturation").value = 100;
+  document.querySelectorAll(".filter-btn").forEach(b => {
+    b.classList.toggle("active", b.dataset.filter === "none");
+  });
+  updatePreview();
+}
+
+async function publishMoment(){
+  if(!capturedMediaData){
+    alert("Please capture or select a photo first.");
+    return;
+  }
+
+  const caption = $("caption").value.trim();
+  const username = getUsername();
+
+  try{
+    const moment = {
+      id: Date.now() + "_" + Math.random().toString(36).slice(2,8),
+      username: username,
+      media: capturedMediaData,
+      type: mediaType,
+      caption: caption,
+      filter: currentFilter,
+      brightness: Number(currentBrightness),
+      contrast: Number(currentContrast),
+      saturation: Number(currentSaturation),
+      likes: [],
+      comments: [],
+      views: [],
+      createdAt: Date.now()
+    };
+    moments.unshift(moment);
+
+    if(!saveMoments()) return;
+
+    capturedMediaData = "";
+    $("caption").value = "";
+    resetEditor();
+    closeCreate();
+    renderMoments();
+  }catch(error){
+    alert("Could not save Moment.");
+  }
+}
+
+function momentStyle(moment){
+  return "filter:" + filterCSS(moment.filter) +
+    " brightness(" + moment.brightness + "%)" +
+    " contrast(" + moment.contrast + "%)" +
+    " saturate(" + moment.saturation + "%);";
+}
+
+function renderMoments(){
+  removeExpiredMoments();
+  const grid = $("momentsGrid");
+  const stories = $("storyList");
+
+  let storiesHTML = `
+    <div class="story-item" onclick="openCreate()">
+      <div class="story-ring own">
+        <div class="story-avatar-wrap" id="myStoryAvatarDyn">
+          <span>${getUsername().charAt(0).toUpperCase()}</span>
+        </div>
+        <div class="add-badge">＋</div>
+      </div>
+      <div class="story-name">Your Story</div>
+    </div>
+  `;
+
+  if(moments.length === 0){
+    grid.innerHTML = '<div class="empty">No Moments available. Create your first Moment!</div>';
+    stories.innerHTML = storiesHTML;
+    setupUserProfileAvatar();
+    if(window.lucide) lucide.createIcons();
+    return;
+  }
+
+  moments.forEach((moment)=>{
+    storiesHTML += `
+      <div class="story-item" onclick="openViewer('${moment.id}')">
+        <div class="story-ring">
+          <div class="story-avatar-wrap">
+            ${moment.type === "image" ? `<img src="${moment.media}" alt="Story">` : `<span>▶</span>`}
+          </div>
+        </div>
+        <div class="story-name">${moment.username}</div>
+      </div>
+    `;
+  });
+
+  stories.innerHTML = storiesHTML;
+  setupUserProfileAvatar();
+
+  let gridHTML = "";
+  moments.forEach((moment)=>{
+    const liked = moment.likes.includes(getUsername());
+    gridHTML += `
+      <article class="moment-card">
+        ${moment.type === "video" 
+          ? `<video src="${moment.media}" class="moment-media" style="${momentStyle(moment)}" muted playsinline onclick="openViewer('${moment.id}')"></video>`
+          : `<img src="${moment.media}" class="moment-media" style="${momentStyle(moment)}" alt="Moment" onclick="openViewer('${moment.id}')">`
+        }
+        <div class="moment-info">
+          <div class="moment-user">${moment.username}</div>
+          <div class="muted">${timeLeft(moment)}</div>
+          <p class="moment-caption">${moment.caption || "Shared a Moment"}</p>
+          <div class="moment-actions">
+            <button class="action-btn ${liked ? "liked" : ""}" onclick="toggleLike('${moment.id}')">${liked ? "♥ " : "♡ "}${moment.likes.length}</button>
+            <button class="action-btn" onclick="addComment('${moment.id}')">💬 ${moment.comments.length}</button>
+            <button class="action-btn" onclick="shareMoment('${moment.id}')">↗ Share</button>
+            ${moment.username === getUsername() ? `<button class="action-btn" onclick="deleteMoment('${moment.id}')">🗑</button>` : ""}
+          </div>
+        </div>
+      </article>
+    `;
+  });
+
+  grid.innerHTML = gridHTML;
+  if(window.lucide) lucide.createIcons();
+}
+
+function toggleLike(id){
+  const moment = moments.find(m => m.id === id);
+  if(!moment) return;
+  const user = getUsername();
+  if(moment.likes.includes(user)){
+    moment.likes = moment.likes.filter(name => name !== user);
+  }else{
+    moment.likes.push(user);
+  }
+  saveMoments();
+  renderMoments();
+}
+
+function addComment(id){
+  const moment = moments.find(m => m.id === id);
+  if(!moment) return;
+  const comment = prompt("Write your comment:");
+  if(!comment || !comment.trim()) return;
+  moment.comments.push({
+    username: getUsername(),
+    text: comment.trim(),
+    createdAt: Date.now()
+  });
+  saveMoments();
+  renderMoments();
+}
+
+async function shareMoment(id){
+  const link = location.href.split("?")[0] + "?moment=" + encodeURIComponent(id);
+  try{
     if(navigator.share){
-
-        navigator.share({
-
-            title:"My ZCrush Moment",
-
-            text:"Check out my special moment on ZCrush!"
-
-        });
-
+      await navigator.share({title:"ZCrush Moment", text:"Check out this Moment!", url:link});
+    }else if(navigator.clipboard){
+      await navigator.clipboard.writeText(link);
+      alert("Moment link copied!");
+    }else{
+      prompt("Copy this link:", link);
     }
-
-    else{
-
-        alert(
-            "Share feature is not supported on this browser."
-        );
-
-    }
-
+  }catch(error){}
 }
+
+function deleteMoment(id){
+  const moment = moments.find(m => m.id === id);
+  if(!moment || moment.username !== getUsername()) return;
+  if(!confirm("Delete this Moment?")) return;
+  moments = moments.filter(m => m.id !== id);
+  saveMoments();
+  renderMoments();
+}
+
+function openViewer(id){
+  const index = moments.findIndex(m => m.id === id);
+  if(index < 0) return;
+
+  currentMomentIndex = index;
+  currentViewerId = id;
+  const moment = moments[index];
+
+  if(!moment.views.includes(getUsername())){
+    moment.views.push(getUsername());
+    saveMoments();
+  }
+
+  $("viewerUser").textContent = moment.username;
+  $("viewerCaption").textContent = moment.caption || "";
+
+  const area = $("viewerMedia");
+  area.innerHTML = "";
+
+  let media;
+  if(moment.type === "video"){
+    media = document.createElement("video");
+    media.src = moment.media;
+    media.controls = true;
+    media.autoplay = true;
+    media.playsInline = true;
+    media.onended = () => nextMoment();
+  }else{
+    media = document.createElement("img");
+    media.src = moment.media;
+  }
+
+  media.className = "viewer-media";
+  media.style.cssText = momentStyle(moment);
+  area.appendChild(media);
+
+  $("viewer").style.display = "flex";
+
+  const fill = $("viewerProgress");
+  fill.style.transition = "none";
+  fill.style.width = "0%";
+
+  if(viewerTimer) clearTimeout(viewerTimer);
+
+  setTimeout(()=>{
+    fill.style.transition = moment.type === "video" ? "width linear" : "width 5s linear";
+    if(moment.type !== "video"){
+      fill.style.width = "100%";
+    }
+  }, 50);
+
+  if(moment.type !== "video"){
+    viewerTimer = setTimeout(()=>{
+      nextMoment();
+    }, 5000);
+  }
+}
+
+function closeViewer(){
+  if(viewerTimer) clearTimeout(viewerTimer);
+  $("viewer").style.display = "none";
+  $("viewerMedia").innerHTML = "";
+  currentViewerId = null;
+}
+
+function nextMoment(){
+  if(viewerTimer) clearTimeout(viewerTimer);
+  if(moments.length === 0) return;
+  currentMomentIndex = (currentMomentIndex + 1) % moments.length;
+  openViewer(moments[currentMomentIndex].id);
+}
+
+function viewerLike(){
+  if(currentViewerId) toggleLike(currentViewerId);
+}
+
+function viewerComment(){
+  if(currentViewerId) addComment(currentViewerId);
+}
+
+function viewerShare(){
+  if(currentViewerId) shareMoment(currentViewerId);
+}
+
+function openSharedMoment(){
+  const params = new URLSearchParams(location.search);
+  const id = params.get("moment");
+  if(id && moments.some(m => m.id === id)){
+    openViewer(id);
+  }
+}
+
+const deviceTheme = window.matchMedia("(prefers-color-scheme: dark)");
+function applyDeviceTheme(){
+  document.body.classList.toggle("light", !deviceTheme.matches);
+}
+applyDeviceTheme();
+if(deviceTheme.addEventListener){
+  deviceTheme.addEventListener("change", applyDeviceTheme);
+}
+
+loadMoments();
+renderMoments();
+openSharedMoment();
+
+setInterval(()=>{
+  removeExpiredMoments();
+  renderMoments();
+}, 60000);
 
 </script>
-
 </body>
 </html>
