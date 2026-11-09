@@ -121,12 +121,31 @@ body{
   display:flex;
   align-items:center;
   justify-content:center;
+  text-decoration:none;
 }
 
 .top-icon i{
   width:22px;
   height:22px;
   stroke-width:1.8;
+}
+
+.settings-btn {
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  border: 1px solid var(--border, #333);
+  background: var(--card, #171420);
+  color: var(--text, #fff);
+  cursor: pointer;
+  transition: background .2s;
+}
+
+.settings-btn:hover {
+  background: var(--button);
 }
 
 /* SIDEBAR */
@@ -552,24 +571,7 @@ body{
   opacity:0.9;
 }
 
-/* NOTIFICATIONS & TOAST */
-
-.notification-panel{
-  display:none;
-  position:fixed;
-  top:76px;
-  right:15px;
-  width:min(350px,92vw);
-  max-height:65vh;
-  overflow-y:auto;
-  padding:16px;
-  background:var(--card);
-  color:var(--text);
-  border:1px solid var(--border);
-  border-radius:15px;
-  z-index:3000;
-  box-shadow:var(--shadow);
-}
+/* TOAST */
 
 .toast{
   display:none;
@@ -696,12 +698,24 @@ body{
       placeholder="Search..."
     >
 
-    <button class="top-icon" id="notificationBtn" title="Notifications">
+    <!-- NOTIFICATION LINK BUTTON -->
+    <a href="notification.html" class="top-icon" id="notificationBtn" title="Notifications">
       <i data-lucide="bell"></i>
-    </button>
+    </a>
 
-    <button class="top-icon" id="connectBtn" title="Z-Connect">
+    <!-- Z-CONNECT LINK BUTTON -->
+    <a href="message.html" class="top-icon" id="connectBtn" title="Z-Connect">
       <i data-lucide="globe"></i>
+    </a>
+
+    <button class="settings-btn" onclick="openSettings()" aria-label="Open Settings" title="Settings">
+      <svg width="25" height="25" viewBox="0 0 24 24"
+           fill="none" stroke="currentColor"
+           stroke-width="2" stroke-linecap="round">
+        <path d="M4 6h16"/>
+        <path d="M4 12h16"/>
+        <path d="M4 18h16"/>
+      </svg>
     </button>
 
   </div>
@@ -725,6 +739,16 @@ body{
 
   <a href="shorts.html" class="nav-link">
     <span class="nav-icon"><i data-lucide="circle-play"></i></span> Shorts
+  </a>
+
+  <!-- Z-CONNECT SIDEBAR LINK -->
+  <a href="message.html" class="nav-link">
+    <span class="nav-icon"><i data-lucide="globe"></i></span> Z-Connect
+  </a>
+
+  <!-- NOTIFICATIONS SIDEBAR LINK -->
+  <a href="notification.html" class="nav-link">
+    <span class="nav-icon"><i data-lucide="bell"></i></span> Notifications
   </a>
 
   <a href="profile.html" class="nav-link active">
@@ -831,9 +855,6 @@ body{
 </div>
 
 
-<!-- NOTIFICATIONS PANEL -->
-<div class="notification-panel" id="notificationPanel"></div>
-
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
 
@@ -878,6 +899,21 @@ function showToast(msg){
   t.textContent = msg;
   t.style.display = "block";
   setTimeout(()=>t.style.display="none", 2500);
+}
+
+function updateNotificationCount(){
+  try{
+    const notifs = JSON.parse(localStorage.getItem("zcrushNotifications") || "[]");
+    const count = notifs.filter(n => !n.read).length;
+    const btn = $("notificationBtn");
+    if(!btn) return;
+    if(count > 0){
+      btn.innerHTML = `<i data-lucide="bell"></i><sup style="font-size:10px;color:#ff70aa;position:absolute;top:2px;right:2px;">${count}</sup>`;
+    }else{
+      btn.innerHTML = `<i data-lucide="bell"></i>`;
+    }
+    if(window.lucide) lucide.createIcons();
+  }catch(e){}
 }
 
 function loadProfile(){
@@ -1055,18 +1091,644 @@ function switchTab(type, btn){
   }
 }
 
-/* AUTOMATIC DEVICE THEME */
-const deviceTheme = window.matchMedia("(prefers-color-scheme: dark)");
-function applyDeviceTheme(){
-  document.body.classList.toggle("light", !deviceTheme.matches);
-}
-applyDeviceTheme();
-if(deviceTheme.addEventListener){
-  deviceTheme.addEventListener("change", applyDeviceTheme);
-}
-
 loadProfile();
+updateNotificationCount();
 if(window.lucide) lucide.createIcons();
 </script>
+
+<!-- ZCRUSH SETTINGS -->
+
+<style>
+.settings-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid var(--border, #333);
+  background: var(--card, #171420);
+  color: var(--text, #fff);
+  font-size: 21px;
+  cursor: pointer;
+}
+
+#settingsPage {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  overflow-y: auto;
+  padding: 22px 16px 40px;
+  background: var(--bg, #090812);
+  color: var(--text, #fff);
+  font-family: Arial, sans-serif;
+}
+
+.settings-inner {
+  max-width: 600px;
+  margin: auto;
+}
+
+.settings-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.settings-header button {
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--border, #333);
+  background: var(--card, #171420);
+  color: inherit;
+  border-radius: 12px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.settings-header h2 {
+  font-size: 25px;
+}
+
+.settings-user {
+  background: var(--card, #171420);
+  border: 1px solid var(--border, #333);
+  border-radius: 18px;
+  padding: 18px;
+  margin-bottom: 25px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.settings-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: linear-gradient(135deg,#9333ea,#db2777);
+  display: grid;
+  place-items: center;
+  color: white;
+  font-size: 23px;
+  font-weight: bold;
+  overflow: hidden;
+}
+
+.settings-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.settings-user p {
+  color: var(--muted, #aaa);
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.settings-heading {
+  font-size: 12px;
+  color: #b77aff;
+  font-weight: bold;
+  margin: 22px 4px 10px;
+  letter-spacing: 1px;
+}
+
+.settings-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  text-align: left;
+  gap: 13px;
+  padding: 16px;
+  margin-bottom: 9px;
+  border-radius: 14px;
+  border: 1px solid var(--border, #333);
+  background: var(--card, #171420);
+  color: inherit;
+  cursor: pointer;
+}
+
+.settings-item .setting-icon {
+  font-size: 21px;
+}
+
+.settings-item .setting-info {
+  flex: 1;
+}
+
+.settings-item strong {
+  display: block;
+  font-size: 14px;
+}
+
+.settings-item small {
+  display: block;
+  color: var(--muted, #aaa);
+  margin-top: 5px;
+  font-size: 11px;
+}
+
+.settings-item .arrow {
+  color: var(--muted, #aaa);
+}
+
+.settings-item.logout {
+  color: #fb7185;
+}
+
+.theme-status {
+  color: #b77aff;
+  font-size: 12px;
+}
+
+.settings-version {
+  text-align: center;
+  color: var(--muted, #aaa);
+  font-size: 11px;
+  margin-top: 30px;
+}
+
+.settings-message {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #9333ea;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 12px;
+  display: none;
+  z-index: 100001;
+  font-size: 13px;
+  max-width: 90%;
+}
+
+</style>
+
+<div id="settingsPage">
+
+  <div class="settings-inner">
+
+    <div class="settings-header">
+      <button onclick="closeSettings()">←</button>
+      <h2>Settings</h2>
+    </div>
+
+    <div class="settings-user">
+
+      <div class="settings-avatar" id="settingsAvatar">
+        Z
+      </div>
+
+      <div>
+        <strong id="settingsName">ZCrush User</strong>
+        <p id="settingsHandle">@zcrushuser</p>
+      </div>
+
+    </div>
+
+    <div class="settings-heading">ACCOUNT</div>
+
+    <button class="settings-item" onclick="settingsAction('Edit Profile')">
+      <span class="setting-icon">👤</span>
+      <span class="setting-info">
+        <strong>Edit Profile</strong>
+        <small>Name, username, bio and photo</small>
+      </span>
+      <span class="arrow">›</span>
+    </button>
+
+    <button class="settings-item" onclick="settingsAction('Privacy & Security')">
+      <span class="setting-icon">🛡️</span>
+      <span class="setting-info">
+        <strong>Privacy & Security</strong>
+        <small>Manage account privacy</small>
+      </span>
+      <span class="arrow">›</span>
+    </button>
+
+    <button class="settings-item" onclick="settingsAction('Login & Security')">
+      <span class="setting-icon">🔐</span>
+      <span class="setting-info">
+        <strong>Login & Security</strong>
+        <small>Email and password security</small>
+      </span>
+      <span class="arrow">›</span>
+    </button>
+
+    <button class="settings-item" onclick="window.location.href='notification.html'">
+      <span class="setting-icon">🔔</span>
+      <span class="setting-info">
+        <strong>Notifications</strong>
+        <small>View and manage all notifications</small>
+      </span>
+      <span class="arrow">›</span>
+    </button>
+
+    <div class="settings-heading">PREFERENCES</div>
+
+    <button class="settings-item" onclick="openAppearance()">
+      <span class="setting-icon">🎨</span>
+      <span class="setting-info">
+        <strong>Appearance</strong>
+        <small>Theme settings (Auto / Dark / Light)</small>
+      </span>
+      <span class="theme-status" id="themeStatus">Auto</span>
+    </button>
+
+    <button class="settings-item" onclick="settingsAction('Language')">
+      <span class="setting-icon">🌐</span>
+      <span class="setting-info">
+        <strong>Language</strong>
+        <small>English / Hindi / Gujarati</small>
+      </span>
+      <span class="arrow">›</span>
+    </button>
+
+    <button class="settings-item" onclick="settingsAction('Accessibility')">
+      <span class="setting-icon">♿</span>
+      <span class="setting-info">
+        <strong>Accessibility</strong>
+        <small>Display and reading options</small>
+      </span>
+      <span class="arrow">›</span>
+    </button>
+
+    <div class="settings-heading">SUPPORT</div>
+
+    <button class="settings-item" onclick="settingsAction('Help & Support')">
+      <span class="setting-icon">❓</span>
+      <span class="setting-info">
+        <strong>Help & Support</strong>
+        <small>Get help with ZCrush</small>
+      </span>
+      <span class="arrow">›</span>
+    </button>
+
+    <button class="settings-item" onclick="settingsAction('About ZCrush')">
+      <span class="setting-icon">ℹ️</span>
+      <span class="setting-info">
+        <strong>About ZCrush</strong>
+        <small>Version and information</small>
+      </span>
+      <span class="arrow">›</span>
+    </button>
+
+    <button class="settings-item" onclick="settingsAction('Terms & Privacy Policy')">
+      <span class="setting-icon">📄</span>
+      <span class="setting-info">
+        <strong>Terms & Privacy Policy</strong>
+        <small>Read our policies</small>
+      </span>
+      <span class="arrow">›</span>
+    </button>
+
+    <div class="settings-heading">ACCOUNT ACTIONS</div>
+
+    <button class="settings-item logout" onclick="logoutZCrush()">
+      <span class="setting-icon">🚪</span>
+      <span class="setting-info">
+        <strong>Log Out</strong>
+        <small>Sign out of your account</small>
+      </span>
+      <span class="arrow">›</span>
+    </button>
+
+    <div class="settings-version">
+      ZCrush • Version 1.0
+    </div>
+
+  </div>
+
+</div>
+
+<div class="settings-message" id="settingsMessage"></div>
+
+<script>
+function openSettings() {
+  document.getElementById("settingsPage").style.display = "block";
+
+  const name = localStorage.getItem("zcrushUserName")
+    || "ZCrush User";
+
+  const handle = localStorage.getItem("zcrushUserHandle")
+    || "@zcrushuser";
+
+  const photo = localStorage.getItem("zcrushProfilePhoto");
+
+  document.getElementById("settingsName").textContent = name;
+  document.getElementById("settingsHandle").textContent = handle;
+
+  const avatar = document.getElementById("settingsAvatar");
+
+  if (photo) {
+    avatar.innerHTML = "";
+    const img = document.createElement("img");
+    img.src = photo;
+    img.alt = "Profile photo";
+    avatar.appendChild(img);
+  } else {
+    avatar.textContent = name.charAt(0).toUpperCase();
+  }
+
+  updateThemeStatus();
+}
+
+function closeSettings() {
+  document.getElementById("settingsPage").style.display = "none";
+}
+
+function settingsAction(name) {
+  if (name === "Edit Profile") {
+    closeSettings();
+    openEditModal();
+    return;
+  }
+
+  settingsToast(name + " page will be connected next.");
+}
+
+function settingsToast(message) {
+  const box = document.getElementById("settingsMessage");
+  box.textContent = message;
+  box.style.display = "block";
+  clearTimeout(window.settingsToastTimer);
+  window.settingsToastTimer = setTimeout(() => {
+    box.style.display = "none";
+  }, 2500);
+}
+
+// LOGOUT
+async function logoutZCrush() {
+  if (!confirm("Are you sure you want to log out?")) return;
+
+  try {
+    if (window.supabaseClient) {
+      const { error } = await window.supabaseClient.auth.signOut();
+      if (error) throw error;
+    } else {
+      localStorage.removeItem("zcrushLoggedIn");
+      localStorage.removeItem("zcrushUserName");
+      localStorage.removeItem("zcrushUserHandle");
+      localStorage.removeItem("zcrushUserEmail");
+      window.location.href = "login.html";
+    }
+  } catch (error) {
+    settingsToast(error.message);
+  }
+}
+</script>
+
+
+<!-- APPEARANCE POPUP -->
+
+<div id="appearancePopup" class="appearance-popup">
+
+  <div class="appearance-card">
+
+    <div class="appearance-heading">
+      <h2>Appearance</h2>
+      <button onclick="closeAppearance()">✕</button>
+    </div>
+
+    <p>Choose how ZCrush looks on your device.</p>
+
+    <button class="theme-option" onclick="selectTheme('auto')">
+      <span>📱</span>
+      <span>
+        <strong>Auto</strong>
+        <small>Follow device settings</small>
+      </span>
+      <span id="check-auto">✓</span>
+    </button>
+
+    <button class="theme-option" onclick="selectTheme('dark')">
+      <span>🌙</span>
+      <span>
+        <strong>Dark</strong>
+        <small>Always use dark theme</small>
+      </span>
+      <span id="check-dark"></span>
+    </button>
+
+    <button class="theme-option" onclick="selectTheme('light')">
+      <span>☀️</span>
+      <span>
+        <strong>Light</strong>
+        <small>Always use light theme</small>
+      </span>
+      <span id="check-light"></span>
+    </button>
+
+    <button class="appearance-done"
+      onclick="closeAppearance()">
+      Done
+    </button>
+
+  </div>
+</div>
+
+<style>
+.appearance-popup {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+  background: rgba(0,0,0,.65);
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+}
+
+.appearance-card {
+  width: 100%;
+  max-width: 390px;
+  padding: 23px;
+  border-radius: 22px;
+  background: var(--card, #171420);
+  color: var(--text, white);
+  border: 1px solid var(--border, #333);
+}
+
+.appearance-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.appearance-heading h2 {
+  font-size: 22px;
+}
+
+.appearance-heading button {
+  border: none;
+  background: transparent;
+  color: inherit;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.appearance-card > p {
+  font-size: 13px;
+  color: var(--muted, #aaa);
+  margin: 10px 0 20px;
+}
+
+.theme-option {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  text-align: left;
+  padding: 15px 12px;
+  margin-bottom: 9px;
+  background: var(--bg, #100e18);
+  color: inherit;
+  border: 1px solid var(--border, #333);
+  border-radius: 13px;
+  cursor: pointer;
+}
+
+.theme-option > span:first-child {
+  font-size: 23px;
+}
+
+.theme-option > span:nth-child(2) {
+  flex: 1;
+}
+
+.theme-option strong,
+.theme-option small {
+  display: block;
+}
+
+.theme-option small {
+  color: var(--muted, #aaa);
+  margin-top: 5px;
+  font-size: 11px;
+}
+
+.theme-option > span:last-child {
+  color: #b77aff;
+  font-weight: bold;
+}
+
+.appearance-done {
+  width: 100%;
+  padding: 14px;
+  margin-top: 12px;
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-weight: bold;
+  background: linear-gradient(100deg,#9333ea,#db2777);
+  cursor: pointer;
+}
+</style>
+
+<script>
+/* ZCRUSH GLOBAL APPEARANCE SYSTEM */
+
+const themeMedia = window.matchMedia(
+  "(prefers-color-scheme: dark)"
+);
+
+function getSavedTheme() {
+  return localStorage.getItem("zcrushTheme") || "auto";
+}
+
+function applyZCrushTheme() {
+  const mode = getSavedTheme();
+
+  const isDark = mode === "auto"
+    ? themeMedia.matches
+    : mode === "dark";
+
+  document.documentElement.dataset.theme =
+    isDark ? "dark" : "light";
+
+  document.documentElement.style.colorScheme =
+    isDark ? "dark" : "light";
+
+  document.body.classList.toggle("light", !isDark);
+  document.body.classList.toggle("dark", isDark);
+
+  updateThemeStatus();
+}
+
+function selectTheme(mode) {
+  if (!["auto", "dark", "light"].includes(mode)) return;
+
+  localStorage.setItem("zcrushTheme", mode);
+
+  applyZCrushTheme();
+  updateThemeChecks();
+
+  const message = document.getElementById("settingsMessage");
+
+  if (message) {
+    message.textContent =
+      mode.toUpperCase() + " theme activated";
+    message.style.display = "block";
+
+    clearTimeout(window.settingsToastTimer);
+
+    window.settingsToastTimer = setTimeout(() => {
+      message.style.display = "none";
+    }, 2000);
+  }
+}
+
+function openAppearance() {
+  const popup = document.getElementById("appearancePopup");
+  popup.style.display = "flex";
+  updateThemeChecks();
+}
+
+function closeAppearance() {
+  document.getElementById("appearancePopup")
+    .style.display = "none";
+}
+
+function updateThemeChecks() {
+  const mode = getSavedTheme();
+
+  ["auto", "dark", "light"].forEach(theme => {
+    const check = document.getElementById("check-" + theme);
+
+    if (check) {
+      check.textContent = mode === theme ? "✓" : "";
+    }
+  });
+}
+
+function updateThemeStatus() {
+  const status = document.getElementById("themeStatus");
+
+  if (status) {
+    const mode = getSavedTheme();
+    status.textContent =
+      mode.charAt(0).toUpperCase() + mode.slice(1);
+  }
+}
+
+// Detect device theme changes in Auto mode
+themeMedia.addEventListener("change", () => {
+  if (getSavedTheme() === "auto") {
+    applyZCrushTheme();
+  }
+});
+
+// Apply saved theme on page load
+applyZCrushTheme();
+
+// Sync when another ZCrush tab changes theme
+window.addEventListener("storage", event => {
+  if (event.key === "zcrushTheme") {
+    applyZCrushTheme();
+  }
+});
+</script>
+
 </body>
 </html>
