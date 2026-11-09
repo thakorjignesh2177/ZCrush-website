@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZCrush - Notifications</title>
+
+<!-- Lucide Icons -->
+<script src="https://unpkg.com/lucide@latest"></script>
+
+<style>
+
+/* =====================================
+   ZCRUSH DARK THEME
+===================================== */
+
+:root{
+  color-scheme:dark;
+
+  --bg:#08070b;
+  --card:#121016;
+  --text:#ffffff;
+  --muted:#a8a2b0;
+  --border:#292431;
+  --purple:#241638;
+  --accent:#b77aff;
+  --post:#211d27;
+  --button:#302b36;
+  --shadow:0 5px 20px #0003;
+  --unread-bg:#1a1424;
+}
+
+/* =====================================
+   ZCRUSH LIGHT THEME
+===================================== */
+
+body.light{
+  color-scheme:light;
+
+  --bg:#f5f4f8;
+  --card:#ffffff;
+  --text:#211b2a;
+  --muted:#777080;
+  --border:#e7e1ec;
+  --purple:#eee5f8;
+  --accent:#8142b7;
+  --post:#f0edf3;
+  --button:#eae5ef;
+  --shadow:0 5px 20px #0000000b;
+  --unread-bg:#f3eafd;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial,sans-serif;
+}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  overflow-x:hidden;
+  transition:background .2s,color .2s;
+}
+
+/* TOPBAR */
+
+.topbar{
+  height:70px;
+  width:100%;
+  position:sticky;
+  top:0;
+  z-index:1000;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 25px;
+  background:var(--purple);
+  border-bottom:1px solid var(--border);
+}
+
+.logo{
+  font-size:30px;
+  font-weight:900;
+  letter-spacing:-1.5px;
+  color:var(--text);
+  text-decoration:none;
+}
+
+.logo-z{
+  color:#ff3030;
+}
+
+.top-actions{
+  display:flex;
+  align-items:center;
+  gap:15px;
+}
+
+.top-icon{
+  background:none;
+  border:0;
+  color:var(--text);
+  cursor:pointer;
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-decoration:none;
+}
+
+.top-icon i{
+  width:22px;
+  height:22px;
+  stroke-width:1.8;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+  width:230px;
+  position:fixed;
+  top:70px;
+  bottom:0;
+  left:0;
+  padding:25px 15px;
+  background:var(--bg);
+  border-right:1px solid var(--border);
+  z-index:500;
+}
+
+.menu-title{
+  color:var(--muted);
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:1.5px;
+  margin:5px 12px 20px;
+}
+
+.nav-link{
+  display:flex;
+  align-items:center;
+  gap:15px;
+  padding:13px 14px;
+  margin-bottom:7px;
+  border-radius:12px;
+  color:var(--text);
+  text-decoration:none;
+  font-size:15px;
+}
+
+.nav-link:hover,
+.nav-link.active{
+  background:var(--purple);
+  color:var(--accent);
+}
+
+.nav-icon{
+  width:23px;
+  text-align:center;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.nav-icon i{
+  width:20px;
+  height:20px;
+  stroke-width:1.8;
+}
+
+/* MAIN CONTENT */
+
+.main{
+  margin-left:230px;
+  width:calc(100% - 230px);
+  max-width:900px;
+  padding:25px;
+}
+
+/* HEADER & CONTROLS */
+
+.page-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:15px;
+  margin-bottom:20px;
+}
+
+.page-title{
+  font-size:24px;
+  font-weight:700;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.unread-badge{
+  font-size:12px;
+  background:#ff3030;
+  color:#fff;
+  padding:3px 9px;
+  border-radius:12px;
+  font-weight:600;
+}
+
+.header-actions{
+  display:flex;
+  gap:10px;
+}
+
+.btn-secondary{
+  background:var(--card);
+  border:1px solid var(--border);
+  color:var(--text);
+  padding:8px 14px;
+  border-radius:20px;
+  font-size:13px;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  gap:6px;
+  transition:all .2s;
+}
+
+.btn-secondary:hover{
+  background:var(--button);
+  color:var(--accent);
+}
+
+.btn-secondary i{
+  width:16px;
+  height:16px;
+}
+
+/* FILTER TABS */
+
+.filter-bar{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  overflow-x:auto;
+  padding-bottom:12px;
+  margin-bottom:20px;
+}
+
+.filter-bar::-webkit-scrollbar{
+  display:none;
+}
+
+.filter-btn{
+  background:var(--card);
+  border:1px solid var(--border);
+  color:var(--muted);
+  padding:8px 16px;
+  border-radius:20px;
+  font-size:13px;
+  font-weight:600;
+  cursor:pointer;
+  white-space:nowrap;
+  transition:all .2s;
+}
+
+.filter-btn:hover,
+.filter-btn.active{
+  background:var(--accent);
+  color:#ffffff;
+  border-color:var(--accent);
+}
+
+/* NOTIFICATIONS LIST */
+
+.notifications-list{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+.notice-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:16px;
+  display:flex;
+  align-items:flex-start;
+  gap:14px;
+  cursor:pointer;
+  transition:transform .15s, border-color .2s, background .2s;
+  position:relative;
+  box-shadow:var(--shadow);
+}
+
+.notice-card:hover{
+  transform:translateY(-2px);
+  border-color:var(--accent);
+}
+
+.notice-card.unread{
+  background:var(--unread-bg);
+  border-color:rgba(183, 122, 255, 0.4);
+}
+
+.notice-icon-wrapper{
+  width:44px;
+  height:44px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0;
+  background:var(--post);
+}
+
+.notice-icon-wrapper.like{
+  background:rgba(230, 91, 158, 0.15);
+  color:#e65b9e;
+}
+
+.notice-icon-wrapper.comment{
+  background:rgba(183, 122, 255, 0.15);
+  color:var(--accent);
+}
+
+.notice-icon-wrapper.follow{
+  background:rgba(88, 169, 255, 0.15);
+  color:#58a9ff;
+}
+
+.notice-icon-wrapper.system{
+  background:rgba(74, 209, 123, 0.15);
+  color:#4ad17b;
+}
+
+.notice-icon-wrapper i{
+  width:22px;
+  height:22px;
+}
+
+.notice-body{
+  flex:1;
+  min-width:0;
+}
+
+.notice-text{
+  font-size:15px;
+  line-height:1.45;
+  color:var(--text);
+  overflow-wrap:anywhere;
+}
+
+.notice-meta{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-top:6px;
+  font-size:12px;
+  color:var(--muted);
+}
+
+.dot-unread{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:var(--accent);
+  display:inline-block;
+}
+
+.notice-actions{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  margin-left:auto;
+}
+
+.item-btn{
+  background:transparent;
+  border:0;
+  color:var(--muted);
+  cursor:pointer;
+  padding:6px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:color .2s, background .2s;
+}
+
+.item-btn:hover{
+  background:var(--button);
+  color:#ff4d4d;
+}
+
+.item-btn i{
+  width:16px;
+  height:16px;
+}
+
+/* EMPTY STATE */
+
+.empty-state{
+  text-align:center;
+  padding:50px 20px;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:18px;
+  color:var(--muted);
+}
+
+.empty-icon{
+  width:55px;
+  height:55px;
+  margin:0 auto 15px;
+  color:var(--muted);
+  opacity:0.6;
+}
+
+.empty-title{
+  font-size:18px;
+  font-weight:700;
+  color:var(--text);
+  margin-bottom:6px;
+}
+
+/* TOAST */
+
+.toast{
+  display:none;
+  position:fixed;
+  bottom:100px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#30233b;
+  color:white;
+  padding:12px 20px;
+  border-radius:25px;
+  z-index:5000;
+  max-width:90%;
+  text-align:center;
+  font-size:14px;
+}
+
+/* MOBILE NAV */
+
+.bottom-nav{
+  display:none;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:800px){
+
+  .topbar{
+    height:65px;
+    padding:0 15px;
+  }
+
+  .logo{
+    font-size:27px;
+  }
+
+  .sidebar{
+    display:none;
+  }
+
+  .main{
+    margin-left:0;
+    width:100%;
+    padding:18px 14px 105px;
+  }
+
+  .bottom-nav{
+    position:fixed;
+    bottom:0;
+    left:0;
+    width:100%;
+    height:76px;
+    background:var(--purple);
+    display:flex;
+    align-items:center;
+    justify-content:space-around;
+    border-top:1px solid var(--border);
+    z-index:2000;
+  }
+
+  .bottom-link{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+    color:var(--text);
+    text-decoration:none;
+    font-size:13px;
+    font-weight:500;
+  }
+
+  .bottom-link i{
+    width:28px;
+    height:28px;
+    stroke-width:1.9;
+  }
+
+  .bottom-link.active{
+    color:var(--accent);
+    font-weight:700;
+  }
+}
+
+@media(max-width:480px){
+  .page-header{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+  .header-actions{
+    width:100%;
+  }
+  .btn-secondary{
+    flex:1;
+    justify-content:center;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- TOPBAR -->
+<header class="topbar">
+  <a href="index.html" class="logo">
+    <span class="logo-z">Z</span>Crush
+  </a>
+
+  <div class="top-actions">
+    <a href="message.html" class="top-icon" title="Z-Connect">
+      <i data-lucide="globe"></i>
+    </a>
+    <a href="profile.html" class="top-icon" title="Profile">
+      <i data-lucide="user-round"></i>
+    </a>
+  </div>
+</header>
+
+
+<!-- DESKTOP SIDEBAR -->
+<aside class="sidebar">
+  <div class="menu-title">MENU</div>
+
+  <a href="index.html" class="nav-link">
+    <span class="nav-icon"><i data-lucide="house"></i></span> Home
+  </a>
+
+  <a href="moments.html" class="nav-link">
+    <span class="nav-icon"><i data-lucide="sparkles"></i></span> Moments
+  </a>
+
+  <a href="shorts.html" class="nav-link">
+    <span class="nav-icon"><i data-lucide="circle-play"></i></span> Shorts
+  </a>
+
+  <a href="message.html" class="nav-link">
+    <span class="nav-icon"><i data-lucide="globe"></i></span> Z-Connect
+  </a>
+
+  <a href="notification.html" class="nav-link active">
+    <span class="nav-icon"><i data-lucide="bell"></i></span> Notifications
+  </a>
+
+  <a href="profile.html" class="nav-link">
+    <span class="nav-icon"><i data-lucide="user-round"></i></span> Profile
+  </a>
+</aside>
+
+
+<!-- MAIN CONTENT -->
+<main class="main">
+
+  <div class="page-header">
+    <h1 class="page-title">
+      Notifications
+      <span class="unread-badge" id="unreadBadge" style="display:none;">0</span>
+    </h1>
+
+    <div class="header-actions">
+      <button class="btn-secondary" id="markAllReadBtn">
+        <i data-lucide="check-check"></i>
+        Mark all as read
+      </button>
+
+      <button class="btn-secondary" id="clearAllBtn">
+        <i data-lucide="trash-2"></i>
+        Clear all
+      </button>
+    </div>
+  </div>
+
+  <!-- FILTER BUTTONS -->
+  <div class="filter-bar">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="unread">Unread</button>
+    <button class="filter-btn" data-filter="like">Likes</button>
+    <button class="filter-btn" data-filter="comment">Comments</button>
+    <button class="filter-btn" data-filter="follow">Follows</button>
+  </div>
+
+  <!-- NOTIFICATIONS CONTAINER -->
+  <section class="notifications-list" id="notificationsContainer"></section>
+
+</main>
+
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+
+<!-- MOBILE BOTTOM NAV -->
+<nav class="bottom-nav">
+  <a href="index.html" class="bottom-link">
+    <i data-lucide="house"></i>
+    <span>Home</span>
+  </a>
+
+  <a href="moments.html" class="bottom-link">
+    <i data-lucide="sparkles"></i>
+    <span>Moments</span>
+  </a>
+
+  <a href="zcam.html" class="bottom-link">
+    <i data-lucide="aperture"></i>
+    <span>ZCam</span>
+  </a>
+
+  <a href="shorts.html" class="bottom-link">
+    <i data-lucide="circle-play"></i>
+    <span>Shorts</span>
+  </a>
+
+  <a href="profile.html" class="bottom-link">
+    <i data-lucide="user-round"></i>
+    <span>Profile</span>
+  </a>
+</nav>
+
+
+<script>
+
+/* =====================================
+   1. HELPERS & STORAGE
+===================================== */
+
+function $(id){
+  return document.getElementById(id);
+}
+
+function safe(value){
+  return String(value ?? "").replace(/[&<>"']/g,c => ({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#039;"
+  })[c]);
+}
+
+function getData(key,fallback){
+  try{
+    const value = localStorage.getItem(key);
+    return value ? JSON.parse(value) : fallback;
+  }catch(error){
+    return fallback;
+  }
+}
+
+function saveData(key,value){
+  try{
+    localStorage.setItem(key,JSON.stringify(value));
+    return true;
+  }catch(error){
+    showToast("Storage error: Unable to save changes.");
+    return false;
+  }
+}
+
+function showToast(message){
+  const el = $("toast");
+  el.textContent = message;
+  el.style.display = "block";
+  clearTimeout(window.toastTimer);
+  window.toastTimer = setTimeout(() => {
+    el.style.display = "none";
+  }, 2200);
+}
+
+function timeAgo(time){
+  const seconds = Math.floor((Date.now() - (time || Date.now())) / 1000);
+  if(seconds < 60) return "Just now";
+  if(seconds < 3600) return Math.floor(seconds/60) + "m ago";
+  if(seconds < 86400) return Math.floor(seconds/3600) + "h ago";
+  return Math.floor(seconds/86400) + "d ago";
+}
+
+
+/* =====================================
+   2. DATA & STATE
+===================================== */
+
+let notifications = getData("zcrushNotifications", []);
+if(!Array.isArray(notifications)) notifications = [];
+
+let currentFilter = "all";
+
+
+/* =====================================
+   3. ICON & TYPE MAPPING
+===================================== */
+
+function getTypeDetails(type){
+  switch(type){
+    case "like":
+      return { icon: "heart", class: "like", label: "Liked" };
+    case "comment":
+      return { icon: "message-circle", class: "comment", label: "Comment" };
+    case "follow":
+      return { icon: "user-plus", class: "follow", label: "Follow" };
+    default:
+      return { icon: "bell", class: "system", label: "Notification" };
+  }
+}
+
+
+/* =====================================
+   4. RENDER NOTIFICATIONS
+===================================== */
+
+function updateUnreadCount(){
+  const unreadCount = notifications.filter(n => !n.read).length;
+  const badge = $("unreadBadge");
+  if(unreadCount > 0){
+    badge.textContent = unreadCount;
+    badge.style.display = "inline-block";
+  }else{
+    badge.style.display = "none";
+  }
+}
+
+function renderNotifications(){
+  updateUnreadCount();
+
+  let list = [...notifications];
+
+  if(currentFilter === "unread"){
+    list = list.filter(n => !n.read);
+  }else if(currentFilter !== "all"){
+    list = list.filter(n => n.type === currentFilter);
+  }
+
+  const container = $("notificationsContainer");
+
+  if(!list.length){
+    let emptyMsg = "You don't have any notifications right now.";
+    if(currentFilter === "unread") emptyMsg = "No unread notifications left.";
+    else if(currentFilter !== "all") emptyMsg = `No ${currentFilter} notifications found.`;
+
+    container.innerHTML = `
+      <div class="empty-state">
+        <i data-lucide="bell-off" class="empty-icon"></i>
+        <div class="empty-title">All Caught Up!</div>
+        <p>${emptyMsg}</p>
+      </div>
+    `;
+
+    if(window.lucide) lucide.createIcons();
+    return;
+  }
+
+  container.innerHTML = list.map(item => {
+    const details = getTypeDetails(item.type);
+    const hasPost = Boolean(item.postId);
+
+    return `
+      <div class="notice-card ${!item.read ? 'unread' : ''}" data-id="${safe(item.id)}" data-post="${safe(item.postId || '')}">
+        <div class="notice-icon-wrapper ${details.class}">
+          <i data-lucide="${details.icon}"></i>
+        </div>
+
+        <div class="notice-body">
+          <div class="notice-text">
+            ${safe(item.text)}
+          </div>
+          <div class="notice-meta">
+            <span>${timeAgo(item.createdAt)}</span>
+            ${!item.read ? '<span class="dot-unread" title="Unread"></span>' : ''}
+            ${hasPost ? '<span style="color:var(--accent); font-weight:600;">• View Post</span>' : ''}
+          </div>
+        </div>
+
+        <div class="notice-actions">
+          <button class="item-btn" data-action="delete" title="Delete notification">
+            <i data-lucide="x"></i>
+          </button>
+        </div>
+      </div>
+    `;
+  }).join("");
+
+  if(window.lucide) lucide.createIcons();
+}
+
+
+/* =====================================
+   5. ACTIONS & EVENTS
+===================================== */
+
+// Mark single notification as read & handle post navigation
+$("notificationsContainer").addEventListener("click", event => {
+  const deleteBtn = event.target.closest('[data-action="delete"]');
+  const card = event.target.closest(".notice-card");
+  if(!card) return;
+
+  const id = card.dataset.id;
+  const postId = card.dataset.post;
+
+  if(deleteBtn){
+    // Delete single notification
+    event.stopPropagation();
+    notifications = notifications.filter(n => String(n.id) !== String(id));
+    saveData("zcrushNotifications", notifications);
+    renderNotifications();
+    showToast("Notification removed.");
+    return;
+  }
+
+  // Mark as read on click
+  const targetNotice = notifications.find(n => String(n.id) === String(id));
+  if(targetNotice && !targetNotice.read){
+    targetNotice.read = true;
+    saveData("zcrushNotifications", notifications);
+    renderNotifications();
+  }
+
+  // Navigate to post if postId is available
+  if(postId){
+    window.location.href = `index.html?post=${encodeURIComponent(postId)}`;
+  }
+});
+
+// Mark all as read
+$("markAllReadBtn").addEventListener("click", () => {
+  if(!notifications.length){
+    showToast("No notifications to mark.");
+    return;
+  }
+  notifications = notifications.map(n => ({ ...n, read: true }));
+  saveData("zcrushNotifications", notifications);
+  renderNotifications();
+  showToast("All marked as read.");
+});
+
+// Clear all notifications
+$("clearAllBtn").addEventListener("click", () => {
+  if(!notifications.length){
+    showToast("Nothing to clear.");
+    return;
+  }
+  if(!confirm("Are you sure you want to delete all notifications?")) return;
+
+  notifications = [];
+  saveData("zcrushNotifications", notifications);
+  renderNotifications();
+  showToast("All notifications cleared.");
+});
+
+// Filters
+document.querySelectorAll(".filter-btn").forEach(btn => {
+  btn.addEventListener("click", e => {
+    document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+    e.currentTarget.classList.add("active");
+    currentFilter = e.currentTarget.dataset.filter;
+    renderNotifications();
+  });
+});
+
+
+/* =====================================
+   6. AUTOMATIC DEVICE THEME
+===================================== */
+
+const deviceTheme = window.matchMedia("(prefers-color-scheme: dark)");
+
+function applyDeviceTheme(){
+  const isDark = deviceTheme.matches;
+  document.body.classList.toggle("light", !isDark);
+}
+
+applyDeviceTheme();
+if(deviceTheme.addEventListener){
+  deviceTheme.addEventListener("change", applyDeviceTheme);
+}else{
+  deviceTheme.addListener(applyDeviceTheme);
+}
+
+
+/* =====================================
+   7. INITIALIZE
+===================================== */
+
+renderNotifications();
+
+</script>
+
+</body>
+</html>
