@@ -116,6 +116,7 @@ body{
   display:flex;
   align-items:center;
   justify-content:center;
+  text-decoration:none;
 }
 
 .top-icon i{
@@ -221,7 +222,7 @@ body{
   display:flex;
   align-items:center;
   justify-content:center;
-  position:relative; /* Required for absolute positioning of badge */
+  position:relative;
 }
 
 .story-ring.own{
@@ -251,7 +252,6 @@ body{
   color:var(--text);
 }
 
-/* Placed at top-right */
 .add-badge{
   position:absolute;
   top:0;
@@ -356,6 +356,7 @@ body{
 }
 
 /* CREATE MODAL / CAMERA */
+
 .modal{
   display:none;
   position:fixed;
@@ -515,6 +516,7 @@ body{
 }
 
 /* VIEWER */
+
 .viewer{
   display:none;
   position:fixed;
@@ -587,6 +589,7 @@ body{
 }
 
 /* MOBILE NAV */
+
 .bottom-nav{
   display:none;
 }
@@ -676,9 +679,11 @@ body{
 }
 
 @media(max-width:380px){
+
   .logo{
     font-size:23px;
   }
+
   .moments-grid{
     grid-template-columns:repeat(2,minmax(0,1fr));
   }
@@ -690,7 +695,6 @@ body{
 <body>
 
 <!-- TOPBAR -->
-
 <header class="topbar">
 
   <a href="index.html" class="logo">
@@ -706,13 +710,15 @@ body{
       placeholder="Search..."
     >
 
-    <button class="top-icon" id="notificationBtn" title="Notifications">
+    <!-- NOTIFICATION LINK BUTTON -->
+    <a href="notification.html" class="top-icon" id="notificationBtn" title="Notifications">
       <i data-lucide="bell"></i>
-    </button>
+    </a>
 
-    <button class="top-icon" id="connectBtn" title="Z-Connect">
+    <!-- Z-CONNECT LINK BUTTON -->
+    <a href="message.html" class="top-icon" id="connectBtn" title="Z-Connect">
       <i data-lucide="globe"></i>
-    </button>
+    </a>
 
   </div>
 
@@ -720,7 +726,6 @@ body{
 
 
 <!-- DESKTOP SIDEBAR -->
-
 <aside class="sidebar">
 
   <div class="menu-title">MENU</div>
@@ -737,6 +742,16 @@ body{
     <span class="nav-icon"><i data-lucide="circle-play"></i></span> Shorts
   </a>
 
+  <!-- Z-CONNECT LINK -->
+  <a href="message.html" class="nav-link">
+    <span class="nav-icon"><i data-lucide="globe"></i></span> Z-Connect
+  </a>
+
+  <!-- NOTIFICATIONS LINK -->
+  <a href="notification.html" class="nav-link">
+    <span class="nav-icon"><i data-lucide="bell"></i></span> Notifications
+  </a>
+
   <a href="profile.html" class="nav-link">
     <span class="nav-icon"><i data-lucide="user-round"></i></span> Profile
   </a>
@@ -745,76 +760,25 @@ body{
 
 
 <!-- MAIN -->
-
 <main class="main">
 
-  <!-- INSTAGRAM STYLE STORIES TRAY -->
-  <div class="stories-tray" id="storyList">
-    <!-- Own Story / Create Item -->
-    <div class="story-item" onclick="openCreate()">
-      <div class="story-ring own">
-        <div class="story-avatar-wrap" id="myStoryAvatar">
-          <span>Z</span>
-        </div>
-        <div class="add-badge">＋</div>
-      </div>
-      <div class="story-name">Your Story</div>
-    </div>
-  </div>
+  <!-- STORIES TRAY -->
+  <div class="stories-tray" id="storyList"></div>
 
+  <!-- RECENT MOMENTS -->
   <h2 class="section-heading">Recent Moments</h2>
-
-  <div class="moments-grid" id="momentsGrid">
-    <div class="empty">No Moments available. Create your first Moment!</div>
-  </div>
+  <div class="moments-grid" id="momentsGrid"></div>
 
 </main>
 
 
-<!-- NOTIFICATIONS PANEL -->
-<div class="notification-panel" id="notificationPanel"></div>
-
-<!-- TOAST -->
-<div class="toast" id="toast"></div>
-
-
-<!-- MOBILE BOTTOM NAV -->
-
-<nav class="bottom-nav">
-
-  <a href="index.html" class="bottom-link">
-    <i data-lucide="house"></i>
-    <span>Home</span>
-  </a>
-
-  <a href="moments.html" class="bottom-link active">
-    <i data-lucide="sparkles"></i>
-    <span>Moments</span>
-  </a>
-
-  <a href="zcam.html" class="bottom-link">
-    <i data-lucide="aperture"></i>
-    <span>ZCam</span>
-  </a>
-
-  <a href="shorts.html" class="bottom-link">
-    <i data-lucide="circle-play"></i>
-    <span>Shorts</span>
-  </a>
-
-  <a href="profile.html" class="bottom-link">
-    <i data-lucide="user-round"></i>
-    <span>Profile</span>
-  </a>
-
-</nav>
-
-
 <!-- CREATE MODAL / CAMERA -->
 <div class="modal" id="createModal">
+
   <div class="modal-content">
+
     <div class="modal-header">
-      <h2>Capture Moment</h2>
+      <h3 style="font-size:18px;font-weight:700;">Capture Moment</h3>
       <button class="close-btn" onclick="closeCreate()">✕</button>
     </div>
 
@@ -848,7 +812,6 @@ body{
     </div>
 
     <label class="editor-label">Adjustments</label>
-
     <div class="range-row">
       <span>Brightness</span>
       <input type="range" id="brightness" min="50" max="150" value="100">
@@ -871,13 +834,17 @@ body{
       <button class="action-btn" onclick="resetEditor()">Reset</button>
       <button class="primary-btn" onclick="publishMoment()">Share Moment</button>
     </div>
+
   </div>
+
 </div>
 
 
-<!-- MOMENT VIEWER -->
+<!-- VIEWER -->
 <div class="viewer" id="viewer">
+
   <div class="viewer-inner">
+
     <div class="progress-track">
       <div class="progress-fill" id="viewerProgress"></div>
     </div>
@@ -888,6 +855,7 @@ body{
     </div>
 
     <div id="viewerMedia"></div>
+
     <p class="viewer-caption" id="viewerCaption"></p>
 
     <div class="viewer-actions">
@@ -896,13 +864,46 @@ body{
       <button onclick="viewerShare()">↗ Share</button>
       <button onclick="nextMoment()">Next →</button>
     </div>
+
   </div>
+
 </div>
 
 
-<script>
-const STORAGE_KEY = "zcrushMoments";
+<!-- MOBILE BOTTOM NAV -->
+<nav class="bottom-nav">
 
+  <a href="index.html" class="bottom-link">
+    <i data-lucide="house"></i>
+    <span>Home</span>
+  </a>
+
+  <a href="moments.html" class="bottom-link active">
+    <i data-lucide="sparkles"></i>
+    <span>Moments</span>
+  </a>
+
+  <a href="zcam.html" class="bottom-link">
+    <i data-lucide="aperture"></i>
+    <span>ZCam</span>
+  </a>
+
+  <a href="shorts.html" class="bottom-link">
+    <i data-lucide="circle-play"></i>
+    <span>Shorts</span>
+  </a>
+
+  <a href="profile.html" class="bottom-link">
+    <i data-lucide="user-round"></i>
+    <span>Profile</span>
+  </a>
+
+</nav>
+
+
+<script>
+
+const STORAGE_KEY = "zcrushMoments";
 let moments = [];
 let capturedMediaData = "";
 let mediaType = "image";
@@ -921,10 +922,25 @@ function getUsername(){
   return localStorage.getItem("zcrushUserName") || "ZCrush User";
 }
 
+function updateNotificationCount(){
+  try{
+    const notifs = JSON.parse(localStorage.getItem("zcrushNotifications") || "[]");
+    const count = notifs.filter(n => !n.read).length;
+    const btn = $("notificationBtn");
+    if(!btn) return;
+    if(count > 0){
+      btn.innerHTML = `<i data-lucide="bell"></i><sup style="font-size:10px;color:#ff70aa;position:absolute;top:2px;right:2px;">${count}</sup>`;
+    }else{
+      btn.innerHTML = `<i data-lucide="bell"></i>`;
+    }
+    if(window.lucide) lucide.createIcons();
+  }catch(e){}
+}
+
 function setupUserProfileAvatar(){
   const name = getUsername();
   const photo = localStorage.getItem("zcrushProfilePhoto") || "";
-  const wrap = $("myStoryAvatar");
+  const wrap = $("myStoryAvatarDyn");
   if(wrap){
     wrap.innerHTML = photo
       ? `<img src="${photo}" alt="Profile">`
@@ -984,15 +1000,12 @@ function filterCSS(name){
 function updatePreview(){
   const preview = $("capturedPreview");
   if(preview){
-    preview.style.filter =
-      filterCSS(currentFilter) +
-      " brightness("+currentBrightness+"%)" +
-      " contrast("+currentContrast+"%)" +
-      " saturate("+currentSaturation+"%)";
+    preview.style.filter = filterCSS(currentFilter) + " brightness("+currentBrightness+"%)" + " contrast("+currentContrast+"%)" + " saturate("+currentSaturation+"%)";
   }
 }
 
 /* CAMERA FUNCTIONS */
+
 async function startCamera(){
   stopCamera();
   capturedMediaData = "";
@@ -1002,7 +1015,10 @@ async function startCamera(){
   $("retakeBtn").style.display = "none";
 
   try{
-    mediaStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" }, audio: false });
+    mediaStream = await navigator.mediaDevices.getUserMedia({
+      video: { facingMode: "user" },
+      audio: false
+    });
     $("cameraStream").srcObject = mediaStream;
   }catch(err){
     console.warn("Camera access denied or unavailable, use file upload instead.");
@@ -1019,16 +1035,13 @@ function stopCamera(){
 function takeSnapshot(){
   const video = $("cameraStream");
   const preview = $("capturedPreview");
-  
   const canvas = document.createElement("canvas");
   canvas.width = video.videoWidth || 640;
   canvas.height = video.videoHeight || 480;
   const ctx = canvas.getContext("2d");
   ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-
   capturedMediaData = canvas.toDataURL("image/jpeg", 0.8);
   mediaType = "image";
-
   stopCamera();
   video.style.display = "none";
   preview.src = capturedMediaData;
@@ -1039,6 +1052,7 @@ function takeSnapshot(){
 }
 
 /* FILE UPLOAD FALLBACK */
+
 $("mediaInput").addEventListener("change", async function(){
   const file = this.files[0];
   if(!file) return;
@@ -1053,7 +1067,6 @@ $("mediaInput").addEventListener("change", async function(){
   reader.onload = function(e){
     capturedMediaData = e.target.result;
     mediaType = file.type.startsWith("video/") ? "video" : "image";
-    
     $("cameraStream").style.display = "none";
     const preview = $("capturedPreview");
     preview.src = capturedMediaData;
@@ -1132,8 +1145,8 @@ async function publishMoment(){
       views: [],
       createdAt: Date.now()
     };
-    moments.unshift(moment);
 
+    moments.unshift(moment);
     if(!saveMoments()) return;
 
     capturedMediaData = "";
@@ -1147,10 +1160,7 @@ async function publishMoment(){
 }
 
 function momentStyle(moment){
-  return "filter:" + filterCSS(moment.filter) +
-    " brightness(" + moment.brightness + "%)" +
-    " contrast(" + moment.contrast + "%)" +
-    " saturate(" + moment.saturation + "%);";
+  return "filter:" + filterCSS(moment.filter) + " brightness(" + moment.brightness + "%)" + " contrast(" + moment.contrast + "%)" + " saturate(" + moment.saturation + "%);";
 }
 
 function renderMoments(){
@@ -1199,7 +1209,7 @@ function renderMoments(){
     const liked = moment.likes.includes(getUsername());
     gridHTML += `
       <article class="moment-card">
-        ${moment.type === "video" 
+        ${moment.type === "video"
           ? `<video src="${moment.media}" class="moment-media" style="${momentStyle(moment)}" muted playsinline onclick="openViewer('${moment.id}')"></video>`
           : `<img src="${moment.media}" class="moment-media" style="${momentStyle(moment)}" alt="Moment" onclick="openViewer('${moment.id}')">`
         }
@@ -1275,7 +1285,6 @@ function deleteMoment(id){
 function openViewer(id){
   const index = moments.findIndex(m => m.id === id);
   if(index < 0) return;
-
   currentMomentIndex = index;
   currentViewerId = id;
   const moment = moments[index];
@@ -1303,7 +1312,6 @@ function openViewer(id){
     media = document.createElement("img");
     media.src = moment.media;
   }
-
   media.className = "viewer-media";
   media.style.cssText = momentStyle(moment);
   area.appendChild(media);
@@ -1365,15 +1373,18 @@ function openSharedMoment(){
 }
 
 const deviceTheme = window.matchMedia("(prefers-color-scheme: dark)");
+
 function applyDeviceTheme(){
   document.body.classList.toggle("light", !deviceTheme.matches);
 }
+
 applyDeviceTheme();
 if(deviceTheme.addEventListener){
   deviceTheme.addEventListener("change", applyDeviceTheme);
 }
 
 loadMoments();
+updateNotificationCount();
 renderMoments();
 openSharedMoment();
 
@@ -1382,6 +1393,9 @@ setInterval(()=>{
   renderMoments();
 }, 60000);
 
+if(window.lucide) lucide.createIcons();
+
 </script>
+
 </body>
 </html>
