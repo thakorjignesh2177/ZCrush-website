@@ -63,7 +63,7 @@ body{
   transition:background .2s,color .2s;
 }
 
-/* TOPBAR - EXACT MATCH WITH HOME PAGE */
+/* TOPBAR */
 
 .topbar{
   height:70px;
@@ -116,6 +116,7 @@ body{
   display:flex;
   align-items:center;
   justify-content:center;
+  text-decoration:none;
 }
 
 .top-icon i{
@@ -156,6 +157,7 @@ body{
   color:var(--text);
   text-decoration:none;
   font-size:15px;
+  transition:all .2s ease;
 }
 
 .nav-link:hover,
@@ -188,6 +190,11 @@ body{
   font-weight:bold;
   cursor:pointer;
   margin-top:20px;
+  transition:opacity .2s;
+}
+
+.upload-side:hover{
+  opacity:0.9;
 }
 
 /* MAIN SHORTS AREA */
@@ -445,6 +452,8 @@ body{
   color:var(--text);
   border-radius:16px;
   padding:22px;
+  border:1px solid var(--border);
+  box-shadow:var(--shadow);
 }
 
 .modal-header{
@@ -497,6 +506,7 @@ body{
   background:var(--bg);
   color:var(--text);
   margin:8px 0 14px;
+  outline:none;
 }
 
 .editor-label{
@@ -597,37 +607,6 @@ body{
 .comment-user{
   font-weight:bold;
   margin-bottom:5px;
-}
-
-/* NOTIFICATIONS PANEL */
-.notification-panel{
-  display:none;
-  position:fixed;
-  top:76px;
-  right:15px;
-  width:min(350px,92vw);
-  max-height:65vh;
-  overflow-y:auto;
-  padding:16px;
-  background:var(--card);
-  color:var(--text);
-  border:1px solid var(--border);
-  border-radius:15px;
-  z-index:3000;
-  box-shadow:var(--shadow);
-}
-
-.notice-item{
-  padding:12px 4px;
-  border-bottom:1px solid var(--border);
-  font-size:14px;
-}
-
-.notice-time{
-  display:block;
-  color:var(--muted);
-  font-size:11px;
-  margin-top:5px;
 }
 
 /* TOAST */
@@ -754,12 +733,16 @@ body{
   </a>
   <div class="top-actions">
     <input type="search" id="searchInput" class="search-box" placeholder="Search...">
-    <button class="top-icon" id="notificationBtn" title="Notifications">
+
+    <!-- NOTIFICATION LINK BUTTON -->
+    <a href="notification.html" class="top-icon" id="notificationBtn" title="Notifications">
       <i data-lucide="bell"></i>
-    </button>
-    <button class="top-icon" id="connectBtn" title="Z-Connect">
+    </a>
+
+    <!-- Z-CONNECT LINK BUTTON -->
+    <a href="message.html" class="top-icon" id="connectBtn" title="Z-Connect">
       <i data-lucide="globe"></i>
-    </button>
+    </a>
   </div>
 </header>
 
@@ -774,6 +757,14 @@ body{
   </a>
   <a href="shorts.html" class="nav-link active">
     <span class="nav-icon"><i data-lucide="circle-play"></i></span> Shorts
+  </a>
+  <!-- Z-CONNECT SIDEBAR LINK -->
+  <a href="message.html" class="nav-link">
+    <span class="nav-icon"><i data-lucide="globe"></i></span> Z-Connect
+  </a>
+  <!-- NOTIFICATIONS SIDEBAR LINK -->
+  <a href="notification.html" class="nav-link">
+    <span class="nav-icon"><i data-lucide="bell"></i></span> Notifications
   </a>
   <a href="profile.html" class="nav-link">
     <span class="nav-icon"><i data-lucide="user-round"></i></span> Profile
@@ -793,9 +784,6 @@ body{
     </div>
   </div>
 </main>
-
-<!-- NOTIFICATIONS PANEL -->
-<div class="notification-panel" id="notificationPanel"></div>
 
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
@@ -961,6 +949,7 @@ function loadNotifications(){
 function updateNotificationCount(){
   const count = notifications.filter(n => !n.read).length;
   const btn = $("notificationBtn");
+  if(!btn) return;
   if(count > 0){
     btn.innerHTML = `<i data-lucide="bell"></i><sup style="font-size:10px;color:#ff70aa;position:absolute;top:2px;right:2px;">${count}</sup>`;
   }else{
@@ -968,45 +957,6 @@ function updateNotificationCount(){
   }
   if(window.lucide) lucide.createIcons();
 }
-
-function renderNotifications(){
-  const panel = $("notificationPanel");
-  panel.style.display = panel.style.display === "block" ? "none" : "block";
-  if(panel.style.display !== "block") return;
-
-  panel.innerHTML = `
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-      <strong>Notifications</strong>
-      <button class="follow-btn" id="markRead" style="border:0; background:var(--button); padding:6px 10px; border-radius:8px; cursor:pointer;">Mark all read</button>
-    </div>
-    ${
-      notifications.length
-      ? notifications.map(n => `
-        <div class="notice-item">
-          ${n.text}
-          <span class="notice-time">Just now</span>
-        </div>
-      `).join("")
-      : `<p style="color:var(--muted);">No notifications yet.</p>`
-    }
-  `;
-
-  const markRead = $("markRead");
-  if(markRead){
-    markRead.addEventListener("click", () => {
-      notifications = notifications.map(n => ({...n, read:true}));
-      saveList(NOTIFY_KEY, notifications);
-      updateNotificationCount();
-      renderNotifications();
-    });
-  }
-}
-
-$("notificationBtn").addEventListener("click", renderNotifications);
-
-$("connectBtn").addEventListener("click", () => {
-  showToast("Z-Connect is coming soon!");
-});
 
 /* FILTERS */
 function filterCSS(filter){
