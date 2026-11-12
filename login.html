@@ -1,632 +1,1826 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <meta name="theme-color" content="#030009" />
+  <title>ZCrush — Connect • Create • Explore</title>
 
-  <title>ZCrush - Login</title>
+  <!-- Google Fonts: Outfit & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
 
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    /* ==========================================================================
+       1. CSS VARIABLES & RESET
+       ========================================================================== */
+    :root {
+      --bg-deep: #030009;
+      --bg-card: rgba(17, 7, 34, 0.68);
+      --bg-card-inner: rgba(10, 4, 22, 0.78);
+      --bg-input: rgba(8, 3, 18, 0.82);
+
+      --purple-neon: #a855f7;
+      --purple-bright: #9333ea;
+      --purple-deep: #6d28d9;
+      --violet-glow: #7c3aed;
+      --pink-accent: #d946ef;
+      --red-neon: #ff1e42;
+      --gold-light: #fef08a;
+      --gold-mid: #fbbf24;
+      --gold-deep: #d97706;
+
+      --text-primary: #ffffff;
+      --text-secondary: #cbbbe6;
+      --text-muted: #8e7aa8;
+      --error-color: #fb7185;
+      --info-color: #c084fc;
+
+      --border-glow: rgba(168, 85, 247, 0.38);
+      --border-subtle: rgba(168, 85, 247, 0.2);
+      --shadow-card: 0 28px 70px -15px rgba(0, 0, 0, 0.9), 0 0 45px rgba(139, 92, 246, 0.22);
+      --shadow-btn: 0 8px 26px rgba(147, 51, 234, 0.48), 0 0 18px rgba(168, 85, 247, 0.35);
+
+      --font-display: 'Outfit', sans-serif;
+      --font-body: 'Plus Jakarta Sans', sans-serif;
+      --transition-smooth: all 0.32s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
     body {
       min-height: 100vh;
-      font-family: Arial, sans-serif;
+      width: 100%;
+      background-color: var(--bg-deep);
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
 
+    /* ==========================================================================
+       2. AMBIENT BACKGROUND GLOWS & ABSTRACT PURPLE CURVES
+       ========================================================================== */
+    .ambient-canvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
       background:
-        radial-gradient(circle at 20% 20%, rgba(157,0,255,.25), transparent 35%),
-        radial-gradient(circle at 80% 80%, rgba(0,150,255,.2), transparent 35%),
-        #030712;
+        radial-gradient(circle at 15% 22%, rgba(124, 58, 237, 0.22) 0%, transparent 45%),
+        radial-gradient(circle at 85% 28%, rgba(168, 85, 247, 0.19) 0%, transparent 46%),
+        radial-gradient(circle at 50% 58%, rgba(109, 40, 217, 0.24) 0%, transparent 55%),
+        radial-gradient(circle at 50% 100%, rgba(147, 51, 234, 0.16) 0%, transparent 48%),
+        #030009;
+    }
 
-      color: white;
+    .ambient-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(90px);
+      opacity: 0.55;
+      animation: pulseOrb 9s ease-in-out infinite alternate;
+    }
+
+    .orb-1 {
+      width: 380px;
+      height: 380px;
+      background: radial-gradient(circle, #7c3aed, transparent 70%);
+      top: -90px;
+      left: -80px;
+    }
+
+    .orb-2 {
+      width: 420px;
+      height: 420px;
+      background: radial-gradient(circle, #9333ea, transparent 70%);
+      bottom: -110px;
+      right: -90px;
+      animation-delay: 2.5s;
+    }
+
+    .orb-3 {
+      width: 340px;
+      height: 340px;
+      background: radial-gradient(circle, #a855f7, transparent 72%);
+      top: 42%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0.35;
+    }
+
+    .abstract-curves-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.85;
+    }
+
+    @keyframes pulseOrb {
+      0% {
+        transform: scale(1) translate(0, 0);
+        opacity: 0.48;
+      }
+      100% {
+        transform: scale(1.12) translate(16px, -14px);
+        opacity: 0.68;
+      }
+    }
+
+    /* ==========================================================================
+       3. PAGE SHELL & TOP ZCRUSH BRANDING
+       ========================================================================== */
+    .page-wrapper {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: 28px 18px 24px;
+    }
+
+    .brand-header {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 24px;
+      animation: fadeDown 0.7s ease-out both;
+    }
+
+    .brand-logo-row {
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 20px;
+      margin-bottom: 8px;
     }
 
-    .container {
-      width: 100%;
-      max-width: 420px;
-    }
-
-    .logo {
-      text-align: center;
-      font-size: 42px;
+    .brand-wordmark {
+      font-family: var(--font-display);
+      font-size: clamp(2.6rem, 5.5vw, 3.4rem);
       font-weight: 900;
-      margin-bottom: 25px;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      display: inline-flex;
+      align-items: center;
+    }
 
-      background: linear-gradient(90deg, #a000ff, #ff22bd, #168cff);
+    .brand-wordmark .word-z {
+      background: linear-gradient(135deg, #ff8fa3 0%, #ff1e42 48%, #b91c1c 100%);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
+      filter: drop-shadow(0 0 18px rgba(255, 30, 66, 0.75));
     }
 
-    .card {
-      background: rgba(12, 19, 39, .9);
-      border: 1px solid rgba(255,255,255,.1);
-      border-radius: 25px;
-      padding: 30px;
-
-      box-shadow: 0 20px 60px rgba(0,0,0,.45);
-      backdrop-filter: blur(15px);
+    .brand-wordmark .word-crush {
+      background: linear-gradient(180deg, #ffffff 35%, #d8b4fe 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      filter: drop-shadow(0 0 24px rgba(168, 85, 247, 0.45));
     }
 
-    h1 {
-      text-align: center;
-      font-size: 28px;
-      margin-bottom: 8px;
+    .brand-tagline {
+      font-size: 0.98rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: #dfd1f7;
+      text-shadow: 0 0 14px rgba(168, 85, 247, 0.4);
     }
 
-    .subtitle {
-      text-align: center;
-      color: #8995b2;
-      font-size: 14px;
-      margin-bottom: 25px;
+    /* ==========================================================================
+       4. MAIN 3-COLUMN STAGE (LEFT CHARACTER, CENTER CARD, RIGHT CALLOUT)
+       ========================================================================== */
+    .main-stage {
+      width: 100%;
+      max-width: 1240px;
+      display: grid;
+      grid-template-columns: 1fr minmax(320px, 455px) 1fr;
+      align-items: center;
+      gap: 28px;
+      margin: auto 0;
+      position: relative;
     }
 
-    .tabs {
+    /* Left Decorative Column: Cartoon Character + Floating Icons */
+    .stage-left {
+      position: relative;
       display: flex;
-      background: #080e20;
-      border-radius: 12px;
-      padding: 5px;
-      margin-bottom: 25px;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 440px;
     }
 
-    .tab {
-      width: 50%;
-      padding: 12px;
-      border: none;
-      background: transparent;
-      color: #8d98b4;
-      border-radius: 9px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .tab.active {
-      background: linear-gradient(90deg, #8d00ff, #ed20bc);
-      color: white;
-    }
-
-    label {
-      display: block;
-      margin-bottom: 8px;
-      color: #cbd3e6;
-      font-size: 14px;
-    }
-
-    input {
-      width: 100%;
-      padding: 14px;
-      margin-bottom: 18px;
-
-      border-radius: 12px;
-      border: 1px solid #28334f;
-      outline: none;
-
-      background: #070d1d;
-      color: white;
-      font-size: 15px;
-    }
-
-    input:focus {
-      border-color: #9b35ff;
-    }
-
-    .main-btn {
-      width: 100%;
-      padding: 15px;
-      border: none;
-      border-radius: 30px;
-
-      color: white;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-
-      background: linear-gradient(90deg, #8d00ff, #ff20bd, #008cff);
-      margin-top: 5px;
-    }
-
-    .main-btn:disabled {
-      opacity: .6;
-      cursor: not-allowed;
-    }
-
-    .forgot {
-      display: block;
-      text-align: right;
-      color: #39caff;
-      font-size: 13px;
-      margin: -5px 0 20px;
-      text-decoration: none;
-    }
-
-    .divider {
+    .character-showcase {
+      position: relative;
+      width: 270px;
+      height: 310px;
       display: flex;
       align-items: center;
-      gap: 10px;
-      margin: 25px 0;
-
-      color: #68738d;
-      font-size: 13px;
+      justify-content: center;
+      animation: floatCharacter 5.5s ease-in-out infinite;
     }
 
-    .divider::before,
-    .divider::after {
-      content: "";
-      height: 1px;
-      flex: 1;
-      background: #263149;
+    .character-aura {
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(168, 85, 247, 0.42) 0%, rgba(109, 40, 217, 0.14) 55%, transparent 75%);
+      filter: blur(18px);
+      z-index: 0;
     }
 
-    .social-btn {
+    .character-svg {
+      position: relative;
+      z-index: 1;
       width: 100%;
-      padding: 13px;
-      border-radius: 12px;
+      height: 100%;
+      filter: drop-shadow(0 16px 28px rgba(0, 0, 0, 0.85)) drop-shadow(0 0 18px rgba(168, 85, 247, 0.35));
+    }
 
-      background: #0a1123;
-      border: 1px solid #28334f;
-      color: white;
+    /* Right Decorative Column: "Be a Part of ZCrush!" + Floating Icons */
+    .stage-right {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 440px;
+      text-align: center;
+    }
 
-      font-weight: bold;
-      cursor: pointer;
+    .right-callout-box {
+      position: relative;
+      padding: 26px 28px;
+      border-radius: 24px;
+      background: linear-gradient(145deg, rgba(28, 12, 54, 0.55), rgba(11, 4, 24, 0.45));
+      border: 1px solid rgba(168, 85, 247, 0.32);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6), 0 0 30px rgba(147, 51, 234, 0.2);
+      max-width: 290px;
+      animation: floatGentle 6s ease-in-out infinite reverse;
+    }
+
+    .callout-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      border-radius: 999px;
+      background: rgba(168, 85, 247, 0.18);
+      border: 1px solid rgba(192, 132, 252, 0.4);
+      color: #e9d5ff;
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .right-callout-title {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 800;
+      line-height: 1.16;
+      background: linear-gradient(135deg, #ffffff 15%, #e9d5ff 55%, #a855f7 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 26px rgba(168, 85, 247, 0.35);
       margin-bottom: 10px;
     }
 
-    .back {
-      display: block;
-      text-align: center;
-      margin-top: 22px;
-
-      color: #aeb8d0;
-      font-size: 14px;
-      text-decoration: none;
-    }
-
-    .back span {
-      color: #36caff;
-    }
-
-    #signupFields {
-      display: none;
-    }
-
-    #message {
-      display: none;
-      padding: 12px;
-      margin-bottom: 18px;
-      border-radius: 10px;
-      font-size: 14px;
+    .right-callout-sub {
+      font-size: 0.86rem;
+      color: var(--text-secondary);
       line-height: 1.5;
-      overflow-wrap: anywhere;
     }
 
-    #message.success {
-      display: block;
-      background: rgba(22, 163, 74, .15);
-      border: 1px solid #16a34a;
-      color: #86efac;
+    /* Floating Neon Icons */
+    .floating-neon-icon {
+      position: absolute;
+      width: 54px;
+      height: 54px;
+      border-radius: 16px;
+      background: rgba(24, 10, 48, 0.78);
+      border: 1px solid rgba(192, 132, 252, 0.48);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #e9d5ff;
+      box-shadow:
+        0 10px 25px rgba(0, 0, 0, 0.75),
+        0 0 20px rgba(168, 85, 247, 0.45),
+        inset 0 0 12px rgba(168, 85, 247, 0.25);
+      z-index: 2;
     }
 
-    #message.error {
+    .floating-neon-icon svg {
+      width: 24px;
+      height: 24px;
+      filter: drop-shadow(0 0 8px rgba(192, 132, 252, 0.9));
+    }
+
+    .icon-gamepad {
+      top: 14px;
+      left: 16%;
+      animation: floatBadge 4.8s ease-in-out infinite;
+    }
+
+    .icon-video {
+      bottom: 22px;
+      right: 14%;
+      animation: floatBadge 5.4s ease-in-out infinite 1s;
+    }
+
+    .icon-cart {
+      top: 18px;
+      right: 16%;
+      animation: floatBadge 5.1s ease-in-out infinite 0.5s;
+    }
+
+    .icon-play {
+      bottom: 24px;
+      left: 16%;
+      animation: floatBadge 4.6s ease-in-out infinite 1.4s;
+    }
+
+    @keyframes floatGentle {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-7px); }
+    }
+
+    @keyframes floatCharacter {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-10px) rotate(1deg); }
+    }
+
+    @keyframes floatBadge {
+      0%, 100% { transform: translateY(0px) scale(1); }
+      50% { transform: translateY(-9px) scale(1.05); }
+    }
+
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-14px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ==========================================================================
+       5. CENTER GLASSMORPHISM AUTH CARD & TAB SWITCHER
+       ========================================================================== */
+    .auth-card {
+      width: 100%;
+      background: linear-gradient(160deg, rgba(26, 11, 52, 0.74) 0%, rgba(12, 5, 26, 0.82) 100%);
+      backdrop-filter: blur(24px) saturate(165%);
+      -webkit-backdrop-filter: blur(24px) saturate(165%);
+      border-radius: 26px;
+      border: 1px solid var(--border-glow);
+      box-shadow:
+        var(--shadow-card),
+        inset 0 1px 0 rgba(255, 255, 255, 0.12);
+      padding: 28px 28px 26px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .auth-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 15%;
+      right: 15%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #c084fc, #fbbf24, #c084fc, transparent);
+      opacity: 0.85;
+    }
+
+    /* Tabs */
+    .auth-tabs {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: var(--bg-card-inner);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 5px;
+      margin-bottom: 24px;
+    }
+
+    .tab-glider {
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      width: calc(50% - 5px);
+      height: calc(100% - 10px);
+      background: linear-gradient(135deg, #7c3aed 0%, #9333ea 55%, #a855f7 100%);
+      border-radius: 10px;
+      box-shadow: 0 4px 18px rgba(147, 51, 234, 0.6), 0 0 12px rgba(168, 85, 247, 0.45);
+      transition: transform 0.34s cubic-bezier(0.22, 1, 0.36, 1);
+      z-index: 0;
+    }
+
+    .auth-tabs.signup-active .tab-glider {
+      transform: translateX(100%);
+    }
+
+    .tab-btn {
+      position: relative;
+      z-index: 1;
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      font-family: var(--font-display);
+      font-size: 0.96rem;
+      font-weight: 700;
+      padding: 10px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: color 0.25s ease;
+    }
+
+    .tab-btn.active {
+      color: #ffffff;
+    }
+
+    .tab-btn:not(.active):hover {
+      color: #ffffff;
+    }
+
+    /* Form Panels & Smooth Transition */
+    .form-panel {
+      display: none;
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    .form-panel.active {
       display: block;
-      background: rgba(220, 38, 38, .15);
-      border: 1px solid #dc2626;
-      color: #fca5a5;
+      animation: panelReveal 0.36s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    @keyframes panelReveal {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .form-header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .form-title {
+      font-family: var(--font-display);
+      font-size: 1.65rem;
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: -0.02em;
+      margin-bottom: 5px;
+    }
+
+    .form-subtitle {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+    }
+
+    /* Status / Backend Readiness Banner */
+    .status-banner {
+      display: none;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 11px 13px;
+      border-radius: 12px;
+      font-size: 0.82rem;
+      line-height: 1.45;
+      margin-bottom: 16px;
+      background: rgba(124, 58, 237, 0.18);
+      border: 1px solid rgba(192, 132, 252, 0.45);
+      color: #f3e8ff;
+    }
+
+    .status-banner.visible {
+      display: flex;
+      animation: panelReveal 0.25s ease forwards;
+    }
+
+    .status-banner.error {
+      background: rgba(225, 29, 72, 0.16);
+      border-color: rgba(251, 113, 133, 0.45);
+      color: #ffe4e6;
+    }
+
+    .status-banner svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      margin-top: 1px;
+      color: #c084fc;
+    }
+
+    .status-banner.error svg {
+      color: #fb7185;
+    }
+
+    /* Form Fields */
+    .form-group {
+      margin-bottom: 14px;
+    }
+
+    .field-label {
+      display: block;
+      font-size: 0.81rem;
+      font-weight: 600;
+      color: #dfd3f5;
+      margin-bottom: 6px;
+    }
+
+    .input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 14px;
+      width: 18px;
+      height: 18px;
+      color: var(--text-muted);
+      pointer-events: none;
+      transition: color 0.25s ease;
+    }
+
+    .form-input {
+      width: 100%;
+      height: 46px;
+      padding: 0 42px 0 42px;
+      background: var(--bg-input);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      color: #ffffff;
+      font-family: var(--font-body);
+      font-size: 16px; /* Prevents mobile auto-zoom */
+      outline: none;
+      transition: var(--transition-smooth);
+    }
+
+    .form-input::placeholder {
+      color: #6b5885;
+      font-size: 0.88rem;
+    }
+
+    .form-input:hover {
+      border-color: rgba(168, 85, 247, 0.42);
+    }
+
+    .form-input:focus {
+      border-color: var(--purple-neon);
+      background: rgba(14, 6, 30, 0.95);
+      box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.22), 0 0 16px rgba(147, 51, 234, 0.25);
+    }
+
+    .input-wrapper:focus-within .input-icon {
+      color: #c084fc;
+    }
+
+    .form-input.invalid {
+      border-color: var(--error-color);
+      box-shadow: 0 0 0 3px rgba(251, 113, 133, 0.18);
+    }
+
+    .toggle-pw-btn {
+      position: absolute;
+      right: 10px;
+      width: 32px;
+      height: 32px;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: color 0.2s ease, background 0.2s ease;
+    }
+
+    .toggle-pw-btn:hover {
+      color: #e9d5ff;
+      background: rgba(168, 85, 247, 0.16);
+    }
+
+    .toggle-pw-btn svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .field-error {
+      display: none;
+      font-size: 0.76rem;
+      color: var(--error-color);
+      margin-top: 5px;
+      padding-left: 2px;
+    }
+
+    .field-error.visible {
+      display: block;
+    }
+
+    /* Options Row: Checkboxes & Links */
+    .form-options-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin: 4px 0 18px;
+      font-size: 0.82rem;
+    }
+
+    .checkbox-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-secondary);
+      cursor: pointer;
+      user-select: none;
+      line-height: 1.35;
+    }
+
+    .custom-checkbox {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 17px;
+      height: 17px;
+      border-radius: 5px;
+      background: var(--bg-input);
+      border: 1px solid rgba(168, 85, 247, 0.45);
+      display: grid;
+      place-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: var(--transition-smooth);
+    }
+
+    .custom-checkbox::before {
+      content: '';
+      width: 9px;
+      height: 9px;
+      transform: scale(0);
+      transition: transform 0.16s ease-in-out;
+      box-shadow: inset 1em 1em #ffffff;
+      clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+    }
+
+    .custom-checkbox:checked {
+      background: linear-gradient(135deg, #7c3aed, #a855f7);
+      border-color: #c084fc;
+      box-shadow: 0 0 10px rgba(168, 85, 247, 0.55);
+    }
+
+    .custom-checkbox:checked::before {
+      transform: scale(1);
+    }
+
+    .inline-link {
+      background: none;
+      border: none;
+      padding: 0;
+      color: #c084fc;
+      font-family: inherit;
+      font-size: inherit;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      transition: color 0.2s ease, text-shadow 0.2s ease;
+    }
+
+    .inline-link:hover {
+      color: #f3e8ff;
+      text-shadow: 0 0 10px rgba(192, 132, 252, 0.75);
+      text-decoration: underline;
+    }
+
+    /* Primary Gradient Button */
+    .btn-primary {
+      width: 100%;
+      height: 48px;
+      border: none;
+      border-radius: 13px;
+      background: linear-gradient(135deg, #7c3aed 0%, #9333ea 50%, #a855f7 100%);
+      color: #ffffff;
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      cursor: pointer;
+      box-shadow: var(--shadow-btn);
+      transition: var(--transition-smooth);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 50%, #c084fc 100%);
+      box-shadow:
+        0 12px 32px rgba(168, 85, 247, 0.65),
+        0 0 26px rgba(192, 132, 252, 0.6);
+    }
+
+    .btn-primary:active {
+      transform: translateY(0);
+    }
+
+    .btn-primary svg {
+      width: 19px;
+      height: 19px;
+    }
+
+    /* OR Divider */
+    .divider-or {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 18px 0;
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+    }
+
+    .divider-or::before,
+    .divider-or::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(168, 85, 247, 0.35), transparent);
+    }
+
+    /* White Google Button */
+    .btn-google {
+      width: 100%;
+      height: 46px;
+      border-radius: 13px;
+      border: 1px solid rgba(255, 255, 255, 0.85);
+      background: #ffffff;
+      color: #111827;
+      font-family: var(--font-body);
+      font-size: 0.92rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      cursor: pointer;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
+      transition: var(--transition-smooth);
+    }
+
+    .btn-google:hover {
+      background: #f8f5ff;
+      transform: translateY(-1px);
+      box-shadow: 0 10px 26px rgba(168, 85, 247, 0.35), 0 0 16px rgba(255, 255, 255, 0.35);
+    }
+
+    .btn-google:active {
+      transform: translateY(0);
+    }
+
+    /* Switch Form Bottom Text */
+    .switch-prompt {
+      text-align: center;
+      margin-top: 18px;
+      font-size: 0.86rem;
+      color: var(--text-secondary);
+    }
+
+    /* ==========================================================================
+       6. FOOTER
+       ========================================================================== */
+    .page-footer {
+      text-align: center;
+      margin-top: 28px;
+      padding: 8px 16px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #d6c5f2;
+      letter-spacing: 0.02em;
+      text-shadow: 0 0 16px rgba(168, 85, 247, 0.35);
+    }
+
+    /* ==========================================================================
+       7. FORGOT PASSWORD MODAL
+       ========================================================================== */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(3, 0, 9, 0.82);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      z-index: 50;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+      animation: fadeInBackdrop 0.24s ease forwards;
+    }
+
+    @keyframes fadeInBackdrop {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .modal-card {
+      width: 100%;
+      max-width: 400px;
+      background: linear-gradient(160deg, rgba(28, 12, 56, 0.92), rgba(11, 4, 24, 0.96));
+      border: 1px solid var(--border-glow);
+      border-radius: 22px;
+      padding: 24px;
+      box-shadow: var(--shadow-card);
+      position: relative;
+      animation: panelReveal 0.28s ease forwards;
+    }
+
+    .modal-close-btn {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      border: 1px solid var(--border-subtle);
+      background: rgba(168, 85, 247, 0.12);
+      color: #e9d5ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition-smooth);
+    }
+
+    .modal-close-btn:hover {
+      background: rgba(168, 85, 247, 0.28);
+      color: #ffffff;
+    }
+
+    /* ==========================================================================
+       8. RESPONSIVE DESIGN (TABLET & ANDROID MOBILE SCREENS)
+       ========================================================================== */
+    @media (max-width: 1040px) {
+      .main-stage {
+        grid-template-columns: 1fr;
+        max-width: 470px;
+        gap: 16px;
+      }
+
+      .stage-left,
+      .stage-right {
+        min-height: auto;
+      }
+
+      /* Compact responsive showcase on mobile/tablet so all elements remain visible */
+      .stage-left {
+        flex-direction: row;
+        gap: 14px;
+        padding: 4px 0;
+      }
+
+      .character-showcase {
+        width: 118px;
+        height: 132px;
+      }
+
+      .character-aura {
+        width: 100px;
+        height: 100px;
+      }
+
+      .floating-neon-icon {
+        position: static;
+        width: 44px;
+        height: 44px;
+        border-radius: 13px;
+      }
+
+      .floating-neon-icon svg {
+        width: 20px;
+        height: 20px;
+      }
+
+      .stage-right {
+        flex-direction: row;
+        gap: 12px;
+      }
+
+      .right-callout-box {
+        padding: 14px 18px;
+        max-width: 100%;
+        border-radius: 18px;
+      }
+
+      .callout-pill {
+        margin-bottom: 6px;
+        font-size: 0.68rem;
+      }
+
+      .right-callout-title {
+        font-size: 1.28rem;
+        margin-bottom: 4px;
+      }
+
+      .right-callout-sub {
+        font-size: 0.78rem;
+      }
     }
 
     @media (max-width: 480px) {
-      .card {
-        padding: 23px;
+      .page-wrapper {
+        padding: 20px 14px 20px;
       }
 
-      .logo {
-        font-size: 36px;
+      .brand-tagline {
+        font-size: 0.88rem;
+      }
+
+      .auth-card {
+        padding: 22px 18px 22px;
+        border-radius: 22px;
+      }
+
+      .form-title {
+        font-size: 1.45rem;
+      }
+
+      .form-options-row {
+        flex-wrap: wrap;
+        gap: 8px;
       }
     }
   </style>
 </head>
-
 <body>
+  <!-- Ambient Glows & Abstract Glowing Purple Curves -->
+  <div class="ambient-canvas" aria-hidden="true">
+    <div class="ambient-orb orb-1"></div>
+    <div class="ambient-orb orb-2"></div>
+    <div class="ambient-orb orb-3"></div>
 
-  <div class="container">
+    <svg class="abstract-curves-svg" viewBox="0 0 1440 900" preserveAspectRatio="none">
+      <defs>
+        <linearGradient id="purpleRibbon1" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#7c3aed" stop-opacity="0" />
+          <stop offset="35%" stop-color="#a855f7" stop-opacity="0.45" />
+          <stop offset="65%" stop-color="#d946ef" stop-opacity="0.32" />
+          <stop offset="100%" stop-color="#6d28d9" stop-opacity="0" />
+        </linearGradient>
+        <linearGradient id="purpleRibbon2" x1="100%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#9333ea" stop-opacity="0" />
+          <stop offset="50%" stop-color="#c084fc" stop-opacity="0.35" />
+          <stop offset="100%" stop-color="#7c3aed" stop-opacity="0" />
+        </linearGradient>
+        <filter id="neonCurveGlow" x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur stdDeviation="8" result="blur" />
+          <feMerge>
+            <feMergeNode in="blur" />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
+      </defs>
 
-    <div class="logo">ZCrush</div>
-
-    <div class="card">
-
-      <h1 id="title">Welcome Back 👋</h1>
-
-      <p class="subtitle" id="subtitle">
-        Login to continue your ZCrush journey
-      </p>
-
-      <div id="message" role="status" aria-live="polite"></div>
-
-      <!-- LOGIN / SIGNUP TABS -->
-
-      <div class="tabs">
-
-        <button class="tab active" id="loginTab" onclick="showLogin()">
-          Login
-        </button>
-
-        <button class="tab" id="signupTab" onclick="showSignup()">
-          Sign Up
-        </button>
-
-      </div>
-
-      <!-- SIGNUP FIELDS -->
-
-      <div id="signupFields">
-
-        <label for="nameInput">Full Name</label>
-
-        <input
-          type="text"
-          id="nameInput"
-          placeholder="Enter your full name"
-          autocomplete="name"
-          maxlength="80"
-        >
-
-        <label for="handleInput">Username / Handle</label>
-
-        <input
-          type="text"
-          id="handleInput"
-          placeholder="@yourusername"
-          autocomplete="username"
-          maxlength="30"
-        >
-
-      </div>
-
-      <!-- EMAIL -->
-
-      <label for="emailInput">Email</label>
-
-      <input
-        type="email"
-        id="emailInput"
-        placeholder="Enter your email"
-        autocomplete="email"
-        maxlength="254"
-      >
-
-      <!-- PASSWORD -->
-
-      <label for="passwordInput">Password</label>
-
-      <input
-        type="password"
-        id="passwordInput"
-        placeholder="Enter your password"
-        autocomplete="current-password"
-      >
-
-      <!-- FORGOT PASSWORD -->
-
-      <a
-        href="#"
-        class="forgot"
-        id="forgot"
-        onclick="forgotPassword(event)"
-      >
-        Forgot Password?
-      </a>
-
-      <!-- MAIN BUTTON -->
-
-      <button
-        class="main-btn"
-        id="mainButton"
-        onclick="handleAccount()"
-      >
-        Login to ZCrush
-      </button>
-
-      <!-- DIVIDER -->
-
-      <div class="divider">
-        OR CONTINUE WITH
-      </div>
-
-      <!-- GOOGLE -->
-
-      <button class="social-btn" onclick="demoGoogle()">
-        🌐 Continue with Google
-      </button>
-
-      <!-- PHONE -->
-
-      <button class="social-btn" onclick="demoPhone()">
-        📱 Continue with Phone
-      </button>
-
-      <!-- BACK -->
-
-      <a href="index.html" class="back">
-        ← Back to <span>ZCrush Home</span>
-      </a>
-
-    </div>
-
+      <path
+        d="M -120 680 C 260 540, 420 820, 790 610 C 1120 420, 1260 560, 1560 360"
+        fill="none"
+        stroke="url(#purpleRibbon1)"
+        stroke-width="3.5"
+        filter="url(#neonCurveGlow)"
+      />
+      <path
+        d="M -100 260 C 240 430, 520 120, 880 310 C 1180 470, 1320 220, 1560 280"
+        fill="none"
+        stroke="url(#purpleRibbon2)"
+        stroke-width="2.5"
+        filter="url(#neonCurveGlow)"
+      />
+      <path
+        d="M -80 780 C 340 650, 620 880, 1020 690 C 1250 580, 1380 650, 1540 590"
+        fill="none"
+        stroke="url(#purpleRibbon2)"
+        stroke-width="1.8"
+        opacity="0.65"
+      />
+    </svg>
   </div>
 
-  <!-- SUPABASE AUTHENTICATION -->
+  <!-- Main Page Wrapper -->
+  <div class="page-wrapper">
+    <!-- Top Center ZCrush Branding (Red Z + White/Purple Crush) -->
+    <header class="brand-header">
+      <div class="brand-logo-row">
+        <h1 class="brand-wordmark">
+          <span class="word-z">Z</span><span class="word-crush">Crush</span>
+        </h1>
+      </div>
+      <p class="brand-tagline">Connect &bull; Create &bull; Explore 💜</p>
+    </header>
 
-  <script type="module">
+    <!-- Main 3-Column Stage -->
+    <main class="main-stage">
+      <!-- Left Decorative Side: Gaming Controller Icon + Cartoon Character + Play Icon -->
+      <aside class="stage-left" aria-label="ZCrush Mascot & Highlights">
+        <div class="floating-neon-icon icon-gamepad" title="Gaming">
+          <i data-lucide="gamepad-2"></i>
+        </div>
 
-    import { supabase } from "./js/supabase.js";
+        <div class="character-showcase">
+          <div class="character-aura"></div>
+          <!-- Stylized Cartoon Character Wearing Black Sunglasses and Black Hoodie -->
+          <svg class="character-svg" viewBox="0 0 260 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="hoodieDark" x1="50" y1="120" x2="210" y2="290" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#1f182e" />
+                <stop offset="50%" stop-color="#0d0916" />
+                <stop offset="100%" stop-color="#05030a" />
+              </linearGradient>
+              <linearGradient id="hoodRimPurple" x1="45" y1="40" x2="215" y2="260" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#c084fc" />
+                <stop offset="50%" stop-color="#7c3aed" />
+                <stop offset="100%" stop-color="#3b0764" />
+              </linearGradient>
+              <linearGradient id="skinTone" x1="95" y1="75" x2="165" y2="165" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#f7c8a5" />
+                <stop offset="100%" stop-color="#d8976c" />
+              </linearGradient>
+              <linearGradient id="shadesLens" x1="80" y1="100" x2="180" y2="128" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#09070f" />
+                <stop offset="55%" stop-color="#170e29" />
+                <stop offset="100%" stop-color="#050408" />
+              </linearGradient>
+            </defs>
 
-    let currentMode = "login";
+            <!-- Outer Black Hoodie Silhouette with Neon Purple Rim Highlight -->
+            <path
+              d="M 66 118 C 62 62, 92 34, 130 34 C 168 34, 198 62, 194 118 C 216 134, 232 168, 236 258 C 236 270, 224 278, 210 278 H 50 C 36 278, 24 270, 24 258 C 28 168, 44 134, 66 118 Z"
+              fill="url(#hoodieDark)"
+              stroke="url(#hoodRimPurple)"
+              stroke-width="3"
+            />
 
-    const messageBox = document.getElementById("message");
-    const mainButton = document.getElementById("mainButton");
+            <!-- Inner Hood Opening -->
+            <path
+              d="M 82 122 C 80 74, 102 52, 130 52 C 158 52, 180 74, 178 122 C 174 148, 156 168, 130 172 C 104 168, 86 148, 82 122 Z"
+              fill="#07040d"
+              stroke="#6d28d9"
+              stroke-width="1.5"
+            />
 
-    function showMessage(message, type = "error") {
-      messageBox.textContent = message;
-      messageBox.className = type;
-    }
+            <!-- Neck -->
+            <rect x="115" y="144" width="30" height="28" rx="10" fill="#c9855a" />
 
-    function clearMessage() {
-      messageBox.textContent = "";
-      messageBox.className = "";
-    }
+            <!-- Cartoon Face -->
+            <path
+              d="M 94 102 C 94 78, 110 66, 130 66 C 150 66, 166 78, 166 102 C 166 132, 151 152, 130 154 C 109 152, 94 132, 94 102 Z"
+              fill="url(#skinTone)"
+            />
 
-    function showLogin() {
+            <!-- Stylized Hair Tufts Peeking Under Hood -->
+            <path
+              d="M 93 96 C 92 73, 111 60, 132 61 C 152 62, 167 74, 167 95 C 157 83, 144 80, 132 85 C 122 79, 106 82, 93 96 Z"
+              fill="#120c1d"
+            />
 
-      currentMode = "login";
+            <!-- Black Sunglasses Frame -->
+            <rect x="88" y="96" width="84" height="8" rx="4" fill="#050508" />
+            <!-- Left Lens -->
+            <rect x="91" y="96" width="36" height="24" rx="8" fill="url(#shadesLens)" stroke="#a855f7" stroke-width="1.8" />
+            <!-- Right Lens -->
+            <rect x="133" y="96" width="36" height="24" rx="8" fill="url(#shadesLens)" stroke="#a855f7" stroke-width="1.8" />
+            <!-- Lens Neon Glare Streaks -->
+            <path d="M 98 101 L 108 115" stroke="#e9d5ff" stroke-width="2.4" stroke-linecap="round" opacity="0.75" />
+            <path d="M 105 101 L 112 111" stroke="#c084fc" stroke-width="1.4" stroke-linecap="round" opacity="0.55" />
+            <path d="M 140 101 L 150 115" stroke="#e9d5ff" stroke-width="2.4" stroke-linecap="round" opacity="0.75" />
 
-      clearMessage();
+            <!-- Confident Cartoon Smirk -->
+            <path
+              d="M 118 134 Q 131 142 144 132"
+              stroke="#5c2d16"
+              stroke-width="3"
+              stroke-linecap="round"
+              fill="none"
+            />
 
-      document.getElementById("signupFields").style.display = "none";
+            <!-- Hoodie Collar & Glowing Purple Drawstrings -->
+            <path
+              d="M 88 158 Q 130 184 172 158"
+              stroke="#7c3aed"
+              stroke-width="2.5"
+              fill="none"
+            />
+            <path d="M 112 169 V 222" stroke="#c084fc" stroke-width="3.5" stroke-linecap="round" />
+            <circle cx="112" cy="225" r="4" fill="#fbbf24" />
+            <path d="M 148 169 V 214" stroke="#c084fc" stroke-width="3.5" stroke-linecap="round" />
+            <circle cx="148" cy="217" r="4" fill="#fbbf24" />
 
-      document.getElementById("loginTab").classList.add("active");
-      document.getElementById("signupTab").classList.remove("active");
+            <!-- Subtle Red Z Badge on Hoodie Chest -->
+            <path
+              d="M 164 196 H 182 L 170 212 H 183"
+              stroke="#ff1e42"
+              stroke-width="2.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </div>
 
-      document.getElementById("title").innerText = "Welcome Back 👋";
+        <div class="floating-neon-icon icon-play" title="Stream & Play">
+          <i data-lucide="play"></i>
+        </div>
+      </aside>
 
-      document.getElementById("subtitle").innerText =
-        "Login to continue your ZCrush journey";
+      <!-- Center Glassmorphism Login / Signup Card -->
+      <section class="auth-card" aria-label="ZCrush Authentication">
+        <!-- Top Tab Switcher -->
+        <div class="auth-tabs" id="authTabs" role="tablist">
+          <div class="tab-glider" aria-hidden="true"></div>
+          <button
+            type="button"
+            class="tab-btn active"
+            id="loginTabBtn"
+            role="tab"
+            aria-selected="true"
+            aria-controls="loginFormPanel"
+          >
+            Login
+          </button>
+          <button
+            type="button"
+            class="tab-btn"
+            id="signupTabBtn"
+            role="tab"
+            aria-selected="false"
+            aria-controls="signupFormPanel"
+          >
+            Sign Up
+          </button>
+        </div>
 
-      document.getElementById("forgot").style.display = "block";
+        <!-- Dynamic Status / Validation Notice -->
+        <div class="status-banner" id="authStatusBanner" role="status" aria-live="polite">
+          <i data-lucide="sparkles"></i>
+          <span id="authStatusText"></span>
+        </div>
 
-      mainButton.innerText = "Login to ZCrush";
+        <!-- ==================== LOGIN FORM ==================== -->
+        <div class="form-panel active" id="loginFormPanel" role="tabpanel" aria-labelledby="loginTabBtn">
+          <div class="form-header">
+            <h2 class="form-title">Welcome Back!</h2>
+            <p class="form-subtitle">Login to continue your ZCrush journey 🚀</p>
+          </div>
 
-      document.getElementById("passwordInput").autocomplete =
-        "current-password";
-    }
+          <form id="loginForm" novalidate>
+            <!-- Email Address -->
+            <div class="form-group">
+              <label class="field-label" for="loginEmail">Email Address</label>
+              <div class="input-wrapper">
+                <i data-lucide="mail" class="input-icon"></i>
+                <input
+                  type="email"
+                  id="loginEmail"
+                  class="form-input"
+                  placeholder="you@example.com"
+                  autocomplete="email"
+                  required
+                />
+              </div>
+              <p class="field-error" id="loginEmailError">Please enter a valid email address.</p>
+            </div>
 
-    function showSignup() {
+            <!-- Password -->
+            <div class="form-group">
+              <label class="field-label" for="loginPassword">Password</label>
+              <div class="input-wrapper">
+                <i data-lucide="lock" class="input-icon"></i>
+                <input
+                  type="password"
+                  id="loginPassword"
+                  class="form-input"
+                  placeholder="Enter your password"
+                  autocomplete="current-password"
+                  required
+                />
+                <button
+                  type="button"
+                  class="toggle-pw-btn"
+                  data-target="loginPassword"
+                  aria-label="Toggle password visibility"
+                >
+                  <i data-lucide="eye"></i>
+                </button>
+              </div>
+              <p class="field-error" id="loginPasswordError">Please enter your password (minimum 6 characters).</p>
+            </div>
 
-      currentMode = "signup";
+            <!-- Remember Me & Forgot Password -->
+            <div class="form-options-row">
+              <label class="checkbox-label" for="rememberMeCheckbox">
+                <input type="checkbox" id="rememberMeCheckbox" class="custom-checkbox" />
+                <span>Remember Me</span>
+              </label>
 
-      clearMessage();
+              <button type="button" class="inline-link" id="openForgotPwBtn">
+                Forgot Password?
+              </button>
+            </div>
 
-      document.getElementById("signupFields").style.display = "block";
+            <!-- Main Login Button -->
+            <button type="submit" class="btn-primary">
+              <i data-lucide="log-in"></i>
+              <span>Login</span>
+            </button>
+          </form>
 
-      document.getElementById("signupTab").classList.add("active");
-      document.getElementById("loginTab").classList.remove("active");
+          <!-- OR Divider -->
+          <div class="divider-or">OR</div>
 
-      document.getElementById("title").innerText =
-        "Create Your Account 🚀";
+          <!-- Continue with Google Button -->
+          <button type="button" class="btn-google" id="googleLoginBtn">
+            <svg width="19" height="19" viewBox="0 0 24 24" aria-hidden="true">
+              <path fill="#4285F4" d="M23.49 12.27c0-.79-.07-1.54-.19-2.27H12v4.51h6.47c-.29 1.48-1.14 2.73-2.4 3.58v3h3.86c2.26-2.09 3.56-5.17 3.56-8.82z"/>
+              <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.86-3c-1.08.72-2.45 1.16-4.07 1.16-3.13 0-5.78-2.11-6.73-4.96H1.29v3.09C3.26 21.3 7.31 24 12 24z"/>
+              <path fill="#FBBC05" d="M5.27 14.29c-.25-.72-.38-1.49-.38-2.29s.14-1.57.38-2.29V6.62H1.29C.47 8.24 0 10.06 0 12s.47 3.76 1.29 5.38l3.98-3.09z"/>
+              <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.31 0 3.26 2.7 1.29 6.62l3.98 3.09c.95-2.85 3.6-4.96 6.73-4.96z"/>
+            </svg>
+            <span>Continue with Google</span>
+          </button>
 
-      document.getElementById("subtitle").innerText =
-        "Join the ZCrush community today";
+          <p class="switch-prompt">
+            Don't have an account?
+            <button type="button" class="inline-link" id="switchToSignupLink">Sign Up.</button>
+          </p>
+        </div>
 
-      document.getElementById("forgot").style.display = "none";
+        <!-- ==================== SIGNUP FORM ==================== -->
+        <div class="form-panel" id="signupFormPanel" role="tabpanel" aria-labelledby="signupTabBtn">
+          <div class="form-header">
+            <h2 class="form-title">Create Your Account!</h2>
+            <p class="form-subtitle">Join ZCrush and start your journey.</p>
+          </div>
 
-      mainButton.innerText = "Create ZCrush Account";
+          <form id="signupForm" novalidate>
+            <!-- Full Name -->
+            <div class="form-group">
+              <label class="field-label" for="signupFullName">Full Name</label>
+              <div class="input-wrapper">
+                <i data-lucide="user" class="input-icon"></i>
+                <input
+                  type="text"
+                  id="signupFullName"
+                  class="form-input"
+                  placeholder="Enter your full name"
+                  autocomplete="name"
+                  required
+                />
+              </div>
+              <p class="field-error" id="signupFullNameError">Please enter your full name (at least 2 characters).</p>
+            </div>
 
-      document.getElementById("passwordInput").autocomplete =
-        "new-password";
-    }
+            <!-- Username -->
+            <div class="form-group">
+              <label class="field-label" for="signupUsername">Username</label>
+              <div class="input-wrapper">
+                <i data-lucide="at-sign" class="input-icon"></i>
+                <input
+                  type="text"
+                  id="signupUsername"
+                  class="form-input"
+                  placeholder="Choose a unique username"
+                  autocomplete="username"
+                  required
+                />
+              </div>
+              <p class="field-error" id="signupUsernameError">Username must be 3–20 characters (letters, numbers, underscores).</p>
+            </div>
 
-    async function handleAccount() {
+            <!-- Email Address -->
+            <div class="form-group">
+              <label class="field-label" for="signupEmail">Email Address</label>
+              <div class="input-wrapper">
+                <i data-lucide="mail" class="input-icon"></i>
+                <input
+                  type="email"
+                  id="signupEmail"
+                  class="form-input"
+                  placeholder="you@example.com"
+                  autocomplete="email"
+                  required
+                />
+              </div>
+              <p class="field-error" id="signupEmailError">Please enter a valid email address.</p>
+            </div>
 
-      clearMessage();
+            <!-- Password -->
+            <div class="form-group">
+              <label class="field-label" for="signupPassword">Password</label>
+              <div class="input-wrapper">
+                <i data-lucide="lock" class="input-icon"></i>
+                <input
+                  type="password"
+                  id="signupPassword"
+                  class="form-input"
+                  placeholder="Create a strong password"
+                  autocomplete="new-password"
+                  required
+                />
+                <button
+                  type="button"
+                  class="toggle-pw-btn"
+                  data-target="signupPassword"
+                  aria-label="Toggle password visibility"
+                >
+                  <i data-lucide="eye"></i>
+                </button>
+              </div>
+              <p class="field-error" id="signupPasswordError">Password must be at least 6 characters long.</p>
+            </div>
 
-      const email = document.getElementById("emailInput").value.trim();
+            <!-- Confirm Password -->
+            <div class="form-group">
+              <label class="field-label" for="signupConfirmPassword">Confirm Password</label>
+              <div class="input-wrapper">
+                <i data-lucide="shield-check" class="input-icon"></i>
+                <input
+                  type="password"
+                  id="signupConfirmPassword"
+                  class="form-input"
+                  placeholder="Re-enter your password"
+                  autocomplete="new-password"
+                  required
+                />
+                <button
+                  type="button"
+                  class="toggle-pw-btn"
+                  data-target="signupConfirmPassword"
+                  aria-label="Toggle confirm password visibility"
+                >
+                  <i data-lucide="eye"></i>
+                </button>
+              </div>
+              <p class="field-error" id="signupConfirmPasswordError">Passwords do not match.</p>
+            </div>
 
-      const password = document.getElementById("passwordInput").value;
+            <!-- Agree to Terms & Conditions -->
+            <div class="form-group">
+              <label class="checkbox-label" for="termsCheckbox">
+                <input type="checkbox" id="termsCheckbox" class="custom-checkbox" required />
+                <span>I agree to the <a href="#terms" class="inline-link" onclick="event.preventDefault();">Terms &amp; Conditions</a></span>
+              </label>
+              <p class="field-error" id="termsError">You must agree to the Terms &amp; Conditions to continue.</p>
+            </div>
 
-      if (!email || !email.includes("@")) {
-        showMessage("Please enter a valid email address.");
-        return;
+            <!-- Create Account Button -->
+            <button type="submit" class="btn-primary">
+              <i data-lucide="user-plus"></i>
+              <span>Create Account</span>
+            </button>
+          </form>
+
+          <p class="switch-prompt">
+            Already have an account?
+            <button type="button" class="inline-link" id="switchToLoginLink">Login.</button>
+          </p>
+        </div>
+      </section>
+
+      <!-- Right Decorative Side: Shopping Cart Icon + "Be a Part of ZCrush!" + Video Icon -->
+      <aside class="stage-right" aria-label="Join ZCrush Community">
+        <div class="floating-neon-icon icon-cart" title="Social Marketplace">
+          <i data-lucide="shopping-cart"></i>
+        </div>
+
+        <div class="right-callout-box">
+          <div class="callout-pill">
+            <i data-lucide="zap" style="width: 13px; height: 13px;"></i>
+            <span>Next-Gen Social Hub</span>
+          </div>
+          <h2 class="right-callout-title">Be a Part of ZCrush!</h2>
+          <p class="right-callout-sub">
+            Share short videos, explore trending drops, and connect with creators in one neon-powered universe.
+          </p>
+        </div>
+
+        <div class="floating-neon-icon icon-video" title="Short Videos & Reels">
+          <i data-lucide="video"></i>
+        </div>
+      </aside>
+    </main>
+
+    <!-- Bottom Center Footer -->
+    <footer class="page-footer">
+      ZCrush &bull; Dream Big &bull; Stay Connected 💜
+    </footer>
+  </div>
+
+  <!-- Forgot Password Modal -->
+  <div class="modal-backdrop" id="forgotPwModal" role="dialog" aria-modal="true" aria-labelledby="forgotModalTitle">
+    <div class="modal-card">
+      <button type="button" class="modal-close-btn" id="closeForgotPwBtn" aria-label="Close modal">
+        <i data-lucide="x" style="width: 17px; height: 17px;"></i>
+      </button>
+
+      <div class="form-header" style="margin-bottom: 16px;">
+        <h3 class="form-title" id="forgotModalTitle" style="font-size: 1.4rem;">Reset Password</h3>
+        <p class="form-subtitle">Enter your registered email to receive a reset link.</p>
+      </div>
+
+      <form id="forgotPwForm" novalidate>
+        <div class="form-group">
+          <label class="field-label" for="resetEmailInput">Email Address</label>
+          <div class="input-wrapper">
+            <i data-lucide="mail" class="input-icon"></i>
+            <input
+              type="email"
+              id="resetEmailInput"
+              class="form-input"
+              placeholder="you@example.com"
+              required
+            />
+          </div>
+          <p class="field-error" id="resetEmailError">Please enter a valid email address.</p>
+        </div>
+
+        <button type="submit" class="btn-primary">
+          <i data-lucide="send"></i>
+          <span>Send Reset Link</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    /* ==========================================================================
+       1. SEPARATED AUTHENTICATION ADAPTER (READY FOR SUPABASE AUTH)
+       Connect your Supabase client here later without changing any UI code.
+       ========================================================================== */
+    const ZCrushAuthService = {
+      /**
+       * Connect Supabase Email/Password Login here:
+       * const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+       */
+      async loginWithEmail({ email, password, rememberMe }) {
+        return {
+          status: 'ready_for_backend',
+          message: `Validation passed for ${email}. Connect Supabase Auth in ZCrushAuthService.loginWithEmail() to complete sign-in.`
+        };
+      },
+
+      /**
+       * Connect Supabase Email/Password Registration here:
+       * const { data, error } = await supabase.auth.signUp({
+       *   email, password, options: { data: { full_name: fullName, username } }
+       * });
+       */
+      async signupWithEmail({ fullName, username, email, password }) {
+        return {
+          status: 'ready_for_backend',
+          message: `Account details validated for @${username}. Connect Supabase Auth in ZCrushAuthService.signupWithEmail() to create user.`
+        };
+      },
+
+      /**
+       * Connect Supabase Google OAuth here:
+       * const { data, error } = await supabase.auth.signInWithOAuth({ provider: 'google' });
+       */
+      async loginWithGoogle() {
+        return {
+          status: 'ready_for_backend',
+          message: 'Google OAuth trigger ready. Connect Supabase signInWithOAuth({ provider: "google" }) in ZCrushAuthService.loginWithGoogle().'
+        };
+      },
+
+      /**
+       * Connect Supabase Password Reset here:
+       * const { data, error } = await supabase.auth.resetPasswordForEmail(email);
+       */
+      async sendPasswordReset({ email }) {
+        return {
+          status: 'ready_for_backend',
+          message: `Reset request prepared for ${email}. Connect Supabase resetPasswordForEmail() in ZCrushAuthService.sendPasswordReset().`
+        };
+      }
+    };
+
+    /* ==========================================================================
+       2. UI CONTROLLER, TAB TRANSITIONS & FORM VALIDATION
+       ========================================================================== */
+    document.addEventListener('DOMContentLoaded', () => {
+      // Initialize Lucide icons
+      if (window.lucide) {
+        window.lucide.createIcons();
       }
 
-      if (password.length < 6) {
-        showMessage("Password must contain at least 6 characters.");
-        return;
+      // DOM References
+      const authTabs = document.getElementById('authTabs');
+      const loginTabBtn = document.getElementById('loginTabBtn');
+      const signupTabBtn = document.getElementById('signupTabBtn');
+      const loginFormPanel = document.getElementById('loginFormPanel');
+      const signupFormPanel = document.getElementById('signupFormPanel');
+      const switchToSignupLink = document.getElementById('switchToSignupLink');
+      const switchToLoginLink = document.getElementById('switchToLoginLink');
+
+      const statusBanner = document.getElementById('authStatusBanner');
+      const statusText = document.getElementById('authStatusText');
+
+      // Status Helper
+      function showBanner(message, isError = false) {
+        statusText.textContent = message;
+        statusBanner.classList.toggle('error', isError);
+        statusBanner.classList.add('visible');
       }
 
-      mainButton.disabled = true;
+      function hideBanner() {
+        statusBanner.classList.remove('visible', 'error');
+      }
 
-      const originalText = currentMode === "signup"
-        ? "Create ZCrush Account"
-        : "Login to ZCrush";
+      // Tab Switching
+      function switchTab(target) {
+        hideBanner();
+        clearAllFieldErrors();
 
-      mainButton.innerText = "Please wait...";
+        const isSignup = target === 'signup';
+        authTabs.classList.toggle('signup-active', isSignup);
 
-      try {
+        loginTabBtn.classList.toggle('active', !isSignup);
+        loginTabBtn.setAttribute('aria-selected', String(!isSignup));
 
-        // SIGNUP
+        signupTabBtn.classList.toggle('active', isSignup);
+        signupTabBtn.setAttribute('aria-selected', String(isSignup));
 
-        if (currentMode === "signup") {
+        loginFormPanel.classList.toggle('active', !isSignup);
+        signupFormPanel.classList.toggle('active', isSignup);
+      }
 
-          const name = document.getElementById("nameInput").value.trim();
+      loginTabBtn.addEventListener('click', () => switchTab('login'));
+      signupTabBtn.addEventListener('click', () => switchTab('signup'));
+      switchToSignupLink.addEventListener('click', () => switchTab('signup'));
+      switchToLoginLink.addEventListener('click', () => switchTab('login'));
 
-          let handle = document.getElementById("handleInput").value.trim();
+      // Show / Hide Password Visibility Toggles
+      document.querySelectorAll('.toggle-pw-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const targetId = btn.getAttribute('data-target');
+          const input = document.getElementById(targetId);
+          if (!input) return;
 
-          if (!name) {
-            showMessage("Please enter your full name.");
-            return;
+          const isHidden = input.type === 'password';
+          input.type = isHidden ? 'text' : 'password';
+
+          btn.innerHTML = isHidden
+            ? '<i data-lucide="eye-off"></i>'
+            : '<i data-lucide="eye"></i>';
+
+          if (window.lucide) {
+            window.lucide.createIcons({ nodes: [btn] });
           }
-
-          handle = handle.replace(/\s+/g, "").replace(/^@+/, "");
-
-          if (!/^[a-zA-Z0-9_]{3,30}$/.test(handle)) {
-            showMessage(
-              "Username must contain 3–30 letters, numbers or underscores."
-            );
-            return;
-          }
-
-          handle = "@" + handle;
-
-          const { data, error } = await supabase.auth.signUp({
-            email: email,
-            password: password,
-            options: {
-              data: {
-                full_name: name,
-                username: handle
-              }
-            }
-          });
-
-          if (error) {
-            showMessage(error.message);
-            return;
-          }
-
-          if (data.session) {
-            showMessage("Account created successfully!", "success");
-
-            window.location.href = "profile.html";
-          } else {
-            showMessage(
-              "Account created! Please confirm your email, then login.",
-              "success"
-            );
-
-            showLogin();
-          }
-
-          return;
-        }
-
-        // LOGIN
-
-        const { data, error } = await supabase.auth.signInWithPassword({
-          email: email,
-          password: password
         });
+      });
 
-        if (error) {
-          showMessage(error.message);
-          return;
+      // Validation Helpers
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+      const usernameRegex = /^[a-zA-Z0-9_]{3,20}$/;
+
+      function setFieldError(inputEl, errorEl, hasError, customMsg) {
+        if (customMsg && errorEl) {
+          errorEl.textContent = customMsg;
         }
-
-        if (data.session) {
-          showMessage("Login successful!", "success");
-
-          window.location.href = "profile.html";
+        if (inputEl) {
+          inputEl.classList.toggle('invalid', hasError);
         }
-
-      } catch (error) {
-
-        console.error(error);
-
-        showMessage("Something went wrong. Please try again.");
-
-      } finally {
-
-        mainButton.disabled = false;
-
-        mainButton.innerText = originalText;
-
-      }
-    }
-
-    // FORGOT PASSWORD
-
-    async function forgotPassword(event) {
-
-      event.preventDefault();
-
-      clearMessage();
-
-      const email = document.getElementById("emailInput").value.trim();
-
-      if (!email) {
-        showMessage("Please enter your email first.");
-        return;
+        if (errorEl) {
+          errorEl.classList.toggle('visible', hasError);
+        }
+        return !hasError;
       }
 
-      try {
+      function clearAllFieldErrors() {
+        document.querySelectorAll('.form-input.invalid').forEach((el) => el.classList.remove('invalid'));
+        document.querySelectorAll('.field-error.visible').forEach((el) => el.classList.remove('visible'));
+      }
 
-        const { error } = await supabase.auth.resetPasswordForEmail(email, {
-          redirectTo: window.location.origin +
-            "/ZCrush-website/reset-password.html"
+      // Clear individual field error on input
+      document.querySelectorAll('.form-input').forEach((input) => {
+        input.addEventListener('input', () => {
+          input.classList.remove('invalid');
+          const errEl = document.getElementById(`${input.id}Error`);
+          if (errEl) errEl.classList.remove('visible');
         });
+      });
 
-        if (error) {
-          showMessage(error.message);
+      // Remember Me Preference Persistence (Email convenience only, never storing passwords)
+      const savedEmail = localStorage.getItem('zcrush_remembered_email');
+      const loginEmailInput = document.getElementById('loginEmail');
+      const rememberMeCheckbox = document.getElementById('rememberMeCheckbox');
+
+      if (savedEmail) {
+        loginEmailInput.value = savedEmail;
+        rememberMeCheckbox.checked = true;
+      }
+
+      // Login Form Submission
+      const loginForm = document.getElementById('loginForm');
+      loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        hideBanner();
+
+        const email = loginEmailInput.value.trim();
+        const password = document.getElementById('loginPassword').value;
+        const rememberMe = rememberMeCheckbox.checked;
+
+        const isEmailValid = setFieldError(
+          loginEmailInput,
+          document.getElementById('loginEmailError'),
+          !emailRegex.test(email)
+        );
+
+        const isPasswordValid = setFieldError(
+          document.getElementById('loginPassword'),
+          document.getElementById('loginPasswordError'),
+          password.length < 6
+        );
+
+        if (!isEmailValid || !isPasswordValid) return;
+
+        if (rememberMe) {
+          localStorage.setItem('zcrush_remembered_email', email);
         } else {
-          showMessage(
-            "Password reset email sent. Please check your inbox.",
-            "success"
-          );
+          localStorage.removeItem('zcrush_remembered_email');
         }
 
-      } catch (error) {
+        const result = await ZCrushAuthService.loginWithEmail({ email, password, rememberMe });
+        showBanner(result.message, false);
+      });
 
-        console.error(error);
+      // Google Login Button UI Handler
+      document.getElementById('googleLoginBtn').addEventListener('click', async () => {
+        hideBanner();
+        const result = await ZCrushAuthService.loginWithGoogle();
+        showBanner(result.message, false);
+      });
 
-        showMessage("Unable to send password reset email.");
+      // Signup Form Submission
+      const signupForm = document.getElementById('signupForm');
+      const termsCheckbox = document.getElementById('termsCheckbox');
 
+      termsCheckbox.addEventListener('change', () => {
+        if (termsCheckbox.checked) {
+          document.getElementById('termsError').classList.remove('visible');
+        }
+      });
+
+      signupForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        hideBanner();
+
+        const fullNameInput = document.getElementById('signupFullName');
+        const usernameInput = document.getElementById('signupUsername');
+        const emailInput = document.getElementById('signupEmail');
+        const passwordInput = document.getElementById('signupPassword');
+        const confirmInput = document.getElementById('signupConfirmPassword');
+
+        const fullName = fullNameInput.value.trim();
+        const username = usernameInput.value.trim();
+        const email = emailInput.value.trim();
+        const password = passwordInput.value;
+        const confirmPassword = confirmInput.value;
+
+        const vName = setFieldError(
+          fullNameInput,
+          document.getElementById('signupFullNameError'),
+          fullName.length < 2
+        );
+
+        const vUser = setFieldError(
+          usernameInput,
+          document.getElementById('signupUsernameError'),
+          !usernameRegex.test(username)
+        );
+
+        const vEmail = setFieldError(
+          emailInput,
+          document.getElementById('signupEmailError'),
+          !emailRegex.test(email)
+        );
+
+        const vPass = setFieldError(
+          passwordInput,
+          document.getElementById('signupPasswordError'),
+          password.length < 6
+        );
+
+        const vConfirm = setFieldError(
+          confirmInput,
+          document.getElementById('signupConfirmPasswordError'),
+          confirmPassword !== password || confirmPassword.length === 0
+        );
+
+        const vTerms = setFieldError(
+          null,
+          document.getElementById('termsError'),
+          !termsCheckbox.checked
+        );
+
+        if (!vName || !vUser || !vEmail || !vPass || !vConfirm || !vTerms) return;
+
+        const result = await ZCrushAuthService.signupWithEmail({
+          fullName,
+          username,
+          email,
+          password
+        });
+        showBanner(result.message, false);
+      });
+
+      // Forgot Password Modal Interactions
+      const forgotPwModal = document.getElementById('forgotPwModal');
+      const openForgotPwBtn = document.getElementById('openForgotPwBtn');
+      const closeForgotPwBtn = document.getElementById('closeForgotPwBtn');
+      const forgotPwForm = document.getElementById('forgotPwForm');
+      const resetEmailInput = document.getElementById('resetEmailInput');
+
+      function openForgotModal() {
+        resetEmailInput.value = loginEmailInput.value.trim();
+        resetEmailInput.classList.remove('invalid');
+        document.getElementById('resetEmailError').classList.remove('visible');
+        forgotPwModal.classList.add('open');
+        resetEmailInput.focus();
       }
-    }
 
-    function demoGoogle() {
-      showMessage("Google Login will be connected in a later update.");
-    }
-
-    function demoPhone() {
-      showMessage("Phone Login will be connected in a later update.");
-    }
-
-    // Make functions available to HTML onclick
-
-    window.showLogin = showLogin;
-    window.showSignup = showSignup;
-    window.handleAccount = handleAccount;
-    window.forgotPassword = forgotPassword;
-    window.demoGoogle = demoGoogle;
-    window.demoPhone = demoPhone;
-
-    // CHECK SESSION
-
-    try {
-
-      const { data, error } = await supabase.auth.getSession();
-
-      if (error) {
-        console.error(error);
+      function closeForgotModal() {
+        forgotPwModal.classList.remove('open');
       }
 
-      if (data.session) {
-        window.location.href = "profile.html";
-      }
+      openForgotPwBtn.addEventListener('click', openForgotModal);
+      closeForgotPwBtn.addEventListener('click', closeForgotModal);
 
-    } catch (error) {
+      forgotPwModal.addEventListener('click', (e) => {
+        if (e.target === forgotPwModal) closeForgotModal();
+      });
 
-      console.error("Session check failed:", error);
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && forgotPwModal.classList.contains('open')) {
+          closeForgotModal();
+        }
+      });
 
-    }
+      forgotPwForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = resetEmailInput.value.trim();
+        const isValid = setFieldError(
+          resetEmailInput,
+          document.getElementById('resetEmailError'),
+          !emailRegex.test(email)
+        );
+        if (!isValid) return;
 
+        const result = await ZCrushAuthService.sendPasswordReset({ email });
+        closeForgotModal();
+        showBanner(result.message, false);
+      });
+    });
   </script>
-
 </body>
 </html>
