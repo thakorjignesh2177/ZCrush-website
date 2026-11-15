@@ -1776,6 +1776,40 @@ if(sharedPostId){
 if(window.lucide) lucide.createIcons();
 
 </script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+const SUPABASE_URL = "https://guvjlethwmwzfiaqjkhv.supabase.co";
+const SUPABASE_ANON_KEY = "https://guvjlethwmwzfiaqjkhv.supabase.co";
+
+const HOME_AUTH_CLIENT = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_ANON_KEY
+);
+
+(async function protectHomePage() {
+  const { data, error } = await HOME_AUTH_CLIENT.auth.getSession();
+
+  if (error || !data.session) {
+    window.location.replace(
+      new URL("login.html", window.location.href).href
+    );
+  }
+})();
+
+async function zcrushLogout() {
+  const { error } = await HOME_AUTH_CLIENT.auth.signOut();
+
+  if (error) {
+    alert("Logout failed. Please try again.");
+    return;
+  }
+
+  window.location.replace(
+    new URL("login.html", window.location.href).href
+  );
+}
+</script>
 
 </body>
 </html>
