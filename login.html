@@ -1,1826 +1,693 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
-  <meta name="theme-color" content="#030009" />
-  <title>ZCrush — Connect • Create • Explore</title>
-
-  <!-- Google Fonts: Outfit & Plus Jakarta Sans -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
-
-  <!-- Lucide Icons -->
-  <script src="https://unpkg.com/lucide@latest"></script>
-
-  <style>
-    /* ==========================================================================
-       1. CSS VARIABLES & RESET
-       ========================================================================== */
-    :root {
-      --bg-deep: #030009;
-      --bg-card: rgba(17, 7, 34, 0.68);
-      --bg-card-inner: rgba(10, 4, 22, 0.78);
-      --bg-input: rgba(8, 3, 18, 0.82);
-
-      --purple-neon: #a855f7;
-      --purple-bright: #9333ea;
-      --purple-deep: #6d28d9;
-      --violet-glow: #7c3aed;
-      --pink-accent: #d946ef;
-      --red-neon: #ff1e42;
-      --gold-light: #fef08a;
-      --gold-mid: #fbbf24;
-      --gold-deep: #d97706;
-
-      --text-primary: #ffffff;
-      --text-secondary: #cbbbe6;
-      --text-muted: #8e7aa8;
-      --error-color: #fb7185;
-      --info-color: #c084fc;
-
-      --border-glow: rgba(168, 85, 247, 0.38);
-      --border-subtle: rgba(168, 85, 247, 0.2);
-      --shadow-card: 0 28px 70px -15px rgba(0, 0, 0, 0.9), 0 0 45px rgba(139, 92, 246, 0.22);
-      --shadow-btn: 0 8px 26px rgba(147, 51, 234, 0.48), 0 0 18px rgba(168, 85, 247, 0.35);
-
-      --font-display: 'Outfit', sans-serif;
-      --font-body: 'Plus Jakarta Sans', sans-serif;
-      --transition-smooth: all 0.32s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-
-    *,
-    *::before,
-    *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html,
-    body {
-      min-height: 100vh;
-      width: 100%;
-      background-color: var(--bg-deep);
-      color: var(--text-primary);
-      font-family: var(--font-body);
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-
-    /* ==========================================================================
-       2. AMBIENT BACKGROUND GLOWS & ABSTRACT PURPLE CURVES
-       ========================================================================== */
-    .ambient-canvas {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 0;
-      overflow: hidden;
-      background:
-        radial-gradient(circle at 15% 22%, rgba(124, 58, 237, 0.22) 0%, transparent 45%),
-        radial-gradient(circle at 85% 28%, rgba(168, 85, 247, 0.19) 0%, transparent 46%),
-        radial-gradient(circle at 50% 58%, rgba(109, 40, 217, 0.24) 0%, transparent 55%),
-        radial-gradient(circle at 50% 100%, rgba(147, 51, 234, 0.16) 0%, transparent 48%),
-        #030009;
-    }
-
-    .ambient-orb {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(90px);
-      opacity: 0.55;
-      animation: pulseOrb 9s ease-in-out infinite alternate;
-    }
-
-    .orb-1 {
-      width: 380px;
-      height: 380px;
-      background: radial-gradient(circle, #7c3aed, transparent 70%);
-      top: -90px;
-      left: -80px;
-    }
-
-    .orb-2 {
-      width: 420px;
-      height: 420px;
-      background: radial-gradient(circle, #9333ea, transparent 70%);
-      bottom: -110px;
-      right: -90px;
-      animation-delay: 2.5s;
-    }
-
-    .orb-3 {
-      width: 340px;
-      height: 340px;
-      background: radial-gradient(circle, #a855f7, transparent 72%);
-      top: 42%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      opacity: 0.35;
-    }
-
-    .abstract-curves-svg {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      opacity: 0.85;
-    }
-
-    @keyframes pulseOrb {
-      0% {
-        transform: scale(1) translate(0, 0);
-        opacity: 0.48;
-      }
-      100% {
-        transform: scale(1.12) translate(16px, -14px);
-        opacity: 0.68;
-      }
-    }
-
-    /* ==========================================================================
-       3. PAGE SHELL & TOP ZCRUSH BRANDING
-       ========================================================================== */
-    .page-wrapper {
-      position: relative;
-      z-index: 1;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: space-between;
-      padding: 28px 18px 24px;
-    }
-
-    .brand-header {
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-bottom: 24px;
-      animation: fadeDown 0.7s ease-out both;
-    }
-
-    .brand-logo-row {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 8px;
-    }
-
-    .brand-wordmark {
-      font-family: var(--font-display);
-      font-size: clamp(2.6rem, 5.5vw, 3.4rem);
-      font-weight: 900;
-      letter-spacing: -0.03em;
-      line-height: 1;
-      display: inline-flex;
-      align-items: center;
-    }
-
-    .brand-wordmark .word-z {
-      background: linear-gradient(135deg, #ff8fa3 0%, #ff1e42 48%, #b91c1c 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      filter: drop-shadow(0 0 18px rgba(255, 30, 66, 0.75));
-    }
-
-    .brand-wordmark .word-crush {
-      background: linear-gradient(180deg, #ffffff 35%, #d8b4fe 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      filter: drop-shadow(0 0 24px rgba(168, 85, 247, 0.45));
-    }
-
-    .brand-tagline {
-      font-size: 0.98rem;
-      font-weight: 600;
-      letter-spacing: 0.04em;
-      color: #dfd1f7;
-      text-shadow: 0 0 14px rgba(168, 85, 247, 0.4);
-    }
-
-    /* ==========================================================================
-       4. MAIN 3-COLUMN STAGE (LEFT CHARACTER, CENTER CARD, RIGHT CALLOUT)
-       ========================================================================== */
-    .main-stage {
-      width: 100%;
-      max-width: 1240px;
-      display: grid;
-      grid-template-columns: 1fr minmax(320px, 455px) 1fr;
-      align-items: center;
-      gap: 28px;
-      margin: auto 0;
-      position: relative;
-    }
-
-    /* Left Decorative Column: Cartoon Character + Floating Icons */
-    .stage-left {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 440px;
-    }
-
-    .character-showcase {
-      position: relative;
-      width: 270px;
-      height: 310px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      animation: floatCharacter 5.5s ease-in-out infinite;
-    }
-
-    .character-aura {
-      position: absolute;
-      width: 220px;
-      height: 220px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(168, 85, 247, 0.42) 0%, rgba(109, 40, 217, 0.14) 55%, transparent 75%);
-      filter: blur(18px);
-      z-index: 0;
-    }
-
-    .character-svg {
-      position: relative;
-      z-index: 1;
-      width: 100%;
-      height: 100%;
-      filter: drop-shadow(0 16px 28px rgba(0, 0, 0, 0.85)) drop-shadow(0 0 18px rgba(168, 85, 247, 0.35));
-    }
-
-    /* Right Decorative Column: "Be a Part of ZCrush!" + Floating Icons */
-    .stage-right {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 440px;
-      text-align: center;
-    }
-
-    .right-callout-box {
-      position: relative;
-      padding: 26px 28px;
-      border-radius: 24px;
-      background: linear-gradient(145deg, rgba(28, 12, 54, 0.55), rgba(11, 4, 24, 0.45));
-      border: 1px solid rgba(168, 85, 247, 0.32);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6), 0 0 30px rgba(147, 51, 234, 0.2);
-      max-width: 290px;
-      animation: floatGentle 6s ease-in-out infinite reverse;
-    }
-
-    .callout-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 5px 12px;
-      border-radius: 999px;
-      background: rgba(168, 85, 247, 0.18);
-      border: 1px solid rgba(192, 132, 252, 0.4);
-      color: #e9d5ff;
-      font-size: 0.74rem;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      margin-bottom: 12px;
-    }
-
-    .right-callout-title {
-      font-family: var(--font-display);
-      font-size: 2rem;
-      font-weight: 800;
-      line-height: 1.16;
-      background: linear-gradient(135deg, #ffffff 15%, #e9d5ff 55%, #a855f7 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      text-shadow: 0 0 26px rgba(168, 85, 247, 0.35);
-      margin-bottom: 10px;
-    }
-
-    .right-callout-sub {
-      font-size: 0.86rem;
-      color: var(--text-secondary);
-      line-height: 1.5;
-    }
-
-    /* Floating Neon Icons */
-    .floating-neon-icon {
-      position: absolute;
-      width: 54px;
-      height: 54px;
-      border-radius: 16px;
-      background: rgba(24, 10, 48, 0.78);
-      border: 1px solid rgba(192, 132, 252, 0.48);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #e9d5ff;
-      box-shadow:
-        0 10px 25px rgba(0, 0, 0, 0.75),
-        0 0 20px rgba(168, 85, 247, 0.45),
-        inset 0 0 12px rgba(168, 85, 247, 0.25);
-      z-index: 2;
-    }
-
-    .floating-neon-icon svg {
-      width: 24px;
-      height: 24px;
-      filter: drop-shadow(0 0 8px rgba(192, 132, 252, 0.9));
-    }
-
-    .icon-gamepad {
-      top: 14px;
-      left: 16%;
-      animation: floatBadge 4.8s ease-in-out infinite;
-    }
-
-    .icon-video {
-      bottom: 22px;
-      right: 14%;
-      animation: floatBadge 5.4s ease-in-out infinite 1s;
-    }
-
-    .icon-cart {
-      top: 18px;
-      right: 16%;
-      animation: floatBadge 5.1s ease-in-out infinite 0.5s;
-    }
-
-    .icon-play {
-      bottom: 24px;
-      left: 16%;
-      animation: floatBadge 4.6s ease-in-out infinite 1.4s;
-    }
-
-    @keyframes floatGentle {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-7px); }
-    }
-
-    @keyframes floatCharacter {
-      0%, 100% { transform: translateY(0px) rotate(0deg); }
-      50% { transform: translateY(-10px) rotate(1deg); }
-    }
-
-    @keyframes floatBadge {
-      0%, 100% { transform: translateY(0px) scale(1); }
-      50% { transform: translateY(-9px) scale(1.05); }
-    }
-
-    @keyframes fadeDown {
-      from { opacity: 0; transform: translateY(-14px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* ==========================================================================
-       5. CENTER GLASSMORPHISM AUTH CARD & TAB SWITCHER
-       ========================================================================== */
-    .auth-card {
-      width: 100%;
-      background: linear-gradient(160deg, rgba(26, 11, 52, 0.74) 0%, rgba(12, 5, 26, 0.82) 100%);
-      backdrop-filter: blur(24px) saturate(165%);
-      -webkit-backdrop-filter: blur(24px) saturate(165%);
-      border-radius: 26px;
-      border: 1px solid var(--border-glow);
-      box-shadow:
-        var(--shadow-card),
-        inset 0 1px 0 rgba(255, 255, 255, 0.12);
-      padding: 28px 28px 26px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .auth-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 15%;
-      right: 15%;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, #c084fc, #fbbf24, #c084fc, transparent);
-      opacity: 0.85;
-    }
-
-    /* Tabs */
-    .auth-tabs {
-      position: relative;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      background: var(--bg-card-inner);
-      border: 1px solid var(--border-subtle);
-      border-radius: 14px;
-      padding: 5px;
-      margin-bottom: 24px;
-    }
-
-    .tab-glider {
-      position: absolute;
-      top: 5px;
-      left: 5px;
-      width: calc(50% - 5px);
-      height: calc(100% - 10px);
-      background: linear-gradient(135deg, #7c3aed 0%, #9333ea 55%, #a855f7 100%);
-      border-radius: 10px;
-      box-shadow: 0 4px 18px rgba(147, 51, 234, 0.6), 0 0 12px rgba(168, 85, 247, 0.45);
-      transition: transform 0.34s cubic-bezier(0.22, 1, 0.36, 1);
-      z-index: 0;
-    }
-
-    .auth-tabs.signup-active .tab-glider {
-      transform: translateX(100%);
-    }
-
-    .tab-btn {
-      position: relative;
-      z-index: 1;
-      background: transparent;
-      border: none;
-      color: var(--text-secondary);
-      font-family: var(--font-display);
-      font-size: 0.96rem;
-      font-weight: 700;
-      padding: 10px 12px;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: color 0.25s ease;
-    }
-
-    .tab-btn.active {
-      color: #ffffff;
-    }
-
-    .tab-btn:not(.active):hover {
-      color: #ffffff;
-    }
-
-    /* Form Panels & Smooth Transition */
-    .form-panel {
-      display: none;
-      opacity: 0;
-      transform: translateY(10px);
-    }
-
-    .form-panel.active {
-      display: block;
-      animation: panelReveal 0.36s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-    }
-
-    @keyframes panelReveal {
-      from {
-        opacity: 0;
-        transform: translateY(10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .form-header {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    .form-title {
-      font-family: var(--font-display);
-      font-size: 1.65rem;
-      font-weight: 800;
-      color: #ffffff;
-      letter-spacing: -0.02em;
-      margin-bottom: 5px;
-    }
-
-    .form-subtitle {
-      font-size: 0.88rem;
-      color: var(--text-secondary);
-    }
-
-    /* Status / Backend Readiness Banner */
-    .status-banner {
-      display: none;
-      align-items: flex-start;
-      gap: 10px;
-      padding: 11px 13px;
-      border-radius: 12px;
-      font-size: 0.82rem;
-      line-height: 1.45;
-      margin-bottom: 16px;
-      background: rgba(124, 58, 237, 0.18);
-      border: 1px solid rgba(192, 132, 252, 0.45);
-      color: #f3e8ff;
-    }
-
-    .status-banner.visible {
-      display: flex;
-      animation: panelReveal 0.25s ease forwards;
-    }
-
-    .status-banner.error {
-      background: rgba(225, 29, 72, 0.16);
-      border-color: rgba(251, 113, 133, 0.45);
-      color: #ffe4e6;
-    }
-
-    .status-banner svg {
-      width: 18px;
-      height: 18px;
-      flex-shrink: 0;
-      margin-top: 1px;
-      color: #c084fc;
-    }
-
-    .status-banner.error svg {
-      color: #fb7185;
-    }
-
-    /* Form Fields */
-    .form-group {
-      margin-bottom: 14px;
-    }
-
-    .field-label {
-      display: block;
-      font-size: 0.81rem;
-      font-weight: 600;
-      color: #dfd3f5;
-      margin-bottom: 6px;
-    }
-
-    .input-wrapper {
-      position: relative;
-      display: flex;
-      align-items: center;
-    }
-
-    .input-icon {
-      position: absolute;
-      left: 14px;
-      width: 18px;
-      height: 18px;
-      color: var(--text-muted);
-      pointer-events: none;
-      transition: color 0.25s ease;
-    }
-
-    .form-input {
-      width: 100%;
-      height: 46px;
-      padding: 0 42px 0 42px;
-      background: var(--bg-input);
-      border: 1px solid var(--border-subtle);
-      border-radius: 12px;
-      color: #ffffff;
-      font-family: var(--font-body);
-      font-size: 16px; /* Prevents mobile auto-zoom */
-      outline: none;
-      transition: var(--transition-smooth);
-    }
-
-    .form-input::placeholder {
-      color: #6b5885;
-      font-size: 0.88rem;
-    }
-
-    .form-input:hover {
-      border-color: rgba(168, 85, 247, 0.42);
-    }
-
-    .form-input:focus {
-      border-color: var(--purple-neon);
-      background: rgba(14, 6, 30, 0.95);
-      box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.22), 0 0 16px rgba(147, 51, 234, 0.25);
-    }
-
-    .input-wrapper:focus-within .input-icon {
-      color: #c084fc;
-    }
-
-    .form-input.invalid {
-      border-color: var(--error-color);
-      box-shadow: 0 0 0 3px rgba(251, 113, 133, 0.18);
-    }
-
-    .toggle-pw-btn {
-      position: absolute;
-      right: 10px;
-      width: 32px;
-      height: 32px;
-      border: none;
-      background: transparent;
-      color: var(--text-muted);
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: color 0.2s ease, background 0.2s ease;
-    }
-
-    .toggle-pw-btn:hover {
-      color: #e9d5ff;
-      background: rgba(168, 85, 247, 0.16);
-    }
-
-    .toggle-pw-btn svg {
-      width: 18px;
-      height: 18px;
-    }
-
-    .field-error {
-      display: none;
-      font-size: 0.76rem;
-      color: var(--error-color);
-      margin-top: 5px;
-      padding-left: 2px;
-    }
-
-    .field-error.visible {
-      display: block;
-    }
-
-    /* Options Row: Checkboxes & Links */
-    .form-options-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      margin: 4px 0 18px;
-      font-size: 0.82rem;
-    }
-
-    .checkbox-label {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      color: var(--text-secondary);
-      cursor: pointer;
-      user-select: none;
-      line-height: 1.35;
-    }
-
-    .custom-checkbox {
-      appearance: none;
-      -webkit-appearance: none;
-      width: 17px;
-      height: 17px;
-      border-radius: 5px;
-      background: var(--bg-input);
-      border: 1px solid rgba(168, 85, 247, 0.45);
-      display: grid;
-      place-content: center;
-      cursor: pointer;
-      flex-shrink: 0;
-      transition: var(--transition-smooth);
-    }
-
-    .custom-checkbox::before {
-      content: '';
-      width: 9px;
-      height: 9px;
-      transform: scale(0);
-      transition: transform 0.16s ease-in-out;
-      box-shadow: inset 1em 1em #ffffff;
-      clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
-    }
-
-    .custom-checkbox:checked {
-      background: linear-gradient(135deg, #7c3aed, #a855f7);
-      border-color: #c084fc;
-      box-shadow: 0 0 10px rgba(168, 85, 247, 0.55);
-    }
-
-    .custom-checkbox:checked::before {
-      transform: scale(1);
-    }
-
-    .inline-link {
-      background: none;
-      border: none;
-      padding: 0;
-      color: #c084fc;
-      font-family: inherit;
-      font-size: inherit;
-      font-weight: 600;
-      text-decoration: none;
-      cursor: pointer;
-      transition: color 0.2s ease, text-shadow 0.2s ease;
-    }
-
-    .inline-link:hover {
-      color: #f3e8ff;
-      text-shadow: 0 0 10px rgba(192, 132, 252, 0.75);
-      text-decoration: underline;
-    }
-
-    /* Primary Gradient Button */
-    .btn-primary {
-      width: 100%;
-      height: 48px;
-      border: none;
-      border-radius: 13px;
-      background: linear-gradient(135deg, #7c3aed 0%, #9333ea 50%, #a855f7 100%);
-      color: #ffffff;
-      font-family: var(--font-display);
-      font-size: 1rem;
-      font-weight: 700;
-      letter-spacing: 0.02em;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 9px;
-      cursor: pointer;
-      box-shadow: var(--shadow-btn);
-      transition: var(--transition-smooth);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 50%, #c084fc 100%);
-      box-shadow:
-        0 12px 32px rgba(168, 85, 247, 0.65),
-        0 0 26px rgba(192, 132, 252, 0.6);
-    }
-
-    .btn-primary:active {
-      transform: translateY(0);
-    }
-
-    .btn-primary svg {
-      width: 19px;
-      height: 19px;
-    }
-
-    /* OR Divider */
-    .divider-or {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin: 18px 0;
-      color: var(--text-muted);
-      font-size: 0.78rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-    }
-
-    .divider-or::before,
-    .divider-or::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(168, 85, 247, 0.35), transparent);
-    }
-
-    /* White Google Button */
-    .btn-google {
-      width: 100%;
-      height: 46px;
-      border-radius: 13px;
-      border: 1px solid rgba(255, 255, 255, 0.85);
-      background: #ffffff;
-      color: #111827;
-      font-family: var(--font-body);
-      font-size: 0.92rem;
-      font-weight: 700;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      cursor: pointer;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
-      transition: var(--transition-smooth);
-    }
-
-    .btn-google:hover {
-      background: #f8f5ff;
-      transform: translateY(-1px);
-      box-shadow: 0 10px 26px rgba(168, 85, 247, 0.35), 0 0 16px rgba(255, 255, 255, 0.35);
-    }
-
-    .btn-google:active {
-      transform: translateY(0);
-    }
-
-    /* Switch Form Bottom Text */
-    .switch-prompt {
-      text-align: center;
-      margin-top: 18px;
-      font-size: 0.86rem;
-      color: var(--text-secondary);
-    }
-
-    /* ==========================================================================
-       6. FOOTER
-       ========================================================================== */
-    .page-footer {
-      text-align: center;
-      margin-top: 28px;
-      padding: 8px 16px;
-      font-size: 0.88rem;
-      font-weight: 600;
-      color: #d6c5f2;
-      letter-spacing: 0.02em;
-      text-shadow: 0 0 16px rgba(168, 85, 247, 0.35);
-    }
-
-    /* ==========================================================================
-       7. FORGOT PASSWORD MODAL
-       ========================================================================== */
-    .modal-backdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(3, 0, 9, 0.82);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 18px;
-      z-index: 50;
-    }
-
-    .modal-backdrop.open {
-      display: flex;
-      animation: fadeInBackdrop 0.24s ease forwards;
-    }
-
-    @keyframes fadeInBackdrop {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    .modal-card {
-      width: 100%;
-      max-width: 400px;
-      background: linear-gradient(160deg, rgba(28, 12, 56, 0.92), rgba(11, 4, 24, 0.96));
-      border: 1px solid var(--border-glow);
-      border-radius: 22px;
-      padding: 24px;
-      box-shadow: var(--shadow-card);
-      position: relative;
-      animation: panelReveal 0.28s ease forwards;
-    }
-
-    .modal-close-btn {
-      position: absolute;
-      top: 14px;
-      right: 14px;
-      width: 32px;
-      height: 32px;
-      border-radius: 10px;
-      border: 1px solid var(--border-subtle);
-      background: rgba(168, 85, 247, 0.12);
-      color: #e9d5ff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: var(--transition-smooth);
-    }
-
-    .modal-close-btn:hover {
-      background: rgba(168, 85, 247, 0.28);
-      color: #ffffff;
-    }
-
-    /* ==========================================================================
-       8. RESPONSIVE DESIGN (TABLET & ANDROID MOBILE SCREENS)
-       ========================================================================== */
-    @media (max-width: 1040px) {
-      .main-stage {
-        grid-template-columns: 1fr;
-        max-width: 470px;
-        gap: 16px;
-      }
-
-      .stage-left,
-      .stage-right {
-        min-height: auto;
-      }
-
-      /* Compact responsive showcase on mobile/tablet so all elements remain visible */
-      .stage-left {
-        flex-direction: row;
-        gap: 14px;
-        padding: 4px 0;
-      }
-
-      .character-showcase {
-        width: 118px;
-        height: 132px;
-      }
-
-      .character-aura {
-        width: 100px;
-        height: 100px;
-      }
-
-      .floating-neon-icon {
-        position: static;
-        width: 44px;
-        height: 44px;
-        border-radius: 13px;
-      }
-
-      .floating-neon-icon svg {
-        width: 20px;
-        height: 20px;
-      }
-
-      .stage-right {
-        flex-direction: row;
-        gap: 12px;
-      }
-
-      .right-callout-box {
-        padding: 14px 18px;
-        max-width: 100%;
-        border-radius: 18px;
-      }
-
-      .callout-pill {
-        margin-bottom: 6px;
-        font-size: 0.68rem;
-      }
-
-      .right-callout-title {
-        font-size: 1.28rem;
-        margin-bottom: 4px;
-      }
-
-      .right-callout-sub {
-        font-size: 0.78rem;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .page-wrapper {
-        padding: 20px 14px 20px;
-      }
-
-      .brand-tagline {
-        font-size: 0.88rem;
-      }
-
-      .auth-card {
-        padding: 22px 18px 22px;
-        border-radius: 22px;
-      }
-
-      .form-title {
-        font-size: 1.45rem;
-      }
-
-      .form-options-row {
-        flex-wrap: wrap;
-        gap: 8px;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080313">
+<title>ZCrush — Connect • Create • Explore</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+:root{
+  --bg:#080313;--card:rgba(23,12,39,.82);--purple:#a855f7;
+  --purple2:#7c3aed;--pink:#d946ef;--red:#ff1e42;
+  --text:#fff;--muted:#b7a9c9;--border:rgba(192,132,252,.2);
+}
+*{box-sizing:border-box}
+body{
+  margin:0;min-height:100vh;color:var(--text);
+  font-family:'Plus Jakarta Sans',sans-serif;
+  background:radial-gradient(ellipse at 15% 15%,#291044 0,transparent 38%),
+  radial-gradient(ellipse at 85% 80%,#240d3c 0,transparent 38%),var(--bg);
+  overflow-x:hidden;
+}
+button,input{font:inherit}
+button{cursor:pointer}
+.background-glow{
+  position:fixed;inset:0;pointer-events:none;
+  background:linear-gradient(125deg,transparent 35%,rgba(168,85,247,.04),transparent 70%);
+}
+.abstract-curves-svg{
+  position:fixed;inset:0;width:100%;height:100%;
+  pointer-events:none;opacity:.8;
+}
+.top-brand{text-align:center;padding:27px 15px 8px;position:relative}
+.brand-name{
+  font-family:Outfit,sans-serif;font-size:42px;font-weight:800;
+  letter-spacing:-2px;margin:0;
+}
+.brand-name span{color:var(--red)}
+.brand-tagline{color:#d8c5ee;font-size:13px;margin-top:2px;letter-spacing:1px}
+.main-stage{
+  width:min(1240px,96%);min-height:calc(100vh - 150px);
+  margin:0 auto;display:grid;grid-template-columns:1fr minmax(350px,440px) 1fr;
+  align-items:center;gap:35px;padding:15px 0 25px;position:relative;
+}
+.stage-left,.stage-right{
+  min-height:470px;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;position:relative;
+}
+.character-showcase{
+  width:260px;height:300px;display:grid;place-items:center;position:relative;
+}
+.character-aura{
+  position:absolute;width:220px;height:220px;border-radius:50%;
+  background:#8b5cf6;filter:blur(75px);opacity:.32;
+}
+.character-svg{width:100%;height:100%;position:relative;filter:drop-shadow(0 0 22px #9333ea55)}
+.floating-neon-icon{
+  width:52px;height:52px;border:1px solid #b56cff66;
+  border-radius:16px;background:#190d2dcc;display:grid;place-items:center;
+  color:#d8a8ff;box-shadow:0 0 25px #9333ea30;
+}
+.floating-neon-icon svg{width:24px}
+.icon-gamepad{margin:0 0 5px -180px}
+.icon-play{margin:0 0 0 180px}
+.icon-cart{margin:0 180px 35px 0}
+.icon-video{margin:35px 0 0 180px}
+.right-callout-box{max-width:310px;text-align:center;padding:20px}
+.callout-pill{
+  display:inline-flex;align-items:center;gap:7px;padding:8px 13px;
+  border:1px solid #a855f755;border-radius:30px;color:#e5c7ff;
+  background:#7c3aed22;font-size:11px;font-weight:700;
+}
+.right-callout-title{font:800 30px Outfit,sans-serif;margin:18px 0 10px}
+.right-callout-sub{font-size:13px;color:var(--muted);line-height:1.8}
+.auth-card{
+  width:100%;padding:28px;border:1px solid var(--border);
+  border-radius:25px;background:var(--card);
+  backdrop-filter:blur(22px);box-shadow:0 25px 90px #0008,0 0 35px #9333ea17;
+}
+.auth-tabs{
+  display:flex;position:relative;padding:5px;border-radius:13px;
+  background:#090511;border:1px solid #ffffff12;margin-bottom:23px;
+}
+.tab-btn{
+  position:relative;z-index:1;width:50%;border:0;background:none;
+  color:#a99bb9;padding:12px;font-weight:700;border-radius:10px;
+}
+.tab-btn.active{color:white}
+.tab-glider{
+  position:absolute;left:5px;top:5px;bottom:5px;width:calc(50% - 5px);
+  background:linear-gradient(110deg,#7c3aed,#a855f7);
+  border-radius:10px;transition:transform .25s;
+}
+.auth-tabs.signup-active .tab-glider{transform:translateX(100%)}
+.form-panel{display:none}
+.form-panel.active{display:block;animation:fadeIn .25s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+.form-header{text-align:center;margin-bottom:22px}
+.form-title{font:700 25px Outfit,sans-serif;margin:0 0 7px}
+.form-subtitle{color:var(--muted);font-size:12px;margin:0;line-height:1.6}
+.form-group{margin-bottom:15px}
+.field-label{display:block;font-size:12px;font-weight:700;margin-bottom:8px;color:#e8dcf5}
+.input-wrapper{position:relative}
+.input-icon{
+  position:absolute;left:14px;top:50%;transform:translateY(-50%);
+  width:17px;color:#b98ce8;pointer-events:none;
+}
+.form-input{
+  width:100%;height:48px;border:1px solid #ffffff20;border-radius:11px;
+  background:#090511a8;color:white;padding:0 43px;
+  outline:none;font-size:13px;transition:.2s;
+}
+.form-input::placeholder{color:#766a84}
+.form-input:focus{border-color:#b56cff;box-shadow:0 0 0 3px #a855f71c}
+.toggle-pw-btn{
+  position:absolute;right:10px;top:50%;transform:translateY(-50%);
+  border:0;background:none;color:#b9a5ce;padding:7px;
+}
+.toggle-pw-btn svg{width:17px}
+.field-error{display:none;color:#ff8298;font-size:10px;margin:6px 2px 0}
+.form-group.invalid .field-error{display:block}
+.form-group.invalid .form-input{border-color:#fb526e}
+.form-options-row{display:flex;align-items:center;justify-content:space-between;margin:5px 0 19px}
+.checkbox-label{display:flex;align-items:center;gap:8px;font-size:11px;color:#cfc1dc;cursor:pointer}
+.custom-checkbox{accent-color:#a855f7;width:15px;height:15px}
+.inline-link{background:none;border:0;color:#d3a5ff;font-size:11px;font-weight:700;padding:0}
+.inline-link:hover{color:white;text-decoration:underline}
+.btn-primary,.btn-google{
+  width:100%;height:48px;border-radius:11px;display:flex;
+  justify-content:center;align-items:center;gap:10px;font-weight:800;
+  font-size:13px;transition:.2s;
+}
+.btn-primary{
+  border:0;color:white;background:linear-gradient(105deg,#702de0,#b34de9);
+  box-shadow:0 8px 24px #8b35df35;
+}
+.btn-primary:hover{filter:brightness(1.13);transform:translateY(-1px)}
+.btn-primary:disabled{opacity:.6;cursor:not-allowed;transform:none}
+.btn-primary svg{width:17px}
+.divider-or{display:flex;align-items:center;gap:12px;color:#81728f;font-size:10px;margin:19px 0}
+.divider-or:before,.divider-or:after{content:"";height:1px;background:#ffffff18;flex:1}
+.btn-google{
+  background:#ffffff08;border:1px solid #ffffff24;color:white;
+}
+.btn-google:hover{background:#ffffff12;border-color:#b56cff77}
+.switch-prompt{text-align:center;color:#a99bb9;font-size:11px;margin:19px 0 0}
+.status-banner{
+  display:none;align-items:center;gap:9px;padding:11px 13px;
+  margin:0 0 17px;border-radius:10px;font-size:11px;line-height:1.5;
+}
+.status-banner.show{display:flex}
+.status-banner svg{width:17px;flex-shrink:0}
+.status-banner.success{background:#123c2a;color:#9cf0bc;border:1px solid #2d9e62}
+.status-banner.error{background:#481b2b;color:#ffb1c0;border:1px solid #b33b5b}
+.status-banner.info{background:#291847;color:#dfc3ff;border:1px solid #7543aa}
+.page-footer{text-align:center;color:#877796;font-size:11px;padding:10px 15px 22px}
+.terms-row{margin:10px 0 15px}
+.terms-row a{color:#d3a5ff}
+.modal-backdrop{
+  display:none;position:fixed;inset:0;z-index:20;background:#000b;
+  align-items:center;justify-content:center;padding:18px;
+}
+.modal-backdrop.show{display:flex}
+.forgot-modal{
+  width:min(420px,100%);padding:27px;border-radius:20px;
+  border:1px solid var(--border);background:#160d24;
+  box-shadow:0 20px 70px #000b;position:relative;
+}
+.modal-close{
+  position:absolute;right:15px;top:14px;border:0;background:none;
+  color:#c9b8d9;font-size:23px;
+}
+@media(max-width:950px){
+  .main-stage{grid-template-columns:1fr minmax(340px,440px);justify-content:center}
+  .stage-left{display:none}.stage-right{min-height:300px}
+}
+@media(max-width:650px){
+  .top-brand{padding-top:22px}
+  .brand-name{font-size:36px}
+  .main-stage{display:flex;flex-direction:column;min-height:auto;width:100%;padding:15px 14px}
+  .stage-right{display:none}
+  .auth-card{max-width:440px;padding:22px 19px}
+  .page-footer{padding-top:15px}
+}
+@media(max-width:380px){.auth-card{padding:19px 15px}.form-title{font-size:22px}}
+</style>
 </head>
+
 <body>
-  <!-- Ambient Glows & Abstract Glowing Purple Curves -->
-  <div class="ambient-canvas" aria-hidden="true">
-    <div class="ambient-orb orb-1"></div>
-    <div class="ambient-orb orb-2"></div>
-    <div class="ambient-orb orb-3"></div>
+<div class="background-glow"></div>
 
-    <svg class="abstract-curves-svg" viewBox="0 0 1440 900" preserveAspectRatio="none">
+<svg class="abstract-curves-svg" viewBox="0 0 1440 900" preserveAspectRatio="none" aria-hidden="true">
+<defs>
+<linearGradient id="purpleRibbon1"><stop offset="0%" stop-color="#7c3aed" stop-opacity="0"/><stop offset="45%" stop-color="#a855f7" stop-opacity=".4"/><stop offset="100%" stop-color="#6d28d9" stop-opacity="0"/></linearGradient>
+<linearGradient id="purpleRibbon2"><stop offset="0%" stop-color="#9333ea" stop-opacity="0"/><stop offset="50%" stop-color="#c084fc" stop-opacity=".3"/><stop offset="100%" stop-color="#7c3aed" stop-opacity="0"/></linearGradient>
+</defs>
+<path d="M-120 680 C260 540 420 820 790 610 S1260 560 1560 360" fill="none" stroke="url(#purpleRibbon1)" stroke-width="3"/>
+<path d="M-100 260 C240 430 520 120 880 310 S1320 220 1560 280" fill="none" stroke="url(#purpleRibbon2)" stroke-width="3"/>
+<path d="M-80 780 C340 650 620 880 1020 690 S1380 650 1540 590" fill="none" stroke="url(#purpleRibbon2)" stroke-width="2"/>
+</svg>
+
+<header class="top-brand">
+  <h1 class="brand-name"><span>Z</span>Crush</h1>
+  <div class="brand-tagline">Connect • Create • Explore 💜</div>
+</header>
+
+<main class="main-stage">
+
+<aside class="stage-left" aria-label="ZCrush mascot">
+  <div class="floating-neon-icon icon-gamepad"><i data-lucide="gamepad-2"></i></div>
+  <div class="character-showcase">
+    <div class="character-aura"></div>
+    <svg class="character-svg" viewBox="0 0 260 300" fill="none" xmlns="http://www.w3.org/2000/svg">
       <defs>
-        <linearGradient id="purpleRibbon1" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#7c3aed" stop-opacity="0" />
-          <stop offset="35%" stop-color="#a855f7" stop-opacity="0.45" />
-          <stop offset="65%" stop-color="#d946ef" stop-opacity="0.32" />
-          <stop offset="100%" stop-color="#6d28d9" stop-opacity="0" />
-        </linearGradient>
-        <linearGradient id="purpleRibbon2" x1="100%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stop-color="#9333ea" stop-opacity="0" />
-          <stop offset="50%" stop-color="#c084fc" stop-opacity="0.35" />
-          <stop offset="100%" stop-color="#7c3aed" stop-opacity="0" />
-        </linearGradient>
-        <filter id="neonCurveGlow" x="-20%" y="-20%" width="140%" height="140%">
-          <feGaussianBlur stdDeviation="8" result="blur" />
-          <feMerge>
-            <feMergeNode in="blur" />
-            <feMergeNode in="SourceGraphic" />
-          </feMerge>
-        </filter>
+        <linearGradient id="hoodieDark" x1="50" y1="120" x2="210" y2="290" gradientUnits="userSpaceOnUse"><stop stop-color="#1f182e"/><stop offset=".5" stop-color="#0d0916"/><stop offset="1" stop-color="#05030a"/></linearGradient>
+        <linearGradient id="hoodRimPurple" x1="45" y1="40" x2="215" y2="260" gradientUnits="userSpaceOnUse"><stop stop-color="#c084fc"/><stop offset=".5" stop-color="#7c3aed"/><stop offset="1" stop-color="#3b0764"/></linearGradient>
+        <linearGradient id="skinTone" x1="95" y1="75" x2="165" y2="165" gradientUnits="userSpaceOnUse"><stop stop-color="#f7c8a5"/><stop offset="1" stop-color="#d8976c"/></linearGradient>
       </defs>
-
-      <path
-        d="M -120 680 C 260 540, 420 820, 790 610 C 1120 420, 1260 560, 1560 360"
-        fill="none"
-        stroke="url(#purpleRibbon1)"
-        stroke-width="3.5"
-        filter="url(#neonCurveGlow)"
-      />
-      <path
-        d="M -100 260 C 240 430, 520 120, 880 310 C 1180 470, 1320 220, 1560 280"
-        fill="none"
-        stroke="url(#purpleRibbon2)"
-        stroke-width="2.5"
-        filter="url(#neonCurveGlow)"
-      />
-      <path
-        d="M -80 780 C 340 650, 620 880, 1020 690 C 1250 580, 1380 650, 1540 590"
-        fill="none"
-        stroke="url(#purpleRibbon2)"
-        stroke-width="1.8"
-        opacity="0.65"
-      />
+      <path d="M66 118C62 62 92 34 130 34s68 28 64 84c22 16 38 50 42 140 0 12-12 20-26 20H50c-14 0-26-8-26-20 4-90 20-124 42-140Z" fill="url(#hoodieDark)" stroke="url(#hoodRimPurple)" stroke-width="3"/>
+      <path d="M82 122C80 74 102 52 130 52s50 22 48 70c-4 26-22 46-48 50-26-4-44-24-48-50Z" fill="#07040d" stroke="#6d28d9" stroke-width="1.5"/>
+      <rect x="115" y="144" width="30" height="28" rx="10" fill="#c9855a"/>
+      <path d="M94 102c0-24 16-36 36-36s36 12 36 36c0 30-15 50-36 52-21-2-36-22-36-52Z" fill="url(#skinTone)"/>
+      <path d="M93 96c-1-23 18-36 39-35 20 1 35 13 35 34-10-12-23-15-35-10-10-6-26-3-39 11Z" fill="#120c1d"/>
+      <rect x="88" y="96" width="84" height="8" rx="4" fill="#050508"/>
+      <rect x="91" y="96" width="36" height="24" rx="8" fill="#100b1c" stroke="#a855f7" stroke-width="1.8"/>
+      <rect x="133" y="96" width="36" height="24" rx="8" fill="#100b1c" stroke="#a855f7" stroke-width="1.8"/>
+      <path d="m98 101 10 14m-3-14 7 10m28-10 10 14" stroke="#e9d5ff" stroke-width="2" stroke-linecap="round"/>
+      <path d="M118 134q13 8 26-2" stroke="#5c2d16" stroke-width="3" stroke-linecap="round"/>
+      <path d="M88 158q42 26 84 0" stroke="#7c3aed" stroke-width="2.5"/>
+      <path d="M112 169v53m36-53v45" stroke="#c084fc" stroke-width="3.5" stroke-linecap="round"/>
+      <circle cx="112" cy="225" r="4" fill="#fbbf24"/><circle cx="148" cy="217" r="4" fill="#fbbf24"/>
+      <path d="M164 196h18l-12 16h13" stroke="#ff1e42" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
   </div>
+  <div class="floating-neon-icon icon-play"><i data-lucide="play"></i></div>
+</aside>
 
-  <!-- Main Page Wrapper -->
-  <div class="page-wrapper">
-    <!-- Top Center ZCrush Branding (Red Z + White/Purple Crush) -->
-    <header class="brand-header">
-      <div class="brand-logo-row">
-        <h1 class="brand-wordmark">
-          <span class="word-z">Z</span><span class="word-crush">Crush</span>
-        </h1>
-      </div>
-      <p class="brand-tagline">Connect &bull; Create &bull; Explore 💜</p>
-    </header>
-
-    <!-- Main 3-Column Stage -->
-    <main class="main-stage">
-      <!-- Left Decorative Side: Gaming Controller Icon + Cartoon Character + Play Icon -->
-      <aside class="stage-left" aria-label="ZCrush Mascot & Highlights">
-        <div class="floating-neon-icon icon-gamepad" title="Gaming">
-          <i data-lucide="gamepad-2"></i>
-        </div>
-
-        <div class="character-showcase">
-          <div class="character-aura"></div>
-          <!-- Stylized Cartoon Character Wearing Black Sunglasses and Black Hoodie -->
-          <svg class="character-svg" viewBox="0 0 260 300" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <linearGradient id="hoodieDark" x1="50" y1="120" x2="210" y2="290" gradientUnits="userSpaceOnUse">
-                <stop offset="0%" stop-color="#1f182e" />
-                <stop offset="50%" stop-color="#0d0916" />
-                <stop offset="100%" stop-color="#05030a" />
-              </linearGradient>
-              <linearGradient id="hoodRimPurple" x1="45" y1="40" x2="215" y2="260" gradientUnits="userSpaceOnUse">
-                <stop offset="0%" stop-color="#c084fc" />
-                <stop offset="50%" stop-color="#7c3aed" />
-                <stop offset="100%" stop-color="#3b0764" />
-              </linearGradient>
-              <linearGradient id="skinTone" x1="95" y1="75" x2="165" y2="165" gradientUnits="userSpaceOnUse">
-                <stop offset="0%" stop-color="#f7c8a5" />
-                <stop offset="100%" stop-color="#d8976c" />
-              </linearGradient>
-              <linearGradient id="shadesLens" x1="80" y1="100" x2="180" y2="128" gradientUnits="userSpaceOnUse">
-                <stop offset="0%" stop-color="#09070f" />
-                <stop offset="55%" stop-color="#170e29" />
-                <stop offset="100%" stop-color="#050408" />
-              </linearGradient>
-            </defs>
-
-            <!-- Outer Black Hoodie Silhouette with Neon Purple Rim Highlight -->
-            <path
-              d="M 66 118 C 62 62, 92 34, 130 34 C 168 34, 198 62, 194 118 C 216 134, 232 168, 236 258 C 236 270, 224 278, 210 278 H 50 C 36 278, 24 270, 24 258 C 28 168, 44 134, 66 118 Z"
-              fill="url(#hoodieDark)"
-              stroke="url(#hoodRimPurple)"
-              stroke-width="3"
-            />
-
-            <!-- Inner Hood Opening -->
-            <path
-              d="M 82 122 C 80 74, 102 52, 130 52 C 158 52, 180 74, 178 122 C 174 148, 156 168, 130 172 C 104 168, 86 148, 82 122 Z"
-              fill="#07040d"
-              stroke="#6d28d9"
-              stroke-width="1.5"
-            />
-
-            <!-- Neck -->
-            <rect x="115" y="144" width="30" height="28" rx="10" fill="#c9855a" />
-
-            <!-- Cartoon Face -->
-            <path
-              d="M 94 102 C 94 78, 110 66, 130 66 C 150 66, 166 78, 166 102 C 166 132, 151 152, 130 154 C 109 152, 94 132, 94 102 Z"
-              fill="url(#skinTone)"
-            />
-
-            <!-- Stylized Hair Tufts Peeking Under Hood -->
-            <path
-              d="M 93 96 C 92 73, 111 60, 132 61 C 152 62, 167 74, 167 95 C 157 83, 144 80, 132 85 C 122 79, 106 82, 93 96 Z"
-              fill="#120c1d"
-            />
-
-            <!-- Black Sunglasses Frame -->
-            <rect x="88" y="96" width="84" height="8" rx="4" fill="#050508" />
-            <!-- Left Lens -->
-            <rect x="91" y="96" width="36" height="24" rx="8" fill="url(#shadesLens)" stroke="#a855f7" stroke-width="1.8" />
-            <!-- Right Lens -->
-            <rect x="133" y="96" width="36" height="24" rx="8" fill="url(#shadesLens)" stroke="#a855f7" stroke-width="1.8" />
-            <!-- Lens Neon Glare Streaks -->
-            <path d="M 98 101 L 108 115" stroke="#e9d5ff" stroke-width="2.4" stroke-linecap="round" opacity="0.75" />
-            <path d="M 105 101 L 112 111" stroke="#c084fc" stroke-width="1.4" stroke-linecap="round" opacity="0.55" />
-            <path d="M 140 101 L 150 115" stroke="#e9d5ff" stroke-width="2.4" stroke-linecap="round" opacity="0.75" />
-
-            <!-- Confident Cartoon Smirk -->
-            <path
-              d="M 118 134 Q 131 142 144 132"
-              stroke="#5c2d16"
-              stroke-width="3"
-              stroke-linecap="round"
-              fill="none"
-            />
-
-            <!-- Hoodie Collar & Glowing Purple Drawstrings -->
-            <path
-              d="M 88 158 Q 130 184 172 158"
-              stroke="#7c3aed"
-              stroke-width="2.5"
-              fill="none"
-            />
-            <path d="M 112 169 V 222" stroke="#c084fc" stroke-width="3.5" stroke-linecap="round" />
-            <circle cx="112" cy="225" r="4" fill="#fbbf24" />
-            <path d="M 148 169 V 214" stroke="#c084fc" stroke-width="3.5" stroke-linecap="round" />
-            <circle cx="148" cy="217" r="4" fill="#fbbf24" />
-
-            <!-- Subtle Red Z Badge on Hoodie Chest -->
-            <path
-              d="M 164 196 H 182 L 170 212 H 183"
-              stroke="#ff1e42"
-              stroke-width="2.8"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
-        </div>
-
-        <div class="floating-neon-icon icon-play" title="Stream & Play">
-          <i data-lucide="play"></i>
-        </div>
-      </aside>
-
-      <!-- Center Glassmorphism Login / Signup Card -->
-      <section class="auth-card" aria-label="ZCrush Authentication">
-        <!-- Top Tab Switcher -->
-        <div class="auth-tabs" id="authTabs" role="tablist">
-          <div class="tab-glider" aria-hidden="true"></div>
-          <button
-            type="button"
-            class="tab-btn active"
-            id="loginTabBtn"
-            role="tab"
-            aria-selected="true"
-            aria-controls="loginFormPanel"
-          >
-            Login
-          </button>
-          <button
-            type="button"
-            class="tab-btn"
-            id="signupTabBtn"
-            role="tab"
-            aria-selected="false"
-            aria-controls="signupFormPanel"
-          >
-            Sign Up
-          </button>
-        </div>
-
-        <!-- Dynamic Status / Validation Notice -->
-        <div class="status-banner" id="authStatusBanner" role="status" aria-live="polite">
-          <i data-lucide="sparkles"></i>
-          <span id="authStatusText"></span>
-        </div>
-
-        <!-- ==================== LOGIN FORM ==================== -->
-        <div class="form-panel active" id="loginFormPanel" role="tabpanel" aria-labelledby="loginTabBtn">
-          <div class="form-header">
-            <h2 class="form-title">Welcome Back!</h2>
-            <p class="form-subtitle">Login to continue your ZCrush journey 🚀</p>
-          </div>
-
-          <form id="loginForm" novalidate>
-            <!-- Email Address -->
-            <div class="form-group">
-              <label class="field-label" for="loginEmail">Email Address</label>
-              <div class="input-wrapper">
-                <i data-lucide="mail" class="input-icon"></i>
-                <input
-                  type="email"
-                  id="loginEmail"
-                  class="form-input"
-                  placeholder="you@example.com"
-                  autocomplete="email"
-                  required
-                />
-              </div>
-              <p class="field-error" id="loginEmailError">Please enter a valid email address.</p>
-            </div>
-
-            <!-- Password -->
-            <div class="form-group">
-              <label class="field-label" for="loginPassword">Password</label>
-              <div class="input-wrapper">
-                <i data-lucide="lock" class="input-icon"></i>
-                <input
-                  type="password"
-                  id="loginPassword"
-                  class="form-input"
-                  placeholder="Enter your password"
-                  autocomplete="current-password"
-                  required
-                />
-                <button
-                  type="button"
-                  class="toggle-pw-btn"
-                  data-target="loginPassword"
-                  aria-label="Toggle password visibility"
-                >
-                  <i data-lucide="eye"></i>
-                </button>
-              </div>
-              <p class="field-error" id="loginPasswordError">Please enter your password (minimum 6 characters).</p>
-            </div>
-
-            <!-- Remember Me & Forgot Password -->
-            <div class="form-options-row">
-              <label class="checkbox-label" for="rememberMeCheckbox">
-                <input type="checkbox" id="rememberMeCheckbox" class="custom-checkbox" />
-                <span>Remember Me</span>
-              </label>
-
-              <button type="button" class="inline-link" id="openForgotPwBtn">
-                Forgot Password?
-              </button>
-            </div>
-
-            <!-- Main Login Button -->
-            <button type="submit" class="btn-primary">
-              <i data-lucide="log-in"></i>
-              <span>Login</span>
-            </button>
-          </form>
-
-          <!-- OR Divider -->
-          <div class="divider-or">OR</div>
-
-          <!-- Continue with Google Button -->
-          <button type="button" class="btn-google" id="googleLoginBtn">
-            <svg width="19" height="19" viewBox="0 0 24 24" aria-hidden="true">
-              <path fill="#4285F4" d="M23.49 12.27c0-.79-.07-1.54-.19-2.27H12v4.51h6.47c-.29 1.48-1.14 2.73-2.4 3.58v3h3.86c2.26-2.09 3.56-5.17 3.56-8.82z"/>
-              <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.86-3c-1.08.72-2.45 1.16-4.07 1.16-3.13 0-5.78-2.11-6.73-4.96H1.29v3.09C3.26 21.3 7.31 24 12 24z"/>
-              <path fill="#FBBC05" d="M5.27 14.29c-.25-.72-.38-1.49-.38-2.29s.14-1.57.38-2.29V6.62H1.29C.47 8.24 0 10.06 0 12s.47 3.76 1.29 5.38l3.98-3.09z"/>
-              <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.31 0 3.26 2.7 1.29 6.62l3.98 3.09c.95-2.85 3.6-4.96 6.73-4.96z"/>
-            </svg>
-            <span>Continue with Google</span>
-          </button>
-
-          <p class="switch-prompt">
-            Don't have an account?
-            <button type="button" class="inline-link" id="switchToSignupLink">Sign Up.</button>
-          </p>
-        </div>
-
-        <!-- ==================== SIGNUP FORM ==================== -->
-        <div class="form-panel" id="signupFormPanel" role="tabpanel" aria-labelledby="signupTabBtn">
-          <div class="form-header">
-            <h2 class="form-title">Create Your Account!</h2>
-            <p class="form-subtitle">Join ZCrush and start your journey.</p>
-          </div>
-
-          <form id="signupForm" novalidate>
-            <!-- Full Name -->
-            <div class="form-group">
-              <label class="field-label" for="signupFullName">Full Name</label>
-              <div class="input-wrapper">
-                <i data-lucide="user" class="input-icon"></i>
-                <input
-                  type="text"
-                  id="signupFullName"
-                  class="form-input"
-                  placeholder="Enter your full name"
-                  autocomplete="name"
-                  required
-                />
-              </div>
-              <p class="field-error" id="signupFullNameError">Please enter your full name (at least 2 characters).</p>
-            </div>
-
-            <!-- Username -->
-            <div class="form-group">
-              <label class="field-label" for="signupUsername">Username</label>
-              <div class="input-wrapper">
-                <i data-lucide="at-sign" class="input-icon"></i>
-                <input
-                  type="text"
-                  id="signupUsername"
-                  class="form-input"
-                  placeholder="Choose a unique username"
-                  autocomplete="username"
-                  required
-                />
-              </div>
-              <p class="field-error" id="signupUsernameError">Username must be 3–20 characters (letters, numbers, underscores).</p>
-            </div>
-
-            <!-- Email Address -->
-            <div class="form-group">
-              <label class="field-label" for="signupEmail">Email Address</label>
-              <div class="input-wrapper">
-                <i data-lucide="mail" class="input-icon"></i>
-                <input
-                  type="email"
-                  id="signupEmail"
-                  class="form-input"
-                  placeholder="you@example.com"
-                  autocomplete="email"
-                  required
-                />
-              </div>
-              <p class="field-error" id="signupEmailError">Please enter a valid email address.</p>
-            </div>
-
-            <!-- Password -->
-            <div class="form-group">
-              <label class="field-label" for="signupPassword">Password</label>
-              <div class="input-wrapper">
-                <i data-lucide="lock" class="input-icon"></i>
-                <input
-                  type="password"
-                  id="signupPassword"
-                  class="form-input"
-                  placeholder="Create a strong password"
-                  autocomplete="new-password"
-                  required
-                />
-                <button
-                  type="button"
-                  class="toggle-pw-btn"
-                  data-target="signupPassword"
-                  aria-label="Toggle password visibility"
-                >
-                  <i data-lucide="eye"></i>
-                </button>
-              </div>
-              <p class="field-error" id="signupPasswordError">Password must be at least 6 characters long.</p>
-            </div>
-
-            <!-- Confirm Password -->
-            <div class="form-group">
-              <label class="field-label" for="signupConfirmPassword">Confirm Password</label>
-              <div class="input-wrapper">
-                <i data-lucide="shield-check" class="input-icon"></i>
-                <input
-                  type="password"
-                  id="signupConfirmPassword"
-                  class="form-input"
-                  placeholder="Re-enter your password"
-                  autocomplete="new-password"
-                  required
-                />
-                <button
-                  type="button"
-                  class="toggle-pw-btn"
-                  data-target="signupConfirmPassword"
-                  aria-label="Toggle confirm password visibility"
-                >
-                  <i data-lucide="eye"></i>
-                </button>
-              </div>
-              <p class="field-error" id="signupConfirmPasswordError">Passwords do not match.</p>
-            </div>
-
-            <!-- Agree to Terms & Conditions -->
-            <div class="form-group">
-              <label class="checkbox-label" for="termsCheckbox">
-                <input type="checkbox" id="termsCheckbox" class="custom-checkbox" required />
-                <span>I agree to the <a href="#terms" class="inline-link" onclick="event.preventDefault();">Terms &amp; Conditions</a></span>
-              </label>
-              <p class="field-error" id="termsError">You must agree to the Terms &amp; Conditions to continue.</p>
-            </div>
-
-            <!-- Create Account Button -->
-            <button type="submit" class="btn-primary">
-              <i data-lucide="user-plus"></i>
-              <span>Create Account</span>
-            </button>
-          </form>
-
-          <p class="switch-prompt">
-            Already have an account?
-            <button type="button" class="inline-link" id="switchToLoginLink">Login.</button>
-          </p>
-        </div>
-      </section>
-
-      <!-- Right Decorative Side: Shopping Cart Icon + "Be a Part of ZCrush!" + Video Icon -->
-      <aside class="stage-right" aria-label="Join ZCrush Community">
-        <div class="floating-neon-icon icon-cart" title="Social Marketplace">
-          <i data-lucide="shopping-cart"></i>
-        </div>
-
-        <div class="right-callout-box">
-          <div class="callout-pill">
-            <i data-lucide="zap" style="width: 13px; height: 13px;"></i>
-            <span>Next-Gen Social Hub</span>
-          </div>
-          <h2 class="right-callout-title">Be a Part of ZCrush!</h2>
-          <p class="right-callout-sub">
-            Share short videos, explore trending drops, and connect with creators in one neon-powered universe.
-          </p>
-        </div>
-
-        <div class="floating-neon-icon icon-video" title="Short Videos & Reels">
-          <i data-lucide="video"></i>
-        </div>
-      </aside>
-    </main>
-
-    <!-- Bottom Center Footer -->
-    <footer class="page-footer">
-      ZCrush &bull; Dream Big &bull; Stay Connected 💜
-    </footer>
+<section class="auth-card" aria-label="ZCrush Authentication">
+  <div class="auth-tabs" id="authTabs" role="tablist">
+    <div class="tab-glider"></div>
+    <button type="button" class="tab-btn active" id="loginTabBtn" role="tab" aria-selected="true">Login</button>
+    <button type="button" class="tab-btn" id="signupTabBtn" role="tab" aria-selected="false">Sign Up</button>
   </div>
 
-  <!-- Forgot Password Modal -->
-  <div class="modal-backdrop" id="forgotPwModal" role="dialog" aria-modal="true" aria-labelledby="forgotModalTitle">
-    <div class="modal-card">
-      <button type="button" class="modal-close-btn" id="closeForgotPwBtn" aria-label="Close modal">
-        <i data-lucide="x" style="width: 17px; height: 17px;"></i>
-      </button>
+  <div class="status-banner" id="authStatusBanner" role="status" aria-live="polite">
+    <i data-lucide="info"></i><span id="authStatusText"></span>
+  </div>
 
-      <div class="form-header" style="margin-bottom: 16px;">
-        <h3 class="form-title" id="forgotModalTitle" style="font-size: 1.4rem;">Reset Password</h3>
-        <p class="form-subtitle">Enter your registered email to receive a reset link.</p>
-      </div>
-
-      <form id="forgotPwForm" novalidate>
-        <div class="form-group">
-          <label class="field-label" for="resetEmailInput">Email Address</label>
-          <div class="input-wrapper">
-            <i data-lucide="mail" class="input-icon"></i>
-            <input
-              type="email"
-              id="resetEmailInput"
-              class="form-input"
-              placeholder="you@example.com"
-              required
-            />
-          </div>
-          <p class="field-error" id="resetEmailError">Please enter a valid email address.</p>
-        </div>
-
-        <button type="submit" class="btn-primary">
-          <i data-lucide="send"></i>
-          <span>Send Reset Link</span>
-        </button>
-      </form>
+  <div class="form-panel active" id="loginFormPanel">
+    <div class="form-header">
+      <h2 class="form-title">Welcome Back!</h2>
+      <p class="form-subtitle">Login to continue your ZCrush journey 🚀</p>
     </div>
+
+    <form id="loginForm" novalidate>
+      <div class="form-group" id="loginEmailGroup">
+        <label class="field-label" for="loginEmail">Email Address</label>
+        <div class="input-wrapper"><i data-lucide="mail" class="input-icon"></i>
+          <input type="email" id="loginEmail" class="form-input" placeholder="you@example.com" autocomplete="email" required>
+        </div><p class="field-error">Please enter a valid email address.</p>
+      </div>
+
+      <div class="form-group" id="loginPasswordGroup">
+        <label class="field-label" for="loginPassword">Password</label>
+        <div class="input-wrapper"><i data-lucide="lock" class="input-icon"></i>
+          <input type="password" id="loginPassword" class="form-input" placeholder="Enter your password" autocomplete="current-password" required>
+          <button type="button" class="toggle-pw-btn" data-target="loginPassword" aria-label="Show password"><i data-lucide="eye"></i></button>
+        </div><p class="field-error">Please enter your password.</p>
+      </div>
+
+      <div class="form-options-row">
+        <label class="checkbox-label"><input type="checkbox" id="rememberMeCheckbox" class="custom-checkbox"><span>Remember Me</span></label>
+        <button type="button" class="inline-link" id="openForgotPwBtn">Forgot Password?</button>
+      </div>
+
+      <button type="submit" class="btn-primary" id="loginSubmitBtn"><i data-lucide="log-in"></i><span>Login</span></button>
+    </form>
+
+    <div class="divider-or">OR</div>
+    <button type="button" class="btn-google" id="googleLoginBtn">
+      <svg width="19" height="19" viewBox="0 0 24 24" aria-hidden="true">
+        <path fill="#4285F4" d="M23.49 12.27c0-.79-.07-1.54-.19-2.27H12v4.51h6.47c-.29 1.48-1.14 2.73-2.4 3.58v3h3.86c2.26-2.09 3.56-5.17 3.56-8.82z"/>
+        <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.86-3c-1.08.72-2.45 1.16-4.07 1.16-3.13 0-5.78-2.11-6.73-4.96H1.29v3.09C3.26 21.3 7.31 24 12 24z"/>
+        <path fill="#FBBC05" d="M5.27 14.29c-.25-.72-.38-1.49-.38-2.29s.14-1.57.38-2.29V6.62H1.29C.47 8.24 0 10.06 0 12s.47 3.76 1.29 5.38l3.98-3.09z"/>
+        <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.31 0 3.26 2.7 1.29 6.62l3.98 3.09c.95-2.85 3.6-4.96 6.73-4.96z"/>
+      </svg><span>Continue with Google</span>
+    </button>
+    <p class="switch-prompt">Don't have an account? <button type="button" class="inline-link" id="switchToSignupLink">Sign Up.</button></p>
   </div>
 
-  <script>
-    /* ==========================================================================
-       1. SEPARATED AUTHENTICATION ADAPTER (READY FOR SUPABASE AUTH)
-       Connect your Supabase client here later without changing any UI code.
-       ========================================================================== */
-    const ZCrushAuthService = {
-      /**
-       * Connect Supabase Email/Password Login here:
-       * const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-       */
-      async loginWithEmail({ email, password, rememberMe }) {
-        return {
-          status: 'ready_for_backend',
-          message: `Validation passed for ${email}. Connect Supabase Auth in ZCrushAuthService.loginWithEmail() to complete sign-in.`
-        };
-      },
+  <div class="form-panel" id="signupFormPanel">
+    <div class="form-header">
+      <h2 class="form-title">Create Your Account!</h2>
+      <p class="form-subtitle">Join ZCrush and start your journey.</p>
+    </div>
 
-      /**
-       * Connect Supabase Email/Password Registration here:
-       * const { data, error } = await supabase.auth.signUp({
-       *   email, password, options: { data: { full_name: fullName, username } }
-       * });
-       */
-      async signupWithEmail({ fullName, username, email, password }) {
-        return {
-          status: 'ready_for_backend',
-          message: `Account details validated for @${username}. Connect Supabase Auth in ZCrushAuthService.signupWithEmail() to create user.`
-        };
-      },
+    <form id="signupForm" novalidate>
+      <div class="form-group" id="signupFullNameGroup">
+        <label class="field-label" for="signupFullName">Full Name</label>
+        <div class="input-wrapper"><i data-lucide="user" class="input-icon"></i>
+          <input type="text" id="signupFullName" class="form-input" placeholder="Enter your full name" autocomplete="name" required>
+        </div><p class="field-error">Please enter your full name (at least 2 characters).</p>
+      </div>
 
-      /**
-       * Connect Supabase Google OAuth here:
-       * const { data, error } = await supabase.auth.signInWithOAuth({ provider: 'google' });
-       */
-      async loginWithGoogle() {
-        return {
-          status: 'ready_for_backend',
-          message: 'Google OAuth trigger ready. Connect Supabase signInWithOAuth({ provider: "google" }) in ZCrushAuthService.loginWithGoogle().'
-        };
-      },
+      <div class="form-group" id="signupUsernameGroup">
+        <label class="field-label" for="signupUsername">Username</label>
+        <div class="input-wrapper"><i data-lucide="at-sign" class="input-icon"></i>
+          <input type="text" id="signupUsername" class="form-input" placeholder="Choose a unique username" autocomplete="username" required>
+        </div><p class="field-error">Use 3–20 letters, numbers or underscores.</p>
+      </div>
 
-      /**
-       * Connect Supabase Password Reset here:
-       * const { data, error } = await supabase.auth.resetPasswordForEmail(email);
-       */
-      async sendPasswordReset({ email }) {
-        return {
-          status: 'ready_for_backend',
-          message: `Reset request prepared for ${email}. Connect Supabase resetPasswordForEmail() in ZCrushAuthService.sendPasswordReset().`
-        };
+      <div class="form-group" id="signupEmailGroup">
+        <label class="field-label" for="signupEmail">Email Address</label>
+        <div class="input-wrapper"><i data-lucide="mail" class="input-icon"></i>
+          <input type="email" id="signupEmail" class="form-input" placeholder="you@example.com" autocomplete="email" required>
+        </div><p class="field-error">Please enter a valid email address.</p>
+      </div>
+
+      <div class="form-group" id="signupPasswordGroup">
+        <label class="field-label" for="signupPassword">Password</label>
+        <div class="input-wrapper"><i data-lucide="lock" class="input-icon"></i>
+          <input type="password" id="signupPassword" class="form-input" placeholder="Create a strong password" autocomplete="new-password" required>
+          <button type="button" class="toggle-pw-btn" data-target="signupPassword" aria-label="Show password"><i data-lucide="eye"></i></button>
+        </div><p class="field-error">Password must be at least 8 characters.</p>
+      </div>
+
+      <div class="form-group" id="signupConfirmPasswordGroup">
+        <label class="field-label" for="signupConfirmPassword">Confirm Password</label>
+        <div class="input-wrapper"><i data-lucide="shield-check" class="input-icon"></i>
+          <input type="password" id="signupConfirmPassword" class="form-input" placeholder="Re-enter your password" autocomplete="new-password" required>
+          <button type="button" class="toggle-pw-btn" data-target="signupConfirmPassword" aria-label="Show password"><i data-lucide="eye"></i></button>
+        </div><p class="field-error">Passwords do not match.</p>
+      </div>
+
+      <div class="form-group terms-row" id="termsGroup">
+        <label class="checkbox-label"><input type="checkbox" id="termsCheckbox" class="custom-checkbox" required><span>I agree to the <a href="#terms">Terms &amp; Conditions</a></span></label>
+        <p class="field-error">You must agree to continue.</p>
+      </div>
+
+      <button type="submit" class="btn-primary" id="signupSubmitBtn"><i data-lucide="user-plus"></i><span>Create Account</span></button>
+    </form>
+    <p class="switch-prompt">Already have an account? <button type="button" class="inline-link" id="switchToLoginLink">Login.</button></p>
+  </div>
+</section>
+
+<aside class="stage-right" aria-label="Join ZCrush">
+  <div class="floating-neon-icon icon-cart"><i data-lucide="shopping-cart"></i></div>
+  <div class="right-callout-box">
+    <div class="callout-pill"><i data-lucide="zap"></i><span>Next-Gen Social Hub</span></div>
+    <h2 class="right-callout-title">Be a Part of ZCrush!</h2>
+    <p class="right-callout-sub">Share short videos, explore trending drops, and connect with creators in one neon-powered universe.</p>
+  </div>
+  <div class="floating-neon-icon icon-video"><i data-lucide="video"></i></div>
+</aside>
+
+</main>
+
+<footer class="page-footer">ZCrush • Dream Big • Stay Connected 💜</footer>
+
+<div class="modal-backdrop" id="forgotModal" role="dialog" aria-modal="true" aria-labelledby="forgotModalTitle">
+  <div class="forgot-modal">
+    <button type="button" class="modal-close" id="closeForgotModal" aria-label="Close">&times;</button>
+    <div class="form-header" style="margin-bottom:16px">
+      <h3 class="form-title" id="forgotModalTitle" style="font-size:1.4rem">Reset Password</h3>
+      <p class="form-subtitle">Enter your registered email to receive a reset link.</p>
+    </div>
+    <form id="forgotPwForm" novalidate>
+      <div class="form-group" id="resetEmailGroup">
+        <label class="field-label" for="resetEmailInput">Email Address</label>
+        <div class="input-wrapper"><i data-lucide="mail" class="input-icon"></i>
+          <input type="email" id="resetEmailInput" class="form-input" placeholder="you@example.com" required>
+        </div><p class="field-error">Please enter a valid email address.</p>
+      </div>
+      <button type="submit" class="btn-primary" id="resetSubmitBtn"><i data-lucide="send"></i><span>Send Reset Link</span></button>
+    </form>
+  </div>
+</div>
+
+<script>
+/* =====================================================
+   ZCRUSH SUPABASE CONFIGURATION
+   Paste your Supabase Project URL and Publishable/Anon Key.
+   Never put the service_role key in this file.
+===================================================== */
+const SUPABASE_URL = "";
+const SUPABASE_ANON_KEY = "";
+
+/* GitHub Pages project path-safe URLs */
+const HOME_URL = new URL("index.html", window.location.href).href;
+const RESET_URL = new URL("reset-password.html", window.location.href).href;
+const LOGIN_URL = new URL("login.html", window.location.href).href;
+
+const $ = (id) => document.getElementById(id);
+
+function showStatus(message, type = "info") {
+  const banner = $("authStatusBanner");
+  banner.className = "status-banner show " + type;
+  $("authStatusText").textContent = message;
+  const icon = banner.querySelector("i");
+  if (icon) {
+    icon.setAttribute("data-lucide",
+      type === "success" ? "check-circle" :
+      type === "error" ? "alert-circle" : "info");
+    if (window.lucide) lucide.createIcons();
+  }
+}
+function hideStatus() {
+  $("authStatusBanner").className = "status-banner";
+  $("authStatusText").textContent = "";
+}
+function setLoading(button, loading, text) {
+  button.disabled = loading;
+  const span = button.querySelector("span");
+  if (span) span.textContent = loading ? "Please wait..." : text;
+}
+function setError(groupId, invalid) {
+  const group = $(groupId);
+  if (group) group.classList.toggle("invalid", invalid);
+}
+function validEmail(value) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+}
+function clearErrors() {
+  document.querySelectorAll(".form-group.invalid").forEach(el => el.classList.remove("invalid"));
+}
+
+/* Tabs */
+function switchTab(tab) {
+  const signup = tab === "signup";
+  $("authTabs").classList.toggle("signup-active", signup);
+  $("loginTabBtn").classList.toggle("active", !signup);
+  $("signupTabBtn").classList.toggle("active", signup);
+  $("loginTabBtn").setAttribute("aria-selected", String(!signup));
+  $("signupTabBtn").setAttribute("aria-selected", String(signup));
+  $("loginFormPanel").classList.toggle("active", !signup);
+  $("signupFormPanel").classList.toggle("active", signup);
+  hideStatus();
+  clearErrors();
+}
+$("loginTabBtn").addEventListener("click", () => switchTab("login"));
+$("signupTabBtn").addEventListener("click", () => switchTab("signup"));
+$("switchToSignupLink").addEventListener("click", () => switchTab("signup"));
+$("switchToLoginLink").addEventListener("click", () => switchTab("login"));
+
+/* Password visibility */
+document.querySelectorAll(".toggle-pw-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const input = $(btn.dataset.target);
+    const show = input.type === "password";
+    input.type = show ? "text" : "password";
+    btn.innerHTML = show ? '<i data-lucide="eye-off"></i>' : '<i data-lucide="eye"></i>';
+    btn.setAttribute("aria-label", show ? "Hide password" : "Show password");
+    if (window.lucide) lucide.createIcons();
+  });
+});
+
+/* Remember Me: local storage when checked, session storage otherwise */
+const rememberBox = $("rememberMeCheckbox");
+rememberBox.checked = localStorage.getItem("zcrushRememberMe") === "true";
+const rememberedEmail = localStorage.getItem("zcrushRememberedEmail");
+if (rememberedEmail) $("loginEmail").value = rememberedEmail;
+
+const authStorage = {
+  getItem(key) {
+    const store = rememberBox.checked ? localStorage : sessionStorage;
+    return Promise.resolve(store.getItem(key));
+  },
+  setItem(key, value) {
+    const useLocal = rememberBox.checked;
+    const destination = useLocal ? localStorage : sessionStorage;
+    const other = useLocal ? sessionStorage : localStorage;
+    other.removeItem(key);
+    destination.setItem(key, value);
+    return Promise.resolve();
+  },
+  removeItem(key) {
+    localStorage.removeItem(key);
+    sessionStorage.removeItem(key);
+    return Promise.resolve();
+  }
+};
+
+let supabaseClient = null;
+if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+  showStatus("Supabase setup pending. Add your Project URL and Publishable/Anon Key in the script.", "info");
+} else if (!window.supabase || !window.supabase.createClient) {
+  showStatus("Supabase library could not load. Check your internet connection.", "error");
+} else {
+  supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+    auth: {
+      storage: authStorage,
+      persistSession: true,
+      autoRefreshToken: true,
+      detectSessionInUrl: true
+    }
+  });
+}
+
+/* Login */
+$("loginForm").addEventListener("submit", async (event) => {
+  event.preventDefault();
+  if (!supabaseClient) return showStatus("First add your Supabase URL and Publishable/Anon Key.", "error");
+
+  hideStatus(); clearErrors();
+  const email = $("loginEmail").value.trim().toLowerCase();
+  const password = $("loginPassword").value;
+  let valid = true;
+
+  if (!validEmail(email)) { setError("loginEmailGroup", true); valid = false; }
+  if (!password) { setError("loginPasswordGroup", true); valid = false; }
+  if (!valid) return;
+
+  setLoading($("loginSubmitBtn"), true, "Login");
+  localStorage.setItem("zcrushRememberMe", String(rememberBox.checked));
+  if (rememberBox.checked) localStorage.setItem("zcrushRememberedEmail", email);
+  else localStorage.removeItem("zcrushRememberedEmail");
+
+  const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+  setLoading($("loginSubmitBtn"), false, "Login");
+
+  if (error) {
+    const message = /email not confirmed/i.test(error.message)
+      ? "Please verify your email using the confirmation link before logging in."
+      : "Login failed. Check your email and password, then try again.";
+    return showStatus(message, "error");
+  }
+  if (data.session) {
+    showStatus("Login successful. Opening ZCrush...", "success");
+    window.location.replace(HOME_URL);
+  }
+});
+
+/* Signup */
+$("signupForm").addEventListener("submit", async (event) => {
+  event.preventDefault();
+  if (!supabaseClient) return showStatus("First add your Supabase URL and Publishable/Anon Key.", "error");
+
+  hideStatus(); clearErrors();
+  const fullName = $("signupFullName").value.trim();
+  const username = $("signupUsername").value.trim().toLowerCase();
+  const email = $("signupEmail").value.trim().toLowerCase();
+  const password = $("signupPassword").value;
+  const confirm = $("signupConfirmPassword").value;
+  const terms = $("termsCheckbox").checked;
+  let valid = true;
+
+  if (fullName.length < 2) { setError("signupFullNameGroup", true); valid = false; }
+  if (!/^[a-zA-Z0-9_]{3,20}$/.test(username)) { setError("signupUsernameGroup", true); valid = false; }
+  if (!validEmail(email)) { setError("signupEmailGroup", true); valid = false; }
+  if (password.length < 8) { setError("signupPasswordGroup", true); valid = false; }
+  if (password !== confirm) { setError("signupConfirmPasswordGroup", true); valid = false; }
+  if (!terms) { setError("termsGroup", true); valid = false; }
+  if (!valid) return;
+
+  setLoading($("signupSubmitBtn"), true, "Create Account");
+
+  const { data, error } = await supabaseClient.auth.signUp({
+    email,
+    password,
+    options: {
+      data: { full_name: fullName, username },
+      emailRedirectTo: HOME_URL
+    }
+  });
+
+  setLoading($("signupSubmitBtn"), false, "Create Account");
+
+  if (error) {
+    let message = error.message;
+    if (/duplicate key|unique constraint/i.test(message)) {
+      message = "This username may already be in use. Please try another username.";
+    } else if (/password/i.test(message)) {
+      message = "Please choose a password that meets your project's password requirements.";
+    } else {
+      message = "Signup could not be completed. Please check your details and try again.";
+    }
+    return showStatus(message, "error");
+  }
+
+  if (data.session) {
+    showStatus("Account created successfully. Opening ZCrush...", "success");
+    window.location.replace(HOME_URL);
+  } else {
+    showStatus("Account created! Please check your email and click the verification link before logging in.", "success");
+    $("loginEmail").value = email;
+    switchTab("login");
+    showStatus("Verification email sent. Confirm your email, then log in.", "success");
+  }
+});
+
+/* Google Authentication */
+$("googleLoginBtn").addEventListener("click", async () => {
+  if (!supabaseClient) return showStatus("First add your Supabase URL and Publishable/Anon Key.", "error");
+  hideStatus();
+  localStorage.setItem("zcrushRememberMe", String(rememberBox.checked));
+  const { error } = await supabaseClient.auth.signInWithOAuth({
+    provider: "google",
+    options: { redirectTo: HOME_URL }
+  });
+  if (error) showStatus("Google login could not start. Please try again.", "error");
+});
+
+/* Forgot password modal */
+$("openForgotPwBtn").addEventListener("click", () => {
+  $("resetEmailInput").value = $("loginEmail").value.trim();
+  $("forgotModal").classList.add("show");
+});
+$("closeForgotModal").addEventListener("click", () => $("forgotModal").classList.remove("show"));
+$("forgotModal").addEventListener("click", (e) => {
+  if (e.target === $("forgotModal")) $("forgotModal").classList.remove("show");
+});
+
+$("forgotPwForm").addEventListener("submit", async (event) => {
+  event.preventDefault();
+  if (!supabaseClient) return showStatus("First add your Supabase URL and Publishable/Anon Key.", "error");
+
+  const email = $("resetEmailInput").value.trim().toLowerCase();
+  if (!validEmail(email)) {
+    setError("resetEmailGroup", true);
+    return;
+  }
+  setError("resetEmailGroup", false);
+  setLoading($("resetSubmitBtn"), true, "Send Reset Link");
+
+  const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
+    redirectTo: RESET_URL
+  });
+  setLoading($("resetSubmitBtn"), false, "Send Reset Link");
+
+  if (error) {
+    showStatus("Could not send the reset email. Please try again.", "error");
+  } else {
+    $("forgotModal").classList.remove("show");
+    showStatus("If an account exists for this email, a password reset link has been sent. Please check your inbox.", "success");
+  }
+});
+
+/* Restore session and handle OAuth/email confirmation returns */
+if (supabaseClient) {
+  supabaseClient.auth.onAuthStateChange((event, session) => {
+    if ((event === "SIGNED_IN" || event === "INITIAL_SESSION") && session) {
+      if (window.location.pathname.endsWith("/login.html") || window.location.pathname.endsWith("login.html")) {
+        window.location.replace(HOME_URL);
       }
-    };
+    }
+  });
 
-    /* ==========================================================================
-       2. UI CONTROLLER, TAB TRANSITIONS & FORM VALIDATION
-       ========================================================================== */
-    document.addEventListener('DOMContentLoaded', () => {
-      // Initialize Lucide icons
-      if (window.lucide) {
-        window.lucide.createIcons();
-      }
+  supabaseClient.auth.getSession().then(({ data, error }) => {
+    if (!error && data.session) {
+      window.location.replace(HOME_URL);
+    }
+  });
+}
 
-      // DOM References
-      const authTabs = document.getElementById('authTabs');
-      const loginTabBtn = document.getElementById('loginTabBtn');
-      const signupTabBtn = document.getElementById('signupTabBtn');
-      const loginFormPanel = document.getElementById('loginFormPanel');
-      const signupFormPanel = document.getElementById('signupFormPanel');
-      const switchToSignupLink = document.getElementById('switchToSignupLink');
-      const switchToLoginLink = document.getElementById('switchToLoginLink');
+if (window.lucide) lucide.createIcons();
+</script>
 
-      const statusBanner = document.getElementById('authStatusBanner');
-      const statusText = document.getElementById('authStatusText');
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
 
-      // Status Helper
-      function showBanner(message, isError = false) {
-        statusText.textContent = message;
-        statusBanner.classList.toggle('error', isError);
-        statusBanner.classList.add('visible');
-      }
+(async function protectHomePage() {
+  const { data, error } = await HOME_AUTH_CLIENT.auth.getSession();
 
-      function hideBanner() {
-        statusBanner.classList.remove('visible', 'error');
-      }
+  if (error || !data.session) {
+    window.location.replace(
+      new URL("login.html", window.location.href).href
+    );
+  }
+})();
 
-      // Tab Switching
-      function switchTab(target) {
-        hideBanner();
-        clearAllFieldErrors();
+/* Use this function for your Logout button */
+async function zcrushLogout() {
+  const { error } = await HOME_AUTH_CLIENT.auth.signOut();
 
-        const isSignup = target === 'signup';
-        authTabs.classList.toggle('signup-active', isSignup);
+  if (error) {
+    alert("Logout failed. Please try again.");
+    return;
+  }
 
-        loginTabBtn.classList.toggle('active', !isSignup);
-        loginTabBtn.setAttribute('aria-selected', String(!isSignup));
+  window.location.replace(
+    new URL("login.html", window.location.href).href
+  );
+}
+</script>
 
-        signupTabBtn.classList.toggle('active', isSignup);
-        signupTabBtn.setAttribute('aria-selected', String(isSignup));
-
-        loginFormPanel.classList.toggle('active', !isSignup);
-        signupFormPanel.classList.toggle('active', isSignup);
-      }
-
-      loginTabBtn.addEventListener('click', () => switchTab('login'));
-      signupTabBtn.addEventListener('click', () => switchTab('signup'));
-      switchToSignupLink.addEventListener('click', () => switchTab('signup'));
-      switchToLoginLink.addEventListener('click', () => switchTab('login'));
-
-      // Show / Hide Password Visibility Toggles
-      document.querySelectorAll('.toggle-pw-btn').forEach((btn) => {
-        btn.addEventListener('click', () => {
-          const targetId = btn.getAttribute('data-target');
-          const input = document.getElementById(targetId);
-          if (!input) return;
-
-          const isHidden = input.type === 'password';
-          input.type = isHidden ? 'text' : 'password';
-
-          btn.innerHTML = isHidden
-            ? '<i data-lucide="eye-off"></i>'
-            : '<i data-lucide="eye"></i>';
-
-          if (window.lucide) {
-            window.lucide.createIcons({ nodes: [btn] });
-          }
-        });
-      });
-
-      // Validation Helpers
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-      const usernameRegex = /^[a-zA-Z0-9_]{3,20}$/;
-
-      function setFieldError(inputEl, errorEl, hasError, customMsg) {
-        if (customMsg && errorEl) {
-          errorEl.textContent = customMsg;
-        }
-        if (inputEl) {
-          inputEl.classList.toggle('invalid', hasError);
-        }
-        if (errorEl) {
-          errorEl.classList.toggle('visible', hasError);
-        }
-        return !hasError;
-      }
-
-      function clearAllFieldErrors() {
-        document.querySelectorAll('.form-input.invalid').forEach((el) => el.classList.remove('invalid'));
-        document.querySelectorAll('.field-error.visible').forEach((el) => el.classList.remove('visible'));
-      }
-
-      // Clear individual field error on input
-      document.querySelectorAll('.form-input').forEach((input) => {
-        input.addEventListener('input', () => {
-          input.classList.remove('invalid');
-          const errEl = document.getElementById(`${input.id}Error`);
-          if (errEl) errEl.classList.remove('visible');
-        });
-      });
-
-      // Remember Me Preference Persistence (Email convenience only, never storing passwords)
-      const savedEmail = localStorage.getItem('zcrush_remembered_email');
-      const loginEmailInput = document.getElementById('loginEmail');
-      const rememberMeCheckbox = document.getElementById('rememberMeCheckbox');
-
-      if (savedEmail) {
-        loginEmailInput.value = savedEmail;
-        rememberMeCheckbox.checked = true;
-      }
-
-      // Login Form Submission
-      const loginForm = document.getElementById('loginForm');
-      loginForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        hideBanner();
-
-        const email = loginEmailInput.value.trim();
-        const password = document.getElementById('loginPassword').value;
-        const rememberMe = rememberMeCheckbox.checked;
-
-        const isEmailValid = setFieldError(
-          loginEmailInput,
-          document.getElementById('loginEmailError'),
-          !emailRegex.test(email)
-        );
-
-        const isPasswordValid = setFieldError(
-          document.getElementById('loginPassword'),
-          document.getElementById('loginPasswordError'),
-          password.length < 6
-        );
-
-        if (!isEmailValid || !isPasswordValid) return;
-
-        if (rememberMe) {
-          localStorage.setItem('zcrush_remembered_email', email);
-        } else {
-          localStorage.removeItem('zcrush_remembered_email');
-        }
-
-        const result = await ZCrushAuthService.loginWithEmail({ email, password, rememberMe });
-        showBanner(result.message, false);
-      });
-
-      // Google Login Button UI Handler
-      document.getElementById('googleLoginBtn').addEventListener('click', async () => {
-        hideBanner();
-        const result = await ZCrushAuthService.loginWithGoogle();
-        showBanner(result.message, false);
-      });
-
-      // Signup Form Submission
-      const signupForm = document.getElementById('signupForm');
-      const termsCheckbox = document.getElementById('termsCheckbox');
-
-      termsCheckbox.addEventListener('change', () => {
-        if (termsCheckbox.checked) {
-          document.getElementById('termsError').classList.remove('visible');
-        }
-      });
-
-      signupForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        hideBanner();
-
-        const fullNameInput = document.getElementById('signupFullName');
-        const usernameInput = document.getElementById('signupUsername');
-        const emailInput = document.getElementById('signupEmail');
-        const passwordInput = document.getElementById('signupPassword');
-        const confirmInput = document.getElementById('signupConfirmPassword');
-
-        const fullName = fullNameInput.value.trim();
-        const username = usernameInput.value.trim();
-        const email = emailInput.value.trim();
-        const password = passwordInput.value;
-        const confirmPassword = confirmInput.value;
-
-        const vName = setFieldError(
-          fullNameInput,
-          document.getElementById('signupFullNameError'),
-          fullName.length < 2
-        );
-
-        const vUser = setFieldError(
-          usernameInput,
-          document.getElementById('signupUsernameError'),
-          !usernameRegex.test(username)
-        );
-
-        const vEmail = setFieldError(
-          emailInput,
-          document.getElementById('signupEmailError'),
-          !emailRegex.test(email)
-        );
-
-        const vPass = setFieldError(
-          passwordInput,
-          document.getElementById('signupPasswordError'),
-          password.length < 6
-        );
-
-        const vConfirm = setFieldError(
-          confirmInput,
-          document.getElementById('signupConfirmPasswordError'),
-          confirmPassword !== password || confirmPassword.length === 0
-        );
-
-        const vTerms = setFieldError(
-          null,
-          document.getElementById('termsError'),
-          !termsCheckbox.checked
-        );
-
-        if (!vName || !vUser || !vEmail || !vPass || !vConfirm || !vTerms) return;
-
-        const result = await ZCrushAuthService.signupWithEmail({
-          fullName,
-          username,
-          email,
-          password
-        });
-        showBanner(result.message, false);
-      });
-
-      // Forgot Password Modal Interactions
-      const forgotPwModal = document.getElementById('forgotPwModal');
-      const openForgotPwBtn = document.getElementById('openForgotPwBtn');
-      const closeForgotPwBtn = document.getElementById('closeForgotPwBtn');
-      const forgotPwForm = document.getElementById('forgotPwForm');
-      const resetEmailInput = document.getElementById('resetEmailInput');
-
-      function openForgotModal() {
-        resetEmailInput.value = loginEmailInput.value.trim();
-        resetEmailInput.classList.remove('invalid');
-        document.getElementById('resetEmailError').classList.remove('visible');
-        forgotPwModal.classList.add('open');
-        resetEmailInput.focus();
-      }
-
-      function closeForgotModal() {
-        forgotPwModal.classList.remove('open');
-      }
-
-      openForgotPwBtn.addEventListener('click', openForgotModal);
-      closeForgotPwBtn.addEventListener('click', closeForgotModal);
-
-      forgotPwModal.addEventListener('click', (e) => {
-        if (e.target === forgotPwModal) closeForgotModal();
-      });
-
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && forgotPwModal.classList.contains('open')) {
-          closeForgotModal();
-        }
-      });
-
-      forgotPwForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const email = resetEmailInput.value.trim();
-        const isValid = setFieldError(
-          resetEmailInput,
-          document.getElementById('resetEmailError'),
-          !emailRegex.test(email)
-        );
-        if (!isValid) return;
-
-        const result = await ZCrushAuthService.sendPasswordReset({ email });
-        closeForgotModal();
-        showBanner(result.message, false);
-      });
-    });
-  </script>
 </body>
 </html>
